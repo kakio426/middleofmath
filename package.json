@@ -1,0 +1,9 @@
+{
+  "name": "middle-of-math",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node scripts/student-content-harness.js",
+    "test:student-content": "node scripts/student-content-harness.js"
+  }
+}
