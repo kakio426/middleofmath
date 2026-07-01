@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
   --surface-primary: #f8faf9;
   --surface-secondary: #ffffff;
   --surface-tertiary: #edf3f1;
@@ -25,6 +25,26 @@
   --space-8: 32px;
   --space-10: 40px;
   --space-12: 48px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-primary: #0d1110;
+    --surface-secondary: #151918;
+    --surface-tertiary: #1d2422;
+    --surface-selected: #22332d;
+    --text-primary: #f4f7f6;
+    --text-secondary: #bac7c2;
+    --text-tertiary: #869590;
+    --border-default: #2b3431;
+    --border-subtle: #202724;
+    --accent-primary: #64d2ad;
+    --accent-hover: #8ee6c6;
+    --accent-soft: #19362f;
+    --status-warning: #f4c35f;
+    --status-error: #ff9a93;
+    --status-info: #8bbcef;
+  }
 }
 
 * {
@@ -55,6 +75,8 @@ select {
 }
 
 button {
+  appearance: none;
+  -webkit-appearance: none;
   color: inherit;
 }
 

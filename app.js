@@ -35,6 +35,12 @@
       interpretation: "공통 기준을 유지한다는 감각이 아직 약합니다.",
       teachingMove: "통분 이후 분모가 왜 유지되는지 막대와 단위 언어로 확인해 주세요.",
     },
+    "numerator-denominator-mix": {
+      title: "분자의 합을 분모 자리에 씀",
+      severity: "high",
+      interpretation: "분모를 공통 기준이 아니라 계산 결과가 들어가는 자리로 보고 있습니다.",
+      teachingMove: "분모는 계산 결과가 아니라 조각 이름이 유지되는 자리라는 점을 막대로 다시 확인해 주세요.",
+    },
     "denominator-only": {
       title: "분모만 바꾸고 분자를 유지함",
       severity: "medium",
@@ -46,6 +52,12 @@
       severity: "medium",
       interpretation: "분모 증가량을 분자에도 더하는 방식으로 같은 크기를 만들려 합니다.",
       teachingMove: "증가량보다 배수가 같아야 한다는 점을 작은 수 예시로 확인해 주세요.",
+    },
+    "multiplier-miscalculation": {
+      title: "분모 변화의 배수를 잘못 계산함",
+      severity: "medium",
+      interpretation: "곱셈으로 동치분수를 만든다는 절차는 알지만 배수 자체를 잘못 구하고 있습니다.",
+      teachingMove: "분모가 몇 배가 됐는지 먼저 확인한 뒤 분자에 적용하는 순서로 나눠서 짚어주세요.",
     },
     "larger-denominator-only": {
       title: "큰 분모만 공통 기준으로 삼음",
@@ -83,6 +95,18 @@
       interpretation: "분자와 분모가 각각 무엇을 말하는지 연결이 약합니다.",
       teachingMove: "분수 표기와 막대의 전체 조각 수, 칠한 조각 수를 동시에 짚어주세요.",
     },
+    "reversed-fraction": {
+      title: "분자와 분모 위치를 뒤집어 읽음",
+      severity: "high",
+      interpretation: "전체를 나타내는 수와 부분을 나타내는 수의 자리를 구분하지 못하고 있습니다.",
+      teachingMove: "분수 표기에서 아래 수는 전체 조각 수, 위 수는 칠한 조각 수라는 자리를 막대와 함께 반복해 확인해 주세요.",
+    },
+    "size-order": {
+      title: "동치와 크기 비교를 혼동함",
+      severity: "medium",
+      interpretation: "같은 크기를 찾는 질문에 더 큰 분수를 고르는 등 동치와 크기비교 질문을 구분하지 못합니다.",
+      teachingMove: "지금 묻는 것이 같은 크기인지 더 큰 크기인지를 먼저 말로 확인하게 해주세요.",
+    },
     "rule-guessing": {
       title: "임의 계산 규칙을 만듦",
       severity: "medium",
@@ -100,6 +124,12 @@
       severity: "medium",
       interpretation: "공통 기준은 떠올렸지만 실제 변환을 건너뛰고 있습니다.",
       teachingMove: "결과 선택 전 변환된 두 분수를 반드시 쓰는 중간 판단을 넣어주세요.",
+    },
+    "estimation-overprocedure": {
+      title: "통분 절차 없이 어림으로 답함",
+      severity: "medium",
+      interpretation: "정확한 공통 기준 변환을 거치지 않고 대략적인 크기 감각으로 답을 고릅니다.",
+      teachingMove: "어림으로 맞았더라도 통분과 계산 절차를 직접 쓰게 해 절차 자체를 확인해 주세요.",
     },
     "needs-scaffold": {
       title: "판단 시작점에서 추가 발판이 필요함",
@@ -630,7 +660,6 @@
     students.forEach((student) => {
       student.logs.forEach((log) => {
         collectSignal(summary, student.id, log.signal, log);
-        if (log.usedUnknown) collectSignal(summary, student.id, "needs-scaffold", log);
         if (log.durationMs >= 18000 || log.firstSelectionMs >= 14000) collectSignal(summary, student.id, "slow-judgment", log);
         if (log.selectionChanges >= 2) collectSignal(summary, student.id, "unstable-choice", log);
       });
