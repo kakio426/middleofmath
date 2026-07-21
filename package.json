@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "node scripts/student-content-harness.js",
-    "test:student-content": "node scripts/student-content-harness.js"
+    "test": "node scripts/student-content-harness.js && node scripts/runtime-harness.js",
+    "test:student-content": "node scripts/student-content-harness.js",
+    "test:runtime": "node scripts/runtime-harness.js"
   }
 }

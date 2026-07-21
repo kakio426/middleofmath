@@ -151,12 +151,68 @@
     },
   };
 
-  const questions = window.MOM_QUESTIONS || [];
+  const diagnosticSets = window.MOM_DIAGNOSTIC_SETS || [
+    {
+      id: "fraction-grade5",
+      title: "5학년 분수",
+      shortTitle: "분수",
+      gradeLabel: "초등 5학년",
+      description: "분수 풀이 과정을 살펴봅니다.",
+      questionCountLabel: "10문항",
+      questions: window.MOM_QUESTIONS || [],
+      teacherMode: "signals",
+    },
+  ];
+  const COUNTING_AXES = [
+    {
+      id: "number-sequence",
+      title: "수 이름 순서",
+      description: "임의의 수에서 이어 세고 거꾸로 셉니다.",
+      teachingMove: "수직선에서 한 칸씩 이동하며 수 이름을 함께 말해 보세요.",
+    },
+    {
+      id: "one-to-one",
+      title: "일대일 대응",
+      description: "사물을 빠뜨리거나 중복하지 않고 하나씩 셉니다.",
+      teachingMove: "센 사물에 표시하거나 한쪽으로 옮기며 한 번씩 세어 보세요.",
+    },
+    {
+      id: "cardinality",
+      title: "전체 개수 이해",
+      description: "마지막 수가 전체 개수이며 배열과 무관함을 이해합니다.",
+      teachingMove: "다 센 뒤 마지막에 말한 수를 그대로 전체 개수로 말하게 해보세요.",
+    },
+    {
+      id: "representation",
+      title: "수량·기호·표상",
+      description: "수량을 숫자, 점, 손가락, 수직선과 연결합니다.",
+      teachingMove: "같은 수를 물건, 점, 숫자, 수직선으로 번갈아 나타내 보세요.",
+    },
+    {
+      id: "comparison-patterns",
+      title: "비교와 규칙 세기",
+      description: "많고 적음, 하나 더·덜, 뛰어 세기 규칙을 봅니다.",
+      teachingMove: "두 모임을 짝짓고, 일정한 묶음을 더하며 변화량을 말하게 해보세요.",
+    },
+  ];
+  const countingCurriculum = window.MOM_COUNTING_CURRICULUM || { source: {}, anchors: [] };
+  const countingStages = [...(window.MOM_COUNTING_STAGES || [])].sort((a, b) => a.order - b.order);
+  const countingConceptById = new Map(
+    (window.MOM_COUNTING_CONCEPTS || []).map((concept) => [concept.id, concept])
+  );
+  const countingConceptAxisById = new Map(
+    [...countingConceptById].map(([id, concept]) => [id, concept.axis])
+  );
+  const countingStageById = new Map(countingStages.map((stage) => [stage.id, stage]));
+  const countingAnchorById = new Map(
+    (countingCurriculum.anchors || []).map((anchor) => [anchor.id, anchor])
+  );
   const app = document.querySelector("#app");
   const roleTabs = Array.from(document.querySelectorAll(".role-tab"));
 
   const state = {
     view: "student",
+    selectedSetId: null,
     problemIndex: 0,
     stepIndex: 0,
     selectedChoiceId: null,
@@ -169,6 +225,7 @@
     logs: [],
     completed: false,
     selectedStudentId: "current",
+    interactionTrace: createInteractionTrace(),
   };
 
   function init() {
@@ -180,14 +237,13 @@
       state.unknownVisible = true;
       renderApp();
     };
-    startUnknownTimer();
     renderApp();
   }
 
   function setView(view) {
     state.view = view;
     if (view === "student" && !state.completed) {
-      startUnknownTimer();
+      if (state.selectedSetId) startUnknownTimer();
     } else {
       clearUnknownTimer();
     }
@@ -199,7 +255,11 @@
     if (!target) return;
 
     const action = target.dataset.action;
+    if (action === "select-set") selectDiagnosticSet(target.dataset.setId);
+    if (action === "change-set") returnToSetPicker();
     if (action === "select-choice") selectChoice(target.dataset.choiceId);
+    if (action === "tap-object") tapObject(target.dataset.objectId);
+    if (action === "select-number-line") selectChoice(target.dataset.choiceId);
     if (action === "select-unknown") selectChoice(UNKNOWN_CHOICE.id);
     if (action === "next-step") goNext();
     if (action === "open-teacher") setView("teacher");
@@ -211,11 +271,34 @@
   }
 
   function currentProblem() {
-    return questions[state.problemIndex];
+    return currentQuestions()[state.problemIndex];
   }
 
   function currentStep() {
     return currentProblem().steps[state.stepIndex];
+  }
+
+  function currentSet() {
+    return diagnosticSets.find((set) => set.id === state.selectedSetId) || null;
+  }
+
+  function currentQuestions() {
+    return currentSet()?.questions || [];
+  }
+
+  function selectDiagnosticSet(setId) {
+    if (!diagnosticSets.some((set) => set.id === setId)) return;
+    state.selectedSetId = setId;
+    resetProgress();
+    if (state.view === "student") startUnknownTimer();
+    renderApp();
+  }
+
+  function returnToSetPicker() {
+    clearUnknownTimer();
+    state.selectedSetId = null;
+    resetProgress();
+    renderApp();
   }
 
   function selectChoice(choiceId) {
@@ -229,13 +312,25 @@
     renderApp();
   }
 
+  function tapObject(objectId) {
+    const step = currentStep();
+    if (step?.interaction?.type !== "object-set") return;
+    state.interactionTrace.objectTapOrder.push(objectId);
+    if (state.interactionTrace.selectedObjectIds.includes(objectId)) {
+      state.interactionTrace.duplicateObjectTaps += 1;
+    } else {
+      state.interactionTrace.selectedObjectIds.push(objectId);
+    }
+    renderApp();
+  }
+
   function goNext() {
     if (!state.selectedChoiceId) return;
     state.logs.push(buildLogEntry());
 
     const problem = currentProblem();
     const isLastStep = state.stepIndex === problem.steps.length - 1;
-    const isLastProblem = state.problemIndex === questions.length - 1;
+    const isLastProblem = state.problemIndex === currentQuestions().length - 1;
 
     if (isLastStep && isLastProblem) {
       state.completed = true;
@@ -262,6 +357,7 @@
     state.selectionChanges = 0;
     state.stepStartMs = performance.now();
     state.unknownVisible = false;
+    state.interactionTrace = createInteractionTrace();
     startUnknownTimer();
     renderApp();
   }
@@ -271,8 +367,23 @@
     const step = currentStep();
     const choice = getSelectedChoice();
     const now = performance.now();
+    const objectItems = step.interaction?.type === "object-set" ? step.interaction.items || [] : [];
+    const interactionAttempted = state.interactionTrace.objectTapOrder.length > 0;
+    const untouchedObjectIds = interactionAttempted
+      ? objectItems
+          .map((item) => item.id)
+          .filter((id) => !state.interactionTrace.selectedObjectIds.includes(id))
+      : [];
+    const skillIds = step.skillIds || [];
+    const skillAxes = [...new Set(skillIds.map((id) => countingConceptAxisById.get(id)).filter(Boolean))];
+    const concepts = skillIds.map((id) => countingConceptById.get(id)).filter(Boolean);
+    const learnerStageIds = [...new Set(concepts.map((concept) => concept.stageId).filter(Boolean))];
+    const curriculumAnchorIds = [...new Set(concepts.map((concept) => concept.curriculumAnchorId).filter(Boolean))];
+    const curriculumTopicIds = [...new Set(concepts.map((concept) => concept.curriculumTopicId).filter(Boolean))];
     return {
       studentId: "현재 익명 세션",
+      diagnosticSetId: state.selectedSetId,
+      diagnosticSetTitle: currentSet()?.title || "진단",
       problemId: problem.id,
       problemTitle: problem.title,
       stepId: step.id,
@@ -284,11 +395,24 @@
       signal: choice.signal,
       misconception: choice.misconception,
       teacherNote: choice.teacherNote,
+      skillIds,
+      skillAxes,
+      skillAxis: step.axis || null,
+      learnerStageIds,
+      curriculumAnchorIds,
+      curriculumTopicIds,
       durationMs: Math.round(now - state.stepStartMs),
       firstSelectionMs: state.firstSelectionMs === null ? null : Math.round(state.firstSelectionMs),
       afterChoiceMs: state.selectedAtMs === null ? null : Math.round(now - state.selectedAtMs),
       selectionChanges: state.selectionChanges,
       usedUnknown: choice.id === UNKNOWN_CHOICE.id,
+      interactionType: step.interaction?.type || "choice",
+      objectTapOrder: [...state.interactionTrace.objectTapOrder],
+      selectedObjectIds: [...state.interactionTrace.selectedObjectIds],
+      duplicateObjectTaps: state.interactionTrace.duplicateObjectTaps,
+      interactionAttempted,
+      untouchedObjectIds,
+      objectOmissionCount: untouchedObjectIds.length,
       recordedAt: new Date().toISOString(),
     };
   }
@@ -300,6 +424,15 @@
 
   function restartSession() {
     clearUnknownTimer();
+    const selectedSetId = state.selectedSetId;
+    resetProgress();
+    state.selectedSetId = selectedSetId;
+    state.view = "student";
+    if (state.selectedSetId) startUnknownTimer();
+    renderApp();
+  }
+
+  function resetProgress() {
     state.problemIndex = 0;
     state.stepIndex = 0;
     state.selectedChoiceId = null;
@@ -311,9 +444,15 @@
     state.logs = [];
     state.completed = false;
     state.selectedStudentId = "current";
-    state.view = "student";
-    startUnknownTimer();
-    renderApp();
+    state.interactionTrace = createInteractionTrace();
+  }
+
+  function createInteractionTrace() {
+    return {
+      objectTapOrder: [],
+      selectedObjectIds: [],
+      duplicateObjectTaps: 0,
+    };
   }
 
   function startUnknownTimer() {
@@ -338,6 +477,11 @@
       tab.setAttribute("aria-pressed", String(active));
     });
 
+    if (!state.selectedSetId) {
+      renderSetPicker();
+      return;
+    }
+
     if (state.view === "teacher") {
       renderTeacher();
       return;
@@ -353,9 +497,10 @@
 
     const problem = currentProblem();
     const step = currentStep();
+    const set = currentSet();
     const ordinal = stepOrdinal(state.problemIndex, state.stepIndex);
     const percent = Math.round((ordinal / totalStepCount()) * 100);
-    const isLast = state.problemIndex === questions.length - 1 && state.stepIndex === problem.steps.length - 1;
+    const isLast = state.problemIndex === currentQuestions().length - 1 && state.stepIndex === problem.steps.length - 1;
 
     app.innerHTML = `
       <section class="student-workspace">
@@ -375,13 +520,13 @@
         <div class="student-layout">
           <section class="problem-panel" aria-labelledby="problem-title">
             <div class="problem-meta">
-              <span>5학년 분수</span>
+              <span>${escapeHtml(set.gradeLabel)}</span>
               <span>${escapeHtml(problem.focus)}</span>
             </div>
             <h2 id="problem-title">${escapeHtml(problem.title)}</h2>
             <p>${escapeHtml(problem.stem)}</p>
             <div class="problem-position">
-              <span>문항 ${state.problemIndex + 1} / ${questions.length}</span>
+              <span>문항 ${state.problemIndex + 1} / ${currentQuestions().length}</span>
               <span>판단 ${state.stepIndex + 1} / ${problem.steps.length}</span>
             </div>
           </section>
@@ -393,9 +538,12 @@
             </div>
             <p class="step-prompt">${escapeHtml(step.prompt)}</p>
             ${renderFractionBars(step.bars || [])}
-            <div class="choice-list" role="group" aria-label="선택지">
-              ${step.choices.map(renderChoice).join("")}
-            </div>
+            ${renderInteraction(step)}
+            ${step.interaction?.type === "number-line" ? "" : `
+              <div class="choice-list" role="group" aria-label="선택지">
+                ${step.choices.map(renderChoice).join("")}
+              </div>
+            `}
             <div class="unknown-slot" aria-live="polite">
               ${renderUnknownButton()}
             </div>
@@ -413,6 +561,117 @@
         </div>
       </section>
     `;
+  }
+
+  function renderSetPicker() {
+    const audience = state.view === "teacher" ? "교사" : "학생";
+    app.innerHTML = `
+      <section class="set-picker" aria-labelledby="set-picker-title">
+        <div class="set-picker-heading">
+          <p class="section-label">${audience} 시작 화면</p>
+          <h2 id="set-picker-title">살펴볼 수학 영역을 고르세요.</h2>
+          <p>${state.view === "teacher" ? "선택한 진단의 현재 익명 세션 결과를 확인할 수 있습니다." : "한 번에 한 판단씩 진행하며, 정오답은 학생 화면에 표시하지 않습니다."}</p>
+        </div>
+        <div class="set-card-grid">
+          ${diagnosticSets.map(renderSetCard).join("")}
+        </div>
+        <p class="privacy-note">이 MVP는 이름을 받지 않으며, 기록은 이 브라우저의 현재 세션에서만 사용합니다.</p>
+      </section>
+    `;
+  }
+
+  function renderSetCard(set) {
+    return `
+      <article class="set-card">
+        <div>
+          <span class="set-grade">${escapeHtml(set.gradeLabel)}</span>
+          <h3>${escapeHtml(set.title)}</h3>
+          <p>${escapeHtml(set.description)}</p>
+        </div>
+        <div class="set-card-footer">
+          <span>${escapeHtml(set.questionCountLabel)}</span>
+          <button class="primary-button" type="button" data-action="select-set" data-set-id="${escapeHtml(set.id)}">
+            ${state.view === "teacher" ? "이 진단 보기" : "시작하기"}
+          </button>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderInteraction(step) {
+    const interaction = step.interaction;
+    if (!interaction) return "";
+    if (interaction.type === "object-set") return renderObjectSet(interaction);
+    if (interaction.type === "number-sequence") return renderNumberSequence(interaction);
+    if (interaction.type === "number-line") return renderNumberLine(interaction, step.choices);
+    if (interaction.type === "object-rows") return renderObjectRows(interaction);
+    if (interaction.type === "object-display") return renderObjectDisplay(interaction);
+    if (interaction.type === "comparison-sets") return renderComparisonSets(interaction);
+    return "";
+  }
+
+  function renderObjectSet(interaction) {
+    return `
+      <div class="object-activity">
+        <p>${escapeHtml(interaction.instruction)}</p>
+        <div class="object-set object-layout-${escapeHtml(interaction.layout)}" role="group" aria-label="셀 그림">
+          ${interaction.items.map((item) => {
+            const counted = state.interactionTrace.selectedObjectIds.includes(item.id);
+            return `
+              <button
+                class="count-object ${counted ? "is-counted" : ""}"
+                type="button"
+                data-action="tap-object"
+                data-object-id="${escapeHtml(item.id)}"
+                aria-pressed="${counted}"
+                aria-label="${counted ? "센" : "아직 세지 않은"} 그림"
+              >${escapeHtml(item.symbol)}</button>
+            `;
+          }).join("")}
+        </div>
+        <p class="counted-total" aria-live="polite">눌러 본 그림 ${state.interactionTrace.selectedObjectIds.length}개</p>
+      </div>
+    `;
+  }
+
+  function renderNumberSequence(interaction) {
+    return `
+      <div class="number-sequence" aria-label="수 배열">
+        ${interaction.values.map((value) => `<span class="sequence-cell ${value === null ? "is-blank" : ""}">${value === null ? "?" : escapeHtml(value)}</span>`).join("")}
+      </div>
+    `;
+  }
+
+  function renderNumberLine(interaction, choices) {
+    const selectable = new Set(interaction.choices.map(String));
+    const choiceByLabel = new Map(choices.map((choice) => [String(choice.label), choice]));
+    const ticks = [];
+    for (let value = interaction.min; value <= interaction.max; value += 1) {
+      const choice = choiceByLabel.get(String(value));
+      if (selectable.has(String(value)) && choice) {
+        const selected = choice.id === state.selectedChoiceId;
+        ticks.push(`<button class="number-tick is-selectable ${selected ? "is-selected" : ""}" type="button" data-action="select-number-line" data-choice-id="${escapeHtml(choice.id)}" aria-pressed="${selected}"><span></span><strong>${value}</strong></button>`);
+      } else {
+        ticks.push(`<span class="number-tick"><span></span><strong>${value}</strong></span>`);
+      }
+    }
+    return `<div class="number-line" role="group" aria-label="수직선에서 수 고르기">${ticks.join("")}</div>`;
+  }
+
+  function renderObjectRows(interaction) {
+    return `<div class="object-rows" aria-label="서로 다르게 놓은 같은 수의 단추">${interaction.rows.map((row, index) => `<div class="object-row row-${index + 1}">${row.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>`).join("")}</div>`;
+  }
+
+  function renderObjectDisplay(interaction) {
+    return `
+      <div class="object-display object-display-${escapeHtml(interaction.layout || "ordered")}" aria-label="셀 그림">
+        ${interaction.items.map((item) => `<span>${escapeHtml(item.symbol)}</span>`).join("")}
+      </div>
+    `;
+  }
+
+  function renderComparisonSets(interaction) {
+    return `<div class="comparison-sets" aria-label="두 모임 비교">${interaction.groups.map((group) => `<figure><figcaption>${escapeHtml(group.label)} 쪽</figcaption><div>${group.items.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div></figure>`).join("")}</div>`;
   }
 
   function renderChoice(choice) {
@@ -473,10 +732,11 @@
     return `
       <section class="completion-panel">
         <p class="section-label">풀이 완료</p>
-        <h2>풀이 기록이 저장되었습니다.</h2>
-        <p>학생 화면에는 정오답 대신 완료 상태만 보여줍니다. 세부 진단은 교사 화면에서만 확인합니다.</p>
+        <h2>${escapeHtml(currentSet()?.title || "진단")} 기록이 저장되었습니다.</h2>
+        <p>학생 화면에는 정오답 대신 완료 상태만 보여줍니다. 자세한 내용은 교사 화면에서만 확인합니다.</p>
         <div class="completion-actions">
-          <button class="secondary-button" type="button" data-action="restart">처음부터</button>
+          <button class="secondary-button" type="button" data-action="change-set">다른 진단 선택</button>
+          <button class="secondary-button" type="button" data-action="restart">같은 진단 다시 하기</button>
           <button class="primary-button" type="button" data-action="open-teacher">교사 화면 보기</button>
         </div>
       </section>
@@ -484,6 +744,10 @@
   }
 
   function renderTeacher() {
+    if (currentSet()?.teacherMode === "counting-axes") {
+      renderCountingTeacher();
+      return;
+    }
     const students = getStudentsForTeacher();
     ensureSelectedStudent(students);
     const selectedStudent = students.find((student) => student.id === state.selectedStudentId) || students[0];
@@ -500,10 +764,13 @@
         <div class="dashboard-heading">
           <div>
             <p class="section-label">교사용</p>
-            <h2>현재 풀이 진단</h2>
+            <h2>${escapeHtml(currentSet()?.title || "현재 풀이")} 진단</h2>
             <p>${hasCurrentLogs ? "현재 학생의 풀이 기록만 기준으로 진단합니다." : "학생 화면에서 한 단계 이상 진행하면 현재 풀이 기반 진단이 생깁니다."}</p>
           </div>
-          <button class="secondary-button" type="button" data-action="restart">새 학생 기록 시작</button>
+          <div class="dashboard-actions">
+            <button class="secondary-button" type="button" data-action="change-set">진단 바꾸기</button>
+            <button class="secondary-button" type="button" data-action="restart">새 학생 기록 시작</button>
+          </div>
         </div>
 
         <div class="metric-strip" aria-label="반 요약 지표">
@@ -550,6 +817,233 @@
     `;
   }
 
+  function renderCountingTeacher() {
+    const logs = state.logs;
+    const axisRows = buildCountingAxisSummary(logs);
+    const stageRows = buildCountingStageSummary(logs);
+    const earliestStage = findEarliestStageToCheck(stageRows);
+    const issueCount = logs.filter(logNeedsCheck).length;
+    const touchedObjects = logs.reduce((sum, log) => sum + (log.objectTapOrder?.length || 0), 0);
+
+    app.innerHTML = `
+      <section class="teacher-dashboard counting-dashboard">
+        <div class="dashboard-heading">
+          <div>
+            <p class="section-label">교사용 · 현재 익명 세션</p>
+            <h2>초등 수 세기 진단</h2>
+            <p>${logs.length ? "교육과정 앵커, 작은 학습 단계, 근거 행동을 현재 세션 기록으로만 연결했습니다." : "학생 화면에서 한 단계 이상 진행하면 단계별 근거가 표시됩니다."}</p>
+          </div>
+          <div class="dashboard-actions">
+            <button class="secondary-button" type="button" data-action="change-set">진단 바꾸기</button>
+            <button class="secondary-button" type="button" data-action="restart">새 학생 기록 시작</button>
+          </div>
+        </div>
+
+        <div class="metric-strip" aria-label="현재 세션 요약 지표">
+          ${renderMetric("분석 대상", logs.length ? "현재 세션" : "기록 없음", "이름 없이 방금 푼 기록만 봅니다")}
+          ${renderMetric("관찰 판단", `${logs.length}개`, "개념 ID가 연결된 작은 판단 단위")}
+          ${renderMetric("확인할 행동", `${issueCount}개`, touchedObjects ? `그림 누르기 ${touchedObjects}회 포함` : "오답·발판 요청·세기 행동")}
+        </div>
+
+        <section class="learning-path-panel" aria-labelledby="learning-path-title">
+          <div class="panel-heading learning-path-heading">
+            <div>
+              <h3 id="learning-path-title">교육과정에서 관찰 근거까지</h3>
+              <p>교육과정 코드는 범위의 기준이며, 7개 단계와 연결은 이 MVP가 만든 관찰 순서입니다.</p>
+            </div>
+            ${renderEarliestStage(earliestStage, logs.length)}
+          </div>
+          <div class="curriculum-anchor-grid">
+            ${(countingCurriculum.anchors || []).map(renderCurriculumAnchor).join("")}
+          </div>
+          <ol class="learner-stage-list">
+            ${stageRows.map(renderLearnerStage).join("")}
+          </ol>
+          <p class="curriculum-disclaimer">
+            참고 자료:
+            <a href="${escapeHtml(countingCurriculum.source?.url || "https://github.com/DECK6/korean-elementary-learning-map")}" target="_blank" rel="noreferrer">${escapeHtml(countingCurriculum.source?.id || "DECK6/korean-elementary-learning-map")}</a>
+            · ${escapeHtml(countingCurriculum.source?.note || "이 단계는 현재 MVP의 관찰 구조이며 공식 진단 기준이 아닙니다.")}
+          </p>
+        </section>
+
+        <section class="axis-panel" aria-labelledby="axis-title">
+          <div class="panel-heading">
+            <h3 id="axis-title">다섯 가지 수 세기 축</h3>
+            <p>한 번의 선택으로 능력을 확정하지 않고, 관찰된 근거와 함께 표시합니다.</p>
+          </div>
+          <div class="axis-grid">
+            ${axisRows.map(renderAxisCard).join("")}
+          </div>
+        </section>
+
+        <div class="teacher-grid">
+          <section class="summary-panel" aria-labelledby="evidence-title">
+            <div class="panel-heading">
+              <h3 id="evidence-title">판단 근거</h3>
+              <p>학생이 고른 답과 그림을 센 행동을 함께 봅니다.</p>
+            </div>
+            ${logs.length ? `<div class="timeline">${logs.map(renderLogRow).join("")}</div>` : renderTeacherEmptyState()}
+          </section>
+          <aside class="student-panel privacy-panel" aria-labelledby="privacy-title">
+            <div class="panel-heading">
+              <h3 id="privacy-title">진단 범위와 개인정보</h3>
+              <p>현재 브라우저 세션 안의 익명 기록만 사용합니다.</p>
+            </div>
+            <ul class="privacy-list">
+              <li>학생 이름, 학교, 학급 정보를 받지 않습니다.</li>
+              <li>정답 선택과 조작 순서는 교사 화면에만 보입니다.</li>
+              <li>페이지를 새로 열면 서버에서 이전 기록을 불러오지 않습니다.</li>
+              <li>한 번의 오답은 확정 진단이 아니라 확인할 근거로 표시합니다.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+    `;
+  }
+
+  function buildCountingStageSummary(logs) {
+    const highestObservedOrder = countingStages.reduce((highest, stage) => {
+      const hasLog = logs.some((log) => (log.learnerStageIds || []).includes(stage.id));
+      return hasLog ? Math.max(highest, stage.order) : highest;
+    }, 0);
+
+    return countingStages.map((stage) => {
+      const stageLogs = logs.filter((log) => (log.learnerStageIds || []).includes(stage.id));
+      const evidenceLogs = stageLogs.filter((log) => !logNeedsMoreEvidence(log));
+      const issueLogs = evidenceLogs.filter(logNeedsCheck);
+      let status = "아직 관찰 전";
+      let statusClass = "empty";
+
+      if (issueLogs.length) {
+        status = "추가 확인 필요";
+        statusClass = "check";
+      } else if (stageLogs.length > evidenceLogs.length || (!stageLogs.length && stage.order < highestObservedOrder)) {
+        status = "근거 더 필요";
+        statusClass = "observe";
+      } else if (evidenceLogs.length) {
+        status = "현재 관찰됨";
+        statusClass = "observed";
+      }
+
+      return { ...stage, stageLogs, evidenceLogs, issueLogs, status, statusClass };
+    });
+  }
+
+  function findEarliestStageToCheck(stageRows) {
+    return stageRows.find((stage) => stage.statusClass === "check" || stage.statusClass === "observe") || null;
+  }
+
+  function renderEarliestStage(stage, hasLogs) {
+    if (!hasLogs) {
+      return `
+        <div class="earliest-stage is-empty">
+          <span>가장 먼저 다시 볼 단계</span>
+          <strong>풀이 전</strong>
+          <p>학생이 풀기 시작하면 표시됩니다.</p>
+        </div>
+      `;
+    }
+    if (!stage) {
+      return `
+        <div class="earliest-stage is-clear">
+          <span>가장 먼저 다시 볼 단계</span>
+          <strong>현재 확인 신호 없음</strong>
+          <p>숙달을 확정하는 뜻은 아닙니다.</p>
+        </div>
+      `;
+    }
+    return `
+      <div class="earliest-stage is-${escapeHtml(stage.statusClass)}">
+        <span>가장 먼저 다시 볼 단계</span>
+        <strong>${stage.order}단계 · ${escapeHtml(stage.shortTitle)}</strong>
+        <p>${stage.statusClass === "check" ? "현재 세션에서 가장 이른 확인 신호입니다." : "앞 단계 근거를 한 번 더 모아보세요."}</p>
+      </div>
+    `;
+  }
+
+  function renderCurriculumAnchor(anchor) {
+    return `
+      <article class="curriculum-anchor-card">
+        <div>
+          <code>${escapeHtml(anchor.code)}</code>
+          <span>${escapeHtml(anchor.gradeBand)} · ${escapeHtml(anchor.domain)}</span>
+        </div>
+        <h4>${escapeHtml(anchor.module)}</h4>
+        <p>${escapeHtml(anchor.summary)}</p>
+        <small>${escapeHtml(anchor.id)}</small>
+      </article>
+    `;
+  }
+
+  function renderLearnerStage(stage) {
+    const anchor = countingAnchorById.get(stage.curriculumAnchorId);
+    const evidence = stage.evidenceLogs.slice(-1)[0];
+    return `
+      <li class="learner-stage stage-${escapeHtml(stage.statusClass)}">
+        <div class="stage-order" aria-hidden="true">${stage.order}</div>
+        <div class="stage-content">
+          <div class="stage-heading">
+            <div>
+              <span>${escapeHtml(anchor?.code || stage.curriculumAnchorId)}</span>
+              <h4>${escapeHtml(stage.title)}</h4>
+            </div>
+            <strong>${escapeHtml(stage.status)}</strong>
+          </div>
+          <p>${escapeHtml(stage.description)}</p>
+          <div class="stage-path" aria-label="교육과정에서 관찰 근거까지의 연결">
+            <code>${escapeHtml(anchor?.code || stage.curriculumAnchorId)}</code>
+            <span aria-hidden="true">→</span>
+            <span>${stage.order}단계</span>
+            <span aria-hidden="true">→</span>
+            <span>관찰 ${stage.evidenceLogs.length}개 · 확인 ${stage.issueLogs.length}개</span>
+          </div>
+          <code class="stage-topic-id">${escapeHtml(stage.id)} · ${escapeHtml((stage.curriculumTopicIds || []).join(", "))}</code>
+          ${evidence ? `<p class="stage-evidence"><strong>최근 근거</strong>${escapeHtml(evidence.stepTitle)} · ${escapeHtml(evidence.selectedLabel)}</p>` : ""}
+        </div>
+      </li>
+    `;
+  }
+
+  function buildCountingAxisSummary(logs) {
+    return COUNTING_AXES.map((axis) => {
+      const axisLogs = logs.filter((log) => (log.skillAxes || [log.skillAxis]).includes(axis.id));
+      const evidenceLogs = axisLogs.filter((log) => !logNeedsMoreEvidence(log));
+      const issueLogs = evidenceLogs.filter(logNeedsCheck);
+      let status = "아직 관찰 전";
+      let statusClass = "empty";
+      if (evidenceLogs.length && issueLogs.length) {
+        status = "추가 확인 필요";
+        statusClass = "check";
+      } else if (evidenceLogs.length >= 2) {
+        status = "현재 기록에서 안정";
+        statusClass = "stable";
+      } else if (evidenceLogs.length === 1 || axisLogs.length > evidenceLogs.length) {
+        status = "근거 더 필요";
+        statusClass = "observe";
+      }
+      return { ...axis, logs: evidenceLogs, issueLogs, status, statusClass };
+    });
+  }
+
+  function renderAxisCard(axis) {
+    const evidence = axis.logs.slice(-2).map((log) => `${log.stepTitle}: ${log.selectedLabel}`).join(" · ");
+    return `
+      <article class="axis-card axis-${axis.statusClass}">
+        <div class="axis-card-heading">
+          <h4>${escapeHtml(axis.title)}</h4>
+          <span>${escapeHtml(axis.status)}</span>
+        </div>
+        <p>${escapeHtml(axis.description)}</p>
+        <dl>
+          <div><dt>관찰</dt><dd>${axis.logs.length}개</dd></div>
+          <div><dt>확인</dt><dd>${axis.issueLogs.length}개</dd></div>
+        </dl>
+        ${evidence ? `<p class="axis-evidence"><strong>근거</strong>${escapeHtml(evidence)}</p>` : ""}
+        ${axis.issueLogs.length ? `<p class="axis-move"><strong>다음 활동</strong>${escapeHtml(axis.teachingMove)}</p>` : ""}
+      </article>
+    `;
+  }
+
   function renderMetric(label, value, hint) {
     return `
       <div class="metric-item">
@@ -588,7 +1082,7 @@
 
   function renderStudentSelector(student, selectedId) {
     const active = student.id === selectedId;
-    const issueCount = student.logs.filter((log) => !log.isCorrect || log.usedUnknown).length;
+    const issueCount = student.logs.filter(logNeedsCheck).length;
     return `
       <button
         class="student-chip ${active ? "is-selected" : ""}"
@@ -621,7 +1115,17 @@
   }
 
   function renderLogRow(log) {
-    const status = log.isCorrect && !log.usedUnknown ? "안정" : "확인";
+    const status = logNeedsCheck(log) ? "확인" : logNeedsMoreEvidence(log) ? "관찰" : "안정";
+    const conceptIds = (log.skillIds || []).join(", ");
+    const learnerStages = (log.learnerStageIds || [])
+      .map((id) => countingStageById.get(id))
+      .filter(Boolean)
+      .map((stage) => `${stage.order}단계 ${stage.shortTitle}`)
+      .join(", ");
+    const curriculumCodes = (log.curriculumAnchorIds || [])
+      .map((id) => countingAnchorById.get(id)?.code || id)
+      .join(", ");
+    const curriculumTopicIds = (log.curriculumTopicIds || []).join(", ");
     return `
       <article class="timeline-row">
         <div class="timeline-header">
@@ -632,10 +1136,15 @@
           <p><span>선택</span>${escapeHtml(log.selectedLabel || "기록 없음")}</p>
           <p><span>시간 해석</span>${escapeHtml(timeInterpretation(log))}</p>
           <p><span>행동 신호</span>${escapeHtml(behaviorInterpretation(log))}</p>
+          ${learnerStages ? `<p><span>작은 학습 단계</span>${escapeHtml(learnerStages)}</p>` : ""}
+          ${curriculumCodes ? `<p><span>교육과정 앵커</span><code>${escapeHtml(curriculumCodes)}</code></p>` : ""}
+          ${curriculumTopicIds ? `<p><span>주제 ID</span><code>${escapeHtml(curriculumTopicIds)}</code></p>` : ""}
+          ${conceptIds ? `<p><span>개념 ID</span><code>${escapeHtml(conceptIds)}</code></p>` : ""}
+          ${log.interactionType === "object-set" ? `<p><span>세기 기록</span>${escapeHtml(objectInteractionInterpretation(log))}</p>` : ""}
         </div>
         <div class="timeline-footer">
-          <span class="status-pill status-${status === "안정" ? "stable" : "check"}">${status}</span>
-          <span>${escapeHtml(log.misconception || log.teacherNote || "현재 단계에서는 큰 흔들림이 보이지 않습니다.")}</span>
+          <span class="status-pill status-${status === "안정" ? "stable" : status === "관찰" ? "observe" : "check"}">${status}</span>
+          <span>${escapeHtml(diagnosticInterpretation(log))}</span>
         </div>
       </article>
     `;
@@ -708,9 +1217,41 @@
     const parts = [];
     if (log.selectionChanges > 0) parts.push(`선택을 ${log.selectionChanges}번 바꿈`);
     if (log.usedUnknown) parts.push("잘 모르겠어요 사용");
+    if (log.duplicateObjectTaps > 0) parts.push(`같은 그림 다시 누름 ${log.duplicateObjectTaps}회`);
+    if (log.objectOmissionCount > 0) parts.push(`누르지 않은 그림 ${log.objectOmissionCount}개`);
     if (parts.length) return parts.join(", ");
     if (log.isCorrect) return "큰 흔들림 없이 다음 판단으로 이동";
     return "선택 변경 없이 오개념 신호가 남음";
+  }
+
+  function objectInteractionInterpretation(log) {
+    const order = (log.objectTapOrder || []).map((id) => id.replace("object-", "")).join(" → ");
+    if (!order) return "그림을 누르지 않음 · 답 선택만 기록";
+    return `누른 순서 ${order} · 중복 ${log.duplicateObjectTaps || 0}회 · 누락 ${log.objectOmissionCount || 0}개`;
+  }
+
+  function diagnosticInterpretation(log) {
+    if (logNeedsMoreEvidence(log)) {
+      return "그림을 세는 조작 없이 답만 선택해 일대일 대응 근거는 더 필요합니다.";
+    }
+    if (log.interactionType === "object-set" && log.duplicateObjectTaps > 0 && log.objectOmissionCount > 0) {
+      return "선택한 답과 별개로 그림을 세는 과정에서 중복과 누락이 함께 관찰되었습니다.";
+    }
+    if (log.interactionType === "object-set" && log.duplicateObjectTaps > 0) {
+      return "선택한 답과 별개로 같은 그림을 다시 누른 행동이 있어 일대일 대응을 더 확인해야 합니다.";
+    }
+    if (log.interactionType === "object-set" && log.objectOmissionCount > 0) {
+      return "선택한 답과 별개로 누르지 않은 그림이 있어 일대일 대응을 더 확인해야 합니다.";
+    }
+    return log.misconception || log.teacherNote || "현재 단계에서는 큰 흔들림이 보이지 않습니다.";
+  }
+
+  function logNeedsCheck(log) {
+    return !log.isCorrect || log.usedUnknown || log.duplicateObjectTaps > 0 || log.objectOmissionCount > 0;
+  }
+
+  function logNeedsMoreEvidence(log) {
+    return log.interactionType === "object-set" && !log.interactionAttempted && log.isCorrect && !log.usedUnknown;
   }
 
   function severityLabel(severity) {
@@ -725,11 +1266,11 @@
   }
 
   function stepOrdinal(problemIndex, stepIndex) {
-    return questions.slice(0, problemIndex).reduce((sum, problem) => sum + problem.steps.length, 0) + stepIndex + 1;
+    return currentQuestions().slice(0, problemIndex).reduce((sum, problem) => sum + problem.steps.length, 0) + stepIndex + 1;
   }
 
   function totalStepCount() {
-    return questions.reduce((sum, problem) => sum + problem.steps.length, 0);
+    return currentQuestions().reduce((sum, problem) => sum + problem.steps.length, 0);
   }
 
   function escapeHtml(value) {
