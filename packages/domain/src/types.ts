@@ -1,0 +1,290 @@
+export type Severity = "low" | "medium" | "high";
+
+export type ElementaryGrade = 1 | 2 | 3 | 4 | 5 | 6;
+export type SchoolSemester = 1 | 2;
+
+export type SessionStatus =
+  | "not_started"
+  | "in_progress"
+  | "sync_pending"
+  | "completed"
+  | "abandoned";
+
+export interface CurriculumAnchor {
+  id: string;
+  label: string;
+  source: string;
+}
+
+export interface LearnerStage {
+  id: string;
+  order: number;
+  unitId: string;
+  title: string;
+  shortTitle: string;
+  curriculumAnchorIds: string[];
+  prerequisiteStageIds: string[];
+}
+
+export interface SignalDefinition {
+  id: string;
+  title: string;
+  severity: Severity;
+  teacherInterpretation: string;
+  teachingMove: string;
+  parentSummary: string;
+  homePrompt: string;
+}
+
+export interface TeacherSignalCopy {
+  interpretation: string;
+  teachingMove: string;
+}
+
+export interface GuardianSignalCopy {
+  summary: string;
+  homePrompt: string;
+}
+
+export interface JudgmentChoice {
+  id: string;
+  label: string;
+  correct: boolean;
+  signalIds?: string[];
+}
+
+export type JudgmentVisual =
+  | { kind: "none" }
+  | { kind: "array"; rows: number; columns: number; label: string }
+  | { kind: "division-groups"; total: number; groups: number }
+  | { kind: "circle"; showCenter?: boolean; showRadius?: boolean; showDiameter?: boolean }
+  | { kind: "fraction-bar"; numerator: number; denominator: number; unknown?: "numerator" | "denominator" }
+  | { kind: "measurement"; amount: number; unit: "mL" | "L" | "g" | "kg" }
+  | { kind: "pictograph"; symbol: string; value: number; rows: Array<{ label: string; count: number }> };
+
+export interface InteractionDescriptor {
+  type: string;
+  version: number;
+  config?: Record<string, unknown>;
+}
+
+export interface Judgment {
+  id: string;
+  unitId: string;
+  learnerStageId: string;
+  curriculumAnchorIds: string[];
+  prompt: string;
+  context?: string;
+  visual: JudgmentVisual;
+  interaction: InteractionDescriptor;
+  choices: JudgmentChoice[];
+}
+
+export interface DiagnosisSetManifest {
+  id: string;
+  version: string;
+  checksum: string;
+  title: string;
+  shortTitle: string;
+  grade: ElementaryGrade;
+  semester: SchoolSemester;
+  curriculum: "2022-revised";
+  status: "draft" | "review" | "published" | "retired";
+  units: Array<{ id: string; order: number; title: string }>;
+  interactionTypes: Array<{ type: string; version: number }>;
+  estimatedMinutes: number;
+}
+
+export type ContentTeamRole = "author" | "reviewer" | "admin";
+
+export interface ContentTeamMembership {
+  userId: string;
+  role: ContentTeamRole;
+  active: boolean;
+}
+
+export type ContentDraftStatus =
+  | "draft"
+  | "in_review"
+  | "changes_requested"
+  | "approved"
+  | "published";
+
+export type ContentReviewDecision = "approve" | "request_changes";
+
+export interface ContentValidationIssue {
+  code: string;
+  path: string;
+  message: string;
+  severity: "error" | "warning";
+}
+
+export interface ContentValidationResult {
+  valid: boolean;
+  issues: ContentValidationIssue[];
+}
+
+export interface ContentDraft {
+  id: string;
+  setKey: string;
+  ownerId: string;
+  status: ContentDraftStatus;
+  baseDiagnosisSetId?: string;
+  content: DiagnosisSet;
+  revision: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ContentReviewRequest {
+  id: string;
+  draftId: string;
+  draftRevision: number;
+  authorId: string;
+  reviewerId?: string;
+  status: "pending" | "changes_requested" | "approved" | "cancelled" | "published";
+  requestedAt: string;
+  decidedAt?: string;
+}
+
+export interface ContentReviewComment {
+  id: string;
+  reviewRequestId: string;
+  authorId: string;
+  path: string;
+  body: string;
+  required: boolean;
+  resolvedAt?: string;
+  createdAt: string;
+}
+
+export interface PublishedDiagnosisSet {
+  id: string;
+  setKey: string;
+  version: string;
+  checksum: string;
+  status: "published" | "retired";
+  content: DiagnosisSet;
+  publishedAt: string;
+}
+
+export interface DiagnosisSet {
+  manifest: DiagnosisSetManifest;
+  curriculumAnchors: CurriculumAnchor[];
+  learnerStages: LearnerStage[];
+  signals: SignalDefinition[];
+  judgments: Judgment[];
+}
+
+export type ObservationEventType =
+  | "session_started"
+  | "choice_selected"
+  | "choice_changed"
+  | "uncertainty_selected"
+  | "judgment_confirmed"
+  | "session_completed";
+
+export interface JudgmentConfirmationPayload extends Record<string, unknown> {
+  choiceId: string;
+  durationMs: number;
+  firstSelectionMs: number | null;
+  confirmationMs: number | null;
+  selectionChanges: number;
+  uncertainty: boolean;
+}
+
+export interface ObservationEvent<TPayload = Record<string, unknown>> {
+  id: string;
+  clientEventId: string;
+  clientSeq: number;
+  sessionId: string;
+  diagnosisSetId: string;
+  diagnosisSetVersion: string;
+  eventType: ObservationEventType;
+  judgmentId?: string;
+  interaction: InteractionDescriptor;
+  payload: TPayload;
+  occurredAt: string;
+  receivedAt?: string;
+}
+
+export interface EvidenceItem {
+  eventId: string;
+  judgmentId: string;
+  learnerStageId: string;
+  curriculumAnchorIds: string[];
+  selectedChoiceId: string;
+  selectedChoiceLabel: string;
+  durationBand: "quick" | "steady" | "long";
+  firstSelectionMs: number | null;
+  confirmationMs: number | null;
+  selectionChanges: number;
+  uncertainty: boolean;
+}
+
+export interface DiagnosisFinding {
+  signalId: string;
+  title: string;
+  severity: Severity;
+  evidenceCount: number;
+  learnerStageIds: string[];
+  curriculumAnchorIds: string[];
+  interpretation: string;
+  teachingMove: string;
+  parentSummary: string;
+  homePrompt: string;
+  evidence: EvidenceItem[];
+}
+
+export interface TeacherStudentReport {
+  sessionId: string;
+  diagnosisSetId: string;
+  diagnosisSetVersion: string;
+  engineVersion: string;
+  generatedAt: string;
+  observedJudgmentCount: number;
+  stableJudgmentCount: number;
+  uncertaintyCount: number;
+  findings: DiagnosisFinding[];
+  evidence: EvidenceItem[];
+}
+
+export interface ParentReport {
+  studentLabel: string;
+  diagnosisTitle: string;
+  generatedAt: string;
+  participation: string;
+  strengths: string[];
+  supportAreas: Array<{ title: string; observation: string; homePrompt: string }>;
+  closing: string;
+  disclaimer: string;
+}
+
+export interface ClassSummaryItem {
+  signalId: string;
+  title: string;
+  severity: Severity;
+  studentCount: number;
+  evidenceCount: number;
+  studentIds: string[];
+  interpretation: string;
+  teachingMove: string;
+}
+
+export interface ClassSummary {
+  completedStudents: number;
+  inProgressStudents: number;
+  items: ClassSummaryItem[];
+}
+
+export interface DiagnosisSession {
+  id: string;
+  assignmentId: string;
+  studentId: string;
+  diagnosisSetId: string;
+  diagnosisSetVersion: string;
+  status: SessionStatus;
+  startedAt: string;
+  completedAt?: string;
+  lastEventSeq: number;
+}

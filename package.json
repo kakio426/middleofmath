@@ -1,10 +1,33 @@
 {
   "name": "middle-of-math",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "test": "node scripts/student-content-harness.js && node scripts/runtime-harness.js",
+    "dev:student": "npm run dev --workspace @middle-of-math/student",
+    "dev:teacher": "npm run dev --workspace @middle-of-math/teacher",
+    "dev:studio": "npm run dev --workspace @middle-of-math/studio",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test:legacy && vitest run",
+    "test:db": "npx supabase test db",
+    "test:legacy": "node scripts/student-content-harness.js && node scripts/runtime-harness.js",
     "test:student-content": "node scripts/student-content-harness.js",
-    "test:runtime": "node scripts/runtime-harness.js"
+    "test:runtime": "node scripts/runtime-harness.js",
+    "test:watch": "vitest",
+    "supabase:start": "npx supabase start",
+    "supabase:push": "npx supabase db push"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.3",
+    "fake-indexeddb": "6.2.5",
+    "typescript": "7.0.2",
+    "vite": "8.1.5",
+    "vitest": "4.1.10"
   }
 }

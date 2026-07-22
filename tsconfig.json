@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/domain" },
+    { "path": "./packages/content" },
+    { "path": "./packages/application" },
+    { "path": "./packages/adapters" },
+    { "path": "./packages/ui" },
+    { "path": "./apps/student" },
+    { "path": "./apps/teacher" },
+    { "path": "./apps/studio" }
+  ]
+}
