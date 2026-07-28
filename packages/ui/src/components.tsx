@@ -1,13 +1,69 @@
 import { Fragment, type ReactNode } from "react";
 import type { EvidenceItem, JudgmentVisual, Severity } from "@middle-of-math/domain";
 
+const KEEP_WITH_NEXT = new Set([
+  "그리고",
+  "그래서",
+  "그렇다면",
+  "다음으로",
+  "따라서",
+  "또",
+  "또한",
+  "먼저",
+  "그러면",
+  "하지만",
+  "이때",
+  "이제"
+]);
+
+function readableSentences(text: string): string[][] {
+  const sentences: string[][] = [];
+  let current: string[] = [];
+  for (const token of text.trim().split(/\s+/).filter(Boolean)) {
+    current.push(token);
+    if (/[.!?](?:["'”’)\]]*)$/.test(token)) {
+      sentences.push(current);
+      current = [];
+    }
+  }
+  if (current.length > 0) sentences.push(current);
+  return sentences;
+}
+
+function readableGroups(tokens: string[]): string[][] {
+  const groups: string[][] = [];
+  for (let index = 0; index < tokens.length; index += 1) {
+    if (KEEP_WITH_NEXT.has(tokens[index]) && tokens[index + 1]) {
+      groups.push([tokens[index], tokens[index + 1]]);
+      index += 1;
+    } else {
+      groups.push([tokens[index]]);
+    }
+  }
+  return groups;
+}
+
 export function ReadableText({ text }: { text: string }) {
   return (
     <>
-      {text.trim().split(/\s+/).map((token, index) => (
-        <Fragment key={`${token}-${index}`}>
-          {index > 0 && " "}
-          <span className="mom-readable-token">{token}</span>
+      {readableSentences(text).map((sentence, sentenceIndex) => (
+        <Fragment key={`${sentence.join("-")}-${sentenceIndex}`}>
+          {sentenceIndex > 0 && " "}
+          <span className="mom-readable-sentence">
+            {readableGroups(sentence).map((group, groupIndex) => (
+              <Fragment key={`${group.join("-")}-${groupIndex}`}>
+                {groupIndex > 0 && " "}
+                <span className={group.length > 1 ? "mom-readable-keep" : undefined}>
+                  {group.map((token, tokenIndex) => (
+                    <Fragment key={`${token}-${tokenIndex}`}>
+                      {tokenIndex > 0 && " "}
+                      <span className="mom-readable-token">{token}</span>
+                    </Fragment>
+                  ))}
+                </span>
+              </Fragment>
+            ))}
+          </span>
         </Fragment>
       ))}
     </>

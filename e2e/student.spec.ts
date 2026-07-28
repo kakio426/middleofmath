@@ -50,6 +50,15 @@ async function verifyEveryQuestionWrapsByWord(page: import("@playwright/test").P
         tokens.filter((token) => token.getClientRects().length !== 1).map((token) => token.textContent)
       );
       expect(splitTokens, `${judgment.id}에서 어절 내부 줄바꿈 발생`).toEqual([]);
+      const splitConnectors = await prompt.locator(".mom-readable-keep").evaluateAll((groups) =>
+        groups
+          .filter((group) => {
+            const tokens = [...group.querySelectorAll(".mom-readable-token")];
+            return new Set(tokens.map((token) => Math.round(token.getBoundingClientRect().top))).size > 1;
+          })
+          .map((group) => group.textContent)
+      );
+      expect(splitConnectors, `${judgment.id}에서 연결어가 다음 어절과 분리됨`).toEqual([]);
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth),
         `${judgment.id}에서 가로 넘침 발생`
@@ -103,6 +112,28 @@ test("3학년 2학기 활동은 4개 영역 아래 6개 단원으로 나뉜다",
   await expect(page.getByRole("heading", { name: "6단원 · 그림그래프" })).toBeVisible();
   await expect(page.getByText(/64개의 짧은 생각/)).toHaveCount(0);
   await expect(assignmentCard(page, "fraction")).toContainText("14문제 · 약 7분");
+});
+
+test("두 문장으로 된 질문은 의미 단위로 자연스럽게 줄을 바꾼다", async ({ page }) => {
+  await page.setViewportSize({ width: 1060, height: 720 });
+  await enterFreshActivityList(page, "33");
+  await startUnitActivity(page, "multiplication");
+
+  const prompt = page.locator(".student-question h1");
+  await expect(prompt).toHaveText("24×3을 계산하려고 해요. 먼저 20×3은 얼마일까요?");
+  const sentences = prompt.locator(".mom-readable-sentence");
+  await expect(sentences).toHaveCount(2);
+  const sentenceTops = await sentences.evaluateAll((items) =>
+    items.map((item) => Math.round(item.getBoundingClientRect().top))
+  );
+  expect(sentenceTops[1]).toBeGreaterThan(sentenceTops[0]);
+
+  const connectorTokens = prompt.locator(".mom-readable-keep .mom-readable-token");
+  await expect(connectorTokens).toHaveCount(2);
+  const connectorTops = await connectorTokens.evaluateAll((items) =>
+    items.map((item) => Math.round(item.getBoundingClientRect().top))
+  );
+  expect(new Set(connectorTops).size).toBe(1);
 });
 
 test("6개 단원의 64개 문제는 세로형 태블릿에서 어절 중간에 줄바꿈하지 않는다", async ({ page }) => {

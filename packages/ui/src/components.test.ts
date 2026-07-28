@@ -17,6 +17,21 @@ describe("ReadableText", () => {
     expect(markup).not.toContain("<br");
   });
 
+  it("keeps sentences together when they fit and attaches a connector to the next word", () => {
+    const markup = renderToStaticMarkup(
+      createElement(ReadableText, {
+        text: "24×3을 계산하려고 해요. 먼저 20×3은 얼마일까요?"
+      })
+    );
+
+    expect(markup.match(/class="mom-readable-sentence"/g)).toHaveLength(2);
+    expect(markup.match(/class="mom-readable-token"/g)).toHaveLength(6);
+    expect(markup).toContain(
+      '<span class="mom-readable-keep"><span class="mom-readable-token">먼저</span> <span class="mom-readable-token">20×3은</span></span>'
+    );
+    expect(markup).not.toContain("<br");
+  });
+
   it("uses the same readable tokens inside answer choices", () => {
     const markup = renderToStaticMarkup(
       createElement(ChoiceOption, {
