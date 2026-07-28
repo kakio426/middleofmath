@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@middle-of-math/adapters": "0.1.0",
+    "@middle-of-math/application": "0.1.0",
     "@middle-of-math/content": "0.1.0",
     "@middle-of-math/domain": "0.1.0",
     "@middle-of-math/ui": "0.1.0",

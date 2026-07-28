@@ -288,3 +288,95 @@ export interface DiagnosisSession {
   completedAt?: string;
   lastEventSeq: number;
 }
+
+export interface TeacherClassSnapshot {
+  id: string;
+  name: string;
+  grade: number;
+  semester: SchoolSemester;
+  pilotEndsAt: string;
+  purgeAfter: string;
+}
+
+export interface TeacherAssignmentSnapshot {
+  id: string;
+  classId: string;
+  status: "draft" | "active" | "closed" | "archived";
+  opensAt: string;
+  closesAt?: string;
+}
+
+export interface TeacherStudentSnapshot {
+  id: string;
+  rosterKey: string;
+  displayAlias: string | null;
+  active: boolean;
+}
+
+export interface InterpretationRunRecord {
+  id: string;
+  sessionId: string;
+  engineVersion: string;
+  diagnosisSetVersion: string;
+  generatedAt: string;
+  report: TeacherStudentReport;
+}
+
+export interface ParentReportExportRecord {
+  id: string;
+  sessionId: string;
+  interpretationRunId: string;
+  reviewedBy: string;
+  generatedAt: string;
+  report: ParentReport;
+}
+
+export interface TeacherSessionEvidence {
+  session: DiagnosisSession;
+  events: ObservationEvent[];
+  interpretationRuns: InterpretationRunRecord[];
+}
+
+export interface TeacherStudentEvidence {
+  student: TeacherStudentSnapshot;
+  sessions: TeacherSessionEvidence[];
+}
+
+export interface TeacherAssignmentEvidenceBundle {
+  class: TeacherClassSnapshot;
+  assignment: TeacherAssignmentSnapshot;
+  diagnosisSet: PublishedDiagnosisSet;
+  students: TeacherStudentEvidence[];
+}
+
+export interface TeacherSessionEvidenceContext {
+  class: TeacherClassSnapshot;
+  assignment: TeacherAssignmentSnapshot;
+  diagnosisSet: PublishedDiagnosisSet;
+  student: TeacherStudentSnapshot;
+  evidence: TeacherSessionEvidence;
+}
+
+export interface PrivacySafeDailyAggregate {
+  day: string;
+  classesCreated: number;
+  studentsAdded: number;
+  sessionsStarted: number;
+  sessionsCompleted: number;
+  observationEventsReceived: number;
+  parentExportsGenerated: number;
+}
+
+export interface TeacherAssignmentStudentInsight {
+  student: TeacherStudentSnapshot;
+  interpretationStatus: "not_started" | "in_progress" | "ready" | "interpretation_pending";
+  pendingReason?: "checksum_mismatch" | "unsupported_interaction_version";
+  latestCompletedSessionId?: string;
+  report?: TeacherStudentReport;
+}
+
+export interface TeacherAssignmentInsights {
+  bundle: TeacherAssignmentEvidenceBundle;
+  classSummary: ClassSummary;
+  students: TeacherAssignmentStudentInsight[];
+}

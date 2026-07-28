@@ -154,7 +154,7 @@ p { line-height: 1.6; }
 .mom-division { display: grid; gap: var(--space-5); align-content: center; padding: var(--space-5); }
 .mom-total-number { text-align: center; font-size: 40px; font-weight: 800; }
 .mom-total-number small { margin-left: var(--space-1); font-size: 14px; color: var(--text-secondary); }
-.mom-group-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); }
+.mom-group-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(56px, 1fr)); gap: var(--space-2); }
 .mom-group-row span { min-height: 46px; display: grid; place-items: center; border-bottom: 2px solid var(--border-default); color: var(--text-secondary); font-size: 12px; }
 .mom-circle-wrap { display: grid; place-items: center; }
 .mom-circle { position: relative; width: 126px; height: 126px; border: 2px solid var(--text-primary); border-radius: 50%; }
@@ -162,10 +162,13 @@ p { line-height: 1.6; }
 .mom-circle-radius, .mom-circle-diameter { position: absolute; left: 50%; top: calc(50% - 1px); height: 2px; transform-origin: left center; background: var(--accent-primary); }
 .mom-circle-radius { width: 50%; transform: rotate(-28deg); }
 .mom-circle-diameter { width: 100%; left: 0; transform: rotate(22deg); transform-origin: center; }
-.mom-fraction { min-height: 92px; display: grid; overflow: hidden; background: var(--surface-secondary); }
-.mom-fraction span { border-right: 1px solid var(--border-default); }
-.mom-fraction span:last-child { border-right: 0; }
-.mom-fraction .is-filled { background: var(--accent-soft); }
+.mom-fraction { min-height: 92px; display: grid; align-content: center; gap: var(--space-3); padding: var(--space-3); background: var(--surface-tertiary); }
+.mom-fraction-row { min-height: 64px; display: grid; overflow: hidden; border: 1px solid var(--border-default); border-radius: 6px; background: var(--surface-secondary); }
+.mom-fraction-row span { border-right: 1px solid var(--border-default); }
+.mom-fraction-row span:last-child { border-right: 0; }
+.mom-fraction-row .is-filled { background: var(--accent-soft); }
+.mom-fraction-unknown { justify-items: center; font-size: 28px; }
+.mom-fraction-unknown > span { width: 52px; height: 2px; background: var(--text-primary); }
 .mom-measurement { display: flex; justify-content: center; align-items: baseline; gap: var(--space-2); }
 .mom-measurement span { font-size: clamp(52px, 10vw, 84px); font-weight: 800; }
 .mom-measurement small { color: var(--text-secondary); font-size: 20px; font-weight: 700; }

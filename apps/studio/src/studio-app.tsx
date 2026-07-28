@@ -57,7 +57,8 @@ function publicConfig() {
 }
 
 const runtimeConfig = publicConfig();
-const runtimeClient = runtimeConfig ? createMiddleOfMathClient(runtimeConfig) : null;
+const demoMode = import.meta.env.VITE_DEMO_MODE === "true";
+const runtimeClient = runtimeConfig && !demoMode ? createMiddleOfMathClient(runtimeConfig) : null;
 const ids = new CryptoIdGenerator();
 
 function readLocalDraft(): LocalDraftRecord {
@@ -116,7 +117,7 @@ export function StudioApp() {
     draftId: null
   });
   const initialRecord = useMemo(readLocalDraft, []);
-  const [signedIn, setSignedIn] = useState(!client);
+  const [signedIn, setSignedIn] = useState(!client && demoMode);
   const [authReady, setAuthReady] = useState(!client);
   const [authError, setAuthError] = useState<string | null>(null);
   const [page, setPage] = useState<Page>("library");
@@ -125,7 +126,7 @@ export function StudioApp() {
   const [remoteDraftId, setRemoteDraftId] = useState<string | null>(null);
   const [reviewRequest, setReviewRequest] = useState<ContentReviewRequest | null>(null);
   const [reviewComments, setReviewComments] = useState<ContentReviewComment[]>([]);
-  const [remoteReady, setRemoteReady] = useState(!repository);
+  const [remoteReady, setRemoteReady] = useState(!repository && demoMode);
   const [accessError, setAccessError] = useState<string | null>(null);
   const [draft, setDraft] = useState(initialRecord.content);
   const [baseContent, setBaseContent] = useState<DiagnosisSet>(baseline);
@@ -134,7 +135,7 @@ export function StudioApp() {
   const [workflow, setWorkflow] = useState<Workflow>(initialRecord.workflow);
   const [saveState, setSaveState] = useState<SaveState>("saved");
   const [recoveryDraft, setRecoveryDraft] = useState<LocalDraftRecord | null>(() =>
-    repository ? null : readRecoveryDraft(recoveryStorageKey(null, null))
+    repository || !demoMode ? null : readRecoveryDraft(recoveryStorageKey(null, null))
   );
   const [selectedJudgmentId, setSelectedJudgmentId] = useState(initialRecord.content.judgments[0]?.id ?? "");
   const [editorTab, setEditorTab] = useState<EditorTab>("judgment");
@@ -152,7 +153,7 @@ export function StudioApp() {
     ? draft.signals.filter((signal) => selectedJudgment.choices.some((choice) => choice.signalIds?.includes(signal.id)))
     : [];
   const editable = (role === "author" || role === "admin") && (workflow === "draft" || workflow === "changes_requested");
-  const hasWorkingDraft = !repository || Boolean(remoteDraftId);
+  const hasWorkingDraft = demoMode || Boolean(remoteDraftId);
   const nextVersion = nextPatchVersion(draft.manifest.version);
 
   const resetRemoteWorkspace = useCallback((nextUserId: string | null) => {
@@ -641,6 +642,7 @@ export function StudioApp() {
     }
   }
 
+  if (!client && !demoMode) return <StudioConfigurationError />;
   if (!authReady) return <StudioLoading />;
   if (!signedIn) return <StudioLogin onSignIn={signIn} error={authError} />;
   if (accessError) return <StudioAccessDenied message={accessError} onSignOut={signOut} />;
@@ -727,6 +729,10 @@ export function StudioApp() {
       </main>
     </div>
   );
+}
+
+function StudioConfigurationError() {
+  return <main className="studio-centered"><Brand /><div className="mom-panel"><div className="mom-panel-body mom-stack"><h1>스튜디오 설정이 필요합니다</h1><p className="mom-muted">운영 환경에는 Supabase URL과 publishable key를 설정해 주세요. 로컬 데모는 <code>VITE_DEMO_MODE=true</code>에서만 열립니다.</p></div></div></main>;
 }
 
 function StudioLoading() {

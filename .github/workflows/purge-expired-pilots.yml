@@ -1,0 +1,36 @@
+name: Purge expired pilots
+
+on:
+  schedule:
+    - cron: "17 18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pilot-retention-purge
+  cancel-in-progress: false
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    environment: ${{ matrix.environment }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        environment: [staging-retention, production-retention]
+    steps:
+      - name: Run the service-role-only retention boundary
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          test -n "$SUPABASE_URL"
+          test -n "$SUPABASE_SERVICE_ROLE_KEY"
+          curl --fail-with-body --silent --show-error \
+            --request POST "$SUPABASE_URL/rest/v1/rpc/purge_expired_pilot_data" \
+            --header "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
+            --header "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+            --header "Content-Type: application/json" \
+            --data '{}'

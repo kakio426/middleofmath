@@ -8,9 +8,14 @@ import type {
   CurriculumAnchor,
   DiagnosisSet,
   DiagnosisSession,
+  InterpretationRunRecord,
   ObservationEvent,
   ParentReport,
+  ParentReportExportRecord,
+  PrivacySafeDailyAggregate,
   PublishedDiagnosisSet,
+  TeacherAssignmentEvidenceBundle,
+  TeacherSessionEvidenceContext,
   TeacherStudentReport
 } from "@middle-of-math/domain";
 
@@ -53,8 +58,26 @@ export interface AssignmentRepository {
 }
 
 export interface ReportRepository {
-  saveTeacherReport(report: TeacherStudentReport): Promise<void>;
-  saveParentReport?(sessionId: string, report: ParentReport): Promise<void>;
+  saveInterpretationRun(report: TeacherStudentReport): Promise<InterpretationRunRecord>;
+  getInterpretationRun(input: {
+    sessionId: string;
+    engineVersion: string;
+    diagnosisSetVersion: string;
+  }): Promise<InterpretationRunRecord | null>;
+  saveParentReportExport(input: {
+    id: string;
+    sessionId: string;
+    interpretationRunId: string;
+    reviewedBy: string;
+    report: ParentReport;
+  }): Promise<ParentReportExportRecord>;
+}
+
+export interface TeacherInsightsRepository {
+  getAssignmentBundle(assignmentId: string): Promise<TeacherAssignmentEvidenceBundle | null>;
+  listClassAssignmentBundles(classId: string): Promise<TeacherAssignmentEvidenceBundle[]>;
+  getSessionEvidence(sessionId: string): Promise<TeacherSessionEvidenceContext | null>;
+  listDailyAggregates(from: string, to: string): Promise<PrivacySafeDailyAggregate[]>;
 }
 
 export interface AiSummarizer {

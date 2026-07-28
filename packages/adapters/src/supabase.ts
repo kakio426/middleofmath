@@ -11,6 +11,10 @@ export interface SupabasePublicConfig {
   publishableKey: string;
 }
 
+export type PilotOperation =
+  | { app: "student"; event: "sync.failed" }
+  | { app: "teacher"; event: "interpretation.checksum_failed" | "interpretation.unsupported" | "interpretation.failed" };
+
 export interface StudentAssignmentRecord {
   id: string;
   opensAt: string;
@@ -31,6 +35,8 @@ export interface TeacherClassRecord {
   name: string;
   grade: number;
   semester: number;
+  pilotEndsAt: string;
+  purgeAfter: string;
   joinCode?: string;
 }
 
@@ -39,12 +45,31 @@ export interface TeacherStudentRecord {
   rosterKey: string;
   displayAlias: string | null;
   active: boolean;
+  joinSecret?: string;
+}
+
+export interface TeacherProfileRecord {
+  id: string;
+  displayName: string;
+  email: string | null;
 }
 
 export function createMiddleOfMathClient(config: SupabasePublicConfig): SupabaseClient {
   return createClient(config.url, config.publishableKey, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
   });
+}
+
+export class SupabaseOperationalTelemetry {
+  constructor(private readonly client: SupabaseClient) {}
+
+  async record(operation: PilotOperation): Promise<void> {
+    const { error } = await this.client.rpc("record_pilot_operation", {
+      p_app: operation.app,
+      p_event_name: operation.event
+    });
+    if (error) throw error;
+  }
 }
 
 export class SupabaseStudentGateway {
@@ -58,7 +83,7 @@ export class SupabaseStudentGateway {
     return data.user.id;
   }
 
-  async joinClass(joinCode: string, rosterKey: string): Promise<{
+  async joinClass(joinCode: string, rosterKey: string, studentSecret: string): Promise<{
     studentId: string;
     classId: string;
     className: string;
@@ -68,11 +93,12 @@ export class SupabaseStudentGateway {
     await this.ensureAnonymousIdentity();
     const { data, error } = await this.client.rpc("join_class", {
       p_join_code: joinCode,
-      p_roster_key: rosterKey
+      p_roster_key: rosterKey,
+      p_student_secret: studentSecret
     });
-    if (error) throw error;
+    if (error) throw new Error("입장 정보를 다시 확인해 주세요.");
     const row = Array.isArray(data) ? data[0] : data;
-    if (!row) throw new Error("클래스 코드 또는 번호를 다시 확인해 주세요.");
+    if (!row) throw new Error("입장 정보를 다시 확인해 주세요.");
     return {
       studentId: String(row.student_id),
       classId: String(row.class_id),
@@ -119,10 +145,26 @@ export class SupabaseStudentGateway {
 export class SupabaseTeacherGateway {
   constructor(private readonly client: SupabaseClient) {}
 
+  async getCurrentTeacherProfile(): Promise<TeacherProfileRecord> {
+    const { data: auth, error: authError } = await this.client.auth.getUser();
+    if (authError || !auth.user) throw authError ?? new Error("교사 로그인이 필요합니다.");
+    const { data, error } = await this.client
+      .from("teachers")
+      .select("id, display_name")
+      .eq("id", auth.user.id)
+      .single();
+    if (error) throw error;
+    return {
+      id: String(data.id),
+      displayName: String(data.display_name),
+      email: auth.user.email ?? null
+    };
+  }
+
   async listActiveClasses(): Promise<TeacherClassRecord[]> {
     const { data, error } = await this.client
       .from("classes")
-      .select("id, name, grade, semester")
+      .select("id, name, grade, semester, pilot_ends_at, purge_after")
       .eq("active", true)
       .order("created_at");
     if (error) throw error;
@@ -130,7 +172,9 @@ export class SupabaseTeacherGateway {
       id: String(row.id),
       name: String(row.name),
       grade: Number(row.grade),
-      semester: Number(row.semester)
+      semester: Number(row.semester),
+      pilotEndsAt: String(row.pilot_ends_at),
+      purgeAfter: String(row.purge_after)
     }));
   }
 
@@ -143,11 +187,19 @@ export class SupabaseTeacherGateway {
     if (error) throw error;
     const row = Array.isArray(data) ? data[0] : data;
     if (!row) throw new Error("클래스를 만들지 못했습니다.");
+    const { data: classRow, error: classError } = await this.client
+      .from("classes")
+      .select("pilot_ends_at, purge_after")
+      .eq("id", row.class_id)
+      .single();
+    if (classError) throw classError;
     return {
       id: String(row.class_id),
       name: String(row.class_name),
       grade: input.grade,
       semester: input.semester,
+      pilotEndsAt: String(classRow.pilot_ends_at),
+      purgeAfter: String(classRow.purge_after),
       joinCode: String(row.join_code)
     };
   }
@@ -168,18 +220,31 @@ export class SupabaseTeacherGateway {
   }
 
   async addStudent(input: { classId: string; rosterKey: string; displayAlias?: string }): Promise<TeacherStudentRecord> {
-    const { data, error } = await this.client.from("students").insert({
-      class_id: input.classId,
-      roster_key: input.rosterKey,
-      display_alias: input.displayAlias?.trim() || null
-    }).select("id, roster_key, display_alias, active").single();
+    const { data, error } = await this.client.rpc("create_student", {
+      p_class_id: input.classId,
+      p_roster_key: input.rosterKey,
+      p_display_alias: input.displayAlias?.trim() || null
+    });
     if (error) throw error;
+    const row = Array.isArray(data) ? data[0] : data;
+    if (!row?.student_id || !row?.join_secret) throw new Error("학생 입장 카드를 만들지 못했습니다.");
     return {
-      id: String(data.id),
-      rosterKey: String(data.roster_key),
-      displayAlias: data.display_alias ? String(data.display_alias) : null,
-      active: Boolean(data.active)
+      id: String(row.student_id),
+      rosterKey: String(row.roster_key),
+      displayAlias: row.display_alias ? String(row.display_alias) : null,
+      active: Boolean(row.active),
+      joinSecret: String(row.join_secret)
     };
+  }
+
+  async rotateStudentJoinSecret(studentId: string): Promise<string> {
+    const { data, error } = await this.client.rpc("rotate_student_join_secret", {
+      p_student_id: studentId
+    });
+    if (error) throw error;
+    const row = Array.isArray(data) ? data[0] : data;
+    if (!row?.join_secret) throw new Error("학생 개인 코드를 재발급하지 못했습니다.");
+    return String(row.join_secret);
   }
 
   async rotateJoinCode(classId: string): Promise<string> {
@@ -195,16 +260,11 @@ export class SupabaseSessionRepository implements SessionRepository {
   constructor(private readonly client: SupabaseClient) {}
 
   async create(session: DiagnosisSession): Promise<void> {
-    const { data: auth } = await this.client.auth.getUser();
-    const { error } = await this.client.from("sessions").insert({
-      id: session.id,
-      assignment_id: session.assignmentId,
-      student_id: session.studentId,
-      student_auth_uid: auth.user?.id,
-      client_session_id: session.id,
-      status: session.status,
-      started_at: session.startedAt,
-      last_event_seq: session.lastEventSeq
+    const { error } = await this.client.rpc("start_student_session", {
+      p_session_id: session.id,
+      p_assignment_id: session.assignmentId,
+      p_student_id: session.studentId,
+      p_client_session_id: session.id
     });
     if (error) throw error;
   }
@@ -233,17 +293,12 @@ export class SupabaseSessionRepository implements SessionRepository {
     return data ? mapSession(data) : null;
   }
 
-  async updateStatus(sessionId: string, status: SessionStatus, completedAt?: string): Promise<void> {
-    const { error } = await this.client
-      .from("sessions")
-      .update({ status, completed_at: completedAt ?? null })
-      .eq("id", sessionId);
-    if (error) throw error;
+  async updateStatus(_sessionId: string, _status: SessionStatus, _completedAt?: string): Promise<void> {
+    // 원격 상태와 완료 시각은 append_observation_events가 서버 수신 순서로만 전이한다.
   }
 
-  async updateLastEventSeq(sessionId: string, lastEventSeq: number): Promise<void> {
-    const { error } = await this.client.from("sessions").update({ last_event_seq: lastEventSeq }).eq("id", sessionId);
-    if (error) throw error;
+  async updateLastEventSeq(_sessionId: string, _lastEventSeq: number): Promise<void> {
+    // 원격 순번은 append_observation_events가 검증 후 갱신한다.
   }
 }
 

@@ -11,7 +11,7 @@ Middle of Math를 브라우저 안에서만 동작하는 정적 진단 프로토
 Phase 1의 성공 상태는 다음과 같다.
 
 - 교사는 이메일 계정으로 로그인해 자기 클래스만 관리한다.
-- 학생은 별도 계정 없이 클래스 코드와 교사가 부여한 필수 번호로 입장한다. 별칭은 선택 표시명이다.
+- 학생은 별도 실명 계정 없이 클래스 코드, 교사가 부여한 필수 번호, 학생별 6자리 개인 코드로 입장한다. 별칭은 선택 표시명이다.
 - 학생은 배정된 진단을 시작하거나 이어서 진행할 수 있다.
 - 네트워크가 끊겨도 이미 시작한 진단은 계속할 수 있고, 관찰 이벤트는 복구 후 중복 없이 동기화된다.
 - 교사는 첫 화면에서 반 전체의 반복 신호를 보고, 학생 개인과 판단 단위 근거까지 내려갈 수 있다.
@@ -33,12 +33,12 @@ Phase 1의 성공 상태는 다음과 같다.
 ### 1.1 학생
 
 - 사용 환경: 태블릿 우선, 모바일·노트북 대응
-- 인증 경험: 로그인 화면 없이 `클래스 코드 + 학생 번호`로 입장
+- 인증 경험: 실명 로그인 화면 없이 `클래스 코드 + 학생 번호 + 개인 코드`로 입장
 - 핵심 행동: 배정 확인, 진단 시작·이어하기, 한 번에 한 판단 수행, 완료
 - 볼 수 없는 정보: 정오답, 오개념 이름, 교사용 해석, 반·다른 학생 데이터
 - 데이터 정체성: 실명 대신 클래스 안에서만 의미가 있는 가명 ID
 
-학생 번호는 클래스 안에서 변하지 않는 입장 식별자이고 별칭은 인증에 쓰지 않는 선택 표시명이다. 둘 다 인증 강도가 높은 계정이 아니므로 학생 화면과 저장 데이터에 성적 외 개인정보를 추가하지 않으며, 클래스 코드는 접근 권한 그 자체로 사용하지 않는다.
+학생 번호는 클래스 안에서 변하지 않는 식별자이고 별칭은 인증에 쓰지 않는 선택 표시명이다. 번호 추측만으로 다른 학생이 되지 못하도록 학생별 6자리 개인 코드를 함께 확인한다. 개인 코드 원문은 생성·재발급 때 한 번만 보여 주고 DB에는 bcrypt hash만 저장한다. 학생 화면과 저장 데이터에는 성적 외 개인정보를 추가하지 않으며, 클래스 코드 하나를 접근 권한 그 자체로 사용하지 않는다.
 
 ### 1.2 교사
 
@@ -60,7 +60,7 @@ Phase 1은 클래스당 소유 교사 1명을 기본으로 한다. 공동 교사
 ### 1.4 개인정보 최소화 원칙
 
 - 학생 실명, 학교 식별 정보, 자유 서술 원문을 기본 수집하지 않는다.
-- `students`에는 교사가 부여한 필수 번호와 선택 별칭만 저장한다.
+- `students`에는 교사가 부여한 필수 번호, 선택 별칭, 개인 코드의 단방향 hash만 저장한다.
 - 이메일은 교사 계정에만 필요하며 Supabase Auth를 원장으로 사용한다.
 - 외부 AI에는 학생 이름·학교·개인을 식별할 수 있는 원문을 보내지 않는다.
 - 로그, 오류 추적, 분석 도구에도 클래스 코드 원문과 학생 별칭을 남기지 않는다.
@@ -87,9 +87,9 @@ Phase 1은 클래스당 소유 교사 1명을 기본으로 한다. 공동 교사
 
 #### S1. 클래스 코드 입장
 
-- 클래스 코드와 학생 번호를 순서대로 입력한다. 별칭은 입장 필드가 아니다.
+- 클래스 코드, 학생 번호, 학생별 개인 코드를 순서대로 입력한다. 별칭은 입장 필드가 아니다.
 - 코드는 대소문자·공백을 정규화하되 원문을 로그에 남기지 않는다.
-- 실패 문구는 `코드 또는 번호를 다시 확인해 주세요`처럼 계정 존재 여부를 과도하게 드러내지 않는다.
+- 모든 서버 실패는 `입장 정보를 다시 확인해 주세요`라는 같은 빈 결과로 처리해 클래스·번호·개인 코드 중 무엇이 달랐는지 드러내지 않는다.
 - 성공 시 해당 학생에게 열린 배정과 이어갈 세션만 가져온다.
 - 최초 입장에는 네트워크가 필요하다.
 
@@ -156,8 +156,8 @@ Phase 1은 클래스당 소유 교사 1명을 기본으로 한다. 공동 교사
 
 #### T5. 클래스/학생 관리
 
-- 클래스 생성, 입장 코드 회전·만료, 가명 번호 일괄 등록, 비활성화를 제공한다.
-- 실명 입력을 유도하지 않고 `번호(필수)`와 `별칭(선택)`을 분리한다.
+- 클래스 생성, 입장 코드 회전·만료, 가명 번호 일괄 등록, 학생 개인 코드 재발급, 비활성화를 제공한다.
+- 실명 입력을 유도하지 않고 `번호(필수)`와 `별칭(선택)`을 분리하며, 개인 코드는 교사가 학생 입장 카드로 따로 전달한다.
 - 삭제보다 비활성화를 기본으로 해 세션 근거 연결을 보존한다.
 
 #### T6. 설정
@@ -256,7 +256,7 @@ packages/ui      ──> 도메인·Supabase를 모르는 표현 계층
 
 ### 4.4 주요 유스케이스
 
-- `JoinClass` — 클래스 코드와 가명 번호를 확인하고 학생용 접근 세션을 만든다.
+- `JoinClass` — 클래스 코드, 가명 번호, 학생별 개인 코드를 확인하고 학생용 접근 세션을 만든다.
 - `ListAssignedDiagnoses` — 학생에게 열린 배정과 이어갈 세션을 반환한다.
 - `StartSession` — 콘텐츠 버전을 고정하고 새 진단 세션을 만든다.
 - `ResumeSession` — 서버 이벤트와 로컬 미동기화 이벤트를 병합해 다음 판단을 계산한다.
@@ -264,8 +264,11 @@ packages/ui      ──> 도메인·Supabase를 모르는 표현 계층
 - `SyncObservationEvents` — 멱등 키로 이벤트 묶음을 서버에 append한다.
 - `CompleteSession` — 완료 이벤트를 기록하고 서버 확인 후 완료 상태를 확정한다.
 - `AssignDiagnosis` — 발행된 콘텐츠 버전을 클래스에 배정한다.
+- `LoadClassInsights` — 선택한 클래스의 배정별 학생·세션·이벤트·콘텐츠 버전 묶음을 조회한다.
 - `GenerateStudentReport` — 특정 엔진 버전으로 세션 이벤트를 해석한다.
+- `GenerateAssignmentInsights` — 학생별 최신 완료 시도만 해석 실행으로 저장하고 진행 중·해석 대기 상태를 분리한다.
 - `GenerateClassSummary` — 학생별 finding을 집계하되 근거 수와 불확실성을 유지한다.
+- `ExportParentReport` — 교사가 출력/PDF를 요청한 시점에만 학부모 공유 스냅샷을 저장한다.
 
 ### 4.5 관찰 데이터: append-only 이벤트 로그
 
@@ -370,25 +373,26 @@ manifest 최소 필드:
 
 - 교사: Supabase Auth 이메일 계정의 `auth.uid()`를 `teachers.id`와 연결한다.
 - 학생: 화면상 계정은 없지만 최초 입장 시 앱 내부에서 Supabase anonymous auth 세션을 만든다.
-- `join_class` security-definer RPC가 클래스 코드 hash와 학생 번호를 검증하고, 해당 anonymous `auth.uid()`에 한 학생 범위 접근 권한을 연결한다.
+- `join_class` security-definer RPC가 클래스 코드 hash, 학생 번호, 학생 개인 코드 hash를 검증하고, 해당 anonymous `auth.uid()`에 한 학생 범위 접근 권한을 연결한다.
 - 클래스 코드는 혼동하기 쉬운 문자를 뺀 6자리 영문 대문자·숫자 조합이며, 원문은 DB에 저장하지 않고 조회용 SHA-256과 확인용 bcrypt hash만 저장한다.
-- 클래스 코드는 rate limit, 만료, 회전, 실패 횟수 제한을 적용한다.
+- 입장 실패는 anonymous Auth UID별 10분 동안 10회까지 허용하고 11번째 시도부터 15분 잠근다. 클래스 코드·개인 코드 원문과 IP는 저장하지 않으며 모든 실패는 같은 빈 결과로 응답한다. 학생 전체를 잠그는 전역 lockout은 교실 내 표적 방해에 악용될 수 있어 두지 않고, 6자리 비예측 개인 코드와 Supabase anonymous Auth 발급 제한을 함께 사용한다.
 - 학생 클라이언트에 service-role key를 배포하지 않는다. public anon key와 RLS만 사용한다.
 
-클래스 코드와 번호는 낮은 보증 수준의 입장 수단이다. 이를 전제로 학생 데이터는 가명·최소 데이터로 제한하고, 동시에 같은 학생으로 입장한 기기를 감지해 교사가 세션을 구분할 수 있게 한다.
+클래스 코드와 번호는 낮은 보증 수준의 입장 수단이다. 학생별 비예측 개인 코드와 UID rate boundary로 번호 추측을 막되, 학생 데이터는 계속 가명·최소 데이터로 제한하고 동시에 같은 학생으로 입장한 기기를 감지해 교사가 세션을 구분할 수 있게 한다.
 
 ### 5.2 핵심 테이블
 
 | 테이블 | 핵심 필드 | 제약·설명 |
 |---|---|---|
 | `teachers` | `id`, `display_name`, `created_at` | `id = auth.users.id`; 이메일 원장은 Auth |
-| `classes` | `id`, `teacher_id`, `name`, `join_code_lookup`, `join_code_hash`, `join_code_rotated_at`, `active` | `teacher_id → teachers.id`; 코드 원문 미저장 |
-| `students` | `id`, `class_id`, `roster_key`, `display_alias`, `active`, `created_at` | 실명 없음; 번호는 `(class_id, roster_key)` unique, 별칭은 선택 |
+| `classes` | `id`, `teacher_id`, `name`, `join_code_lookup`, `join_code_hash`, `join_code_rotated_at`, `active`, `pilot_ends_at`, `purge_after`, `purged_at` | `teacher_id → teachers.id`; 코드 원문 미저장; 종료 90일 뒤 삭제 |
+| `students` | `id`, `class_id`, `roster_key`, `display_alias`, `join_secret_hash`, `active`, `created_at` | 실명 없음; 번호는 `(class_id, roster_key)` unique, 별칭은 선택, 개인 코드 원문 미저장 |
 | `student_access_grants` | `auth_uid`, `class_id`, `student_id`, `granted_at`, `revoked_at` | 익명 Auth UID와 현재 학생 범위를 연결 |
 | `diagnosis_sets` | `id`, `set_key`, `version`, `manifest`, `content`, `checksum`, `status`, `published_at` | `(set_key, version)` unique; published row immutable |
 | `assignments` | `id`, `class_id`, `diagnosis_set_id`, `opens_at`, `closes_at`, `status`, `created_by` | Phase 1은 클래스 전체 배정 |
-| `sessions` | `id`, `assignment_id`, `student_id`, `student_auth_uid`, `client_session_id`, `status`, `started_at`, `completed_at`, `last_event_seq` | 콘텐츠 버전은 assignment를 통해 고정; active 중복 감지 |
-| `observation_events` | `id`, `session_id`, `client_event_id`, `client_seq`, `event_type`, `judgment_id`, `interaction_type`, `interaction_version`, `payload`, `occurred_at`, `received_at` | append-only; `(session_id, client_event_id)` unique |
+| `sessions` | `id`, `assignment_id`, `student_id`, `student_auth_uid`, `client_session_id`, `status`, `started_at`, `completed_at`, `last_event_seq` | 콘텐츠 버전은 assignment를 통해 고정; 상태·완료 시각은 이벤트 RPC가 서버 시간으로 전이 |
+| `observation_events` | `id`, `session_id`, `client_event_id`, `client_seq`, `event_type`, `judgment_id`, `interaction_type`, `interaction_version`, `payload`, `occurred_at`, `received_at` | append-only; `client_event_id` unique, `(session_id, client_seq)` unique |
+| `anonymous_join_throttles` | `auth_uid`, `window_started_at`, `failure_count`, `locked_until` | 익명 UID별 입장 실패 경계; 코드·IP 미저장 |
 
 ### 5.3 파생 결과 테이블
 
@@ -398,6 +402,7 @@ manifest 최소 필드:
 |---|---|---|
 | `interpretation_runs` | `id`, `session_id`, `engine_version`, `diagnosis_set_version`, `report`, `generated_at` | 교사용 근거 리포트와 해석 기준 추적 |
 | `parent_report_exports` | `id`, `session_id`, `interpretation_run_id`, `reviewed_by`, `report`, `generated_at` | 교사가 검토한 학부모 공유본을 교사용 리포트와 분리 저장 |
+| `pilot_operations_daily` | `day`, `app`, `event_name`, `event_count` | 입장·동기화·완료·해석 실패의 익명 건수만 보존 |
 
 Phase 1 초기에는 class summary를 요청 시 계산하고 성능 요구가 확인된 뒤 snapshot을 활성화해도 된다. 그러나 `interpretation_runs`의 버전·입력 범위 기록은 처음부터 둔다.
 
@@ -429,7 +434,7 @@ erDiagram
 정책 구현 원칙:
 
 - 교사 정책은 모든 경로에서 `classes.teacher_id = auth.uid()` 연결을 확인한다.
-- 학생 event insert 정책은 `sessions.student_auth_uid = auth.uid()`와 active 상태를 함께 확인한다.
+- 학생 event append RPC는 `sessions.student_auth_uid = auth.uid()`와 서버 상태·연속 순번·콘텐츠 버전을 함께 확인한다.
 - 학생은 `observation_events`에 update/delete 정책을 갖지 않는다.
 - 교사도 event는 read-only다.
 - join 로직은 일반 테이블 공개 select가 아니라 rate-limited Edge Function/RPC로 감싼다.
@@ -440,7 +445,7 @@ erDiagram
 - 이벤트 batch append는 전부 성공하거나 안전하게 재시도할 수 있어야 한다.
 - `client_event_id` 충돌은 동일 payload면 성공으로 간주하고, 다른 payload면 무결성 오류로 격리한다.
 - `last_event_seq`는 캐시이며 원장은 이벤트 로그다.
-- session 완료는 `session_completed` 이벤트와 서버 상태 전이를 하나의 서버 트랜잭션으로 처리한다.
+- session 완료는 모든 판단 이벤트가 확인된 뒤 `session_completed` 이벤트와 서버 상태·서버 수신 완료 시각 전이를 하나의 서버 트랜잭션으로 처리한다. 클라이언트는 `completed_at`을 직접 쓸 수 없다.
 - 교사 요약은 완료 세션만 기본 포함하고, 진행 중 데이터는 명확히 구분할 때만 보조로 표시한다.
 - 콘텐츠 checksum 불일치 세션은 자동 해석하지 않고 검수 큐로 보낸다.
 
@@ -448,14 +453,14 @@ erDiagram
 
 ### 6.1 교사 준비
 
-1. 교사가 이메일로 가입·로그인한다.
+1. 관리자가 초대한 교사가 이메일로 로그인한다. 일반·익명 사용자의 `teachers` INSERT 권한은 없다.
 2. 클래스를 만들고 입장 코드를 발급한다.
-3. 학생 번호를 필수로 등록하고 필요한 학생에게만 별칭을 붙인다.
+3. 학생 번호를 필수로 등록하고 필요한 학생에게만 별칭을 붙인 뒤, 한 번만 표시되는 개인 코드를 학생에게 안전하게 전달한다.
 4. 발행된 `3학년 2학기 수학` v1.0.0 세트를 클래스에 배정한다.
 
 ### 6.2 학생 진단
 
-1. 학생이 클래스 코드와 번호를 입력한다.
+1. 학생이 클래스 코드, 번호, 개인 코드를 입력한다.
 2. 앱이 anonymous auth 세션과 서버의 제한된 session grant를 만든다.
 3. 학생이 새 진단을 시작하거나 진행 중 세션을 이어간다.
 4. 각 판단 이벤트가 IndexedDB에 append된 뒤 서버로 동기화된다.
@@ -522,9 +527,9 @@ erDiagram
 
 ## 9. 구현에서 고정한 운영 결정
 
-1. 학생 이벤트와 계정 연결 정보의 보존 기간 및 삭제 요청 처리 방식
+1. 파일럿 종료 90일 뒤 service-role 전용 purge가 파생 리포트·이벤트·세션·배정·접근 권한·학생·클래스를 지우고, 다른 활성 범위가 없는 익명 Auth 사용자도 정리한다. 교사 ID가 연결된 클래스 껍데기는 남기지 않는다.
 2. 같은 브라우저에서는 세션을 자동으로 이어가고, 다른 기기의 새 시도는 기존 시도를 덮어쓰지 않는다.
-3. 클래스 코드는 6자리이며 교사가 즉시 회전·비활성화할 수 있다. rate limit 수치는 출시 전 부하·보안 테스트로 확정한다.
+3. 클래스 코드와 학생 개인 코드는 각각 6자리이며 교사가 즉시 회전·재발급할 수 있다. Auth UID별 실패 10회/10분 뒤 다음 시도부터 15분 잠그는 수치를 DB 테스트로 고정하고, 학생 전체 전역 잠금은 두지 않는다.
 4. 완료 전 세션은 반 오개념 집계에서 빼고 `진행 중 학생 수`로만 표시한다.
 5. interpretation engine의 승인·rollback 책임자와 재해석 실행 시점
 6. 운영 콘텐츠 원장은 Supabase의 불변 발행본 전체 JSON이다. `packages/content`는 시드·export·백업·테스트 fixture로 유지한다.

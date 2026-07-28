@@ -1,24 +1,34 @@
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
   createMiddleOfMathClient,
   CryptoIdGenerator,
   SupabaseAssignmentRepository,
   SupabaseContentStudioRepository,
+  SupabaseOperationalTelemetry,
+  SupabaseReportRepository,
   SupabaseTeacherGateway,
+  SupabaseTeacherInsightsRepository,
   SystemClock,
-  type TeacherClassRecord
+  type TeacherClassRecord,
+  type TeacherProfileRecord
 } from "@middle-of-math/adapters";
-import { AssignDiagnosis } from "@middle-of-math/application";
+import { AssignDiagnosis, ExportParentReport, GenerateAssignmentInsights, LoadClassInsights } from "@middle-of-math/application";
 import { grade3Semester2Diagnosis } from "@middle-of-math/content";
 import {
   createParentReport,
   generateClassSummary,
   interpretSession,
+  type ClassSummary,
+  type DiagnosisSet,
   type DiagnosisFinding,
   type JudgmentConfirmationPayload,
   type ObservationEvent,
   type ParentReport,
+  type ParentReportExportRecord,
   type PublishedDiagnosisSet,
+  type TeacherAssignmentEvidenceBundle,
+  type TeacherAssignmentInsights,
+  type TeacherSessionEvidence,
   type TeacherStudentReport
 } from "@middle-of-math/domain";
 import {
@@ -32,12 +42,15 @@ import {
 type Page = "summary" | "student" | "assignment" | "roster" | "settings";
 type ReportMode = "teacher" | "parent";
 
-interface DemoStudent {
+interface TeacherStudentView {
   id: string;
   rosterKey: string;
   alias: string | null;
-  status: "completed" | "in_progress" | "not_started";
+  status: "completed" | "in_progress" | "not_started" | "interpretation_pending";
+  pendingReason?: "checksum_mismatch" | "unsupported_interaction_version";
+  latestCompletedSessionId?: string;
   report?: TeacherStudentReport;
+  attempts: TeacherSessionEvidence[];
 }
 
 const content = grade3Semester2Diagnosis;
@@ -64,12 +77,13 @@ function publicConfig() {
 }
 
 const runtimeConfig = publicConfig();
-const runtimeClient = runtimeConfig ? createMiddleOfMathClient(runtimeConfig) : null;
+const demoMode = import.meta.env.VITE_DEMO_MODE === "true";
+const runtimeClient = runtimeConfig && !demoMode ? createMiddleOfMathClient(runtimeConfig) : null;
 
-function makeDemoReport(studentId: string): TeacherStudentReport {
+function makeDemoEvidence(studentId: string): ObservationEvent<JudgmentConfirmationPayload>[] {
   const profile = demoProfiles[studentId] ?? {};
   const sessionId = `demo-session-${studentId}`;
-  const events: ObservationEvent<JudgmentConfirmationPayload>[] = content.judgments.map((judgment, index) => {
+  return content.judgments.map((judgment, index) => {
     const choice = judgment.choices[profile[judgment.id] ?? 0];
     return {
       id: `${sessionId}-event-${index + 1}`,
@@ -92,94 +106,284 @@ function makeDemoReport(studentId: string): TeacherStudentReport {
       occurredAt: `2026-07-22T0${Math.floor(index / 6) + 8}:${String(index * 4 % 60).padStart(2, "0")}:00.000Z`
     };
   });
-  return interpretSession(content, events, undefined, "2026-07-22T10:30:00.000Z");
 }
 
-const initialStudents: DemoStudent[] = [
-  { id: "student-03", rosterKey: "3", alias: "민들레", status: "completed", report: makeDemoReport("student-03") },
-  { id: "student-07", rosterKey: "7", alias: null, status: "completed", report: makeDemoReport("student-07") },
-  { id: "student-12", rosterKey: "12", alias: "나무", status: "completed", report: makeDemoReport("student-12") },
-  { id: "student-18", rosterKey: "18", alias: null, status: "completed", report: makeDemoReport("student-18") },
-  { id: "student-21", rosterKey: "21", alias: "구름", status: "in_progress" },
-  { id: "student-24", rosterKey: "24", alias: null, status: "in_progress" },
-  { id: "student-25", rosterKey: "25", alias: null, status: "not_started" }
+const demoClass: TeacherClassRecord = {
+  id: "demo-class",
+  name: "3학년 햇살반",
+  grade: 3,
+  semester: 2,
+  pilotEndsAt: "2026-08-21T00:00:00.000Z",
+  purgeAfter: "2026-11-19T00:00:00.000Z",
+  joinCode: "MATH27"
+};
+
+const demoDefinitions = [
+  { id: "student-03", rosterKey: "3", alias: "민들레", status: "completed" as const },
+  { id: "student-07", rosterKey: "7", alias: null, status: "completed" as const },
+  { id: "student-12", rosterKey: "12", alias: "나무", status: "completed" as const },
+  { id: "student-18", rosterKey: "18", alias: null, status: "completed" as const },
+  { id: "student-21", rosterKey: "21", alias: "구름", status: "in_progress" as const },
+  { id: "student-24", rosterKey: "24", alias: null, status: "in_progress" as const },
+  { id: "student-25", rosterKey: "25", alias: null, status: "not_started" as const }
 ];
+
+function createDemoInsights(): TeacherAssignmentInsights {
+  const students = demoDefinitions.map((student) => {
+    const events = student.status === "completed" ? makeDemoEvidence(student.id) : [];
+    const session = student.status === "not_started" ? undefined : {
+      id: `demo-session-${student.id}`,
+      assignmentId: "demo-assignment",
+      studentId: student.id,
+      diagnosisSetId: content.manifest.id,
+      diagnosisSetVersion: content.manifest.version,
+      status: student.status === "completed" ? "completed" as const : "in_progress" as const,
+      startedAt: "2026-07-22T08:00:00.000Z",
+      completedAt: student.status === "completed" ? "2026-07-22T10:00:00.000Z" : undefined,
+      lastEventSeq: events.length
+    };
+    const report = session?.status === "completed"
+      ? interpretSession(content, events, undefined, "2026-07-22T10:30:00.000Z")
+      : undefined;
+    return {
+      student: { id: student.id, rosterKey: student.rosterKey, displayAlias: student.alias, active: true },
+      sessions: session ? [{ session, events, interpretationRuns: [] }] : [],
+      report
+    };
+  });
+  const bundle: TeacherAssignmentEvidenceBundle = {
+    class: { ...demoClass, semester: 2 },
+    assignment: { id: "demo-assignment", classId: demoClass.id, status: "active", opensAt: "2026-07-22T00:00:00.000Z" },
+    diagnosisSet: packagedPublishedContent,
+    students: students.map(({ student, sessions }) => ({ student, sessions }))
+  };
+  const ready = students.filter((student) => student.report).map((student) => ({ studentId: student.student.id, report: student.report! }));
+  return {
+    bundle,
+    classSummary: generateClassSummary(ready, 2),
+    students: students.map((student) => ({
+      student: student.student,
+      interpretationStatus: student.report ? "ready" : student.sessions.length ? "in_progress" : "not_started",
+      latestCompletedSessionId: student.report ? student.sessions[0]?.session.id : undefined,
+      report: student.report
+    }))
+  };
+}
+
+const demoInsights = createDemoInsights();
 
 export function TeacherApp() {
   const client = runtimeClient;
-  const [signedIn, setSignedIn] = useState(!client);
-  const [authReady, setAuthReady] = useState(!client);
+  const [signedIn, setSignedIn] = useState(demoMode);
+  const [authReady, setAuthReady] = useState(demoMode);
   const [authError, setAuthError] = useState<string | null>(null);
-  const [authNotice, setAuthNotice] = useState<string | null>(null);
   const [page, setPage] = useState<Page>("summary");
-  const [students, setStudents] = useState(client ? [] : initialStudents);
+  const [profile, setProfile] = useState<TeacherProfileRecord | null>(demoMode ? { id: "demo-teacher", displayName: "김수학", email: "demo@middleofmath.local" } : null);
+  const [roster, setRoster] = useState<TeacherStudentView[]>(demoMode ? mapInsightsToStudents(demoInsights) : []);
   const [selectedStudentId, setSelectedStudentId] = useState("student-03");
   const [reportMode, setReportMode] = useState<ReportMode>("teacher");
   const [selectedFinding, setSelectedFinding] = useState<DiagnosisFinding | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
-  const [publishedContents, setPublishedContents] = useState<PublishedDiagnosisSet[]>(client ? [] : [packagedPublishedContent]);
-  const [teacherClasses, setTeacherClasses] = useState<TeacherClassRecord[]>(client ? [] : [
-    { id: "demo-class", name: "3학년 햇살반", grade: 3, semester: 2 }
-  ]);
+  const [publishedContents, setPublishedContents] = useState<PublishedDiagnosisSet[]>(demoMode ? [packagedPublishedContent] : []);
+  const [teacherClasses, setTeacherClasses] = useState<TeacherClassRecord[]>(demoMode ? [demoClass] : []);
+  const [selectedClassId, setSelectedClassId] = useState(demoMode ? demoClass.id : "");
+  const [assignmentBundles, setAssignmentBundles] = useState<TeacherAssignmentEvidenceBundle[]>(demoMode ? [demoInsights.bundle] : []);
+  const [selectedAssignmentId, setSelectedAssignmentId] = useState(demoMode ? demoInsights.bundle.assignment.id : "");
+  const [insights, setInsights] = useState<TeacherAssignmentInsights | null>(demoMode ? demoInsights : null);
+  const [loadState, setLoadState] = useState<"idle" | "syncing" | "error">("idle");
+  const [exportingParentReport, setExportingParentReport] = useState(false);
+  const [printExport, setPrintExport] = useState<ParentReportExportRecord | null>(null);
+  const loadGeneration = useRef(0);
+  const authGeneration = useRef(0);
+  const selectedClassIdRef = useRef(selectedClassId);
+  const selectedAssignmentIdRef = useRef(selectedAssignmentId);
+  const authUserIdRef = useRef<string | null>(demoMode ? "demo-teacher" : null);
 
-  const completed = students.filter((student) => student.report).map((student) => ({ studentId: student.id, report: student.report! }));
-  const summary = generateClassSummary(completed, students.filter((student) => student.status === "in_progress").length);
+  const students = insights ? mapInsightsToStudents(insights) : roster;
+  const summary: ClassSummary = insights?.classSummary ?? { completedStudents: 0, inProgressStudents: 0, items: [] };
+  const selectedClass = teacherClasses.find((item) => item.id === selectedClassId) ?? teacherClasses[0];
+  const selectedBundle = assignmentBundles.find((item) => item.assignment.id === selectedAssignmentId) ?? assignmentBundles[0];
   const selectedStudent = students.find((student) => student.id === selectedStudentId) ?? students[0];
   const parentReport = selectedStudent?.report
-    ? createParentReport(content, selectedStudent.report, parentStudentLabel(selectedStudent))
+    ? createParentReport(selectedBundle?.diagnosisSet.content ?? content, selectedStudent.report, parentStudentLabel(selectedStudent))
     : null;
+
+  useEffect(() => {
+    selectedClassIdRef.current = selectedClassId;
+  }, [selectedClassId]);
+
+  useEffect(() => {
+    selectedAssignmentIdRef.current = selectedAssignmentId;
+  }, [selectedAssignmentId]);
+
+  useEffect(() => {
+    if (!printExport) return;
+    const clearSnapshot = () => setPrintExport(null);
+    window.addEventListener("afterprint", clearSnapshot, { once: true });
+    const timer = window.setTimeout(() => window.print(), 0);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("afterprint", clearSnapshot);
+    };
+  }, [printExport]);
 
   useEffect(() => {
     if (!client) return;
     let active = true;
-    const loadTeacherData = async () => {
+    const clearTeacherData = () => {
+      ++loadGeneration.current;
+      setProfile(null);
+      setPublishedContents([]);
+      setTeacherClasses([]);
+      selectedClassIdRef.current = "";
+      setSelectedClassId("");
+      setRoster([]);
+      setAssignmentBundles([]);
+      selectedAssignmentIdRef.current = "";
+      setSelectedAssignmentId("");
+      setInsights(null);
+      setPrintExport(null);
+      setExportingParentReport(false);
+      setNotice(null);
+      setLoadState("idle");
+    };
+    const loadTeacherData = async (expectedUserId: string, generation: number) => {
       const gateway = new SupabaseTeacherGateway(client);
-      const [contents, classesResult] = await Promise.all([
+      setLoadState("syncing");
+      const [teacherProfile, contents, classesResult] = await Promise.all([
+        gateway.getCurrentTeacherProfile(),
         new SupabaseContentStudioRepository(client).listPublished(),
         gateway.listActiveClasses()
       ]);
-      const roster = classesResult[0] ? await gateway.listStudents(classesResult[0].id) : [];
-      if (!active) return;
+      if (!active || generation !== authGeneration.current || teacherProfile.id !== expectedUserId) return;
+      setProfile(teacherProfile);
       setPublishedContents(contents.filter((row) => row.status === "published"));
       setTeacherClasses(classesResult);
-      setStudents(roster.map((student) => ({
-        id: student.id,
-        rosterKey: student.rosterKey,
-        alias: student.displayAlias,
-        status: "not_started" as const
-      })));
+      const firstClass = classesResult[0];
+      selectedClassIdRef.current = firstClass?.id ?? "";
+      setSelectedClassId(firstClass?.id ?? "");
+      if (firstClass) {
+        await loadClassContext(firstClass.id);
+        if (!active || generation !== authGeneration.current) return;
+      }
+      else {
+        setRoster([]);
+        setAssignmentBundles([]);
+        setSelectedAssignmentId("");
+        setInsights(null);
+        setLoadState("idle");
+      }
+    };
+    const handleSession = (session: { user: { id: string } } | null) => {
+      const nextUserId = session?.user.id ?? null;
+      setSignedIn(Boolean(session));
+      setAuthReady(true);
+      if (nextUserId === authUserIdRef.current) return;
+      authUserIdRef.current = nextUserId;
+      const generation = ++authGeneration.current;
+      clearTeacherData();
+      if (!session) {
+        return;
+      }
+      void loadTeacherData(session.user.id, generation)
+        .catch(() => {
+          if (!active || generation !== authGeneration.current) return;
+          setLoadState("error");
+          setNotice("교사 프로필과 클래스 데이터를 불러오지 못했습니다.");
+        });
     };
     void client.auth.getSession().then(({ data }) => {
       if (!active) return;
-      setSignedIn(Boolean(data.session));
-      setAuthReady(true);
-      if (data.session) {
-        void loadTeacherData()
-          .catch(() => setNotice("발행 콘텐츠 또는 클래스를 불러오지 못해 배정 화면을 열 수 없습니다."));
-      }
+      handleSession(data.session);
     });
     const { data } = client.auth.onAuthStateChange((_event, session) => {
       if (!active) return;
-      setSignedIn(Boolean(session));
-      setAuthReady(true);
-      if (session) {
-        void loadTeacherData()
-          .catch(() => setNotice("발행 콘텐츠 또는 클래스를 불러오지 못해 배정 화면을 열 수 없습니다."));
-      } else {
-        setPublishedContents([]);
-        setTeacherClasses([]);
-      }
+      handleSession(session);
     });
     return () => {
       active = false;
+      ++authGeneration.current;
+      ++loadGeneration.current;
       data.subscription.unsubscribe();
     };
   }, [client]);
 
+  async function loadClassContext(classId: string, preferredAssignmentId?: string): Promise<void> {
+    if (!client) return;
+    const generation = ++loadGeneration.current;
+    setLoadState("syncing");
+    const gateway = new SupabaseTeacherGateway(client);
+    const repository = new SupabaseTeacherInsightsRepository(client);
+    try {
+      const [studentRows, bundles] = await Promise.all([
+        gateway.listStudents(classId),
+        new LoadClassInsights(repository).execute(classId)
+      ]);
+      if (generation !== loadGeneration.current) return;
+      setRoster(studentRows.map((student) => ({ id: student.id, rosterKey: student.rosterKey, alias: student.displayAlias, status: "not_started", attempts: [] })));
+      setAssignmentBundles(bundles);
+      const target = bundles.find((bundle) => bundle.assignment.id === preferredAssignmentId) ?? bundles[0];
+      selectedAssignmentIdRef.current = target?.assignment.id ?? "";
+      setSelectedAssignmentId(target?.assignment.id ?? "");
+      if (!target) {
+        setInsights(null);
+        setLoadState("idle");
+        return;
+      }
+      await loadAssignmentInsights(target.assignment.id, generation);
+    } catch (error) {
+      if (generation !== loadGeneration.current) return;
+      setLoadState("error");
+      throw error;
+    }
+  }
+
+  async function loadAssignmentInsights(assignmentId: string, generation = ++loadGeneration.current): Promise<void> {
+    if (!client) return;
+    setLoadState("syncing");
+    try {
+      const next = await new GenerateAssignmentInsights(
+        new SupabaseTeacherInsightsRepository(client),
+        new SupabaseReportRepository(client),
+        new SystemClock()
+      ).execute(assignmentId);
+      if (generation !== loadGeneration.current) return;
+      const pendingReasons = new Set(next.students.map((student) => student.pendingReason).filter(Boolean));
+      if (pendingReasons.has("checksum_mismatch")) {
+        void new SupabaseOperationalTelemetry(client).record({ app: "teacher", event: "interpretation.checksum_failed" }).catch(() => undefined);
+      }
+      if (pendingReasons.has("unsupported_interaction_version")) {
+        void new SupabaseOperationalTelemetry(client).record({ app: "teacher", event: "interpretation.unsupported" }).catch(() => undefined);
+      }
+      setInsights(next);
+      setSelectedStudentId((current) => next.students.some((student) => student.student.id === current) ? current : next.students[0]?.student.id ?? "");
+      setLoadState("idle");
+    } catch (error) {
+      if (generation !== loadGeneration.current) return;
+      void new SupabaseOperationalTelemetry(client).record({ app: "teacher", event: "interpretation.failed" }).catch(() => undefined);
+      setInsights(null);
+      setLoadState("error");
+      throw error;
+    }
+  }
+
+  async function changeClass(classId: string): Promise<void> {
+    selectedClassIdRef.current = classId;
+    setSelectedClassId(classId);
+    setSelectedFinding(null);
+    await loadClassContext(classId).catch(() => setNotice("선택한 클래스의 기록을 불러오지 못했습니다."));
+  }
+
+  async function changeAssignment(assignmentId: string): Promise<void> {
+    selectedAssignmentIdRef.current = assignmentId;
+    setSelectedAssignmentId(assignmentId);
+    setSelectedFinding(null);
+    await loadAssignmentInsights(assignmentId).catch(() => setNotice("선택한 배정은 지금 해석할 수 없습니다."));
+  }
+
   async function signIn(email: string, password: string) {
     if (!client) return;
     setAuthError(null);
-    setAuthNotice(null);
     const { error } = await client.auth.signInWithPassword({ email, password });
     if (error) {
       setAuthError("이메일과 비밀번호를 확인해 주세요.");
@@ -189,25 +393,13 @@ export function TeacherApp() {
     setAuthReady(true);
   }
 
-  async function register(displayName: string, email: string, password: string) {
+  async function signOut(): Promise<void> {
     if (!client) return;
-    setAuthError(null);
-    setAuthNotice(null);
-    const { data, error } = await client.auth.signUp({
-      email,
-      password,
-      options: { data: { display_name: displayName.trim() || "교사" } }
-    });
-    if (error) {
-      setAuthError("계정을 만들지 못했습니다. 이메일과 비밀번호를 확인해 주세요.");
-      return;
-    }
-    if (data.session) {
-      setSignedIn(true);
-      setAuthReady(true);
-    } else {
-      setAuthNotice("확인 이메일을 보냈습니다. 이메일 인증 뒤 로그인해 주세요.");
-    }
+    ++authGeneration.current;
+    ++loadGeneration.current;
+    setPrintExport(null);
+    const { error } = await client.auth.signOut();
+    if (error) setNotice("로그아웃하지 못했습니다. 잠시 뒤 다시 시도해 주세요.");
   }
 
   function openStudent(studentId: string, finding?: DiagnosisFinding) {
@@ -222,35 +414,63 @@ export function TeacherApp() {
       setNotice("이미 사용 중인 번호입니다.");
       return;
     }
-    const targetClass = teacherClasses[0];
+    const targetClass = selectedClass;
     if (!targetClass) throw new Error("학생을 추가할 클래스를 먼저 만들어 주세요.");
+    const mutationAuthGeneration = authGeneration.current;
     const saved = client
       ? await new SupabaseTeacherGateway(client).addStudent({ classId: targetClass.id, rosterKey, displayAlias: alias })
-      : { id: `local-${crypto.randomUUID()}`, rosterKey, displayAlias: alias || null, active: true };
-    const newStudent: DemoStudent = { id: saved.id, rosterKey: saved.rosterKey, alias: saved.displayAlias, status: "not_started" };
-    setStudents((current) => [...current, newStudent].sort((a, b) => Number(a.rosterKey) - Number(b.rosterKey)));
-    setNotice(`${rosterKey}번을 ${targetClass.name}에 추가했습니다.`);
+      : { id: `local-${crypto.randomUUID()}`, rosterKey, displayAlias: alias || null, active: true, joinSecret: "STAR27" };
+    if (mutationAuthGeneration !== authGeneration.current) return;
+    if (selectedClassIdRef.current !== targetClass.id) {
+      setNotice(`${targetClass.name}에 ${rosterKey}번을 추가했습니다. 개인 코드 ${saved.joinSecret}은 지금 한 번만 안전하게 전달해 주세요.`);
+      return;
+    }
+    const newStudent: TeacherStudentView = { id: saved.id, rosterKey: saved.rosterKey, alias: saved.displayAlias, status: "not_started", attempts: [] };
+    setRoster((current) => [...current, newStudent].sort((a, b) => Number(a.rosterKey) - Number(b.rosterKey)));
+    if (client) await loadClassContext(targetClass.id, selectedAssignmentIdRef.current);
+    if (mutationAuthGeneration !== authGeneration.current) return;
+    setNotice(`${rosterKey}번을 추가했습니다. 개인 코드 ${saved.joinSecret}은 지금 한 번만 안전하게 전달해 주세요.`);
+  }
+
+  async function rotateStudentJoinSecret(studentId: string): Promise<void> {
+    const student = students.find((item) => item.id === studentId);
+    if (!student) throw new Error("학생을 찾을 수 없습니다.");
+    const targetClassName = selectedClass?.name ?? "선택한 클래스";
+    const mutationAuthGeneration = authGeneration.current;
+    const joinSecret = client
+      ? await new SupabaseTeacherGateway(client).rotateStudentJoinSecret(studentId)
+      : "NEW527";
+    if (mutationAuthGeneration !== authGeneration.current) return;
+    setNotice(`${targetClassName} ${student.rosterKey}번의 새 개인 코드 ${joinSecret}입니다. 이전 코드는 즉시 사용할 수 없습니다.`);
   }
 
   async function createTeacherClass(name: string): Promise<void> {
     if (!client) {
-      setTeacherClasses([{ id: "demo-class", name, grade: 3, semester: 2, joinCode: "MATH27" }]);
+      setTeacherClasses([{ ...demoClass, name }]);
       setNotice(`${name}을 만들었습니다. 입장 코드 MATH27`);
       return;
     }
+    const mutationAuthGeneration = authGeneration.current;
     const created = await new SupabaseTeacherGateway(client).createClass({ name, grade: 3, semester: 2 });
+    if (mutationAuthGeneration !== authGeneration.current) return;
     setTeacherClasses((current) => [...current, created]);
+    selectedClassIdRef.current = created.id;
+    setSelectedClassId(created.id);
+    await loadClassContext(created.id);
+    if (mutationAuthGeneration !== authGeneration.current) return;
     setNotice(`${created.name}을 만들었습니다. 입장 코드 ${created.joinCode}는 지금 안전하게 전달해 주세요.`);
   }
 
   async function rotateJoinCode(): Promise<void> {
-    const targetClass = teacherClasses[0];
+    const targetClass = selectedClass;
     if (!targetClass) throw new Error("활성 클래스가 없습니다.");
+    const mutationAuthGeneration = authGeneration.current;
     const joinCode = client
       ? await new SupabaseTeacherGateway(client).rotateJoinCode(targetClass.id)
       : "NEW527";
+    if (mutationAuthGeneration !== authGeneration.current) return;
     setTeacherClasses((current) => current.map((item) => item.id === targetClass.id ? { ...item, joinCode } : item));
-    setNotice(`새 입장 코드 ${joinCode}를 만들었습니다. 이전 코드는 즉시 사용할 수 없습니다.`);
+    setNotice(`${targetClass.name}의 새 입장 코드 ${joinCode}를 만들었습니다. 이전 코드는 즉시 사용할 수 없습니다.`);
   }
 
   async function assignDiagnosis(input: {
@@ -263,6 +483,7 @@ export function TeacherApp() {
       setNotice(`${input.diagnosis.content.manifest.title} v${input.diagnosis.version}을 데모 클래스에 배정했습니다.`);
       return;
     }
+    const mutationAuthGeneration = authGeneration.current;
     await new AssignDiagnosis(
       new SupabaseAssignmentRepository(client),
       new SystemClock(),
@@ -274,21 +495,64 @@ export function TeacherApp() {
       opensAt: input.opensAt,
       closesAt: input.closesAt
     });
+    if (mutationAuthGeneration !== authGeneration.current) return;
     const targetClass = teacherClasses.find((item) => item.id === input.classId);
+    if (selectedClassIdRef.current === input.classId) await loadClassContext(input.classId, selectedAssignmentIdRef.current);
+    if (mutationAuthGeneration !== authGeneration.current) return;
     setNotice(`${input.diagnosis.content.manifest.title} v${input.diagnosis.version}을 ${targetClass?.name ?? "클래스"}에 배정했습니다.`);
   }
 
-  if (!authReady) return <main className="teacher-auth-loading"><Brand /><p>교사 계정을 확인하고 있습니다.</p></main>;
-  if (!signedIn) return <TeacherLogin onSubmit={signIn} onRegister={register} error={authError} notice={authNotice} />;
+  async function exportParentReport(): Promise<void> {
+    if (!selectedStudent?.latestCompletedSessionId || !profile || !parentReport) return;
+    const sessionId = selectedStudent.latestCompletedSessionId;
+    const reviewedBy = profile.id;
+    const mutationAuthGeneration = authGeneration.current;
+    setExportingParentReport(true);
+    if (!client) {
+      setPrintExport({
+        id: `demo-export-${crypto.randomUUID()}`,
+        sessionId,
+        interpretationRunId: "demo-interpretation",
+        reviewedBy,
+        generatedAt: new Date().toISOString(),
+        report: parentReport
+      });
+      setExportingParentReport(false);
+      return;
+    }
+    try {
+      const snapshot = await new ExportParentReport(
+        new SupabaseTeacherInsightsRepository(client),
+        new SupabaseReportRepository(client),
+        new CryptoIdGenerator(),
+        new SystemClock()
+      ).execute({ sessionId, reviewedBy });
+      if (mutationAuthGeneration !== authGeneration.current) return;
+      setPrintExport(snapshot);
+      setNotice("교사 검토 시점의 학부모 공유본을 기록했습니다. 인쇄 창을 엽니다.");
+    } catch (error) {
+      if (mutationAuthGeneration === authGeneration.current) {
+        setNotice(error instanceof Error ? error.message : "학부모 공유본을 만들지 못했습니다.");
+      }
+    } finally {
+      if (mutationAuthGeneration === authGeneration.current) {
+        setExportingParentReport(false);
+      }
+    }
+  }
 
-  return (
-    <div className="teacher-shell">
+  if (!client && !demoMode) return <TeacherConfigurationError />;
+  if (!authReady) return <main className="teacher-auth-loading"><Brand /><p>교사 계정을 확인하고 있습니다.</p></main>;
+  if (!signedIn) return <TeacherLogin onSubmit={signIn} error={authError} />;
+
+  return (<>
+    <div className="teacher-shell" aria-busy={exportingParentReport}>
       <aside className="teacher-sidebar">
         <Brand />
         <div className="teacher-class-switcher">
           <span>현재 클래스</span>
-          <strong>{teacherClasses[0]?.name ?? "클래스 없음"}</strong>
-          <small>{teacherClasses[0]?.joinCode ? `입장 코드 ${teacherClasses[0].joinCode}` : "코드는 재발급할 때만 표시됩니다"}</small>
+          <strong>{selectedClass?.name ?? "클래스 없음"}</strong>
+          <small>{selectedClass?.joinCode ? `입장 코드 ${selectedClass.joinCode}` : "코드는 재발급할 때만 표시됩니다"}</small>
         </div>
         <nav aria-label="교사 메뉴">
           <NavButton active={page === "summary"} onClick={() => setPage("summary")} icon="∑">반 요약</NavButton>
@@ -298,25 +562,31 @@ export function TeacherApp() {
           <NavButton active={page === "settings"} onClick={() => setPage("settings")} icon="·">설정</NavButton>
         </nav>
         <div className="teacher-sidebar-foot">
-          <StatusPill tone="warning">{client ? "시연 데이터 · Auth 연결" : "로컬 데모"}</StatusPill>
-          <span>교사 김수학</span>
+          <StatusPill tone={demoMode ? "warning" : "accent"}>{demoMode ? "로컬 데모" : "실제 기록"}</StatusPill>
+          <span>교사 {profile?.displayName ?? "불러오는 중"}</span>
+          {!demoMode && <button className="mom-button mom-button-quiet teacher-sign-out" onClick={() => void signOut()}>로그아웃</button>}
         </div>
       </aside>
       <main className="teacher-main">
         {notice && <div className="teacher-notice" role="status">{notice}<button onClick={() => setNotice(null)} aria-label="알림 닫기">×</button></div>}
-        {page === "summary" && <ClassSummaryPage students={students} summary={summary} onOpenStudent={openStudent} />}
-        {page === "student" && (selectedStudent ? <StudentReportPage student={selectedStudent} students={students} reportMode={reportMode} parentReport={parentReport} selectedFinding={selectedFinding} onStudentChange={(id) => openStudent(id)} onModeChange={setReportMode} onFindingSelect={setSelectedFinding} /> : <div className="teacher-page"><EmptyState title="학생이 없습니다" description="클래스·학생 화면에서 번호를 먼저 추가해 주세요." /></div>)}
+        <TeacherContextBar classes={teacherClasses} assignments={assignmentBundles} selectedClassId={selectedClassId} selectedAssignmentId={selectedAssignmentId} state={loadState} onClassChange={changeClass} onAssignmentChange={changeAssignment} />
+        {page === "summary" && <ClassSummaryPage students={students} summary={summary} selectedClass={selectedClass} selectedBundle={selectedBundle} state={loadState} onOpenStudent={openStudent} />}
+        {page === "student" && (selectedStudent ? <StudentReportPage student={selectedStudent} students={students} diagnosisSet={selectedBundle?.diagnosisSet.content ?? content} reportMode={reportMode} parentReport={parentReport} selectedFinding={selectedFinding} exporting={exportingParentReport} onExport={exportParentReport} onStudentChange={(id) => openStudent(id)} onModeChange={setReportMode} onFindingSelect={setSelectedFinding} /> : <div className="teacher-page"><EmptyState title="학생이 없습니다" description="클래스·학생 화면에서 번호를 먼저 추가해 주세요." /></div>)}
         {page === "assignment" && <AssignmentPage diagnosisSets={publishedContents} classes={teacherClasses} onAssigned={assignDiagnosis} onCreateClass={createTeacherClass} />}
-        {page === "roster" && <RosterPage students={students} classes={teacherClasses} onAdd={addStudent} onCreateClass={createTeacherClass} onRotate={rotateJoinCode} />}
-        {page === "settings" && <SettingsPage />}
+        {page === "roster" && <RosterPage students={students} classes={teacherClasses} selectedClass={selectedClass} onAdd={addStudent} onCreateClass={createTeacherClass} onRotate={rotateJoinCode} onRotateStudent={rotateStudentJoinSecret} />}
+        {page === "settings" && <SettingsPage profile={profile} selectedClass={selectedClass} />}
       </main>
     </div>
-  );
+    {exportingParentReport && <div className="teacher-export-lock" role="status">검토한 공유본을 고정하고 있습니다…</div>}
+    {printExport && <div className="teacher-export-print"><ParentShareDocument report={printExport.report} /></div>}
+  </>);
 }
 
-function TeacherLogin({ onSubmit, onRegister, error, notice }: { onSubmit: (email: string, password: string) => Promise<void>; onRegister: (displayName: string, email: string, password: string) => Promise<void>; error: string | null; notice: string | null }) {
-  const [mode, setMode] = useState<"login" | "register">("login");
-  const [displayName, setDisplayName] = useState("");
+function TeacherConfigurationError() {
+  return <main className="teacher-auth-loading"><Brand /><div className="mom-panel"><div className="mom-panel-body mom-stack"><h1>교사 앱 설정이 필요합니다</h1><p className="mom-muted">운영 환경에는 Supabase URL과 publishable key를 설정해 주세요. 로컬 데모는 <code>VITE_DEMO_MODE=true</code>에서만 열립니다.</p></div></div></main>;
+}
+
+function TeacherLogin({ onSubmit, error }: { onSubmit: (email: string, password: string) => Promise<void>; error: string | null }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
@@ -327,35 +597,60 @@ function TeacherLogin({ onSubmit, onRegister, error, notice }: { onSubmit: (emai
         <h1>정답보다<br />생각의 중간을 봅니다</h1>
         <p>반복해서 나타난 판단 신호부터 보고, 학생의 근거까지 한 단계씩 내려갑니다.</p>
       </section>
-      <form className="mom-panel teacher-login-form" onSubmit={(event) => { event.preventDefault(); if (mode === "login") void onSubmit(email, password); else void onRegister(displayName, email, password); }}>
+      <form className="mom-panel teacher-login-form" onSubmit={(event) => { event.preventDefault(); void onSubmit(email, password); }}>
         <div className="mom-panel-body mom-stack-lg">
-          <div><p className="mom-eyebrow">{mode === "login" ? "Welcome back" : "Teacher account"}</p><h2>{mode === "login" ? "교사 로그인" : "교사 계정 만들기"}</h2></div>
-          {mode === "register" && <label className="mom-input-group">표시 이름<input className="mom-input" autoComplete="name" value={displayName} onChange={(event) => setDisplayName(event.target.value.slice(0, 30))} required /></label>}
+          <div><p className="mom-eyebrow">Invited teachers only</p><h2>교사 로그인</h2><p className="mom-muted">파일럿은 관리자에게 초대받은 교사만 사용할 수 있습니다.</p></div>
           <label className="mom-input-group">이메일<input className="mom-input" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required /></label>
-          <label className="mom-input-group">비밀번호<input className="mom-input" type="password" minLength={8} autoComplete={mode === "login" ? "current-password" : "new-password"} value={password} onChange={(event) => setPassword(event.target.value)} required /></label>
+          <label className="mom-input-group">비밀번호<input className="mom-input" type="password" minLength={8} autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required /></label>
           {error && <p className="mom-form-error" role="alert">{error}</p>}
-          {notice && <p className="teacher-auth-notice" role="status">{notice}</p>}
-          <button className="mom-button mom-button-primary mom-button-block">{mode === "login" ? "로그인" : "계정 만들기"}</button>
-          <button className="mom-button mom-button-quiet mom-button-block" type="button" onClick={() => setMode((current) => current === "login" ? "register" : "login")}>{mode === "login" ? "처음이신가요? 교사 계정 만들기" : "이미 계정이 있나요? 로그인"}</button>
+          <button className="mom-button mom-button-primary mom-button-block">로그인</button>
         </div>
       </form>
     </main>
   );
 }
 
-function ClassSummaryPage({ students, summary, onOpenStudent }: { students: DemoStudent[]; summary: ReturnType<typeof generateClassSummary>; onOpenStudent: (studentId: string, finding?: DiagnosisFinding) => void }) {
+function TeacherContextBar({ classes, assignments, selectedClassId, selectedAssignmentId, state, onClassChange, onAssignmentChange }: {
+  classes: TeacherClassRecord[];
+  assignments: TeacherAssignmentEvidenceBundle[];
+  selectedClassId: string;
+  selectedAssignmentId: string;
+  state: "idle" | "syncing" | "error";
+  onClassChange: (classId: string) => Promise<void>;
+  onAssignmentChange: (assignmentId: string) => Promise<void>;
+}) {
+  const active = assignments.find((bundle) => bundle.assignment.id === selectedAssignmentId);
+  return (
+    <section className="teacher-context-spine" aria-label="리포트 범위">
+      <div className="teacher-context-index">01</div>
+      <label><span>클래스</span><select aria-label="현재 클래스" value={selectedClassId} disabled={!classes.length || state === "syncing"} onChange={(event) => void onClassChange(event.target.value)}>{classes.length ? classes.map((item) => <option value={item.id} key={item.id}>{item.name}</option>) : <option value="">클래스 없음</option>}</select></label>
+      <div className="teacher-context-arrow" aria-hidden="true">→</div>
+      <label><span>배정</span><select aria-label="현재 배정" value={selectedAssignmentId} disabled={!assignments.length || state === "syncing"} onChange={(event) => void onAssignmentChange(event.target.value)}>{assignments.length ? assignments.map((bundle) => <option value={bundle.assignment.id} key={bundle.assignment.id}>{bundle.diagnosisSet.content.manifest.shortTitle} · v{bundle.diagnosisSet.version} · {formatDate(bundle.assignment.opensAt)}</option>) : <option value="">배정 없음</option>}</select></label>
+      <div className="teacher-context-proof"><span>{state === "syncing" ? "동기화 중" : state === "error" ? "불러오기 실패" : active ? "버전 고정" : "배정 대기"}</span><strong>{active ? `${active.diagnosisSet.checksum.slice(0, 10)}…` : "—"}</strong></div>
+    </section>
+  );
+}
+
+function ClassSummaryPage({ students, summary, selectedClass, selectedBundle, state, onOpenStudent }: { students: TeacherStudentView[]; summary: ClassSummary; selectedClass?: TeacherClassRecord; selectedBundle?: TeacherAssignmentEvidenceBundle; state: "idle" | "syncing" | "error"; onOpenStudent: (studentId: string, finding?: DiagnosisFinding) => void }) {
+  const pending = students.filter((student) => student.status === "interpretation_pending").length;
   return (
     <div className="teacher-page mom-stack-lg">
-      <PageHeader eyebrow="3학년 햇살반 · 3학년 2학기 수학" title="반에서 함께 다시 볼 생각" description="완료한 학생의 반복 신호만 모았습니다. 진행 중 기록은 오개념 집계에 넣지 않습니다." action={<button className="mom-button mom-button-secondary">내보내기</button>} />
+      <PageHeader eyebrow={`${selectedClass?.name ?? "클래스 선택 필요"} · ${selectedBundle?.diagnosisSet.content.manifest.title ?? "배정 선택 필요"}`} title="반에서 함께 다시 볼 생각" description="학생별 최신 완료 세션만 모았습니다. 진행 중·해석 대기 기록은 신호 집계에 넣지 않습니다." />
       <section className="teacher-metrics" aria-label="진단 현황">
-        <Metric value={`${summary.completedStudents}명`} label="완료" />
+        <Metric value={`${summary.completedStudents}명`} label="완료·해석" />
         <Metric value={`${summary.inProgressStudents}명`} label="진행 중" />
         <Metric value={`${students.filter((student) => student.status === "not_started").length}명`} label="시작 전" />
-        <Metric value="12개" label="판단 단위" />
+        <Metric value={pending ? `${pending}명` : `${selectedBundle?.diagnosisSet.content.judgments.length ?? 0}개`} label={pending ? "해석 대기" : "판단 단위"} />
       </section>
+      {!selectedClass && <EmptyState title="첫 클래스를 만들어 주세요" description="클래스·학생 화면에서 3학년 2학기 파일럿 클래스를 만들 수 있습니다." />}
+      {selectedClass && !selectedBundle && state !== "syncing" && <EmptyState title="아직 배정된 진단이 없습니다" description="진단 배정 화면에서 검수 완료된 콘텐츠 버전을 이 클래스에 배정해 주세요." />}
+      {state === "error" && <EmptyState title="기록을 불러오지 못했습니다" description="네트워크 연결을 확인한 뒤 클래스나 배정을 다시 선택해 주세요." />}
+      {pending > 0 && <div className="teacher-pending-note" role="status"><strong>{pending}명 해석 대기</strong><span>콘텐츠 checksum 또는 상호작용 버전을 확인한 뒤 새 엔진 실행으로 다시 해석합니다. 원본 이벤트는 바꾸지 않습니다.</span></div>}
+      {selectedBundle && state !== "error" && (
       <section className="mom-panel teacher-summary-panel">
-        <div className="mom-panel-header"><div><p className="mom-eyebrow">Common signals</p><h2>학생 수가 많은 순서</h2></div><span className="mom-caption">엔진 rules-2.0.0</span></div>
+        <div className="mom-panel-header"><div><p className="mom-eyebrow">Common signals</p><h2>학생 수가 많은 순서</h2></div><span className="mom-caption">{summary.items[0] ? "최신 엔진 해석" : "집계할 반복 신호 없음"}</span></div>
         <div className="teacher-summary-list">
+          {!summary.items.length && <EmptyState title={state === "syncing" ? "실제 기록을 동기화하고 있습니다" : "함께 다시 볼 반복 신호가 없습니다"} description={state === "syncing" ? "세션, 이벤트, 콘텐츠 버전을 확인하고 있습니다." : "완료 기록이 생기거나 반복 신호가 나타나면 이곳에 표시됩니다."} />}
           {summary.items.slice(0, 6).map((item, index) => {
             const related = students.filter((student) => item.studentIds.includes(student.id) && student.report);
             return (
@@ -369,12 +664,14 @@ function ClassSummaryPage({ students, summary, onOpenStudent }: { students: Demo
           })}
         </div>
       </section>
+      )}
     </div>
   );
 }
 
-function StudentReportPage({ student, students, reportMode, parentReport, selectedFinding, onStudentChange, onModeChange, onFindingSelect }: { student: DemoStudent; students: DemoStudent[]; reportMode: ReportMode; parentReport: ParentReport | null; selectedFinding: DiagnosisFinding | null; onStudentChange: (id: string) => void; onModeChange: (mode: ReportMode) => void; onFindingSelect: (finding: DiagnosisFinding | null) => void }) {
+function StudentReportPage({ student, students, diagnosisSet, reportMode, parentReport, selectedFinding, exporting, onExport, onStudentChange, onModeChange, onFindingSelect }: { student: TeacherStudentView; students: TeacherStudentView[]; diagnosisSet: DiagnosisSet; reportMode: ReportMode; parentReport: ParentReport | null; selectedFinding: DiagnosisFinding | null; exporting: boolean; onExport: () => Promise<void>; onStudentChange: (id: string) => void; onModeChange: (mode: ReportMode) => void; onFindingSelect: (finding: DiagnosisFinding | null) => void }) {
   const report = student.report;
+  const attempts = [...student.attempts].sort((a, b) => b.session.startedAt.localeCompare(a.session.startedAt));
   return (
     <div className={`teacher-page mom-stack-lg ${reportMode === "parent" ? "is-parent-preview" : ""}`}>
       <PageHeader eyebrow="학생 리포트" title={studentLabel(student)} description="교사용 근거 리포트와 학부모 공유용 요약은 목적과 문장을 분리합니다." action={<select className="mom-input teacher-student-select" value={student.id} onChange={(event) => onStudentChange(event.target.value)}>{students.map((item) => <option key={item.id} value={item.id}>{studentLabel(item)}</option>)}</select>} />
@@ -382,19 +679,21 @@ function StudentReportPage({ student, students, reportMode, parentReport, select
         <button role="tab" aria-selected={reportMode === "teacher"} onClick={() => onModeChange("teacher")}>교사용 근거 리포트</button>
         <button role="tab" aria-selected={reportMode === "parent"} onClick={() => onModeChange("parent")}>학부모 공유 리포트</button>
       </div>
-      {!report && <EmptyState title="완료된 기록이 아직 없습니다" description="학생이 활동을 마치면 교사용 근거와 학부모용 요약을 따로 만들 수 있습니다." />}
-      {report && reportMode === "teacher" && <TeacherEvidenceReport report={report} selectedFinding={selectedFinding} onFindingSelect={onFindingSelect} />}
-      {report && reportMode === "parent" && parentReport && <ParentShareReport report={parentReport} />}
+      {student.status === "interpretation_pending" && <EmptyState title="해석 대기 중입니다" description={student.pendingReason === "checksum_mismatch" ? "배정된 콘텐츠 checksum을 확인하고 있습니다. 이 기록은 반 요약에 포함되지 않습니다." : "현재 엔진이 지원하지 않는 상호작용 버전입니다. 지원 엔진 배포 뒤 새 해석 실행을 만듭니다."} />}
+      {!report && student.status !== "interpretation_pending" && <EmptyState title="완료된 기록이 아직 없습니다" description="학생이 활동을 마치면 교사용 근거와 학부모용 요약을 따로 만들 수 있습니다." />}
+      {report && reportMode === "teacher" && <TeacherEvidenceReport report={report} diagnosisSet={diagnosisSet} selectedFinding={selectedFinding} onFindingSelect={onFindingSelect} />}
+      {report && reportMode === "parent" && parentReport && <ParentShareReport report={parentReport} exporting={exporting} onExport={onExport} />}
+      <section className="mom-panel teacher-attempts"><div className="mom-panel-header"><div><p className="mom-eyebrow">Attempt history</p><h2>시도 이력</h2></div><span className="mom-caption">최신 완료 1건만 반 요약에 사용</span></div>{attempts.length ? <ol>{attempts.map((attempt) => <li key={attempt.session.id}><div><strong>{formatDateTime(attempt.session.startedAt)}</strong><span>{attempt.session.completedAt ? `완료 ${formatDateTime(attempt.session.completedAt)}` : "진행 중"}</span></div><StatusPill tone={attempt.session.id === student.latestCompletedSessionId ? "accent" : attempt.session.status === "completed" ? "neutral" : "warning"}>{attempt.session.id === student.latestCompletedSessionId ? "현재 해석" : attempt.session.status === "completed" ? "이전 완료" : "진행 중"}</StatusPill></li>)}</ol> : <p className="mom-panel-body mom-muted">아직 시작한 시도가 없습니다.</p>}</section>
     </div>
   );
 }
 
-function TeacherEvidenceReport({ report, selectedFinding, onFindingSelect }: { report: TeacherStudentReport; selectedFinding: DiagnosisFinding | null; onFindingSelect: (finding: DiagnosisFinding | null) => void }) {
+function TeacherEvidenceReport({ report, diagnosisSet, selectedFinding, onFindingSelect }: { report: TeacherStudentReport; diagnosisSet: DiagnosisSet; selectedFinding: DiagnosisFinding | null; onFindingSelect: (finding: DiagnosisFinding | null) => void }) {
   const finding = selectedFinding ?? report.findings[0];
   const evidence = finding?.evidence[0];
-  const judgment = evidence ? content.judgments.find((item) => item.id === evidence.judgmentId) : null;
-  const stage = judgment ? content.learnerStages.find((item) => item.id === judgment.learnerStageId) : null;
-  const anchor = judgment ? content.curriculumAnchors.find((item) => item.id === judgment.curriculumAnchorIds[0]) : null;
+  const judgment = evidence ? diagnosisSet.judgments.find((item) => item.id === evidence.judgmentId) : null;
+  const stage = judgment ? diagnosisSet.learnerStages.find((item) => item.id === judgment.learnerStageId) : null;
+  const anchor = judgment ? diagnosisSet.curriculumAnchors.find((item) => item.id === judgment.curriculumAnchorIds[0]) : null;
   return (
     <div className="teacher-report-grid">
       <section className="mom-panel">
@@ -419,10 +718,14 @@ function TeacherEvidenceReport({ report, selectedFinding, onFindingSelect }: { r
   );
 }
 
-function ParentShareReport({ report }: { report: ParentReport }) {
+function ParentShareReport({ report, exporting, onExport }: { report: ParentReport; exporting: boolean; onExport: () => Promise<void> }) {
+  return <ParentShareDocument report={report} action={<button className="mom-button mom-button-secondary parent-print-button" disabled={exporting} onClick={() => void onExport()}>{exporting ? "공유본 기록 중…" : "검토 완료 · 인쇄/PDF"}</button>} />;
+}
+
+function ParentShareDocument({ report, action }: { report: ParentReport; action?: ReactNode }) {
   return (
     <section className="parent-report-paper">
-      <header><div><p className="mom-eyebrow">Middle of Math · 가정 공유용</p><h1>{report.studentLabel}의 수학 생각 기록</h1><p>{report.diagnosisTitle} · {formatDate(report.generatedAt)}</p></div><button className="mom-button mom-button-secondary parent-print-button" onClick={() => window.print()}>인쇄 · PDF 저장</button></header>
+      <header><div><p className="mom-eyebrow">Middle of Math · 가정 공유용</p><h1>{report.studentLabel}의 수학 생각 기록</h1><p>{report.diagnosisTitle} · {formatDate(report.generatedAt)}</p></div>{action}</header>
       <div className="parent-report-intro"><span aria-hidden="true">∴</span><p>{report.participation}<br />{report.closing}</p></div>
       <section><p className="parent-section-number">01</p><h2>지금 잘 이어가고 있어요</h2><ul>{report.strengths.map((strength) => <li key={strength}>{strength}</li>)}</ul></section>
       <section><p className="parent-section-number">02</p><h2>함께 연습하고 있어요</h2><div className="parent-support-list">{report.supportAreas.map((area) => <article key={area.title}><h3>{area.title}</h3><p>{area.observation}</p><strong>집에서 이렇게 물어봐 주세요</strong><p>{area.homePrompt}</p></article>)}</div></section>
@@ -497,12 +800,14 @@ function assignmentDateValue(offsetDays: number): string {
   }).format(date);
 }
 
-function RosterPage({ students, classes, onAdd, onCreateClass, onRotate }: {
-  students: DemoStudent[];
+function RosterPage({ students, classes, selectedClass, onAdd, onCreateClass, onRotate, onRotateStudent }: {
+  students: TeacherStudentView[];
   classes: TeacherClassRecord[];
+  selectedClass?: TeacherClassRecord;
   onAdd: (key: string, alias: string) => Promise<void>;
   onCreateClass: (name: string) => Promise<void>;
   onRotate: () => Promise<void>;
+  onRotateStudent: (studentId: string) => Promise<void>;
 }) {
   const [key, setKey] = useState("");
   const [alias, setAlias] = useState("");
@@ -525,19 +830,20 @@ function RosterPage({ students, classes, onAdd, onCreateClass, onRotate }: {
   }
   return (
     <div className="teacher-page mom-stack-lg">
-      <PageHeader eyebrow="클래스·학생" title="번호는 필수, 별칭은 선택" description="번호는 클래스 안에서 변하지 않는 식별자입니다. 별칭은 화면 표시용이며 실명을 입력하지 않습니다." action={classes.length ? <button className="mom-button mom-button-secondary" onClick={() => void onRotate().catch((cause) => setError(cause instanceof Error ? cause.message : "입장 코드를 바꾸지 못했습니다."))}>입장 코드 바꾸기</button> : undefined} />
-      {classes.length === 0 ? <section className="mom-panel"><div className="mom-panel-body mom-stack-lg"><div><p className="mom-eyebrow">First class</p><h2>첫 클래스를 만들어 주세요</h2><p className="mom-muted">3학년 2학기 파일럿 클래스로 시작합니다.</p></div><label className="mom-input-group">클래스 이름<input className="mom-input" value={className} onChange={(event) => setClassName(event.target.value.slice(0, 60))} /></label><button className="mom-button mom-button-primary" disabled={!className.trim()} onClick={() => void onCreateClass(className.trim()).catch((cause) => setError(cause instanceof Error ? cause.message : "클래스를 만들지 못했습니다."))}>클래스 만들기</button></div></section> : <section className="teacher-code-strip"><div><span>{classes[0].name}</span><strong>{classes[0].joinCode ?? "코드 비공개"}</strong></div><p>원문 코드는 생성·재발급 직후에만 표시합니다.<br />분실했다면 새 코드를 발급해 주세요.</p></section>}
+      <PageHeader eyebrow="클래스·학생" title="번호는 필수, 별칭은 선택" description="실명은 받지 않습니다. 학생별 개인 코드는 생성·재발급 때 한 번만 보여 주고 해시로 보관합니다." action={classes.length ? <button className="mom-button mom-button-secondary" onClick={() => void onRotate().catch((cause) => setError(cause instanceof Error ? cause.message : "입장 코드를 바꾸지 못했습니다."))}>입장 코드 바꾸기</button> : undefined} />
+      {classes.length === 0 ? <section className="mom-panel"><div className="mom-panel-body mom-stack-lg"><div><p className="mom-eyebrow">First class</p><h2>첫 클래스를 만들어 주세요</h2><p className="mom-muted">3학년 2학기 파일럿 클래스로 시작합니다.</p></div><label className="mom-input-group">클래스 이름<input className="mom-input" value={className} onChange={(event) => setClassName(event.target.value.slice(0, 60))} /></label><button className="mom-button mom-button-primary" disabled={!className.trim()} onClick={() => void onCreateClass(className.trim()).catch((cause) => setError(cause instanceof Error ? cause.message : "클래스를 만들지 못했습니다."))}>클래스 만들기</button></div></section> : <section className="teacher-code-strip"><div><span>{selectedClass?.name ?? "클래스 선택"}</span><strong>{selectedClass?.joinCode ?? "코드 비공개"}</strong></div><p>원문 코드는 생성·재발급 직후에만 표시합니다.<br />분실했다면 새 코드를 발급해 주세요.</p></section>}
+      {classes.length > 0 && <section className="teacher-class-create"><div><p className="mom-eyebrow">New pilot class</p><strong>다른 클래스 추가</strong></div><label className="mom-input-group">클래스 이름<input className="mom-input" value={className} onChange={(event) => setClassName(event.target.value.slice(0, 60))} /></label><button className="mom-button mom-button-secondary" disabled={!className.trim()} onClick={() => void onCreateClass(className.trim()).catch((cause) => setError(cause instanceof Error ? cause.message : "클래스를 만들지 못했습니다."))}>3학년 2학기 클래스 만들기</button></section>}
       {error && <p className="mom-form-error" role="alert">{error}</p>}
       <div className="teacher-roster-grid">
-        <section className="mom-panel"><div className="mom-panel-header"><div><p className="mom-eyebrow">Roster</p><h2>학생 {students.length}명</h2></div></div><table className="teacher-table"><thead><tr><th>번호</th><th>별칭</th><th>진행</th><th>상태</th></tr></thead><tbody>{students.map((student) => <tr key={student.id}><td><strong>{student.rosterKey}</strong></td><td>{student.alias ?? <span className="mom-muted">사용 안 함</span>}</td><td>{student.status === "completed" ? "완료" : student.status === "in_progress" ? "진행 중" : "시작 전"}</td><td><StatusPill tone="neutral">활성</StatusPill></td></tr>)}</tbody></table></section>
+        <section className="mom-panel"><div className="mom-panel-header"><div><p className="mom-eyebrow">Roster</p><h2>학생 {students.length}명</h2></div></div><table className="teacher-table"><thead><tr><th>번호</th><th>별칭</th><th>진행</th><th>개인 코드</th></tr></thead><tbody>{students.map((student) => <tr key={student.id}><td><strong>{student.rosterKey}</strong></td><td>{student.alias ?? <span className="mom-muted">사용 안 함</span>}</td><td>{student.status === "completed" ? "완료" : student.status === "in_progress" ? "진행 중" : student.status === "interpretation_pending" ? "해석 대기" : "시작 전"}</td><td><button type="button" className="mom-button mom-button-quiet" onClick={() => void onRotateStudent(student.id).catch((cause) => setError(cause instanceof Error ? cause.message : "개인 코드를 바꾸지 못했습니다."))}>재발급</button></td></tr>)}</tbody></table></section>
         <form className="mom-panel" onSubmit={submit}><div className="mom-panel-body mom-stack-lg"><div><p className="mom-eyebrow">Add student</p><h2>학생 한 명 추가</h2></div><label className="mom-input-group">번호 <span>필수</span><input className="mom-input" inputMode="numeric" pattern="[0-9]+" value={key} onChange={(event) => setKey(event.target.value.replace(/\D/g, "").slice(0, 3))} placeholder="예: 8" required /></label><label className="mom-input-group">별칭 <span>선택</span><input className="mom-input" value={alias} onChange={(event) => setAlias(event.target.value.slice(0, 12))} placeholder="예: 민들레" /><small>실명 대신 학생과 합의한 별칭을 사용하세요.</small></label><button className="mom-button mom-button-primary mom-button-block" disabled={saving || classes.length === 0}>{saving ? "저장 중…" : "학생 추가"}</button></div></form>
       </div>
     </div>
   );
 }
 
-function SettingsPage() {
-  return <div className="teacher-page mom-stack-lg"><PageHeader eyebrow="설정" title="교사 계정과 데이터 원칙" description="AI 요약 설정은 Phase 3 전까지 노출하지 않습니다." /><section className="mom-panel"><div className="mom-panel-body teacher-settings"><div><span>표시 이름</span><strong>김수학</strong></div><div><span>이메일 상태</span><strong>인증 완료</strong></div><div><span>학생 개인정보</span><strong>번호 필수 · 별칭 선택 · 실명 미수집</strong></div><div><span>학부모 공유</span><strong>교사 검토 후 인쇄/PDF 저장</strong></div></div></section></div>;
+function SettingsPage({ profile, selectedClass }: { profile: TeacherProfileRecord | null; selectedClass?: TeacherClassRecord }) {
+  return <div className="teacher-page mom-stack-lg"><PageHeader eyebrow="설정" title="교사 계정과 데이터 원칙" description="AI 요약 설정은 Phase 3 전까지 노출하지 않습니다." /><section className="mom-panel"><div className="mom-panel-body teacher-settings"><div><span>표시 이름</span><strong>{profile?.displayName ?? "불러오는 중"}</strong></div><div><span>이메일</span><strong>{profile?.email ?? "인증 계정"}</strong></div><div><span>학생 개인정보</span><strong>번호 필수 · 별칭 선택 · 실명 미수집 · 개인 코드 해시 보관</strong></div><div><span>학부모 공유</span><strong>교사 검토 후 인쇄/PDF 저장</strong></div>{selectedClass && <><div><span>파일럿 종료</span><strong>{formatDate(selectedClass.pilotEndsAt)}</strong></div><div><span>자동 삭제 예정</span><strong>{formatDate(selectedClass.purgeAfter)}</strong></div></>}</div></section></div>;
 }
 
 function PageHeader({ eyebrow, title, description, action }: { eyebrow: string; title: string; description: string; action?: ReactNode }) {
@@ -556,14 +862,32 @@ function DecisionBlock({ number, title, description, children }: { number: strin
   return <div className="teacher-decision-block"><span>{number}</span><div className="mom-stack"><div><h2>{title}</h2><p className="mom-muted">{description}</p></div>{children}</div></div>;
 }
 
-function studentLabel(student: DemoStudent) {
+function mapInsightsToStudents(value: TeacherAssignmentInsights): TeacherStudentView[] {
+  const evidenceByStudent = new Map(value.bundle.students.map((entry) => [entry.student.id, entry.sessions]));
+  return value.students.map((entry) => ({
+    id: entry.student.id,
+    rosterKey: entry.student.rosterKey,
+    alias: entry.student.displayAlias,
+    status: entry.interpretationStatus === "ready" ? "completed" : entry.interpretationStatus,
+    pendingReason: entry.pendingReason,
+    latestCompletedSessionId: entry.latestCompletedSessionId,
+    report: entry.report,
+    attempts: evidenceByStudent.get(entry.student.id) ?? []
+  }));
+}
+
+function studentLabel(student: TeacherStudentView) {
   return student.alias ? `${student.rosterKey}번 · ${student.alias}` : `${student.rosterKey}번`;
 }
 
-function parentStudentLabel(student: DemoStudent) {
+function parentStudentLabel(student: TeacherStudentView) {
   return student.alias ?? "학생";
 }
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("ko-KR", { dateStyle: "medium", timeZone: "Asia/Seoul" }).format(new Date(value));
+}
+
+function formatDateTime(value: string) {
+  return new Intl.DateTimeFormat("ko-KR", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Seoul" }).format(new Date(value));
 }

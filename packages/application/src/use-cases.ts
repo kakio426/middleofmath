@@ -1,6 +1,7 @@
 import {
   createParentReport,
   generateClassSummary,
+  INTERPRETATION_ENGINE_VERSION,
   interpretSession,
   type ContentDraft,
   type ContentReviewComment,
@@ -12,7 +13,11 @@ import {
   type DiagnosisSet,
   type JudgmentConfirmationPayload,
   type ObservationEvent,
+  type ParentReportExportRecord,
   type PublishedDiagnosisSet,
+  type TeacherAssignmentEvidenceBundle,
+  type TeacherAssignmentInsights,
+  type TeacherSessionEvidence,
   type TeacherStudentReport
 } from "@middle-of-math/domain";
 import type {
@@ -25,7 +30,8 @@ import type {
   RemoteEventRepository,
   ReportRepository,
   SessionRepository,
-  PublishedDiagnosisSetRepository
+  PublishedDiagnosisSetRepository,
+  TeacherInsightsRepository
 } from "./ports";
 
 export class StartSession {
@@ -170,12 +176,162 @@ export class GenerateStudentReport {
     diagnosisSet: DiagnosisSet,
     events: ObservationEvent[],
     studentLabel: string
-  ): Promise<{ teacher: TeacherStudentReport; parent: ReturnType<typeof createParentReport> }> {
+  ): Promise<{
+    teacher: TeacherStudentReport;
+    parent: ReturnType<typeof createParentReport>;
+    interpretationRun: Awaited<ReturnType<ReportRepository["saveInterpretationRun"]>>;
+  }> {
     const teacher = interpretSession(diagnosisSet, events);
     const parent = createParentReport(diagnosisSet, teacher, studentLabel);
-    await this.reports.saveTeacherReport(teacher);
-    if (this.reports.saveParentReport) await this.reports.saveParentReport(teacher.sessionId, parent);
-    return { teacher, parent };
+    const interpretationRun = await this.reports.saveInterpretationRun(teacher);
+    return { teacher, parent, interpretationRun };
+  }
+}
+
+export class LoadClassInsights {
+  constructor(private readonly insights: TeacherInsightsRepository) {}
+
+  async execute(classId: string): Promise<TeacherAssignmentEvidenceBundle[]> {
+    return this.insights.listClassAssignmentBundles(classId);
+  }
+}
+
+export function selectLatestCompletedAttempt(
+  attempts: TeacherSessionEvidence[]
+): TeacherSessionEvidence | undefined {
+  return attempts
+    .filter((attempt) => attempt.session.status === "completed" && attempt.session.completedAt)
+    .sort((left, right) => {
+      const completed = right.session.completedAt!.localeCompare(left.session.completedAt!);
+      if (completed !== 0) return completed;
+      const started = right.session.startedAt.localeCompare(left.session.startedAt);
+      if (started !== 0) return started;
+      return right.session.id.localeCompare(left.session.id);
+    })[0];
+}
+
+export class GenerateAssignmentInsights {
+  constructor(
+    private readonly insights: TeacherInsightsRepository,
+    private readonly reports: ReportRepository,
+    private readonly clock: Clock
+  ) {}
+
+  async execute(assignmentId: string): Promise<TeacherAssignmentInsights> {
+    const bundle = await this.insights.getAssignmentBundle(assignmentId);
+    if (!bundle) throw new Error("과제 근거를 찾을 수 없습니다.");
+
+    const studentReports: Array<{ studentId: string; report: TeacherStudentReport }> = [];
+    const students = [];
+    let inProgressStudents = 0;
+    const contentPendingReason = getInterpretationPendingReason(bundle.diagnosisSet);
+
+    for (const student of bundle.students) {
+      const latest = selectLatestCompletedAttempt(student.sessions);
+      if (student.sessions.some((attempt) => ["in_progress", "sync_pending"].includes(attempt.session.status))) {
+        inProgressStudents += 1;
+      }
+      if (!latest) {
+        students.push({
+          student: student.student,
+          interpretationStatus: student.sessions.some((attempt) => ["in_progress", "sync_pending"].includes(attempt.session.status))
+            ? "in_progress" as const
+            : "not_started" as const
+        });
+        continue;
+      }
+      if (contentPendingReason) {
+        students.push({
+          student: student.student,
+          interpretationStatus: "interpretation_pending" as const,
+          pendingReason: contentPendingReason,
+          latestCompletedSessionId: latest.session.id
+        });
+        continue;
+      }
+      const persisted = latest.interpretationRuns.find((run) =>
+        run.engineVersion === INTERPRETATION_ENGINE_VERSION
+        && run.diagnosisSetVersion === bundle.diagnosisSet.version
+      ) ?? await this.reports.getInterpretationRun({
+        sessionId: latest.session.id,
+        engineVersion: INTERPRETATION_ENGINE_VERSION,
+        diagnosisSetVersion: bundle.diagnosisSet.version
+      });
+      const report = persisted?.report ?? interpretSession(
+        bundle.diagnosisSet.content,
+        latest.events,
+        undefined,
+        this.clock.now().toISOString()
+      );
+      if (!persisted) await this.reports.saveInterpretationRun(report);
+      studentReports.push({ studentId: student.student.id, report });
+      students.push({
+        student: student.student,
+        interpretationStatus: "ready" as const,
+        latestCompletedSessionId: latest.session.id,
+        report
+      });
+    }
+
+    return {
+      bundle,
+      classSummary: generateClassSummary(studentReports, inProgressStudents),
+      students
+    };
+  }
+}
+
+function getInterpretationPendingReason(
+  diagnosisSet: PublishedDiagnosisSet
+): "checksum_mismatch" | "unsupported_interaction_version" | undefined {
+  if (diagnosisSet.checksum !== diagnosisSet.content.manifest.checksum) return "checksum_mismatch";
+  const supported = new Set(["choice@1", "fraction-bar@1", "measurement@1", "pictograph@1"]);
+  if (diagnosisSet.content.judgments.some((judgment) =>
+    !supported.has(`${judgment.interaction.type}@${judgment.interaction.version}`)
+  )) return "unsupported_interaction_version";
+  return undefined;
+}
+
+export class ExportParentReport {
+  constructor(
+    private readonly insights: TeacherInsightsRepository,
+    private readonly reports: ReportRepository,
+    private readonly ids: IdGenerator,
+    private readonly clock: Clock
+  ) {}
+
+  async execute(input: { sessionId: string; reviewedBy: string }): Promise<ParentReportExportRecord> {
+    const context = await this.insights.getSessionEvidence(input.sessionId);
+    if (!context || context.evidence.session.status !== "completed") {
+      throw new Error("완료된 세션 근거를 찾을 수 없습니다.");
+    }
+    if (getInterpretationPendingReason(context.diagnosisSet)) {
+      throw new Error("콘텐츠 검증이 끝날 때까지 학부모 리포트를 내보낼 수 없습니다.");
+    }
+    const current = context.evidence.interpretationRuns.find((run) =>
+      run.engineVersion === INTERPRETATION_ENGINE_VERSION
+      && run.diagnosisSetVersion === context.diagnosisSet.version
+    ) ?? await this.reports.getInterpretationRun({
+      sessionId: context.evidence.session.id,
+      engineVersion: INTERPRETATION_ENGINE_VERSION,
+      diagnosisSetVersion: context.diagnosisSet.version
+    });
+    const report = current?.report ?? interpretSession(
+      context.diagnosisSet.content,
+      context.evidence.events,
+      undefined,
+      this.clock.now().toISOString()
+    );
+    const run = current ?? await this.reports.saveInterpretationRun(report);
+    const studentLabel = context.student.displayAlias ?? "학생";
+    const parent = createParentReport(context.diagnosisSet.content, report, studentLabel);
+    return this.reports.saveParentReportExport({
+      id: this.ids.next(),
+      sessionId: context.evidence.session.id,
+      interpretationRunId: run.id,
+      reviewedBy: input.reviewedBy,
+      report: parent
+    });
   }
 }
 

@@ -14,6 +14,9 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test:legacy && vitest run",
     "test:db": "npx supabase test db",
+    "test:e2e": "playwright test",
+    "test:smoke:staging": "playwright test --config playwright.staging.config.ts",
+    "test:smoke:production": "playwright test --config playwright.production.config.ts",
     "test:legacy": "node scripts/student-content-harness.js && node scripts/runtime-harness.js",
     "test:student-content": "node scripts/student-content-harness.js",
     "test:runtime": "node scripts/runtime-harness.js",
@@ -22,6 +25,7 @@
     "supabase:push": "npx supabase db push"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.3",

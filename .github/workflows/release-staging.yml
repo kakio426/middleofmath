@@ -1,0 +1,104 @@
+name: Release staging
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: staging-release
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Link staging without interactive credentials
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: supabase link --project-ref "$SUPABASE_PROJECT_REF" --password "$SUPABASE_DB_PASSWORD" --yes
+      - name: Apply the reviewed migration chain
+        env:
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: supabase db push --linked --password "$SUPABASE_DB_PASSWORD" --yes
+
+  deploy:
+    needs: migrate
+    runs-on: ubuntu-latest
+    environment: staging
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: student
+            project_secret: VERCEL_PROJECT_ID_STUDENT
+            staging_alias: middle-of-math-student-staging.vercel.app
+          - app: teacher
+            project_secret: VERCEL_PROJECT_ID_TEACHER
+            staging_alias: middle-of-math-teacher-staging.vercel.app
+          - app: studio
+            project_secret: VERCEL_PROJECT_ID_STUDIO
+            staging_alias: middle-of-math-studio-staging.vercel.app
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Pull staging environment
+        working-directory: apps/${{ matrix.app }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets[matrix.project_secret] }}
+        run: npx vercel@56.5.0 pull --yes --environment=preview --token="$VERCEL_TOKEN"
+      - name: Build and deploy immutable artifact
+        working-directory: apps/${{ matrix.app }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets[matrix.project_secret] }}
+        run: |
+          npx vercel@56.5.0 build --token="$VERCEL_TOKEN"
+          deployment_url=$(npx vercel@56.5.0 deploy --prebuilt --token="$VERCEL_TOKEN")
+          npx vercel@56.5.0 alias set "$deployment_url" "${{ matrix.staging_alias }}" --token="$VERCEL_TOKEN"
+
+  smoke:
+    needs: deploy
+    runs-on: ubuntu-latest
+    environment: staging
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Run the invited-teacher pilot journey
+        env:
+          STAGING_STUDENT_URL: https://middle-of-math-student-staging.vercel.app
+          STAGING_TEACHER_URL: https://middle-of-math-teacher-staging.vercel.app
+          STAGING_TEACHER_EMAIL: ${{ secrets.STAGING_TEACHER_EMAIL }}
+          STAGING_TEACHER_PASSWORD: ${{ secrets.STAGING_TEACHER_PASSWORD }}
+        run: npm run test:smoke:staging

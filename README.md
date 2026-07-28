@@ -2,7 +2,7 @@
 
 초등학생의 수학 풀이를 최종 정답만으로 판단하지 않고, 풀이 과정의 작은 판단 단위로 나누어 어디에서 이해가 흔들리는지 교사가 볼 수 있게 하는 진단 서비스입니다.
 
-현재 Phase 1 알파의 학생·교사 서비스에 Phase 2 내부 콘텐츠 스튜디오를 추가하고 있습니다. `3학년 2학기 수학` 진단, 클래스 코드 입장, 오프라인 큐, Supabase 영구 저장, 반 요약, 분리된 교사·학부모 리포트와 2인 검수 발행을 구현합니다. 기존 `수 세기·5학년 분수` 정적 프로토타입은 회귀 fixture로 루트에 보존합니다.
+현재 1–3명의 초대 교사가 사용할 3학년 2학기 실교실 파일럿 경로를 구현하고 있습니다. 클래스 코드 입장, 오프라인 큐, Supabase 영구 저장, 최신 완료 세션 기반 반 요약, 분리된 교사·학부모 리포트와 내부 콘텐츠 스튜디오를 포함합니다. 기존 `수 세기·5학년 분수` 정적 프로토타입은 회귀 fixture로 루트에 보존합니다.
 
 ## 왜 만들게 되었나
 
@@ -28,8 +28,8 @@
 - 기준 학기: 초등 3학년 2학기
 - 단원: 곱셈, 나눗셈, 원, 분수, 들이와 무게, 그림그래프
 - 콘텐츠: 6개 단원·12개 판단, Zod 검증, 버전 `1.0.0`
-- 학생: 클래스 코드 + 번호 입장, 앞으로만 진행, IndexedDB 오프라인 큐
-- 교사: 반 요약 첫 화면, 학생 근거 드릴다운, 진단 배정, 번호·선택 별칭 관리
+- 학생: 클래스 코드 + 번호 + 학생별 6자리 개인 코드 입장, 앞으로만 진행, IndexedDB 오프라인 큐
+- 교사: 반 요약 첫 화면, 학생 근거 드릴다운, 진단 배정, 번호·선택 별칭·일회 노출 개인 코드 관리
 - 리포트: 교사용 근거와 학부모 공유용 인쇄/PDF 화면 분리
 - 백엔드: Supabase Auth·Postgres·RLS, append-only 관찰 이벤트
 
@@ -185,6 +185,8 @@ npm run dev:teacher  # http://127.0.0.1:4174
 npm run dev:studio   # http://127.0.0.1:4175
 ```
 
+세 앱은 운영 설정 누락 시 자동으로 샘플 데이터에 내려가지 않습니다. 로컬 데모가 필요할 때만 각 앱에 `VITE_DEMO_MODE=true`를 명시합니다. staging과 production은 `VITE_DEMO_MODE=false`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`를 각각 분리해 설정합니다.
+
 ## 테스트
 
 ```bash
@@ -192,6 +194,7 @@ npm test
 npm run typecheck
 npm run build
 npm run test:db
+npm run test:e2e
 ```
 
 또는 직접 실행할 수 있습니다.
@@ -223,10 +226,11 @@ node scripts/runtime-harness.js
 └── scripts/                           # legacy 회귀 하네스
 ```
 
-## 다음 단계
+## 파일럿 개방 전 남은 운영 작업
 
-- 실제 교실 파일럿용 보존 기간·삭제 요청·코드 rate limit 확정
-- Phase 2 hardening migration을 원격 Supabase에 적용
-- 학생/교사 핵심 흐름 브라우저 E2E와 RLS 부정 테스트를 CI에 추가
-- 콘텐츠 스튜디오의 새 세트·단원·학습 단계 구조 편집과 관리자 운영 화면 확장
-- Phase 3 DeepSeek 익명 요약 adapter
+- GitHub `staging` environment에 Supabase access token·DB password·project ref와 Vercel token, smoke 교사 계정을 등록
+- 별도 production Supabase 프로젝트 생성 후 production environment 비밀값과 Auth redirect URL 등록
+- staging 자동 migration·배포에서 초대 교사 → 학생 완료 → 반 요약 → 학부모 출력 smoke 통과
+- staging에서 검증한 정확한 커밋 SHA를 production 수동 승인으로 승격
+
+세부 체크리스트와 보존 작업은 [`docs/pilot-operations.md`](docs/pilot-operations.md)를 따른다. Phase 2 구조 편집 확장과 Phase 3 DeepSeek 익명 요약은 파일럿 이후 범위다.

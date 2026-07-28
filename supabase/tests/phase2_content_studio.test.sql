@@ -5,11 +5,11 @@ select plan(8);
 
 insert into auth.users (
   id, aud, role, email, encrypted_password, email_confirmed_at,
-  raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+  invited_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at
 ) values
-  ('10000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'phase2-author@example.test', 'x', now(), '{}', '{}', now(), now()),
-  ('10000000-0000-0000-0000-000000000002', 'authenticated', 'authenticated', 'phase2-reviewer@example.test', 'x', now(), '{}', '{}', now(), now()),
-  ('10000000-0000-0000-0000-000000000003', 'authenticated', 'authenticated', 'phase2-teacher@example.test', 'x', now(), '{}', '{}', now(), now());
+  ('10000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'phase2-author@example.test', 'x', now(), now(), '{}', '{}', now(), now()),
+  ('10000000-0000-0000-0000-000000000002', 'authenticated', 'authenticated', 'phase2-reviewer@example.test', 'x', now(), now(), '{}', '{}', now(), now()),
+  ('10000000-0000-0000-0000-000000000003', 'authenticated', 'authenticated', 'phase2-teacher@example.test', 'x', now(), now(), '{}', '{}', now(), now());
 
 insert into public.content_team_members (user_id, role) values
   ('10000000-0000-0000-0000-000000000001', 'author'),

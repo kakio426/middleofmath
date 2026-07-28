@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+      - name: Start isolated local Supabase
+        run: supabase start
+
+      - name: Verify migrations and pgTAP policies
+        run: npm run test:db
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Run browser journeys
+        run: npm run test:e2e
+
+      - name: Upload browser evidence on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+
+      - name: Stop local Supabase
+        if: always()
+        run: supabase stop --no-backup

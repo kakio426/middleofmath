@@ -1,0 +1,121 @@
+name: Release production
+
+on:
+  workflow_dispatch:
+    inputs:
+      git_sha:
+        description: Staging에서 검증한 main 커밋 SHA
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-release
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.git_sha }}
+          fetch-depth: 0
+      - name: Require a commit contained in main
+        env:
+          TARGET_SHA: ${{ inputs.git_sha }}
+        run: git merge-base --is-ancestor "$TARGET_SHA" origin/main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: supabase start
+      - run: npm run test:db
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - if: always()
+        run: supabase stop --no-backup
+
+  migrate:
+    needs: preflight
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.git_sha }}
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Link production without interactive credentials
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: supabase link --project-ref "$SUPABASE_PROJECT_REF" --password "$SUPABASE_DB_PASSWORD" --yes
+      - name: Apply exactly the repository migration chain
+        env:
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: supabase db push --linked --password "$SUPABASE_DB_PASSWORD" --yes
+
+  deploy:
+    needs: migrate
+    runs-on: ubuntu-latest
+    environment: production
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: student
+            project_secret: VERCEL_PROJECT_ID_STUDENT
+          - app: teacher
+            project_secret: VERCEL_PROJECT_ID_TEACHER
+          - app: studio
+            project_secret: VERCEL_PROJECT_ID_STUDIO
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.git_sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build and deploy production artifact
+        working-directory: apps/${{ matrix.app }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets[matrix.project_secret] }}
+        run: |
+          npx vercel@56.5.0 pull --yes --environment=production --token="$VERCEL_TOKEN"
+          npx vercel@56.5.0 build --prod --token="$VERCEL_TOKEN"
+          npx vercel@56.5.0 deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+
+  smoke:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.git_sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Verify production URLs use real configuration
+        env:
+          PRODUCTION_STUDENT_URL: https://middle-of-math-student.vercel.app
+          PRODUCTION_TEACHER_URL: https://middle-of-math-teacher.vercel.app
+          PRODUCTION_STUDIO_URL: https://middle-of-math-studio.vercel.app
+        run: npm run test:smoke:production

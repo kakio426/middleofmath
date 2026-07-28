@@ -30,3 +30,5 @@
   .student-entry-copy h1 br { display: none; }
   .student-question, .student-response { padding: var(--space-4); }
 }
+.student-centered { min-height: 100dvh; display: grid; place-content: center; justify-items: center; gap: var(--space-4); padding: var(--space-6); }
+.student-centered .mom-panel { max-width: 36rem; }

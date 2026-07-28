@@ -5,13 +5,13 @@ select plan(21);
 
 insert into auth.users (
   id, aud, role, email, encrypted_password, email_confirmed_at, is_anonymous,
-  raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+  invited_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at
 ) values
-  ('11000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'integrity-teacher@example.test', 'x', now(), false, '{}', '{}', now(), now()),
-  ('11000000-0000-0000-0000-000000000002', 'authenticated', 'authenticated', null, 'x', now(), true, '{}', '{}', now(), now()),
-  ('11000000-0000-0000-0000-000000000003', 'authenticated', 'authenticated', 'integrity-owner@example.test', 'x', now(), false, '{}', '{}', now(), now()),
-  ('11000000-0000-0000-0000-000000000004', 'authenticated', 'authenticated', 'integrity-other@example.test', 'x', now(), false, '{}', '{}', now(), now()),
-  ('11000000-0000-0000-0000-000000000005', 'authenticated', 'authenticated', 'integrity-reviewer@example.test', 'x', now(), false, '{}', '{}', now(), now());
+  ('11000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'integrity-teacher@example.test', 'x', now(), false, now(), '{}', '{}', now(), now()),
+  ('11000000-0000-0000-0000-000000000002', 'authenticated', 'authenticated', null, 'x', now(), true, null, '{}', '{}', now(), now()),
+  ('11000000-0000-0000-0000-000000000003', 'authenticated', 'authenticated', 'integrity-owner@example.test', 'x', now(), false, now(), '{}', '{}', now(), now()),
+  ('11000000-0000-0000-0000-000000000004', 'authenticated', 'authenticated', 'integrity-other@example.test', 'x', now(), false, now(), '{}', '{}', now(), now()),
+  ('11000000-0000-0000-0000-000000000005', 'authenticated', 'authenticated', 'integrity-reviewer@example.test', 'x', now(), false, now(), '{}', '{}', now(), now());
 
 insert into public.content_team_members (user_id, role) values
   ('11000000-0000-0000-0000-000000000003', 'author'),
@@ -26,8 +26,8 @@ insert into public.classes (
   '무결성 테스트반', 3, 2, 'integrity-test-lookup', 'integrity-test-hash'
 );
 
-insert into public.students (id, class_id, roster_key)
-values ('13000000-0000-0000-0000-000000000001', '12000000-0000-0000-0000-000000000001', '1');
+insert into public.students (id, class_id, roster_key, join_secret_hash)
+values ('13000000-0000-0000-0000-000000000001', '12000000-0000-0000-0000-000000000001', '1', extensions.crypt('SAFE27', extensions.gen_salt('bf')));
 
 insert into public.assignments (
   id, class_id, diagnosis_set_id, diagnosis_set_version, status, opens_at, created_by

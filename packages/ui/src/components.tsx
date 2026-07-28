@@ -77,7 +77,7 @@ export function VisualAid({ visual }: { visual: JudgmentVisual }) {
       <div className="mom-visual mom-division" role="img" aria-label={`${visual.total}개를 ${visual.groups}묶음으로 나누는 그림`}>
         <div className="mom-total-number">{visual.total}<small>개</small></div>
         <div className="mom-group-row">
-          {Array.from({ length: visual.groups }, (_, index) => <span key={index}>한 사람</span>)}
+          {Array.from({ length: visual.groups }, (_, index) => <span key={index}>묶음 {index + 1}</span>)}
         </div>
       </div>
     );
@@ -94,13 +94,39 @@ export function VisualAid({ visual }: { visual: JudgmentVisual }) {
     );
   }
   if (visual.kind === "fraction-bar") {
+    if (visual.unknown === "denominator") {
+      return (
+        <div className="mom-visual mom-fraction mom-fraction-unknown" role="img" aria-label={`분자는 ${visual.numerator}, 분모는 물음표인 분수`}>
+          <strong>{visual.numerator}</strong>
+          <span aria-hidden="true" />
+          <strong>?</strong>
+        </div>
+      );
+    }
+    const barCount = visual.unknown
+      ? 1
+      : Math.max(1, Math.ceil(visual.numerator / visual.denominator));
     const label = visual.unknown
       ? `${visual.denominator}칸으로 나뉜 빈 기준 막대`
-      : `${visual.denominator}칸 중 ${visual.numerator}칸이 채워진 분수 막대`;
+      : `한 줄에 ${visual.denominator}칸씩, 모두 ${visual.numerator}칸이 채워진 분수 막대`;
     return (
-      <div className="mom-visual mom-fraction" role="img" aria-label={label} style={{ gridTemplateColumns: `repeat(${visual.denominator}, 1fr)` }}>
-        {Array.from({ length: visual.denominator }, (_, index) => (
-          <span key={index} className={!visual.unknown && index < visual.numerator ? "is-filled" : ""} />
+      <div className="mom-visual mom-fraction" role="img" aria-label={label}>
+        {Array.from({ length: barCount }, (_, barIndex) => (
+          <div
+            className="mom-fraction-row"
+            key={barIndex}
+            style={{ gridTemplateColumns: `repeat(${visual.denominator}, 1fr)` }}
+          >
+            {Array.from({ length: visual.denominator }, (_, cellIndex) => {
+              const globalIndex = barIndex * visual.denominator + cellIndex;
+              return (
+                <span
+                  key={cellIndex}
+                  className={!visual.unknown && globalIndex < visual.numerator ? "is-filled" : ""}
+                />
+              );
+            })}
+          </div>
         ))}
       </div>
     );

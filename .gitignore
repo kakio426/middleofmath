@@ -3,6 +3,8 @@ node_modules/
 qa-*.png
 dist/
 coverage/
+test-results/
+playwright-report/
 *.tsbuildinfo
 .env
 .env.*

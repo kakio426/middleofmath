@@ -5,7 +5,11 @@ import {
   StartSession,
   SyncObservationEvents
 } from "@middle-of-math/application";
-import { grade3Semester2Diagnosis, parseDiagnosisSet } from "@middle-of-math/content";
+import {
+  grade3Semester2CompleteDiagnosis,
+  grade3Semester2Diagnosis,
+  parseDiagnosisSet
+} from "@middle-of-math/content";
 import type { DiagnosisSession, DiagnosisSet, Judgment } from "@middle-of-math/domain";
 import {
   CryptoIdGenerator,
@@ -13,6 +17,7 @@ import {
   IndexedDbContentStore,
   IndexedDbSessionStore,
   SupabaseEventRepository,
+  SupabaseOperationalTelemetry,
   SupabaseSessionRepository,
   SupabaseStudentGateway,
   SystemClock,
@@ -21,6 +26,7 @@ import {
 import type { PublishedDiagnosisSet } from "@middle-of-math/domain";
 import {
   AppShell,
+  Brand,
   ChoiceOption,
   EmptyState,
   ProgressLine,
@@ -69,18 +75,19 @@ function publicConfig() {
 }
 
 const runtimeConfig = publicConfig();
-const runtimeClient = runtimeConfig ? createMiddleOfMathClient(runtimeConfig) : null;
+const demoMode = import.meta.env.VITE_DEMO_MODE === "true";
+const runtimeClient = runtimeConfig && !demoMode ? createMiddleOfMathClient(runtimeConfig) : null;
 
 function demoAssignment(): AssignmentCard {
   return {
-    id: "grade3-semester2-pilot",
-    title: grade3Semester2Diagnosis.manifest.title,
-    description: "곱셈부터 그림그래프까지 · 12개의 짧은 생각",
+    id: "grade3-semester2-complete-review",
+    title: `${grade3Semester2CompleteDiagnosis.manifest.title} · 전체 검수본`,
+    description: `${grade3Semester2CompleteDiagnosis.manifest.units.length}개 단원 · ${grade3Semester2CompleteDiagnosis.judgments.length}개의 짧은 생각`,
     status: "new",
-    diagnosisSetId: grade3Semester2Diagnosis.manifest.id,
-    diagnosisSetVersion: grade3Semester2Diagnosis.manifest.version,
-    checksum: grade3Semester2Diagnosis.manifest.checksum,
-    content: grade3Semester2Diagnosis
+    diagnosisSetId: grade3Semester2CompleteDiagnosis.manifest.id,
+    diagnosisSetVersion: grade3Semester2CompleteDiagnosis.manifest.version,
+    checksum: grade3Semester2CompleteDiagnosis.manifest.checksum,
+    content: grade3Semester2CompleteDiagnosis
   };
 }
 
@@ -151,19 +158,20 @@ async function loadCachedAssignments(store: IndexedDbContentStore): Promise<Assi
 }
 
 export function StudentApp() {
-  const config = runtimeConfig;
+  const config = demoMode ? null : runtimeConfig;
   const localStore = useMemo(() => new IndexedDbSessionStore(), []);
   const contentStore = useMemo(() => new IndexedDbContentStore(), []);
   const client = runtimeClient;
   const gateway = useMemo(() => client ? new SupabaseStudentGateway(client) : null, [client]);
   const remoteSessions = useMemo(() => client ? new SupabaseSessionRepository(client) : null, [client]);
   const remoteEvents = useMemo(() => client ? new SupabaseEventRepository(client) : null, [client]);
+  const telemetry = useMemo(() => client ? new SupabaseOperationalTelemetry(client) : null, [client]);
   const [screen, setScreen] = useState<Screen>(() => localStorage.getItem(LOCAL_CONTEXT_KEY) ? "assignments" : "join");
   const [student, setStudent] = useState<StudentContext | null>(() => {
     const saved = localStorage.getItem(LOCAL_CONTEXT_KEY);
     return saved ? JSON.parse(saved) as StudentContext : null;
   });
-  const [assignmentCards, setAssignmentCards] = useState<AssignmentCard[]>(() => runtimeConfig ? [] : [demoAssignment()]);
+  const [assignmentCards, setAssignmentCards] = useState<AssignmentCard[]>(() => demoMode ? [demoAssignment()] : []);
   const [assignment, setAssignment] = useState<AssignmentCard | null>(null);
   const [session, setSession] = useState<DiagnosisSession | null>(null);
   const [judgmentIndex, setJudgmentIndex] = useState(0);
@@ -196,10 +204,15 @@ export function StudentApp() {
 
   useEffect(() => {
     if (!online || !remoteEvents || !session) return;
-    new SyncObservationEvents(localStore, remoteEvents, remoteSessions ?? localStore)
-      .execute(session.id)
-      .catch(() => undefined);
-  }, [online, remoteEvents, remoteSessions, session, localStore]);
+    void (async () => {
+      if (remoteSessions) {
+        const localSession = await localStore.get(session.id);
+        if (localSession && !await remoteSessions.get(session.id)) await remoteSessions.create(localSession);
+      }
+      return new SyncObservationEvents(localStore, remoteEvents, remoteSessions ?? localStore).execute(session.id);
+    })()
+      .catch(() => { void telemetry?.record({ app: "student", event: "sync.failed" }).catch(() => undefined); });
+  }, [online, remoteEvents, remoteSessions, session, localStore, telemetry]);
 
   useEffect(() => {
     if (!config || !student) return;
@@ -219,12 +232,16 @@ export function StudentApp() {
   const activeContent = assignment?.content ?? assignmentCards[0]?.content ?? grade3Semester2Diagnosis;
   const assignments = assignmentCards.map((card) => card.id === assignment?.id ? {
     ...card,
-    status: session?.status === "completed" ? "completed" as const : session ? "in_progress" as const : card.status
+    status: session?.status === "completed" || (demoMode && session?.status === "sync_pending")
+      ? "completed" as const
+      : session
+        ? "in_progress" as const
+        : card.status
   } : card);
   const currentJudgment = activeContent.judgments[judgmentIndex];
   const progress = judgmentIndex / activeContent.judgments.length * 100;
 
-  async function joinClass(input: { joinCode: string; rosterKey: string }) {
+  async function joinClass(input: { joinCode: string; rosterKey: string; studentSecret: string }) {
     setMessage(null);
     if (!/^[A-Z0-9]{6}$/.test(input.joinCode)) {
       setMessage("클래스 코드는 공백 없이 6자리로 입력해 주세요.");
@@ -232,14 +249,14 @@ export function StudentApp() {
     }
     try {
       const context = gateway
-        ? await gateway.joinClass(input.joinCode, input.rosterKey)
-        : {
+        ? await gateway.joinClass(input.joinCode, input.rosterKey, input.studentSecret)
+        : demoMode ? {
             studentId: `demo-${input.rosterKey}`,
             classId: "demo-class",
             className: "3학년 햇살반",
             rosterKey: input.rosterKey,
             displayAlias: null
-          };
+          } : (() => { throw new Error("학생 앱의 Supabase 환경변수가 필요합니다."); })();
       const next: StudentContext = context;
       setStudent(next);
       localStorage.setItem(LOCAL_CONTEXT_KEY, JSON.stringify(next));
@@ -253,8 +270,17 @@ export function StudentApp() {
       }
       setScreen("assignments");
     } catch {
-      setMessage("클래스 코드 또는 번호를 다시 확인해 주세요.");
+      setMessage("입장 정보를 다시 확인해 주세요.");
     }
+  }
+
+  async function syncPendingSession(sessionId: string): Promise<number> {
+    if (!remoteEvents || !remoteSessions) return 0;
+    const localSession = await localStore.get(sessionId);
+    if (localSession && !await remoteSessions.get(sessionId)) {
+      await remoteSessions.create(localSession);
+    }
+    return new SyncObservationEvents(localStore, remoteEvents, remoteSessions).execute(sessionId);
   }
 
   async function startAssignment(card: AssignmentCard) {
@@ -320,7 +346,10 @@ export function StudentApp() {
         const updated = await repository.get(session.id);
         if (updated) setSession(updated);
         if (online && remoteEvents) {
-          await new SyncObservationEvents(localStore, remoteEvents, repository).execute(session.id).catch(() => 0);
+          await syncPendingSession(session.id).catch(() => {
+            void telemetry?.record({ app: "student", event: "sync.failed" }).catch(() => undefined);
+            return 0;
+          });
         }
         setScreen("complete");
       } else {
@@ -348,16 +377,20 @@ export function StudentApp() {
     localStorage.removeItem(LOCAL_CONTEXT_KEY);
     localStorage.removeItem(LOCAL_ASSIGNMENTS_KEY);
     setStudent(null);
-    setAssignmentCards(config ? [] : [demoAssignment()]);
+    setAssignmentCards(demoMode ? [demoAssignment()] : []);
     setAssignment(null);
     setSession(null);
     setScreen("join");
   }
 
+  if (!config && !demoMode) {
+    return <RuntimeConfigurationError appName="학생 앱" />;
+  }
+
   return (
     <AppShell
       role="student"
-      actions={<><StatusPill tone={online ? "accent" : "warning"}>{online ? "연결됨" : "이 기기에 저장 중"}</StatusPill>{student && <button className="mom-button mom-button-quiet" onClick={() => void leaveClass()}>나가기</button>}</>}
+      actions={<><StatusPill tone={demoMode ? "neutral" : online ? "accent" : "warning"}>{demoMode ? "로컬 체험" : online ? "연결됨" : "이 기기에 저장 중"}</StatusPill>{student && <button className="mom-button mom-button-quiet" onClick={() => void leaveClass()}>나가기</button>}</>}
     >
       {screen === "join" && <JoinScreen onJoin={joinClass} message={message} configured={Boolean(config)} />}
       {screen === "assignments" && student && (
@@ -377,6 +410,7 @@ export function StudentApp() {
       )}
       {screen === "complete" && (
         <CompletionScreen
+          demo={demoMode}
           synced={Boolean(online && session?.status === "completed")}
           onDone={() => setScreen("assignments")}
         />
@@ -385,18 +419,23 @@ export function StudentApp() {
   );
 }
 
-function JoinScreen({ onJoin, message, configured }: { onJoin: (input: { joinCode: string; rosterKey: string }) => void; message: string | null; configured: boolean }) {
+function RuntimeConfigurationError({ appName }: { appName: string }) {
+  return <main className="student-centered"><Brand /><div className="mom-panel"><div className="mom-panel-body mom-stack"><h1>{appName} 설정이 필요합니다</h1><p className="mom-muted">운영 환경에는 Supabase URL과 publishable key를 설정해 주세요. 로컬 데모는 <code>VITE_DEMO_MODE=true</code>에서만 열립니다.</p></div></div></main>;
+}
+
+function JoinScreen({ onJoin, message, configured }: { onJoin: (input: { joinCode: string; rosterKey: string; studentSecret: string }) => void; message: string | null; configured: boolean }) {
   const [joinCode, setJoinCode] = useState(configured ? "" : "MATH27");
   const [rosterKey, setRosterKey] = useState("");
+  const [studentSecret, setStudentSecret] = useState(configured ? "" : "STAR27");
   return (
     <section className="student-entry">
       <div className="student-entry-copy">
         <p className="mom-eyebrow">3학년 2학기 수학</p>
         <h1>선생님이 알려준<br />코드로 들어가요</h1>
-        <p className="mom-muted">이름은 필요하지 않아요. 선생님이 정해준 번호를 사용합니다.</p>
+        <p className="mom-muted">이름은 필요하지 않아요. 선생님이 준 번호와 개인 코드를 사용합니다.</p>
         {!configured && <StatusPill tone="warning">Supabase 미연결 · 로컬 체험 모드</StatusPill>}
       </div>
-      <form className="mom-panel student-entry-form" onSubmit={(event) => { event.preventDefault(); onJoin({ joinCode, rosterKey }); }}>
+      <form className="mom-panel student-entry-form" onSubmit={(event) => { event.preventDefault(); onJoin({ joinCode, rosterKey, studentSecret }); }}>
         <div className="mom-panel-body mom-stack-lg">
           <div className="mom-input-group">
             <label htmlFor="join-code">클래스 코드</label>
@@ -406,6 +445,11 @@ function JoinScreen({ onJoin, message, configured }: { onJoin: (input: { joinCod
             <label htmlFor="roster-key">내 번호</label>
             <input id="roster-key" className="mom-input" value={rosterKey} onChange={(event) => setRosterKey(event.target.value.trimStart().slice(0, 20))} inputMode="numeric" autoComplete="off" placeholder="예: 12" required />
             <span className="mom-caption">별칭은 선생님이 정한 경우에만 함께 표시됩니다.</span>
+          </div>
+          <div className="mom-input-group">
+            <label htmlFor="student-secret">내 개인 코드</label>
+            <input id="student-secret" className="mom-input student-code-input" value={studentSecret} onChange={(event) => setStudentSecret(event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6))} inputMode="text" autoComplete="off" placeholder="입장 카드 6자리" required />
+            <span className="mom-caption">친구와 바꾸지 않고 내 입장 카드에 적힌 코드를 사용해요.</span>
           </div>
           {message && <p className="mom-form-error" role="alert">{message}</p>}
           <button className="mom-button mom-button-primary mom-button-block" type="submit">활동 확인하기</button>
@@ -432,7 +476,7 @@ function AssignmentScreen({ student, assignments, onStart, saving, message }: { 
             <div className="mom-panel-body mom-stack">
               <div className="mom-row-between">
                 <StatusPill tone={item.status === "in_progress" ? "accent" : "neutral"}>{item.status === "in_progress" ? "진행 중" : item.status === "completed" ? "완료" : "새 활동"}</StatusPill>
-                <span className="mom-caption">약 12분</span>
+                <span className="mom-caption">약 {item.content.manifest.estimatedMinutes}분</span>
               </div>
               <div><h2>{item.title}</h2><p className="mom-muted">{item.description}</p></div>
               <button className="mom-button mom-button-primary mom-button-block" disabled={saving || item.status === "completed"} onClick={() => onStart(item)}>
@@ -473,12 +517,16 @@ function JudgmentScreen({ judgment, unitTitle, progress, selectedChoiceId, unkno
   );
 }
 
-function CompletionScreen({ synced, onDone }: { synced: boolean; onDone: () => void }) {
+function CompletionScreen({ demo, synced, onDone }: { demo: boolean; synced: boolean; onDone: () => void }) {
   return (
     <section className="student-complete">
       <EmptyState
         title="끝까지 참여했어요"
-        description={synced ? "모든 생각 기록을 선생님께 안전하게 전달했어요." : "기록은 이 기기에 안전하게 보관 중이에요. 연결되면 자동으로 전달할게요."}
+        description={demo
+          ? "로컬 체험 활동을 마쳤어요. 기록은 이 기기에 보관돼요."
+          : synced
+            ? "모든 생각 기록을 선생님께 안전하게 전달했어요."
+            : "기록은 이 기기에 안전하게 보관 중이에요. 연결되면 자동으로 전달할게요."}
         action={<button className="mom-button mom-button-primary" onClick={onDone}>활동 목록으로</button>}
       />
     </section>
@@ -492,8 +540,8 @@ class LocalFirstSessionRepository {
   ) {}
 
   async create(session: DiagnosisSession) {
-    await this.local.create(session);
     await this.remote.create(session);
+    await this.local.create(session);
   }
   async get(id: string) { return await this.local.get(id) ?? this.remote.get(id); }
   async findResumable(assignmentId: string, studentId: string) {
