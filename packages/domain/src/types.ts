@@ -56,6 +56,8 @@ export interface JudgmentChoice {
 export type JudgmentVisual =
   | { kind: "none" }
   | { kind: "array"; rows: number; columns: number; label: string }
+  | { kind: "item-collection"; ariaLabel: string; items: string[] }
+  | { kind: "data-table"; title: string; rows: Array<{ label: string; value: string }> }
   | { kind: "division-groups"; total: number; groups: number }
   | { kind: "circle"; showCenter?: boolean; showRadius?: boolean; showDiameter?: boolean }
   | { kind: "fraction-bar"; numerator: number; denominator: number; unknown?: "numerator" | "denominator" }

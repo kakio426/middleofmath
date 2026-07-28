@@ -1,5 +1,18 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import type { EvidenceItem, JudgmentVisual, Severity } from "@middle-of-math/domain";
+
+export function ReadableText({ text }: { text: string }) {
+  return (
+    <>
+      {text.trim().split(/\s+/).map((token, index) => (
+        <Fragment key={`${token}-${index}`}>
+          {index > 0 && " "}
+          <span className="mom-readable-token">{token}</span>
+        </Fragment>
+      ))}
+    </>
+  );
+}
 
 export function Brand({ compact = false }: { compact?: boolean }) {
   return (
@@ -54,7 +67,7 @@ export function ChoiceOption({
   return (
     <button type="button" className="mom-choice" aria-pressed={selected} onClick={onSelect}>
       <span className="mom-choice-indicator" aria-hidden="true" />
-      <span>{label}</span>
+      <span className="mom-readable-text"><ReadableText text={label} /></span>
     </button>
   );
 }
@@ -70,6 +83,31 @@ export function VisualAid({ visual }: { visual: JudgmentVisual }) {
       <div className="mom-visual mom-array" role="img" aria-label={visual.label} style={{ gridTemplateColumns: `repeat(${visual.columns}, 1fr)` }}>
         {Array.from({ length: visual.rows * visual.columns }, (_, index) => <span key={index} />)}
       </div>
+    );
+  }
+  if (visual.kind === "item-collection") {
+    return (
+      <div className="mom-visual mom-item-collection" role="img" aria-label={visual.ariaLabel}>
+        {visual.items.map((item, index) => <span aria-hidden="true" key={`${item}-${index}`}>{item}</span>)}
+      </div>
+    );
+  }
+  if (visual.kind === "data-table") {
+    return (
+      <table className="mom-visual mom-data-table">
+        <caption>{visual.title}</caption>
+        <thead>
+          <tr><th scope="col">종류</th><th scope="col">수</th></tr>
+        </thead>
+        <tbody>
+          {visual.rows.map((row) => (
+            <tr key={row.label}>
+              <th scope="row">{row.label}</th>
+              <td className={row.value === "?" ? "is-unknown" : undefined}>{row.value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     );
   }
   if (visual.kind === "division-groups") {

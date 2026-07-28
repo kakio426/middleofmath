@@ -59,6 +59,28 @@ describe("content studio diagnosis validation", () => {
     ]));
   });
 
+  it("rejects missing or answer-revealing visual evidence", () => {
+    const missingPictograph = cloneContent();
+    const pictograph = missingPictograph.judgments.find(
+      (judgment) => judgment.interaction.type === "pictograph"
+    );
+    if (!pictograph) throw new Error("그림그래프 문항이 필요합니다.");
+    pictograph.visual = { kind: "none" };
+    expect(validateDiagnosisSet(missingPictograph).issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: "PICTOGRAPH_VISUAL_REQUIRED" })
+    ]));
+
+    const revealedGroups = cloneContent();
+    const division = revealedGroups.judgments.find(
+      (judgment) => judgment.visual.kind === "division-groups"
+    );
+    if (!division) throw new Error("나눗셈 묶음 문항이 필요합니다.");
+    division.prompt = "몇 묶음일까요?";
+    expect(validateDiagnosisSet(revealedGroups).issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: "ANSWER_REVEALING_VISUAL" })
+    ]));
+  });
+
   it("keeps IDs from a previously published base immutable", () => {
     const content = cloneContent();
     content.judgments.shift();

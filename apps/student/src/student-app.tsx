@@ -30,9 +30,16 @@ import {
   ChoiceOption,
   EmptyState,
   ProgressLine,
+  ReadableText,
   StatusPill,
   VisualAid
 } from "@middle-of-math/ui";
+import {
+  createUnitAssignmentCards,
+  groupAssignmentsByArea,
+  judgmentsForAssignment,
+  type AssignmentCard
+} from "./assignment-model";
 
 type Screen = "join" | "assignments" | "judgment" | "complete";
 
@@ -42,17 +49,6 @@ interface StudentContext {
   className: string;
   rosterKey: string;
   displayAlias: string | null;
-}
-
-interface AssignmentCard {
-  id: string;
-  title: string;
-  description: string;
-  status: "new" | "in_progress" | "completed";
-  diagnosisSetId: string;
-  diagnosisSetVersion: string;
-  checksum: string;
-  content: DiagnosisSet;
 }
 
 interface CachedAssignmentMetadata {
@@ -78,19 +74,6 @@ const runtimeConfig = publicConfig();
 const demoMode = import.meta.env.VITE_DEMO_MODE === "true";
 const runtimeClient = runtimeConfig && !demoMode ? createMiddleOfMathClient(runtimeConfig) : null;
 
-function demoAssignment(): AssignmentCard {
-  return {
-    id: "grade3-semester2-complete-review",
-    title: `${grade3Semester2CompleteDiagnosis.manifest.title} · 전체 검수본`,
-    description: `${grade3Semester2CompleteDiagnosis.manifest.units.length}개 단원 · ${grade3Semester2CompleteDiagnosis.judgments.length}개의 짧은 생각`,
-    status: "new",
-    diagnosisSetId: grade3Semester2CompleteDiagnosis.manifest.id,
-    diagnosisSetVersion: grade3Semester2CompleteDiagnosis.manifest.version,
-    checksum: grade3Semester2CompleteDiagnosis.manifest.checksum,
-    content: grade3Semester2CompleteDiagnosis
-  };
-}
-
 function mapAssignmentRecord(row: StudentAssignmentRecord, content = row.diagnosisSet.content): AssignmentCard | null {
   try {
     const parsed = parseDiagnosisSet(content);
@@ -102,7 +85,12 @@ function mapAssignmentRecord(row: StudentAssignmentRecord, content = row.diagnos
       diagnosisSetId: row.diagnosisSet.setKey,
       diagnosisSetVersion: row.diagnosisSet.version,
       checksum: row.diagnosisSet.checksum,
-      content: parsed
+      content: parsed,
+      areaId: "assigned",
+      areaTitle: "선생님이 보낸 활동",
+      symbol: "✦",
+      estimatedMinutes: parsed.manifest.estimatedMinutes,
+      judgmentCount: parsed.judgments.length
     };
   } catch {
     return null;
@@ -171,7 +159,9 @@ export function StudentApp() {
     const saved = localStorage.getItem(LOCAL_CONTEXT_KEY);
     return saved ? JSON.parse(saved) as StudentContext : null;
   });
-  const [assignmentCards, setAssignmentCards] = useState<AssignmentCard[]>(() => demoMode ? [demoAssignment()] : []);
+  const [assignmentCards, setAssignmentCards] = useState<AssignmentCard[]>(() =>
+    demoMode ? createUnitAssignmentCards(grade3Semester2CompleteDiagnosis) : []
+  );
   const [assignment, setAssignment] = useState<AssignmentCard | null>(null);
   const [session, setSession] = useState<DiagnosisSession | null>(null);
   const [judgmentIndex, setJudgmentIndex] = useState(0);
@@ -230,6 +220,9 @@ export function StudentApp() {
   }, [config, student, online, gateway, contentStore]);
 
   const activeContent = assignment?.content ?? assignmentCards[0]?.content ?? grade3Semester2Diagnosis;
+  const activeJudgments = assignment
+    ? judgmentsForAssignment(assignment)
+    : activeContent.judgments;
   const assignments = assignmentCards.map((card) => card.id === assignment?.id ? {
     ...card,
     status: session?.status === "completed" || (demoMode && session?.status === "sync_pending")
@@ -238,8 +231,10 @@ export function StudentApp() {
         ? "in_progress" as const
         : card.status
   } : card);
-  const currentJudgment = activeContent.judgments[judgmentIndex];
-  const progress = judgmentIndex / activeContent.judgments.length * 100;
+  const currentJudgment = activeJudgments[judgmentIndex];
+  const progress = activeJudgments.length > 0
+    ? judgmentIndex / activeJudgments.length * 100
+    : 0;
 
   async function joinClass(input: { joinCode: string; rosterKey: string; studentSecret: string }) {
     setMessage(null);
@@ -296,10 +291,21 @@ export function StudentApp() {
         diagnosisSetVersion: card.diagnosisSetVersion
       });
       const existing = await localStore.listAll(active.id);
-      const completedJudgments = existing.filter((event) => event.eventType === "judgment_confirmed").length;
+      const judgmentIds = new Set(judgmentsForAssignment(card).map((judgment) => judgment.id));
+      const completedJudgments = existing.filter(
+        (event) =>
+          event.eventType === "judgment_confirmed" &&
+          event.judgmentId &&
+          judgmentIds.has(event.judgmentId)
+      ).length;
       setSession(active);
       setAssignment(card);
-      if (completedJudgments >= card.content.judgments.length || active.status === "completed") {
+      setAssignmentCards((current) =>
+        current.map((item) =>
+          item.id === card.id ? { ...item, status: "in_progress" } : item
+        )
+      );
+      if (completedJudgments >= judgmentIds.size || active.status === "completed") {
         setScreen("complete");
       } else {
         setJudgmentIndex(completedJudgments);
@@ -340,7 +346,7 @@ export function StudentApp() {
           uncertainty: selectedChoiceId === "__unknown__"
         }
       });
-      const isLast = judgmentIndex === activeContent.judgments.length - 1;
+      const isLast = judgmentIndex === activeJudgments.length - 1;
       if (isLast) {
         await new CompleteSession(repository, localStore, clock, ids).execute(session.id);
         const updated = await repository.get(session.id);
@@ -350,6 +356,13 @@ export function StudentApp() {
             void telemetry?.record({ app: "student", event: "sync.failed" }).catch(() => undefined);
             return 0;
           });
+        }
+        if (assignment) {
+          setAssignmentCards((current) =>
+            current.map((item) =>
+              item.id === assignment.id ? { ...item, status: "completed" } : item
+            )
+          );
         }
         setScreen("complete");
       } else {
@@ -377,7 +390,9 @@ export function StudentApp() {
     localStorage.removeItem(LOCAL_CONTEXT_KEY);
     localStorage.removeItem(LOCAL_ASSIGNMENTS_KEY);
     setStudent(null);
-    setAssignmentCards(demoMode ? [demoAssignment()] : []);
+    setAssignmentCards(
+      demoMode ? createUnitAssignmentCards(grade3Semester2CompleteDiagnosis) : []
+    );
     setAssignment(null);
     setSession(null);
     setScreen("join");
@@ -390,7 +405,7 @@ export function StudentApp() {
   return (
     <AppShell
       role="student"
-      actions={<><StatusPill tone={demoMode ? "neutral" : online ? "accent" : "warning"}>{demoMode ? "로컬 체험" : online ? "연결됨" : "이 기기에 저장 중"}</StatusPill>{student && <button className="mom-button mom-button-quiet" onClick={() => void leaveClass()}>나가기</button>}</>}
+      actions={<><StatusPill tone={demoMode ? "neutral" : online ? "accent" : "warning"}>{demoMode ? "체험 중" : online ? "연결됨" : "이 기기에 저장 중"}</StatusPill>{student && <button className="mom-button mom-button-quiet" onClick={() => void leaveClass()}>나가기</button>}</>}
     >
       {screen === "join" && <JoinScreen onJoin={joinClass} message={message} configured={Boolean(config)} />}
       {screen === "assignments" && student && (
@@ -433,7 +448,7 @@ function JoinScreen({ onJoin, message, configured }: { onJoin: (input: { joinCod
         <p className="mom-eyebrow">3학년 2학기 수학</p>
         <h1>선생님이 알려준<br />코드로 들어가요</h1>
         <p className="mom-muted">이름은 필요하지 않아요. 선생님이 준 번호와 개인 코드를 사용합니다.</p>
-        {!configured && <StatusPill tone="warning">Supabase 미연결 · 로컬 체험 모드</StatusPill>}
+        {!configured && <StatusPill tone="neutral">체험 모드</StatusPill>}
       </div>
       <form className="mom-panel student-entry-form" onSubmit={(event) => { event.preventDefault(); onJoin({ joinCode, rosterKey, studentSecret }); }}>
         <div className="mom-panel-body mom-stack-lg">
@@ -460,30 +475,52 @@ function JoinScreen({ onJoin, message, configured }: { onJoin: (input: { joinCod
 }
 
 function AssignmentScreen({ student, assignments, onStart, saving, message }: { student: StudentContext; assignments: AssignmentCard[]; onStart: (assignment: AssignmentCard) => void; saving: boolean; message: string | null }) {
+  const groups = groupAssignmentsByArea(assignments);
   return (
     <section className="student-page mom-stack-lg">
       <header className="student-page-heading">
         <p className="mom-eyebrow">{student.className}</p>
         <h1>{student.displayAlias ? `${student.rosterKey}번 · ${student.displayAlias}` : `${student.rosterKey}번`}, 할 수학 활동이에요</h1>
-        <p className="mom-muted">이어 하거나 새 활동을 시작할 수 있어요.</p>
+        <p className="mom-muted">영역을 살펴보고, 오늘 풀 단원 하나를 골라요.</p>
       </header>
       {message && <p className="student-sync-note">{message}</p>}
       {assignments.length === 0 && <EmptyState title="아직 할 활동이 없어요" description="선생님이 활동을 보내면 여기에 나타납니다." />}
-      <div className="assignment-list">
-        {assignments.map((item) => (
-          <article className="mom-panel assignment-card" key={item.id}>
-            <div className="assignment-unit-strip" aria-hidden="true">× ÷ ○ ¼ ℓ ▦</div>
-            <div className="mom-panel-body mom-stack">
-              <div className="mom-row-between">
-                <StatusPill tone={item.status === "in_progress" ? "accent" : "neutral"}>{item.status === "in_progress" ? "진행 중" : item.status === "completed" ? "완료" : "새 활동"}</StatusPill>
-                <span className="mom-caption">약 {item.content.manifest.estimatedMinutes}분</span>
+      <div className="assignment-groups">
+        {groups.map((group) => (
+          <section
+            className="assignment-group mom-stack"
+            aria-labelledby={`assignment-group-${group.id}`}
+            key={group.id}
+          >
+            <header className="assignment-group-heading">
+              <div>
+                <p className="mom-eyebrow">수학 영역</p>
+                <h2 id={`assignment-group-${group.id}`}>{group.title}</h2>
               </div>
-              <div><h2>{item.title}</h2><p className="mom-muted">{item.description}</p></div>
-              <button className="mom-button mom-button-primary mom-button-block" disabled={saving || item.status === "completed"} onClick={() => onStart(item)}>
-                {saving ? "준비 중…" : item.status === "in_progress" ? "이어서 하기" : item.status === "completed" ? "완료했어요" : "시작하기"}
-              </button>
+              <span className="mom-caption">{group.assignments.length}개 단원</span>
+            </header>
+            <div className="assignment-list">
+              {group.assignments.map((item) => (
+                <article
+                  className="mom-panel assignment-card"
+                  data-assignment-id={item.id}
+                  key={item.id}
+                >
+                  <div className="assignment-unit-strip" aria-hidden="true">{item.symbol}</div>
+                  <div className="mom-panel-body mom-stack">
+                    <div className="mom-row-between">
+                      <StatusPill tone={item.status === "in_progress" ? "accent" : "neutral"}>{item.status === "in_progress" ? "진행 중" : item.status === "completed" ? "완료" : "새 활동"}</StatusPill>
+                      <span className="mom-caption">{item.judgmentCount}문제 · 약 {item.estimatedMinutes}분</span>
+                    </div>
+                    <div><h3>{item.title}</h3><p className="mom-muted">{item.description}</p></div>
+                    <button className="mom-button mom-button-primary mom-button-block" disabled={saving || item.status === "completed"} onClick={() => onStart(item)}>
+                      {saving ? "준비 중…" : item.status === "in_progress" ? "이어서 하기" : item.status === "completed" ? "완료했어요" : "시작하기"}
+                    </button>
+                  </div>
+                </article>
+              ))}
             </div>
-          </article>
+          </section>
         ))}
       </div>
     </section>
@@ -498,8 +535,8 @@ function JudgmentScreen({ judgment, unitTitle, progress, selectedChoiceId, unkno
         <div className="student-question mom-stack-lg">
           <div>
             <p className="mom-eyebrow">{unitTitle}</p>
-            {judgment.context && <p className="student-context">{judgment.context}</p>}
-            <h1>{judgment.prompt}</h1>
+            {judgment.context && <p className="student-context mom-readable-text"><ReadableText text={judgment.context} /></p>}
+            <h1 className="mom-readable-text"><ReadableText text={judgment.prompt} /></h1>
           </div>
           <VisualAid visual={judgment.visual} />
         </div>
@@ -523,7 +560,7 @@ function CompletionScreen({ demo, synced, onDone }: { demo: boolean; synced: boo
       <EmptyState
         title="끝까지 참여했어요"
         description={demo
-          ? "로컬 체험 활동을 마쳤어요. 기록은 이 기기에 보관돼요."
+          ? "활동을 마쳤어요. 기록은 이 기기에 저장했어요."
           : synced
             ? "모든 생각 기록을 선생님께 안전하게 전달했어요."
             : "기록은 이 기기에 안전하게 보관 중이에요. 연결되면 자동으로 전달할게요."}

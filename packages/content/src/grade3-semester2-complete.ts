@@ -361,7 +361,12 @@ const addedJudgments: Judgment[] = [
   makeJudgment({
     id: "g3s2-div-05", unitId: "division", learnerStageId: "division.meaning",
     curriculumAnchorIds: ["[4수01-05]"], prompt: "24개를 6개씩 묶으면 몇 묶음일까요?",
-    visual: { kind: "division-groups", total: 24, groups: 4 }, signalId: "division.meaning",
+    visual: {
+      kind: "item-collection",
+      ariaLabel: "묶기 전 공 24개",
+      items: Array.from({ length: 24 }, () => "●")
+    },
+    signalId: "division.meaning",
     answers: [{ id: "4-groups", label: "4묶음" }, { id: "6-groups", label: "6묶음" }, { id: "18-groups", label: "18묶음" }]
   }),
   makeJudgment({
@@ -608,11 +613,11 @@ const fractionMeasurementGraphJudgments: Judgment[] = [
   }),
   makeJudgment({
     id: "g3s2-graph-03", unitId: "pictograph", learnerStageId: "pictograph.legend",
-    curriculumAnchorIds: ["[4수04-01]"], context: "책 20권을 ★ 4개로 나타냈습니다.",
-    prompt: "★ 한 개는 책 몇 권을 나타낼까요?",
-    visual: { kind: "none" }, interactionType: "pictograph",
+    curriculumAnchorIds: ["[4수04-01]"], context: "★ 한 개는 책 5권을 나타냅니다.",
+    prompt: "그림그래프에 나타낸 책은 모두 몇 권일까요?",
+    visual: { kind: "pictograph", symbol: "★", value: 5, rows: [{ label: "책", count: 4 }] }, interactionType: "pictograph",
     signalId: "pictograph.legend",
-    answers: [{ id: "5-books", label: "5권" }, { id: "4-books", label: "4권" }, { id: "20-books", label: "20권" }]
+    answers: [{ id: "20-books", label: "20권" }, { id: "4-books", label: "4권" }, { id: "5-books", label: "5권" }]
   }),
   makeJudgment({
     id: "g3s2-graph-04", unitId: "pictograph", learnerStageId: "pictograph.compare",
@@ -624,15 +629,30 @@ const fractionMeasurementGraphJudgments: Judgment[] = [
   }),
   makeJudgment({
     id: "g3s2-graph-05", unitId: "pictograph", learnerStageId: "pictograph.classify-table",
-    curriculumAnchorIds: ["[4수04-01]"], context: "빨강, 파랑, 빨강, 노랑, 파랑, 빨강 공이 있어요.",
-    prompt: "빨강 공은 몇 개일까요?", visual: { kind: "none" },
+    curriculumAnchorIds: ["[4수04-01]"], context: "공을 색깔에 따라 나누어 세어 보세요.",
+    prompt: "빨간색 공은 몇 개일까요?",
+    visual: {
+      kind: "item-collection",
+      ariaLabel: "빨간색 공, 파란색 공, 빨간색 공, 노란색 공, 파란색 공, 빨간색 공",
+      items: ["🔴", "🔵", "🔴", "🟡", "🔵", "🔴"]
+    },
     signalId: "pictograph.classify-table",
     answers: [{ id: "3-red", label: "3개" }, { id: "2-red", label: "2개" }, { id: "6-red", label: "6개" }]
   }),
   makeJudgment({
     id: "g3s2-graph-06", unitId: "pictograph", learnerStageId: "pictograph.classify-table",
-    curriculumAnchorIds: ["[4수04-01]"], context: "표에 고양이 3, 강아지 2, 전체 7이라고 적혀 있고 토끼 칸은 비어 있어요.",
-    prompt: "토끼 칸에 적을 수는 무엇일까요?", visual: { kind: "none" },
+    curriculumAnchorIds: ["[4수04-01]"], context: "동물 수를 표로 정리했습니다.",
+    prompt: "토끼는 몇 마리일까요?",
+    visual: {
+      kind: "data-table",
+      title: "좋아하는 동물 조사",
+      rows: [
+        { label: "고양이", value: "3" },
+        { label: "강아지", value: "2" },
+        { label: "토끼", value: "?" },
+        { label: "전체", value: "7" }
+      ]
+    },
     signalId: "pictograph.classify-table",
     answers: [{ id: "2-rabbits", label: "2" }, { id: "3-rabbits", label: "3" }, { id: "7-rabbits", label: "7" }]
   }),
@@ -782,8 +802,8 @@ const diagnosis: DiagnosisSet = {
   ...grade3Semester2Diagnosis,
   manifest: {
     ...grade3Semester2Diagnosis.manifest,
-    version: "2.0.0",
-    checksum: "835b78a3d545af60a289ea308235fa5232e83db28e482a97ce12a3947c65a4a4",
+    version: "2.0.1",
+    checksum: "9ceb4c434e0b064b735a203ae43728644981c28ec27a10641ff120d3b3dba9f2",
     estimatedMinutes: 32,
     status: "review"
   },

@@ -47,6 +47,8 @@ export function summarizeVisual(judgment: Judgment): string {
   switch (judgment.visual.kind) {
     case "none": return "시각 자료 없음";
     case "array": return `${judgment.visual.rows}×${judgment.visual.columns} 배열`;
+    case "item-collection": return `셀 자료 ${judgment.visual.items.length}개`;
+    case "data-table": return `${judgment.visual.rows.length}행 표`;
     case "division-groups": return `${judgment.visual.total}개 · ${judgment.visual.groups}묶음`;
     case "circle": return "원과 선분";
     case "fraction-bar": return `${judgment.visual.denominator}칸 분수 막대`;

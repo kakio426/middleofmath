@@ -1,7 +1,35 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { VisualAid } from "./components";
+import { ChoiceOption, ReadableText, VisualAid } from "./components";
+
+describe("ReadableText", () => {
+  it("keeps every Korean eojeol in an atomic token without manual line breaks", () => {
+    const markup = renderToStaticMarkup(
+      createElement(ReadableText, {
+        text: "그림그래프에 나타낸 책은 모두 몇 권일까요?"
+      })
+    );
+
+    expect(markup.match(/class="mom-readable-token"/g)).toHaveLength(6);
+    expect(markup).toContain("그림그래프에");
+    expect(markup).toContain("권일까요?");
+    expect(markup).not.toContain("<br");
+  });
+
+  it("uses the same readable tokens inside answer choices", () => {
+    const markup = renderToStaticMarkup(
+      createElement(ChoiceOption, {
+        label: "두 분수는 같아요",
+        selected: false,
+        onSelect: () => undefined
+      })
+    );
+
+    expect(markup.match(/class="mom-readable-token"/g)).toHaveLength(3);
+    expect(markup).toContain("mom-readable-text");
+  });
+});
 
 describe("VisualAid fraction bars", () => {
   it("renders improper fractions across enough whole bars", () => {
@@ -59,5 +87,42 @@ describe("VisualAid division groups", () => {
 
     expect(markup.match(/묶음 [1-5]/g)).toHaveLength(5);
     expect(markup).not.toContain("한 사람");
+  });
+});
+
+describe("VisualAid source data", () => {
+  it("renders unsorted items without pre-counting them", () => {
+    const markup = renderToStaticMarkup(
+      createElement(VisualAid, {
+        visual: {
+          kind: "item-collection",
+          ariaLabel: "빨간색 공, 파란색 공, 빨간색 공",
+          items: ["🔴", "🔵", "🔴"]
+        }
+      })
+    );
+
+    expect(markup).toContain("mom-item-collection");
+    expect(markup.match(/<span/g)).toHaveLength(3);
+    expect(markup).toContain("빨간색 공, 파란색 공, 빨간색 공");
+  });
+
+  it("renders an unknown table value as a question mark", () => {
+    const markup = renderToStaticMarkup(
+      createElement(VisualAid, {
+        visual: {
+          kind: "data-table",
+          title: "좋아하는 동물 조사",
+          rows: [
+            { label: "고양이", value: "3" },
+            { label: "토끼", value: "?" }
+          ]
+        }
+      })
+    );
+
+    expect(markup).toContain("<table");
+    expect(markup).toContain("좋아하는 동물 조사");
+    expect(markup).toContain('class="is-unknown">?</td>');
   });
 });

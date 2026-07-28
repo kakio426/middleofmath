@@ -34,6 +34,19 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
       label: z.string()
     }),
     z.strictObject({
+      kind: z.literal("item-collection"),
+      ariaLabel: copyString,
+      items: z.array(copyString).min(1)
+    }),
+    z.strictObject({
+      kind: z.literal("data-table"),
+      title: copyString,
+      rows: z.array(z.strictObject({
+        label: copyString,
+        value: copyString
+      })).min(2)
+    }),
+    z.strictObject({
       kind: z.literal("division-groups"),
       total: z.number().int().positive(),
       groups: z.number().int().positive()
@@ -275,6 +288,36 @@ export function validateDiagnosisSet(
     }
     if (judgment.choices.filter((choice) => choice.correct).length !== 1) {
       issue(issues, "SINGLE_CORRECT_REQUIRED", `/judgments/${index}/choices`, "정답 선택지는 정확히 하나여야 합니다.");
+    }
+    if (judgment.interaction.type === "pictograph" && judgment.visual.kind !== "pictograph") {
+      issue(
+        issues,
+        "PICTOGRAPH_VISUAL_REQUIRED",
+        `/judgments/${index}/visual`,
+        "그림그래프 문항에는 범례와 자료 행이 보이는 그림그래프 시각 자료가 필요합니다."
+      );
+    }
+    if (
+      judgment.learnerStageId === "pictograph.classify-table" &&
+      !["item-collection", "data-table"].includes(judgment.visual.kind)
+    ) {
+      issue(
+        issues,
+        "CLASSIFY_TABLE_VISUAL_REQUIRED",
+        `/judgments/${index}/visual`,
+        "자료 분류·표 문항에는 셀 실제 자료 또는 표가 화면에 보여야 합니다."
+      );
+    }
+    if (
+      judgment.visual.kind === "division-groups" &&
+      /몇\s*묶음/.test(judgment.prompt)
+    ) {
+      issue(
+        issues,
+        "ANSWER_REVEALING_VISUAL",
+        `/judgments/${index}/visual`,
+        "묶음 수를 묻는 문항에서 완성된 묶음을 미리 보여주면 정답이 노출됩니다."
+      );
     }
     checkUniqueIds(issues, judgment.choices, `/judgments/${index}/choices`);
     judgment.choices.forEach((choice, choiceIndex) => {
