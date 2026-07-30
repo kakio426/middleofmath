@@ -227,6 +227,46 @@ type PolygonAngleDiagram = Extract<
   { kind: "polygon-angle-diagram" }
 >;
 
+type CircleDiagram = Extract<
+  JudgmentVisual,
+  { kind: "circle" }
+>;
+
+type CircleDiagramMode =
+  | "center"
+  | "radius"
+  | "diameter"
+  | "equal-radii"
+  | "compass-center"
+  | "compass-radius";
+
+function resolvedCircleMode(visual: CircleDiagram): CircleDiagramMode {
+  if (visual.mode) return visual.mode;
+  if (visual.showDiameter) return "diameter";
+  if (visual.showRadius) return "radius";
+  return "center";
+}
+
+function circleDiagramDescription(visual: CircleDiagram): string {
+  const mode = resolvedCircleMode(visual);
+  const measurement = visual.radiusValue === undefined
+    ? ""
+    : ` 표시한 길이는 ${visual.radiusValue}센티미터입니다.`;
+  if (mode === "diameter") {
+    return `원 위의 점 A와 B를 중심 O를 지나 이은 선분이 표시되어 있습니다.${measurement}`;
+  }
+  if (mode === "equal-radii") {
+    return `중심 O에서 원 위의 점 A, B, C까지 이은 세 선분이 표시되어 있습니다.${measurement}`;
+  }
+  if (mode === "compass-center" || mode === "compass-radius") {
+    return `컴퍼스의 한쪽 끝은 중심 O에, 다른 쪽 끝은 원 위의 점 A에 놓여 있습니다.${measurement}`;
+  }
+  if (mode === "radius") {
+    return `중심 O와 원 위의 점 A를 이은 선분이 표시되어 있습니다.${measurement}`;
+  }
+  return "중심 O가 표시된 원입니다.";
+}
+
 function roundCoordinate(value: number): number {
   return Math.round(value * 100) / 100;
 }
@@ -540,20 +580,65 @@ function quadrilateralDiagramPoints(
   return fitDiagramPoints(raw);
 }
 
-function diagramLabelPoints(points: DiagramPoint[]): DiagramPoint[] {
-  const center = points.reduce(
-    (sum, [x, y]) => [sum[0] + x / points.length, sum[1] + y / points.length],
-    [0, 0]
-  );
-  return points.map(([x, y]) => {
-    const deltaX = center[0] - x;
-    const deltaY = center[1] - y;
-    const length = Math.hypot(deltaX, deltaY) || 1;
-    const offset = points.length === 3 ? 29 : 27;
-    return [
-      roundCoordinate(x + deltaX / length * offset),
-      roundCoordinate(y + deltaY / length * offset)
+type PolygonAngleAnnotation = {
+  arcPath: string;
+  valuePoint: DiagramPoint;
+  vertexNamePoint: DiagramPoint;
+};
+
+function unitVector(
+  from: DiagramPoint,
+  to: DiagramPoint
+): DiagramPoint {
+  const deltaX = to[0] - from[0];
+  const deltaY = to[1] - from[1];
+  const length = Math.hypot(deltaX, deltaY) || 1;
+  return [deltaX / length, deltaY / length];
+}
+
+function polygonAngleAnnotations(
+  points: DiagramPoint[]
+): PolygonAngleAnnotation[] {
+  const arcRadius = points.length === 3 ? 17 : 15;
+  const valueOffset = points.length === 3 ? 27 : 25;
+  const vertexNameOffset = points.length === 3 ? 13 : 12;
+  return points.map((vertex, index) => {
+    const previous = points[(index - 1 + points.length) % points.length];
+    const next = points[(index + 1) % points.length];
+    const towardPrevious = unitVector(vertex, previous);
+    const towardNext = unitVector(vertex, next);
+    const bisectorX = towardPrevious[0] + towardNext[0];
+    const bisectorY = towardPrevious[1] + towardNext[1];
+    const bisectorLength = Math.hypot(bisectorX, bisectorY) || 1;
+    const inward: DiagramPoint = [
+      bisectorX / bisectorLength,
+      bisectorY / bisectorLength
     ];
+    const arcStart: DiagramPoint = [
+      roundCoordinate(vertex[0] + towardPrevious[0] * arcRadius),
+      roundCoordinate(vertex[1] + towardPrevious[1] * arcRadius)
+    ];
+    const arcEnd: DiagramPoint = [
+      roundCoordinate(vertex[0] + towardNext[0] * arcRadius),
+      roundCoordinate(vertex[1] + towardNext[1] * arcRadius)
+    ];
+    const cross =
+      towardPrevious[0] * towardNext[1]
+      - towardPrevious[1] * towardNext[0];
+    return {
+      arcPath:
+        `M ${arcStart[0]} ${arcStart[1]} `
+        + `A ${arcRadius} ${arcRadius} 0 0 ${cross > 0 ? 1 : 0} `
+        + `${arcEnd[0]} ${arcEnd[1]}`,
+      valuePoint: [
+        roundCoordinate(vertex[0] + inward[0] * valueOffset),
+        roundCoordinate(vertex[1] + inward[1] * valueOffset)
+      ],
+      vertexNamePoint: [
+        roundCoordinate(vertex[0] - inward[0] * vertexNameOffset),
+        roundCoordinate(vertex[1] - inward[1] * vertexNameOffset)
+      ]
+    };
   });
 }
 
@@ -570,8 +655,7 @@ function PolygonAngleDiagramVisual({
       ? triangleDiagramPoints(visual)
       : quadrilateralDiagramPoints(visual)
   ) ?? fallbackPoints;
-  const labels = diagramLabelPoints(points);
-  const showNotToScaleHint = visual.mode === "verify-claim";
+  const annotations = polygonAngleAnnotations(points);
   return (
     <svg
       aria-label={polygonAngleDescription(visual)}
@@ -582,16 +666,14 @@ function PolygonAngleDiagramVisual({
       viewBox="0 0 240 160"
     >
       <g aria-hidden="true">
-        {showNotToScaleHint && (
-          <text
-            className="mom-polygon-hint"
-            textAnchor="middle"
-            x="120"
-            y="18"
-          >
-            그림보다 표시한 수를 보고 판단해요
-          </text>
-        )}
+        <text
+          className="mom-polygon-hint"
+          textAnchor="middle"
+          x="120"
+          y="16"
+        >
+          ※ 그림은 실제 모양과 다를 수 있어요.
+        </text>
         <polygon
           className="mom-polygon-shape"
           points={points.map((point) => point.join(",")).join(" ")}
@@ -605,19 +687,34 @@ function PolygonAngleDiagramVisual({
             y2={points[2][1]}
           />
         )}
-        {visual.angles.map((angle, index) => (
-          <g
-            className="mom-polygon-angle-label"
-            key={angle.label}
-            transform={`translate(${labels[index][0]} ${labels[index][1]})`}
-          >
-            <circle r="19" />
-            <text textAnchor="middle" y="-3">{angle.label}</text>
-            <text textAnchor="middle" y="10">
-              {angle.value === null ? "?" : `${angle.value}°`}
-            </text>
-          </g>
-        ))}
+        {visual.angles.map((angle, index) => {
+          const annotation = annotations[index];
+          return (
+            <g className="mom-polygon-angle-mark" key={angle.label}>
+              <path
+                className="mom-polygon-angle-arc"
+                d={annotation.arcPath}
+              />
+              <text
+                className="mom-polygon-vertex-name"
+                textAnchor="middle"
+                x={annotation.vertexNamePoint[0]}
+                y={annotation.vertexNamePoint[1]}
+              >
+                {angle.label}
+              </text>
+              <text
+                className="mom-polygon-angle-value"
+                dominantBaseline="central"
+                textAnchor="middle"
+                x={annotation.valuePoint[0]}
+                y={annotation.valuePoint[1]}
+              >
+                {angle.value === null ? "?" : `${angle.value}°`}
+              </text>
+            </g>
+          );
+        })}
       </g>
     </svg>
   );
@@ -650,6 +747,9 @@ function spokenGiven(parts: MeasurePart[]): string {
 }
 
 export function describeVisual(visual: JudgmentVisual): string | null {
+  if (visual.kind === "circle") {
+    return circleDiagramDescription(visual);
+  }
   if (visual.kind === "angle-figure") {
     return angleFigureDescription(visual);
   }
@@ -687,6 +787,148 @@ export function describeVisual(visual: JudgmentVisual): string | null {
     return `${visual.value}${visual.fromUnit}를 ${visual.targetUnit}로 나타내는 관계. 답은 물음표.`;
   }
   return null;
+}
+
+function CirclePointLabel({
+  label,
+  x,
+  y
+}: {
+  label: string;
+  x: number;
+  y: number;
+}) {
+  return (
+    <text
+      className="mom-circle-point-label"
+      dominantBaseline="central"
+      textAnchor="middle"
+      x={x}
+      y={y}
+    >
+      {label}
+    </text>
+  );
+}
+
+function CircleMeasurement({
+  value,
+  x,
+  y
+}: {
+  value: number | undefined;
+  x: number;
+  y: number;
+}) {
+  if (value === undefined) return null;
+  return (
+    <text
+      className="mom-circle-measurement"
+      dominantBaseline="central"
+      textAnchor="middle"
+      x={x}
+      y={y}
+    >
+      {value} cm
+    </text>
+  );
+}
+
+function CircleDiagramVisual({
+  visual
+}: {
+  visual: CircleDiagram;
+}) {
+  const mode = resolvedCircleMode(visual);
+  const compassMode = mode === "compass-center" || mode === "compass-radius";
+  if (compassMode) {
+    return (
+      <svg
+        aria-label={circleDiagramDescription(visual)}
+        className="mom-visual mom-circle-diagram"
+        focusable="false"
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        viewBox="0 0 240 160"
+      >
+        <g aria-hidden="true">
+          <circle className="mom-circle-outline" cx="90" cy="98" r="42" />
+          <line className="mom-circle-radius-segment" x1="90" x2="132" y1="98" y2="98" />
+          <circle className="mom-circle-point" cx="90" cy="98" r="2.8" />
+          <CirclePointLabel label="O" x={82} y={108} />
+          <CirclePointLabel label="A" x={142} y={102} />
+          <g className="mom-compass">
+            <circle className="mom-compass-hinge" cx="128" cy="28" r="5" />
+            <path className="mom-compass-leg" d="M125 33 L91 94" />
+            <path className="mom-compass-leg" d="M131 33 L132 92" />
+            <path className="mom-compass-needle" d="M91 94 L90 102" />
+            <path className="mom-compass-pencil" d="M128 85 L136 85 L132 99 Z" />
+          </g>
+          {mode === "compass-radius" && (
+            <g className="mom-circle-dimension">
+              <path d="M90 133 H132 M90 128 V138 M132 128 V138" />
+              <CircleMeasurement value={visual.radiusValue} x={111} y={146} />
+            </g>
+          )}
+        </g>
+      </svg>
+    );
+  }
+
+  const center = { x: 120, y: 80 };
+  return (
+    <svg
+      aria-label={circleDiagramDescription(visual)}
+      className="mom-visual mom-circle-diagram"
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      viewBox="0 0 240 160"
+    >
+      <g aria-hidden="true">
+        <circle className="mom-circle-outline" cx={center.x} cy={center.y} r="52" />
+        {mode === "radius" && (
+          <>
+            <line className="mom-circle-radius-segment" x1="120" x2="165" y1="80" y2="54" />
+            <circle className="mom-circle-point" cx="120" cy="80" r="2.8" />
+            <CirclePointLabel label="O" x={111} y={91} />
+            <CirclePointLabel label="A" x={174} y={49} />
+            <CircleMeasurement value={visual.radiusValue} x={146} y={61} />
+          </>
+        )}
+        {mode === "diameter" && (
+          <>
+            <line className="mom-circle-diameter-segment" x1="68" x2="172" y1="80" y2="80" />
+            <line className="mom-circle-radius-highlight" x1="120" x2="172" y1="80" y2="80" />
+            <circle className="mom-circle-point" cx="120" cy="80" r="2.8" />
+            <CirclePointLabel label="A" x={58} y={84} />
+            <CirclePointLabel label="O" x={120} y={94} />
+            <CirclePointLabel label="B" x={182} y={84} />
+            <CircleMeasurement value={visual.radiusValue} x={146} y={68} />
+          </>
+        )}
+        {mode === "equal-radii" && (
+          <>
+            <line className="mom-circle-radius-segment" x1="120" x2="165" y1="80" y2="54" />
+            <line className="mom-circle-radius-segment" x1="120" x2="93" y1="80" y2="33" />
+            <line className="mom-circle-radius-segment" x1="120" x2="75" y1="80" y2="106" />
+            <circle className="mom-circle-point" cx="120" cy="80" r="2.8" />
+            <CirclePointLabel label="O" x={112} y={91} />
+            <CirclePointLabel label="A" x={174} y={49} />
+            <CirclePointLabel label="B" x={89} y={22} />
+            <CirclePointLabel label="C" x={66} y={113} />
+            <CircleMeasurement value={visual.radiusValue} x={146} y={61} />
+          </>
+        )}
+        {mode === "center" && (
+          <>
+            <circle className="mom-circle-point" cx="120" cy="80" r="2.8" />
+            <CirclePointLabel label="O" x={111} y={91} />
+          </>
+        )}
+      </g>
+    </svg>
+  );
 }
 
 function PartitionDiagramsVisual({
@@ -952,15 +1194,7 @@ export function VisualAid({ visual }: { visual: JudgmentVisual }) {
     );
   }
   if (visual.kind === "circle") {
-    return (
-      <div className="mom-visual mom-circle-wrap" role="img" aria-label="원의 중심과 선분을 나타낸 그림">
-        <div className="mom-circle">
-          {visual.showCenter && <span className="mom-circle-center" />}
-          {visual.showRadius && <span className="mom-circle-radius" />}
-          {visual.showDiameter && <span className="mom-circle-diameter" />}
-        </div>
-      </div>
-    );
+    return <CircleDiagramVisual visual={visual} />;
   }
   if (visual.kind === "fraction-bar") {
     if (visual.unknown === "denominator") {

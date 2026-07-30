@@ -67,7 +67,14 @@ export type JudgmentVisual =
   | { kind: "item-collection"; ariaLabel: string; items: string[] }
   | { kind: "data-table"; title: string; rows: Array<{ label: string; value: string }> }
   | { kind: "division-groups"; total: number; groups: number }
-  | { kind: "circle"; showCenter?: boolean; showRadius?: boolean; showDiameter?: boolean }
+  | {
+      kind: "circle";
+      mode?: "radius" | "diameter" | "equal-radii" | "compass-center" | "compass-radius";
+      radiusValue?: number;
+      showCenter?: boolean;
+      showRadius?: boolean;
+      showDiameter?: boolean;
+    }
   | { kind: "fraction-bar"; numerator: number; denominator: number; unknown?: "numerator" | "denominator" }
   | {
       kind: "partition-diagrams";

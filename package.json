@@ -20,6 +20,7 @@
     "test:smoke:contract": "node scripts/check-smoke-contract.mjs",
     "test:legacy": "node scripts/student-content-harness.js && node scripts/runtime-harness.js",
     "test:student-content": "node scripts/student-content-harness.js",
+    "test:visual-integrity": "vitest run apps/student/src/visual-integrity-harness.test.tsx",
     "test:runtime": "node scripts/runtime-harness.js",
     "test:bundle-leaks": "node scripts/check-runtime-bundle-leaks.mjs",
     "refresh:crosswalk": "node scripts/refresh-crosswalk-snapshot.mjs",

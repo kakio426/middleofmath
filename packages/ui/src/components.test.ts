@@ -99,6 +99,83 @@ describe("VisualAid fraction bars", () => {
   });
 });
 
+describe("VisualAid circle diagrams", () => {
+  it("uses point labels and a real center-to-circle segment for a radius task", () => {
+    const visual: JudgmentVisual = {
+      kind: "circle",
+      mode: "radius"
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup).toContain("mom-circle-outline");
+    expect(markup).toContain("mom-circle-radius-segment");
+    expect(markup).toContain(">O</text>");
+    expect(markup).toContain(">A</text>");
+    expect(markup).not.toContain("mom-circle-wrap");
+    expect(describeVisual(visual)).not.toMatch(/반지름|정답/);
+  });
+
+  it("shows a diameter through O while labeling only the given half length", () => {
+    const visual: JudgmentVisual = {
+      kind: "circle",
+      mode: "diameter",
+      radiusValue: 6
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup).toContain("mom-circle-diameter-segment");
+    expect(markup).toContain("mom-circle-radius-highlight");
+    expect(markup).toContain(">6 cm</text>");
+    expect(markup).not.toContain("12 cm");
+    expect(markup.match(/mom-circle-point-label/g)).toHaveLength(3);
+  });
+
+  it("draws three separately labeled radii for equal-radius comparisons", () => {
+    const visual: JudgmentVisual = {
+      kind: "circle",
+      mode: "equal-radii",
+      radiusValue: 3
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup.match(/mom-circle-radius-segment/g)).toHaveLength(3);
+    for (const label of ["O", "A", "B", "C"]) {
+      expect(markup).toContain(`>${label}</text>`);
+    }
+    expect(markup).toContain(">3 cm</text>");
+  });
+
+  it("renders the compass legs, hinge, needle, pencil, and opening measure", () => {
+    const visual: JudgmentVisual = {
+      kind: "circle",
+      mode: "compass-radius",
+      radiusValue: 5
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup.match(/mom-compass-leg/g)).toHaveLength(2);
+    expect(markup).toContain("mom-compass-hinge");
+    expect(markup).toContain("mom-compass-needle");
+    expect(markup).toContain("mom-compass-pencil");
+    expect(markup).toContain(">5 cm</text>");
+  });
+
+  it("keeps the immutable legacy circle payload compatible with the new renderer", () => {
+    const markup = renderToStaticMarkup(
+      createElement(VisualAid, {
+        visual: {
+          kind: "circle",
+          showCenter: true,
+          showDiameter: true
+        }
+      })
+    );
+
+    expect(markup).toContain("mom-circle-diameter-segment");
+    expect(markup).not.toContain("mom-circle-wrap");
+  });
+});
+
 describe("VisualAid partition diagrams", () => {
   it("shows equal and unequal parts without replacing them with prose choices", () => {
     const visual: JudgmentVisual = {
@@ -371,11 +448,16 @@ describe("VisualAid angle diagrams", () => {
     expect(first).toContain("55°");
     expect(first).toContain("80°");
     expect(first).toContain(">?</text>");
+    expect(first.match(/mom-polygon-angle-arc/g)).toHaveLength(3);
+    expect(first).toContain("mom-polygon-vertex-name");
+    expect(first).toContain("mom-polygon-angle-value");
+    expect(first).not.toContain("mom-polygon-angle-label");
+    expect(first).not.toContain("<circle");
     expect(first).not.toContain('points="30,132 210,132 96,36"');
     expect(`${first} ${describeVisual(visual)}`).not.toMatch(/45도|45°|합은 180/);
   });
 
-  it("marks every verify-claim polygon as a not-to-scale sketch", () => {
+  it("marks every polygon as a not-to-scale sketch", () => {
     const visual: JudgmentVisual = {
       kind: "polygon-angle-diagram",
       polygon: "triangle",
@@ -388,7 +470,7 @@ describe("VisualAid angle diagrams", () => {
     };
     const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
 
-    expect(markup).toContain("그림보다 표시한 수를 보고 판단해요");
+    expect(markup).toContain("※ 그림은 실제 모양과 다를 수 있어요.");
     expect(markup).not.toMatch(/190도|그릴 수 없습니다/);
   });
 
@@ -409,7 +491,8 @@ describe("VisualAid angle diagrams", () => {
     const description = describeVisual(visual);
 
     expect(markup).toContain("mom-polygon-diagonal");
-    expect(markup).toContain("그림보다 표시한 수를 보고 판단해요");
+    expect(markup).toContain("※ 그림은 실제 모양과 다를 수 있어요.");
+    expect(markup.match(/mom-polygon-angle-arc/g)).toHaveLength(4);
     expect(description).toContain("대각선 하나로 두 삼각형으로 나뉘어");
     expect(description).not.toMatch(/360|합은|맞습니다|틀립니다/);
   });

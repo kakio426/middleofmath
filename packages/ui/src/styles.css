@@ -271,35 +271,121 @@ p { line-height: 1.6; }
   fill: var(--text-tertiary);
 }
 .mom-polygon-diagonal {
-  stroke: var(--accent-primary);
-  stroke-dasharray: 7 5;
+  stroke: var(--text-secondary);
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+.mom-polygon-shape {
+  fill: color-mix(in srgb, var(--accent-soft) 22%, transparent);
   stroke-width: 2.5;
 }
-.mom-polygon-angle-label circle {
-  fill: var(--surface-secondary);
-  stroke: var(--border-default);
+.mom-polygon-angle-arc {
+  fill: none;
+  stroke: var(--accent-primary);
+  stroke-linecap: round;
+  stroke-width: 2.5;
 }
-.mom-polygon-angle-label text {
+.mom-polygon-vertex-name,
+.mom-polygon-angle-value {
   fill: var(--text-primary);
+  paint-order: stroke fill;
+  stroke: var(--surface-secondary);
+  stroke-linejoin: round;
+  stroke-width: 3px;
+}
+.mom-polygon-vertex-name {
+  font-size: 8px;
+  font-weight: 700;
+}
+.mom-polygon-angle-value {
   font-size: 10px;
   font-weight: 800;
 }
 .mom-polygon-hint {
   fill: var(--text-tertiary);
-  font-size: 7px;
-  font-weight: 700;
+  font-size: 6.5px;
+  font-weight: 600;
 }
 .mom-division { display: grid; gap: var(--space-5); align-content: center; padding: var(--space-5); }
 .mom-total-number { text-align: center; font-size: 40px; font-weight: 800; }
 .mom-total-number small { margin-left: var(--space-1); font-size: 14px; color: var(--text-secondary); }
 .mom-group-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(56px, 1fr)); gap: var(--space-2); }
 .mom-group-row span { min-height: 46px; display: grid; place-items: center; border-bottom: 2px solid var(--border-default); color: var(--text-secondary); font-size: 12px; }
-.mom-circle-wrap { display: grid; place-items: center; }
-.mom-circle { position: relative; width: 126px; height: 126px; border: 2px solid var(--text-primary); border-radius: 50%; }
-.mom-circle-center { position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; transform: translate(-50%, -50%); border-radius: 50%; background: var(--accent-primary); }
-.mom-circle-radius, .mom-circle-diameter { position: absolute; left: 50%; top: calc(50% - 1px); height: 2px; transform-origin: left center; background: var(--accent-primary); }
-.mom-circle-radius { width: 50%; transform: rotate(-28deg); }
-.mom-circle-diameter { width: 100%; left: 0; transform: rotate(22deg); transform-origin: center; }
+.mom-circle-diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 3 / 2;
+}
+.mom-circle-outline {
+  fill: color-mix(in srgb, var(--accent-soft) 18%, transparent);
+  stroke: var(--text-primary);
+  stroke-width: 2.5;
+}
+.mom-circle-radius-segment,
+.mom-circle-diameter-segment,
+.mom-circle-radius-highlight,
+.mom-compass-leg,
+.mom-compass-needle,
+.mom-circle-dimension path {
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mom-circle-radius-segment,
+.mom-circle-radius-highlight {
+  stroke: var(--accent-primary);
+  stroke-width: 2.5;
+}
+.mom-circle-diameter-segment {
+  stroke-width: 2.5;
+}
+.mom-circle-radius-highlight {
+  stroke-width: 3.5;
+}
+.mom-circle-point {
+  fill: var(--accent-primary);
+}
+.mom-circle-point-label,
+.mom-circle-measurement {
+  fill: var(--text-primary);
+  paint-order: stroke fill;
+  stroke: var(--surface-tertiary);
+  stroke-linejoin: round;
+  stroke-width: 3px;
+}
+.mom-circle-point-label {
+  font-size: 9px;
+  font-weight: 800;
+}
+.mom-circle-measurement {
+  font-size: 9px;
+  font-weight: 800;
+}
+.mom-compass-hinge {
+  fill: var(--surface-secondary);
+  stroke: var(--text-primary);
+  stroke-width: 2;
+}
+.mom-compass-leg {
+  stroke-width: 4;
+}
+.mom-compass-needle {
+  stroke: var(--accent-primary);
+  stroke-width: 2;
+}
+.mom-compass-pencil {
+  fill: var(--accent-primary);
+  stroke: var(--text-primary);
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+.mom-circle-dimension path {
+  stroke: var(--text-tertiary);
+  stroke-width: 1.5;
+}
 .mom-fraction { min-height: 92px; display: grid; align-content: center; gap: var(--space-3); padding: var(--space-3); background: var(--surface-tertiary); }
 .mom-fraction-row { min-height: 64px; display: grid; overflow: hidden; border: 1px solid var(--border-default); border-radius: 6px; background: var(--surface-secondary); }
 .mom-fraction-row span { border-right: 1px solid var(--border-default); }

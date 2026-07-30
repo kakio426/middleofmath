@@ -58,6 +58,14 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
     }),
     z.strictObject({
       kind: z.literal("circle"),
+      mode: z.enum([
+        "radius",
+        "diameter",
+        "equal-radii",
+        "compass-center",
+        "compass-radius"
+      ]).optional(),
+      radiusValue: z.number().positive().optional(),
       showCenter: z.boolean().optional(),
       showRadius: z.boolean().optional(),
       showDiameter: z.boolean().optional()

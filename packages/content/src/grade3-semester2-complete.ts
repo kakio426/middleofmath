@@ -386,39 +386,39 @@ const addedJudgments: Judgment[] = [
     id: "g3s2-circle-03", unitId: "circle", learnerStageId: "circle.parts",
     curriculumAnchorIds: ["[4수03-06]"], context: "동전의 가운데를 O, 가장자리의 한 점을 A라고 했어요.",
     prompt: "O와 A를 곧게 이은 선분의 이름은 무엇일까요?",
-    visual: { kind: "circle", showCenter: true, showRadius: true }, signalId: "circle.center-radius",
+    visual: { kind: "circle", mode: "radius" }, signalId: "circle.center-radius",
     answers: [{ id: "radius-oa", label: "반지름" }, { id: "diameter-oa", label: "지름" }, { id: "center-oa", label: "중심" }]
   }),
   makeJudgment({
     id: "g3s2-circle-04", unitId: "circle", learnerStageId: "circle.diameter",
     curriculumAnchorIds: ["[4수03-06]"], context: "둥근 시계의 중심에서 가장자리까지는 6cm예요.",
     prompt: "중심을 지나 한쪽 가장자리에서 반대쪽 가장자리까지는 몇 cm일까요?",
-    visual: { kind: "circle", showCenter: true, showDiameter: true }, signalId: "circle.radius-diameter",
+    visual: { kind: "circle", mode: "diameter", radiusValue: 6 }, signalId: "circle.radius-diameter",
     answers: [{ id: "12cm", label: "12cm" }, { id: "6cm", label: "6cm" }, { id: "36cm", label: "36cm" }]
   }),
   makeJudgment({
     id: "g3s2-circle-05", unitId: "circle", learnerStageId: "circle.equal-radii",
     curriculumAnchorIds: ["[4수03-06]"], prompt: "한 원에서 반지름 OA가 3cm예요. 다른 반지름 OB는 몇 cm일까요?",
-    visual: { kind: "circle", showCenter: true, showRadius: true }, signalId: "circle.equal-radii",
+    visual: { kind: "circle", mode: "equal-radii", radiusValue: 3 }, signalId: "circle.equal-radii",
     answers: [{ id: "3cm", label: "3cm" }, { id: "6cm", label: "6cm" }, { id: "1cm", label: "1cm" }]
   }),
   makeJudgment({
     id: "g3s2-circle-06", unitId: "circle", learnerStageId: "circle.equal-radii",
     curriculumAnchorIds: ["[4수03-06]"], context: "동전의 가운데에서 가장자리의 여러 점까지 길이를 재었어요.",
-    prompt: "길이는 어떻게 될까요?", visual: { kind: "circle", showCenter: true, showRadius: true },
+    prompt: "길이는 어떻게 될까요?", visual: { kind: "circle", mode: "equal-radii" },
     signalId: "circle.equal-radii",
     answers: [{ id: "all-same", label: "모두 같아요" }, { id: "all-different", label: "모두 달라요" }, { id: "one-double", label: "한 곳만 두 배예요" }]
   }),
   makeJudgment({
     id: "g3s2-circle-07", unitId: "circle", learnerStageId: "circle.compass",
     curriculumAnchorIds: ["[4수03-07]"], prompt: "컴퍼스로 원을 그릴 때 움직이지 않게 두는 곳은 어디일까요?",
-    visual: { kind: "circle", showCenter: true }, signalId: "circle.compass",
+    visual: { kind: "circle", mode: "compass-center" }, signalId: "circle.compass",
     answers: [{ id: "needle", label: "침이 닿은 곳" }, { id: "pencil", label: "연필이 닿은 곳" }, { id: "both-move", label: "두 곳 모두" }]
   }),
   makeJudgment({
     id: "g3s2-circle-08", unitId: "circle", learnerStageId: "circle.compass",
     curriculumAnchorIds: ["[4수03-07]"], prompt: "컴퍼스를 5cm 벌려 그린 원의 반지름은 얼마일까요?",
-    visual: { kind: "circle", showCenter: true, showRadius: true }, signalId: "circle.compass",
+    visual: { kind: "circle", mode: "compass-radius", radiusValue: 5 }, signalId: "circle.compass",
     answers: [{ id: "5cm", label: "5cm" }, { id: "10cm", label: "10cm" }, { id: "25cm", label: "25cm" }]
   })
 ];
@@ -760,7 +760,24 @@ const existingJudgments = grade3Semester2Diagnosis.judgments.map((judgment) => {
     };
   }
   if (judgment.id === "g3s2-circle-02") {
-    return { ...judgment, curriculumAnchorIds: ["[4수03-06]"] };
+    return {
+      ...judgment,
+      curriculumAnchorIds: ["[4수03-06]"],
+      visual: {
+        kind: "circle",
+        mode: "diameter",
+        radiusValue: 4
+      } satisfies Judgment["visual"]
+    };
+  }
+  if (judgment.id === "g3s2-circle-01") {
+    return {
+      ...judgment,
+      visual: {
+        kind: "circle",
+        mode: "radius"
+      } satisfies Judgment["visual"]
+    };
   }
   if (judgment.id === "g3s2-frac-02") {
     return { ...judgment, visual: { kind: "none" } as const };
@@ -855,7 +872,7 @@ const diagnosis: DiagnosisSet = {
   manifest: {
     ...grade3Semester2Diagnosis.manifest,
     version: "2.1.0",
-    checksum: "3fe3dffb0cb83a8e3803bab3e45c1c2bdacbc2916cb28b0e28e8b9d6b76812b2",
+    checksum: "d00b8d1ebf69b7028804768663bbf72bef76c0cc5260386dbc83ed4887862c08",
     estimatedMinutes: 32,
     status: "review"
   },
