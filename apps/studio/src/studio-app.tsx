@@ -14,7 +14,13 @@ import {
   ReviewContentDraft,
   SaveDraftRevision
 } from "@middle-of-math/application";
-import { diagnosisContentValidator, grade3Semester2Diagnosis } from "@middle-of-math/content";
+import {
+  diagnosisContentValidator,
+  diagnosticIntegrityGate,
+  grade3Semester2CoverageBlueprint,
+  grade3Semester2Diagnosis
+} from "@middle-of-math/content";
+import { presentedChoices } from "@middle-of-math/domain";
 import type {
   ContentDraft,
   ContentReviewComment,
@@ -27,7 +33,10 @@ import { Brand, ChoiceOption, ProgressLine, StatusPill, VisualAid } from "@middl
 import {
   cloneAsDraft,
   collectStudioIssues,
+  getStudioCurriculumProvenance,
+  issueBelongsToJudgment,
   structurallyEqual,
+  summarizeDistractorRationales,
   summarizeVisual,
   updateJudgment,
   updateSignal
@@ -49,6 +58,7 @@ interface LocalDraftRecord {
 const LOCAL_DRAFT_KEY = "middle-of-math.studio.grade3-semester2.v1";
 const LOCAL_RECOVERY_PREFIX = "middle-of-math.studio.recovery.v2";
 const baseline = grade3Semester2Diagnosis;
+const curriculumProvenance = getStudioCurriculumProvenance();
 
 function publicConfig() {
   const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
@@ -145,7 +155,15 @@ export function StudioApp() {
   );
   const [online, setOnline] = useState(navigator.onLine);
 
-  const issues = useMemo(() => collectStudioIssues(draft, baseContent), [draft, baseContent]);
+  const nextVersion = nextPatchVersion(draft.manifest.version);
+  const issues = useMemo(
+    () => collectStudioIssues(
+      draft,
+      baseContent,
+      { setKey: draft.manifest.id, targetVersion: nextVersion }
+    ),
+    [draft, baseContent, nextVersion]
+  );
   const errors = issues.filter((issue) => issue.level === "error");
   const selectedJudgment = draft.judgments.find((judgment) => judgment.id === selectedJudgmentId) ?? draft.judgments[0];
   const selectedStage = draft.learnerStages.find((stage) => stage.id === selectedJudgment?.learnerStageId);
@@ -154,7 +172,6 @@ export function StudioApp() {
     : [];
   const editable = (role === "author" || role === "admin") && (workflow === "draft" || workflow === "changes_requested");
   const hasWorkingDraft = demoMode || Boolean(remoteDraftId);
-  const nextVersion = nextPatchVersion(draft.manifest.version);
 
   const resetRemoteWorkspace = useCallback((nextUserId: string | null) => {
     const cleanDraft = cloneAsDraft(baseline);
@@ -520,7 +537,12 @@ export function StudioApp() {
     const isCurrent = captureRemoteIdentity();
     try {
       if (repository && remoteDraftId && userId) {
-        const request = await new RequestContentReview(repository, diagnosisContentValidator, ids).execute({
+        const request = await new RequestContentReview(
+          repository,
+          diagnosisContentValidator,
+          ids,
+          diagnosticIntegrityGate
+        ).execute({
           draftId: remoteDraftId,
           expectedRevision: revision,
           authorId: userId
@@ -543,7 +565,11 @@ export function StudioApp() {
     const isCurrent = captureRemoteIdentity();
     try {
       if (repository && reviewRequest && userId) {
-        await new ReviewContentDraft(repository).execute({
+        await new ReviewContentDraft(
+          repository,
+          diagnosisContentValidator,
+          diagnosticIntegrityGate
+        ).execute({
           reviewRequestId: reviewRequest.id,
           expectedDraftRevision: revision,
           reviewerId: userId,
@@ -564,7 +590,11 @@ export function StudioApp() {
     const isCurrent = captureRemoteIdentity();
     try {
       if (repository && reviewRequest && userId) {
-        const approved = await new ReviewContentDraft(repository).execute({
+        const approved = await new ReviewContentDraft(
+          repository,
+          diagnosisContentValidator,
+          diagnosticIntegrityGate
+        ).execute({
           reviewRequestId: reviewRequest.id,
           expectedDraftRevision: revision,
           reviewerId: userId,
@@ -587,7 +617,11 @@ export function StudioApp() {
     const isCurrent = captureRemoteIdentity();
     try {
       if (repository && remoteDraftId && userId) {
-        const published = await new PublishDiagnosisSet(repository, diagnosisContentValidator).execute({
+        const published = await new PublishDiagnosisSet(
+          repository,
+          diagnosisContentValidator,
+          diagnosticIntegrityGate
+        ).execute({
           draftId: remoteDraftId,
           expectedRevision: revision,
           reviewerId: reviewRequest?.reviewerId ?? userId,
@@ -813,6 +847,12 @@ interface EditorPageProps {
 }
 
 function EditorPage(props: EditorPageProps) {
+  const rationaleSummary = summarizeDistractorRationales(
+    props.content,
+    props.judgment.id,
+    grade3Semester2CoverageBlueprint
+  );
+
   return (
     <section className="studio-editor">
       <ContentOutline content={props.content} selectedId={props.selectedId} onSelect={props.onSelect} />
@@ -828,7 +868,13 @@ function EditorPage(props: EditorPageProps) {
         </div>
         {!props.editable && <p className="studio-readonly-note">{props.readOnlyReason}</p>}
         <fieldset className="studio-editor-fieldset" disabled={!props.editable}>
-          {props.tab === "judgment" && <JudgmentForm judgment={props.judgment} onChange={props.onChangeJudgment} />}
+          {props.tab === "judgment" && (
+            <JudgmentForm
+              judgment={props.judgment}
+              rationaleSummary={rationaleSummary}
+              onChange={props.onChangeJudgment}
+            />
+          )}
           {props.tab === "interpretation" && <InterpretationForm signals={props.relatedSignals} onChange={props.onChangeSignal} />}
           {props.tab === "metadata" && <MetadataPanel content={props.content} judgment={props.judgment} stageTitle={props.selectedStageTitle} />}
         </fieldset>
@@ -859,7 +905,15 @@ function ContentOutline({ content, selectedId, onSelect }: { content: DiagnosisS
   );
 }
 
-function JudgmentForm({ judgment, onChange }: { judgment: Judgment; onChange: (updater: (judgment: Judgment) => Judgment) => void }) {
+function JudgmentForm({
+  judgment,
+  rationaleSummary,
+  onChange
+}: {
+  judgment: Judgment;
+  rationaleSummary: ReturnType<typeof summarizeDistractorRationales>;
+  onChange: (updater: (judgment: Judgment) => Judgment) => void;
+}) {
   return (
     <div className="studio-form mom-stack-lg">
       <FormSection number="01" title="학생에게 보여줄 말" description="진단 이름이나 정답을 암시하지 않고, 한 번에 한 가지 판단만 묻습니다.">
@@ -880,6 +934,43 @@ function JudgmentForm({ judgment, onChange }: { judgment: Judgment; onChange: (u
       <FormSection number="03" title="시각 자료" description="학생 화면에서 실제로 렌더링되는 구조화 자료입니다.">
         <div className="studio-readonly-grid"><span>유형<strong>{judgment.visual.kind}</strong></span><span>요약<strong>{summarizeVisual(judgment)}</strong></span><span>상호작용<strong>{judgment.interaction.type} v{judgment.interaction.version}</strong></span></div>
         <p className="studio-field-note">새 시각 자료 유형과 상호작용 제작은 이번 단계에서 지원하지 않습니다.</p>
+      </FormSection>
+      <FormSection number="04" title="오답 근거" description="학생에게는 보이지 않는 교사용 검수 정보입니다. 선택지가 어떤 판단에서 만들어졌는지 확인합니다.">
+        {rationaleSummary.status === "mismatch" ? (
+          <p className="studio-rationale-mismatch" role="alert">
+            {rationaleSummary.message}
+          </p>
+        ) : (
+          <div className="studio-rationale-panel">
+            {rationaleSummary.sharedSignalRationale && (
+              <p className="studio-shared-rationale">
+                <strong>공통 관찰 기준</strong>
+                {rationaleSummary.sharedSignalRationale}
+              </p>
+            )}
+            <ol className="studio-rationale-list">
+              {rationaleSummary.items.map((item) => (
+                <li key={item.choiceId}>
+                  <header>
+                    <strong>{item.choiceLabel}</strong>
+                    <span>{item.misconceptionTitle}</span>
+                  </header>
+                  <dl>
+                    <div>
+                      <dt>오답이 만들어진 과정</dt>
+                      <dd>{item.derivation}</dd>
+                    </div>
+                    <div>
+                      <dt>교사가 확인할 판단</dt>
+                      <dd>{item.rationale}</dd>
+                    </div>
+                  </dl>
+                  <code>{item.misconceptionId}</code>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
       </FormSection>
     </div>
   );
@@ -924,12 +1015,21 @@ function MetadataPanel({ content, judgment, stageTitle }: { content: DiagnosisSe
 
 function PreviewRail({ judgment, judgmentIndex, stageTitle, issues }: { judgment: Judgment; judgmentIndex: number; stageTitle: string; issues: ReturnType<typeof collectStudioIssues> }) {
   const [unknownVisible, setUnknownVisible] = useState(false);
+  const previewChoices = useMemo(
+    () => presentedChoices(
+      { sessionId: "studio-preview", judgmentId: judgment.id },
+      judgment.choices
+    ),
+    [judgment]
+  );
   useEffect(() => {
     setUnknownVisible(false);
     const timer = window.setTimeout(() => setUnknownVisible(true), 30_000);
     return () => window.clearTimeout(timer);
   }, [judgment.id]);
-  const relevantIssues = issues.filter((issue) => issue.path.startsWith(`/judgments/${judgmentIndex}`));
+  const relevantIssues = issues.filter((issue) =>
+    issueBelongsToJudgment(issue.path, judgmentIndex)
+  );
   return (
     <aside className="studio-preview-rail">
       <div className="studio-preview-heading"><div><p className="mom-eyebrow">학생 화면 미리보기</p><strong>태블릿 · 자동 진행 없음</strong></div><span>768</span></div>
@@ -940,7 +1040,7 @@ function PreviewRail({ judgment, judgmentIndex, stageTitle, issues }: { judgment
           {judgment.context && <p className="mom-muted">{judgment.context}</p>}
           <h2>{judgment.prompt}</h2>
           <VisualAid visual={judgment.visual} />
-          <div className="mom-choice-list">{judgment.choices.map((choice) => <ChoiceOption key={choice.id} label={choice.label || "빈 선택지"} selected={false} onSelect={() => undefined} />)}</div>
+          <div className="mom-choice-list">{previewChoices.map((choice) => <ChoiceOption key={choice.id} label={choice.label || "빈 선택지"} selected={false} onSelect={() => undefined} />)}</div>
           {unknownVisible
             ? <button type="button" className="studio-unknown-preview">잘 모르겠어요</button>
             : <p className="studio-unknown-preview">30초 후 “잘 모르겠어요” 표시</p>}
@@ -955,6 +1055,8 @@ function PreviewRail({ judgment, judgmentIndex, stageTitle, issues }: { judgment
 function ReviewPage({ baseline, draft, workflow, role, issues, comments, nextVersion, onSelect, onRequestChanges, onApprove, onPublish, onAddComment, onResolveComment }: { baseline: DiagnosisSet; draft: DiagnosisSet; workflow: Workflow; role: StudioRole; issues: ReturnType<typeof collectStudioIssues>; comments: ContentReviewComment[]; nextVersion: string; onSelect: (id: string) => void; onRequestChanges: () => Promise<void>; onApprove: () => Promise<void>; onPublish: () => Promise<void>; onAddComment: (body: string, path: string) => Promise<void>; onResolveComment: (commentId: string) => Promise<void> }) {
   const changed = draft.judgments.filter((judgment, index) => !structurallyEqual(judgment, baseline.judgments[index]));
   const errors = issues.filter((issue) => issue.level === "error");
+  const gateNotEnforced = issues.some((issue) => issue.code === "DI_GATE_NOT_ENFORCED");
+  const crosswalkApplies = !nextVersion.startsWith("1.");
   const unresolvedRequired = comments.filter((comment) => comment.required && !comment.resolvedAt);
   const [commentBody, setCommentBody] = useState("");
   const [commentPath, setCommentPath] = useState("/judgments/0");
@@ -965,10 +1067,43 @@ function ReviewPage({ baseline, draft, workflow, role, issues, comments, nextVer
   }
   return (
     <section className="studio-page studio-review">
-      <div className="studio-page-heading"><div><p className="mom-eyebrow">리비전 검수</p><h1>학생에게 가기 전, 다른 눈으로 봅니다.</h1><p className="mom-muted">기준 버전 1.0.0과 현재 초안의 변경 및 발행 규칙을 함께 확인합니다.</p></div><div className="mom-row"><StatusPill tone={errors.length ? "risk" : "accent"}>{errors.length ? `오류 ${errors.length}` : "검증 통과"}</StatusPill><span className="mom-caption">변경 판단 {changed.length}</span></div></div>
+      <div className="studio-page-heading"><div><p className="mom-eyebrow">리비전 검수</p><h1>학생에게 가기 전, 다른 눈으로 봅니다.</h1><p className="mom-muted">기준 버전 1.0.0과 현재 초안의 변경 및 발행 규칙을 함께 확인합니다.</p></div><div className="mom-row"><StatusPill tone={errors.length ? "risk" : gateNotEnforced ? "warning" : "accent"}>{errors.length ? `오류 ${errors.length}` : gateNotEnforced ? "게이트 적용 전" : "검증 통과"}</StatusPill><span className="mom-caption">변경 판단 {changed.length}</span></div></div>
       <div className="studio-review-layout">
         <div className="studio-review-list">
-          <section className="mom-panel"><header className="mom-panel-header"><div><p className="mom-eyebrow">자동 검증</p><h2>{errors.length ? "발행을 막는 오류가 있습니다" : "발행 규칙을 모두 통과했습니다"}</h2></div></header><div className="mom-panel-body studio-check-list">{issues.length === 0 ? <p className="studio-check-success">구조, 참조, 상호작용, 리포트 문구를 확인했습니다.</p> : issues.map((issue) => <p key={`${issue.path}-${issue.message}`} className={issue.level}><strong>{issue.level === "error" ? "오류" : "확인"}</strong><span>{issue.message}</span><small>{issue.path}</small></p>)}</div></section>
+          <section className="mom-panel">
+            <header className="mom-panel-header">
+              <div>
+                <p className="mom-eyebrow">{crosswalkApplies ? "교육과정 근거" : "2.x 교육과정 근거"}</p>
+                <h2>
+                  {crosswalkApplies ? "" : "2.x용 교차표 · "}
+                  {curriculumProvenance.anchorCount}개 성취기준 · {curriculumProvenance.stageCount}개 진단 단계
+                </h2>
+              </div>
+              <StatusPill tone={!crosswalkApplies || curriculumProvenance.gapCount ? "warning" : "accent"}>
+                {!crosswalkApplies
+                  ? "현재 1.x 적용 전"
+                  : curriculumProvenance.gapCount
+                    ? `공백 ${curriculumProvenance.gapCount}`
+                    : "교차표 완성"}
+              </StatusPill>
+            </header>
+            <div className="mom-panel-body mom-stack">
+              {crosswalkApplies
+                ? <p>
+                    외부 학습맵의 성취기준 코드는 직접 대조했고, 더 세밀한 진단 단계 {curriculumProvenance.partialCount}개는
+                    과장하지 않도록 부분 일치로 검수했습니다.
+                  </p>
+                : <p>
+                    현재 초안의 다음 버전 {nextVersion}에는 아직 적용하지 않습니다. 2.x 전체 콘텐츠를 검수할 때
+                    성취기준 {curriculumProvenance.anchorCount}개와 진단 단계 {curriculumProvenance.stageCount}개를 확인합니다.
+                  </p>}
+              <p className="mom-caption">
+                DECK6 한국 학습맵 · {curriculumProvenance.upstreamCommit.slice(0, 7)} · {curriculumProvenance.taxonomyVersion} · ontology {curriculumProvenance.ontologyVersion}
+              </p>
+              <p className="mom-muted">외부 선수 관계는 편집 참고용이며 학생의 부족 단계를 자동 판정하지 않습니다.</p>
+            </div>
+          </section>
+          <section className="mom-panel"><header className="mom-panel-header"><div><p className="mom-eyebrow">자동 검증</p><h2>{errors.length ? "발행을 막는 오류가 있습니다" : gateNotEnforced ? "이 버전은 진단 게이트 적용 대상이 아닙니다" : "발행 규칙을 모두 통과했습니다"}</h2></div></header><div className="mom-panel-body studio-check-list">{issues.length === 0 ? <p className="studio-check-success">구조, 참조, 상호작용, 리포트 문구를 확인했습니다.</p> : issues.map((issue) => <p key={`${issue.code}-${issue.path}-${issue.message}`} className={issue.level}><strong>{issue.level === "error" ? "오류" : "확인"}</strong><span>{issue.message}</span><small>{issue.code} · {issue.path}</small></p>)}</div></section>
           <section className="mom-panel"><header className="mom-panel-header"><div><p className="mom-eyebrow">1.0.0과 비교</p><h2>{changed.length ? `${changed.length}개 판단이 달라졌습니다` : "판단 내용 변경이 없습니다"}</h2></div></header><div className="studio-diff-list">{changed.length === 0 ? <div className="studio-no-diff">초안은 기준 버전과 같습니다. 편집 화면에서 내용을 수정해 보세요.</div> : changed.map((judgment) => { const before = baseline.judgments.find((item) => item.id === judgment.id); return <button type="button" key={judgment.id} onClick={() => onSelect(judgment.id)}><span>{judgment.id}</span><del>{before?.prompt}</del><ins>{judgment.prompt}</ins></button>; })}</div></section>
           <section className="mom-panel"><header className="mom-panel-header"><div><p className="mom-eyebrow">필드별 검수 의견</p><h2>{comments.length ? `${unresolvedRequired.length}개 해결 필요` : "등록된 의견이 없습니다"}</h2></div></header><div className="studio-comment-list">{comments.length === 0 ? <p className="studio-no-diff">필드 경로와 함께 의견을 남기면 다음 검수에도 위치가 유지됩니다.</p> : comments.map((comment) => <article key={comment.id} className={comment.resolvedAt ? "is-resolved" : ""}><div><code>{comment.path}</code><StatusPill tone={comment.resolvedAt ? "neutral" : "warning"}>{comment.resolvedAt ? "해결됨" : "필수"}</StatusPill></div><p>{comment.body}</p>{!comment.resolvedAt && role !== "reviewer" && <button type="button" className="mom-button" onClick={() => void onResolveComment(comment.id)}>반영 완료</button>}</article>)}</div></section>
         </div>

@@ -2,6 +2,10 @@ import type {
   DiagnosisCoverageBlueprint,
   StageCoverage
 } from "./coverage";
+import {
+  grade3Semester2DistractorRationales,
+  grade3Semester2MisconceptionTitles
+} from "./grade3-semester2-rationales";
 
 function stage(
   stageId: string,
@@ -29,7 +33,11 @@ function stage(
  */
 export const grade3Semester2CoverageBlueprint: DiagnosisCoverageBlueprint = {
   diagnosisSetId: "grade3-semester2",
+  blueprintRevision: "2026-07-30.2",
+  enforcedFromVersion: "2.0.0",
   fallbackSignalIds: ["needs-scaffold", "needs-review"],
+  misconceptionTitles: grade3Semester2MisconceptionTitles,
+  distractors: grade3Semester2DistractorRationales,
   stages: [
     stage(
       "multiplication.place-value",

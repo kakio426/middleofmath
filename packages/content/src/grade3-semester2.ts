@@ -1,7 +1,6 @@
 import type { DiagnosisSet } from "@middle-of-math/domain";
+import { grade3Semester2Anchor } from "./curriculum-anchor-registry";
 import { diagnosisSetSchema } from "./schema";
-
-const source = "교육부 고시 제2022-33호 [별책 8] 수학과 교육과정";
 
 const diagnosis: DiagnosisSet = {
   manifest: {
@@ -31,19 +30,19 @@ const diagnosis: DiagnosisSet = {
     estimatedMinutes: 12
   },
   curriculumAnchors: [
-    { id: "[4수01-04]", label: "한 자리 수 또는 두 자리 수를 곱하는 곱셈", source },
-    { id: "[4수01-05]", label: "나눗셈의 의미와 곱셈과의 관계", source },
-    { id: "[4수01-06]", label: "한 자리 수로 나누는 나눗셈", source },
-    { id: "[4수03-06]", label: "원의 중심, 반지름, 지름", source },
-    { id: "[4수03-07]", label: "컴퍼스로 원 그리기", source },
-    { id: "[4수01-09]", label: "등분할과 분수", source },
-    { id: "[4수01-10]", label: "단위분수, 진분수, 가분수, 대분수", source },
-    { id: "[4수01-11]", label: "분모가 같은 분수와 단위분수의 크기 비교", source },
-    { id: "[4수03-17]", label: "L와 mL의 관계와 들이 측정", source },
-    { id: "[4수03-19]", label: "들이의 덧셈과 뺄셈", source },
-    { id: "[4수03-20]", label: "g과 kg의 관계와 무게 측정", source },
-    { id: "[4수04-01]", label: "실생활 자료와 그림그래프", source }
-  ],
+    "[4수01-04]",
+    "[4수01-05]",
+    "[4수01-06]",
+    "[4수03-06]",
+    "[4수03-07]",
+    "[4수01-09]",
+    "[4수01-10]",
+    "[4수01-11]",
+    "[4수03-17]",
+    "[4수03-19]",
+    "[4수03-20]",
+    "[4수04-01]"
+  ].map((id) => grade3Semester2Anchor(id, "v1")),
   learnerStages: [
     { id: "multiplication.place-value", order: 1, unitId: "multiplication", title: "곱하는 수를 자릿값으로 나누기", shortTitle: "십과 일을 나누어 곱함", curriculumAnchorIds: ["[4수01-04]"], prerequisiteStageIds: [] },
     { id: "multiplication.combine", order: 2, unitId: "multiplication", title: "부분곱을 합쳐 곱셈 결과 만들기", shortTitle: "부분곱을 알맞게 합침", curriculumAnchorIds: ["[4수01-04]"], prerequisiteStageIds: ["multiplication.place-value"] },

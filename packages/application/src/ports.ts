@@ -163,3 +163,11 @@ export interface ContentValidator {
   validate(content: unknown, baseContent?: DiagnosisSet): ContentValidationResult;
   validateRecovery(content: unknown, baseContent?: DiagnosisSet): ContentValidationResult;
 }
+
+export interface DiagnosticIntegrityGate {
+  inspect(input: {
+    content: DiagnosisSet;
+    setKey: string;
+    targetVersion: string;
+  }): ContentValidationResult;
+}

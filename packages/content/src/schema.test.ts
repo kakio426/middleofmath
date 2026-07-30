@@ -81,6 +81,250 @@ describe("content studio diagnosis validation", () => {
     ]));
   });
 
+  it("accepts semantic measurement visuals and rejects mismatched measurement media", () => {
+    const valid = cloneContent();
+    valid.judgments[0].visual = {
+      kind: "quantity-combine",
+      medium: "capacity",
+      operator: "subtract",
+      left: [{ value: 5, unit: "L" }],
+      right: [{ value: 2, unit: "L" }, { value: 750, unit: "mL" }]
+    };
+    expect(validateDiagnosisSet(valid).valid).toBe(true);
+
+    const wrongUnit = cloneContent();
+    wrongUnit.judgments[0].visual = {
+      kind: "unit-relation",
+      medium: "capacity",
+      given: [{ value: 2, unit: "kg" }],
+      targetUnit: "mL"
+    };
+    expect(validateDiagnosisSet(wrongUnit).issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: "SCHEMA_INVALID" })
+    ]));
+
+    const wrongInstrument = cloneContent();
+    wrongInstrument.judgments[0].visual = {
+      kind: "measure-referent",
+      medium: "weight",
+      object: "watermelon",
+      instrument: "beaker"
+    };
+    expect(validateDiagnosisSet(wrongInstrument).issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: "SCHEMA_INVALID" })
+    ]));
+
+    const unknownKind = cloneContent() as any;
+    unknownKind.judgments[0].visual = { kind: "graduated-cylinder", value: 300 };
+    expect(validateDiagnosisSet(unknownKind).issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: "SCHEMA_INVALID" })
+    ]));
+  });
+
+  it("accepts a valid place-value chart and rejects answer leakage or bad indexes", () => {
+    const valid = cloneContent();
+    valid.judgments[0].visual = {
+      kind: "place-value-chart",
+      digits: [7, 3, 5, 2, 4],
+      ask: "value",
+      highlightIndexes: [1]
+    };
+    expect(validateDiagnosisSet(valid).valid).toBe(true);
+
+    const leakedPlaceName = cloneContent();
+    leakedPlaceName.judgments[0].visual = {
+      kind: "place-value-chart",
+      digits: [8, 4, 1, 6, 2],
+      ask: "place-name",
+      highlightIndexes: [0]
+    };
+    expect(validateDiagnosisSet(leakedPlaceName).issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: "SCHEMA_INVALID" })
+      ])
+    );
+
+    const duplicateIndex = cloneContent();
+    duplicateIndex.judgments[0].visual = {
+      kind: "place-value-chart",
+      digits: [5, 4, 5, 2, 0],
+      ask: "value",
+      highlightIndexes: [0, 0]
+    };
+    expect(validateDiagnosisSet(duplicateIndex).issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: "SCHEMA_INVALID" })
+      ])
+    );
+
+    const outOfRange = cloneContent();
+    outOfRange.judgments[0].visual = {
+      kind: "place-value-chart",
+      digits: [5, 4, 5, 2, 0],
+      ask: "value",
+      highlightIndexes: [5]
+    };
+    expect(validateDiagnosisSet(outOfRange).issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: "SCHEMA_INVALID" })
+      ])
+    );
+  });
+
+  it("accepts valid angle figures and rejects impossible or leaking mode combinations", () => {
+    const validateVisual = (visual: any) => {
+      const content = cloneContent() as any;
+      content.judgments[0].visual = visual;
+      return validateDiagnosisSet(content);
+    };
+
+    expect(validateVisual({
+      kind: "angle-figure",
+      degrees: 125,
+      mode: "protractor",
+      protractorPlacement: "aligned",
+      label: "가"
+    }).valid).toBe(true);
+    expect(validateVisual({
+      kind: "angle-figure",
+      degrees: 85,
+      mode: "bare",
+      referenceRightAngle: true,
+      rayLengths: [42, 88]
+    }).valid).toBe(true);
+
+    for (const visual of [
+      { kind: "angle-figure", degrees: 0, mode: "bare" },
+      { kind: "angle-figure", degrees: 180, mode: "bare" },
+      {
+        kind: "angle-figure",
+        degrees: 90,
+        mode: "bare",
+        protractorPlacement: "aligned"
+      }
+    ]) {
+      expect(validateVisual(visual).issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: "SCHEMA_INVALID" })
+        ])
+      );
+    }
+  });
+
+  it("enforces missing-angle and claim-verification polygon contracts", () => {
+    const validateVisual = (visual: any) => {
+      const content = cloneContent() as any;
+      content.judgments[0].visual = visual;
+      return validateDiagnosisSet(content);
+    };
+
+    expect(validateVisual({
+      kind: "polygon-angle-diagram",
+      polygon: "triangle",
+      mode: "find-missing",
+      angles: [
+        { label: "가", value: 55 },
+        { label: "나", value: 80 },
+        { label: "다", value: null }
+      ]
+    }).valid).toBe(true);
+    expect(validateVisual({
+      kind: "polygon-angle-diagram",
+      polygon: "quadrilateral",
+      mode: "verify-claim",
+      diagonal: true,
+      angles: [
+        { label: "가", value: 95 },
+        { label: "나", value: 100 },
+        { label: "다", value: 80 },
+        { label: "라", value: 85 }
+      ]
+    }).valid).toBe(true);
+
+    const invalidVisuals = [
+      {
+        kind: "polygon-angle-diagram",
+        polygon: "triangle",
+        mode: "find-missing",
+        angles: [
+          { label: "가", value: 55 },
+          { label: "나", value: 80 },
+          { label: "다", value: 30 },
+          { label: "라", value: null }
+        ]
+      },
+      {
+        kind: "polygon-angle-diagram",
+        polygon: "triangle",
+        mode: "find-missing",
+        angles: [
+          { label: "가", value: 55 },
+          { label: "나", value: 80 },
+          { label: "다", value: 20 }
+        ]
+      },
+      {
+        kind: "polygon-angle-diagram",
+        polygon: "triangle",
+        mode: "find-missing",
+        angles: [
+          { label: "가", value: 55 },
+          { label: "나", value: null },
+          { label: "다", value: null }
+        ]
+      },
+      {
+        kind: "polygon-angle-diagram",
+        polygon: "triangle",
+        mode: "find-missing",
+        angles: [
+          { label: "가", value: 100 },
+          { label: "나", value: 90 },
+          { label: "다", value: null }
+        ]
+      },
+      {
+        kind: "polygon-angle-diagram",
+        polygon: "triangle",
+        mode: "verify-claim",
+        angles: [
+          { label: "가", value: 60 },
+          { label: "나", value: 70 },
+          { label: "다", value: null }
+        ]
+      },
+      {
+        kind: "polygon-angle-diagram",
+        polygon: "triangle",
+        mode: "verify-claim",
+        diagonal: true,
+        angles: [
+          { label: "가", value: 60 },
+          { label: "나", value: 70 },
+          { label: "다", value: 60 }
+        ]
+      },
+      {
+        kind: "polygon-angle-diagram",
+        polygon: "triangle",
+        mode: "verify-claim",
+        angles: [
+          { label: "가", value: 60 },
+          { label: "가", value: 70 },
+          { label: "다", value: 60 }
+        ]
+      }
+    ];
+
+    for (const visual of invalidVisuals) {
+      expect(validateVisual(visual).issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: "SCHEMA_INVALID" })
+        ])
+      );
+    }
+  });
+
   it("keeps IDs from a previously published base immutable", () => {
     const content = cloneContent();
     content.judgments.shift();

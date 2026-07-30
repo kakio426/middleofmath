@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { grade3Semester2CompleteDiagnosis } from "@middle-of-math/content";
+import {
+  grade3Semester2CompleteDiagnosis,
+  grade4Semester1Diagnosis
+} from "@middle-of-math/content/runtime";
 import {
   createUnitAssignmentCards,
   groupAssignmentsByArea,
@@ -43,5 +46,35 @@ describe("3학년 2학기 학생 활동 묶음", () => {
     }
     expect(scoped.flat()).toHaveLength(64);
     expect(new Set(assignments.map((assignment) => assignment.id)).size).toBe(6);
+  });
+
+  it("4학년 큰 수와 각도를 각각 12문제·약 6분의 독립 활동으로 만든다", () => {
+    const assignments = createUnitAssignmentCards(
+      grade4Semester1Diagnosis
+    );
+
+    expect(assignments).toHaveLength(2);
+    expect(assignments[0]).toMatchObject({
+      id: "grade4-semester1-large-numbers",
+      title: "1단원 · 큰 수",
+      areaId: "number-operations",
+      areaTitle: "수와 연산",
+      symbol: "만",
+      judgmentCount: 12,
+      estimatedMinutes: 6,
+      unitId: "large-numbers"
+    });
+    expect(assignments[1]).toMatchObject({
+      id: "grade4-semester1-angles",
+      title: "2단원 · 각도",
+      areaId: "geometry",
+      areaTitle: "도형",
+      symbol: "∠",
+      judgmentCount: 12,
+      estimatedMinutes: 6,
+      unitId: "angles"
+    });
+    expect(judgmentsForAssignment(assignments[0])).toHaveLength(12);
+    expect(judgmentsForAssignment(assignments[1])).toHaveLength(12);
   });
 });

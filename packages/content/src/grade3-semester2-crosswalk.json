@@ -1,0 +1,498 @@
+{
+  "setKey": "grade3-semester2",
+  "revision": "crosswalk-2026-07-29.1",
+  "upstreamCommit": "3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c",
+  "upstreamTaxonomyVersion": "kr-full-depth-v0.4",
+  "upstreamOntologyVersion": "0.3.0-p3",
+  "snapshotDigest": "sha256:5bb711591ecd2b7312e4fce53c2ab76b1f8701ce532fc74dab164cca882c639a",
+  "anchorRows": [
+    {
+      "anchorId": "[4수01-04]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-04]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-04.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-04.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-04.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수01-05]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-05]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-05.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-05.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-05.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수01-06]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-06]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-06.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-06.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-06.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수01-08]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-08]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-08.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-08.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-08.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수01-09]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-09]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-09.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-09.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-09.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수01-10]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-10]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-10.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-10.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-10.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수01-11]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-11]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-11.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-11.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-11.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수03-06]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-06]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-06.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-06.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-06.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수03-07]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-07]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-07.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-07.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-07.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수03-17]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-17]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-17.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-17.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-17.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수03-18]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-18]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-18.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-18.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-18.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수03-19]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-19]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-19.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-19.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-19.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수03-20]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-20]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-20.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-20.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-20.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수03-21]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-21]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-21.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-21.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-21.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수03-22]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-22]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-22.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-22.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-22.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수03-23]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-23]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-23.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-23.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-23.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    },
+    {
+      "anchorId": "[4수04-01]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수04-01]",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-01.application",
+        "kr.mt.math.data-probability.g3-4.s4-04-01.concept",
+        "kr.mt.math.data-probability.g3-4.s4-04-01.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 같은 성취기준 코드와 개념·표현·적용 분해 주제를 대조해 확인했다."
+    }
+  ],
+  "stageRows": [
+    {
+      "stageId": "multiplication.place-value",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-04.representation"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다.",
+      "predecessorCandidate": {
+        "topicId": "kr.mt.math.number-operations.g3-4.s4-01-04.representation",
+        "prerequisiteId": "kr.mt.math.number-operations.g3-4.s4-01-04.concept",
+        "strength": "hard",
+        "advisory": true,
+        "localStageId": null
+      }
+    },
+    {
+      "stageId": "multiplication.combine",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-04.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "multiplication.two-digit",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-04.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "multiplication.estimate",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-08.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "division.meaning",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-05.concept"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다.",
+      "predecessorCandidate": {
+        "topicId": "kr.mt.math.number-operations.g3-4.s4-01-05.concept",
+        "prerequisiteId": "kr.mt.math.number-operations.g3-4.s4-01-04.application",
+        "strength": "soft",
+        "advisory": true,
+        "localStageId": null
+      }
+    },
+    {
+      "stageId": "division.remainder",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-05.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "division.equal-sharing",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-06.representation"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "division.remainder-check",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-06.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "division.estimate",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-08.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "circle.parts",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-06.concept"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다.",
+      "predecessorCandidate": {
+        "topicId": "kr.mt.math.geometry-measurement.g3-4.s4-03-06.concept",
+        "prerequisiteId": "kr.mt.math.geometry-measurement.g3-4.s4-03-05.application",
+        "strength": "soft",
+        "advisory": true,
+        "localStageId": null
+      }
+    },
+    {
+      "stageId": "circle.equal-radii",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-06.representation"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "circle.diameter",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-06.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "circle.compass",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-07.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "fraction.part-whole",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-09.representation"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다.",
+      "predecessorCandidate": {
+        "topicId": "kr.mt.math.number-operations.g3-4.s4-01-09.representation",
+        "prerequisiteId": "kr.mt.math.number-operations.g3-4.s4-01-09.concept",
+        "strength": "hard",
+        "advisory": true,
+        "localStageId": null
+      }
+    },
+    {
+      "stageId": "fraction.discrete",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-09.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "fraction.unit",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-10.concept"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "fraction.types",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-10.representation"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "fraction.convert",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-10.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "fraction.compare",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-11.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "fraction.unit-compare",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-11.concept"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "measurement.capacity-measure",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-17.concept"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다.",
+      "predecessorCandidate": {
+        "topicId": "kr.mt.math.geometry-measurement.g3-4.s4-03-17.concept",
+        "prerequisiteId": "kr.mt.math.geometry-measurement.g3-4.s4-03-16.application",
+        "strength": "soft",
+        "advisory": true,
+        "localStageId": null
+      }
+    },
+    {
+      "stageId": "measurement.capacity",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-18.representation"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "measurement.capacity-arithmetic",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-19.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "measurement.weight-measure",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-20.concept"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "measurement.weight",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-21.representation"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "measurement.ton",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-22.concept"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "measurement.weight-arithmetic",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-23.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "pictograph.classify-table",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-01.concept"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다.",
+      "predecessorCandidate": {
+        "topicId": "kr.mt.math.data-probability.g3-4.s4-04-01.concept",
+        "prerequisiteId": "kr.mt.math.data-probability.g1-2.s2-04-03.application",
+        "strength": "soft",
+        "advisory": true,
+        "localStageId": null
+      }
+    },
+    {
+      "stageId": "pictograph.legend",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-01.representation"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "pictograph.convert",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-01.representation"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "pictograph.complete",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-01.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    },
+    {
+      "stageId": "pictograph.compare",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-01.application"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현·적용 분해이므로, 더 세밀한 로컬 진단 단계에는 부분 일치로 검수했다."
+    }
+  ],
+  "crosswalkDigest": "sha256:e39d1284f97d38b4946c1787665504385f71aeb1d9e5e03f5ee9ff2d1ffa90ab"
+}

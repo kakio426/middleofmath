@@ -25,6 +25,7 @@ import type {
   Clock,
   ContentStudioRepository,
   ContentValidator,
+  DiagnosticIntegrityGate,
   IdGenerator,
   LocalEventQueue,
   RemoteEventRepository,
@@ -170,7 +171,10 @@ export class CompleteSession {
 }
 
 export class GenerateStudentReport {
-  constructor(private readonly reports: ReportRepository) {}
+  constructor(
+    private readonly reports: ReportRepository,
+    private readonly clock: Clock
+  ) {}
 
   async execute(
     diagnosisSet: DiagnosisSet,
@@ -181,7 +185,12 @@ export class GenerateStudentReport {
     parent: ReturnType<typeof createParentReport>;
     interpretationRun: Awaited<ReturnType<ReportRepository["saveInterpretationRun"]>>;
   }> {
-    const teacher = interpretSession(diagnosisSet, events);
+    const teacher = interpretSession(
+      diagnosisSet,
+      events,
+      undefined,
+      this.clock.now().toISOString()
+    );
     const parent = createParentReport(diagnosisSet, teacher, studentLabel);
     const interpretationRun = await this.reports.saveInterpretationRun(teacher);
     return { teacher, parent, interpretationRun };
@@ -389,6 +398,18 @@ function assertValid(result: ContentValidationResult): void {
   if (!result.valid) throw new ContentValidationError(result);
 }
 
+export function mergeValidationResults(
+  ...results: ContentValidationResult[]
+): ContentValidationResult {
+  const issues = results.flatMap((result) => result.issues);
+  const gates = results.flatMap((result) => result.gates ?? []);
+  return {
+    valid: !issues.some((item) => item.severity === "error"),
+    issues,
+    ...(gates.length > 0 ? { gates } : {})
+  };
+}
+
 export function incrementSemanticVersion(
   current: string | undefined,
   bump: "patch" | "minor" | "major" = "patch"
@@ -402,6 +423,15 @@ export function incrementSemanticVersion(
   if (bump === "major") return `${major + 1}.0.0`;
   if (bump === "minor") return `${major}.${minor + 1}.0`;
   return `${major}.${minor}.${patch + 1}`;
+}
+
+export function publishTargetVersion(
+  draft: ContentDraft,
+  base?: DiagnosisSet
+): string {
+  return base
+    ? incrementSemanticVersion(base.manifest.version)
+    : draft.content.manifest.version;
 }
 
 export class CreateContentDraft {
@@ -477,7 +507,8 @@ export class RequestContentReview {
   constructor(
     private readonly content: ContentStudioRepository,
     private readonly validator: ContentValidator,
-    private readonly ids: IdGenerator
+    private readonly ids: IdGenerator,
+    private readonly gate: DiagnosticIntegrityGate
   ) {}
 
   async execute(input: {
@@ -492,20 +523,51 @@ export class RequestContentReview {
     const base = draft.baseDiagnosisSetId
       ? await this.content.getPublishedContent(draft.baseDiagnosisSetId)
       : undefined;
-    assertValid(this.validator.validate(draft.content, base ?? undefined));
+    assertValid(mergeValidationResults(
+      this.validator.validate(draft.content, base ?? undefined),
+      this.gate.inspect({
+        content: draft.content,
+        setKey: draft.setKey,
+        targetVersion: publishTargetVersion(draft, base ?? undefined)
+      })
+    ));
     return this.content.requestReview({ id: this.ids.next(), ...input });
   }
 }
 
 export class ReviewContentDraft {
-  constructor(private readonly content: ContentStudioRepository) {}
+  constructor(
+    private readonly content: ContentStudioRepository,
+    private readonly validator: ContentValidator,
+    private readonly gate: DiagnosticIntegrityGate
+  ) {}
 
-  execute(input: {
+  async execute(input: {
     reviewRequestId: string;
     expectedDraftRevision: number;
     reviewerId: string;
     decision: ContentReviewDecision;
   }): Promise<ContentReviewRequest> {
+    if (input.decision === "approve") {
+      const review = await this.content.getReviewRequest(input.reviewRequestId);
+      if (!review) throw new Error("검수 요청을 찾을 수 없습니다.");
+      const draft = await this.content.getDraft(review.draftId);
+      if (!draft) throw new Error("초안을 찾을 수 없습니다.");
+      if (draft.revision !== input.expectedDraftRevision) {
+        throw new ContentRevisionConflictError();
+      }
+      const base = draft.baseDiagnosisSetId
+        ? await this.content.getPublishedContent(draft.baseDiagnosisSetId)
+        : undefined;
+      assertValid(mergeValidationResults(
+        this.validator.validate(draft.content, base ?? undefined),
+        this.gate.inspect({
+          content: draft.content,
+          setKey: draft.setKey,
+          targetVersion: publishTargetVersion(draft, base ?? undefined)
+        })
+      ));
+    }
     return this.content.review(input);
   }
 }
@@ -544,7 +606,8 @@ export class ResolveContentReviewComment {
 export class PublishDiagnosisSet {
   constructor(
     private readonly content: ContentStudioRepository,
-    private readonly validator: ContentValidator
+    private readonly validator: ContentValidator,
+    private readonly gate: DiagnosticIntegrityGate
   ) {}
 
   async execute(input: {
@@ -560,7 +623,14 @@ export class PublishDiagnosisSet {
     const base = draft.baseDiagnosisSetId
       ? await this.content.getPublishedContent(draft.baseDiagnosisSetId)
       : undefined;
-    const validation = this.validator.validate(draft.content, base ?? undefined);
+    const validation = mergeValidationResults(
+      this.validator.validate(draft.content, base ?? undefined),
+      this.gate.inspect({
+        content: draft.content,
+        setKey: draft.setKey,
+        targetVersion: input.version
+      })
+    );
     assertValid(validation);
     return this.content.publish({ ...input, validation });
   }

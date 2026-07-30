@@ -18,10 +18,24 @@ export interface StageCoverage {
   evidence: CoverageEvidence[];
 }
 
+export interface DistractorRationale {
+  judgmentId: string;
+  choiceId: string;
+  signalIds: string[];
+  misconceptionId: string;
+  rationale: string;
+  derivation: string;
+  sharedSignalRationale?: string;
+}
+
 export interface DiagnosisCoverageBlueprint {
   diagnosisSetId: string;
+  blueprintRevision: string;
+  enforcedFromVersion: string;
   stages: StageCoverage[];
   fallbackSignalIds: string[];
+  misconceptionTitles: Record<string, string>;
+  distractors: DistractorRationale[];
 }
 
 function addIssue(

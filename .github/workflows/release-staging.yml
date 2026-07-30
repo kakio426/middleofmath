@@ -14,8 +14,42 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  migrate:
+  preflight-secrets:
     if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment: staging
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID_STUDENT: ${{ secrets.VERCEL_PROJECT_ID_STUDENT }}
+      VERCEL_PROJECT_ID_TEACHER: ${{ secrets.VERCEL_PROJECT_ID_TEACHER }}
+      VERCEL_PROJECT_ID_STUDIO: ${{ secrets.VERCEL_PROJECT_ID_STUDIO }}
+      STAGING_TEACHER_EMAIL: ${{ secrets.STAGING_TEACHER_EMAIL }}
+      STAGING_TEACHER_PASSWORD: ${{ secrets.STAGING_TEACHER_PASSWORD }}
+    steps:
+      - name: Fail before migration or deploy when a secret is missing
+        shell: bash
+        run: |
+          missing=0
+          required=(
+            SUPABASE_ACCESS_TOKEN SUPABASE_DB_PASSWORD SUPABASE_PROJECT_REF
+            VERCEL_TOKEN VERCEL_ORG_ID
+            VERCEL_PROJECT_ID_STUDENT VERCEL_PROJECT_ID_TEACHER VERCEL_PROJECT_ID_STUDIO
+            STAGING_TEACHER_EMAIL STAGING_TEACHER_PASSWORD
+          )
+          for name in "${required[@]}"; do
+            if [[ -z "${!name:-}" ]]; then
+              echo "::error::$name is required in the staging environment"
+              missing=1
+            fi
+          done
+          exit "$missing"
+
+  migrate:
+    needs: preflight-secrets
     runs-on: ubuntu-latest
     environment: staging
     steps:
@@ -37,7 +71,7 @@ jobs:
         run: supabase db push --linked --password "$SUPABASE_DB_PASSWORD" --yes
 
   deploy:
-    needs: migrate
+    needs: [preflight-secrets, migrate]
     runs-on: ubuntu-latest
     environment: staging
     strategy:
@@ -81,7 +115,7 @@ jobs:
           npx vercel@56.5.0 alias set "$deployment_url" "${{ matrix.staging_alias }}" --token="$VERCEL_TOKEN"
 
   smoke:
-    needs: deploy
+    needs: [preflight-secrets, deploy]
     runs-on: ubuntu-latest
     environment: staging
     timeout-minutes: 15
@@ -99,6 +133,7 @@ jobs:
         env:
           STAGING_STUDENT_URL: https://middle-of-math-student-staging.vercel.app
           STAGING_TEACHER_URL: https://middle-of-math-teacher-staging.vercel.app
+          STAGING_STUDIO_URL: https://middle-of-math-studio-staging.vercel.app
           STAGING_TEACHER_EMAIL: ${{ secrets.STAGING_TEACHER_EMAIL }}
           STAGING_TEACHER_PASSWORD: ${{ secrets.STAGING_TEACHER_PASSWORD }}
         run: npm run test:smoke:staging

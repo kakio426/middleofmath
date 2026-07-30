@@ -41,6 +41,8 @@ jobs:
 
       - name: Run browser journeys
         run: npm run test:e2e
+      - name: Collect remote smoke suites without credentials
+        run: npm run test:smoke:contract
 
       - name: Upload browser evidence on failure
         if: failure()

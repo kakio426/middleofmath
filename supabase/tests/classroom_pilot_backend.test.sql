@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(52);
+select plan(56);
 
 insert into auth.users (
   id, aud, role, email, encrypted_password, email_confirmed_at, is_anonymous,
@@ -125,6 +125,62 @@ insert into public.interpretation_runs (
     'rules-2.0.0', '1.0.0', now(),
     '{"sessionId":"25000000-0000-0000-0000-000000000003","engineVersion":"rules-2.0.0","diagnosisSetVersion":"1.0.0"}'
   );
+
+select lives_ok(
+  $$insert into public.interpretation_runs (
+      id, session_id, engine_version, diagnosis_set_version, generated_at, report
+    ) values (
+      '27000000-0000-0000-0000-000000000003',
+      '25000000-0000-0000-0000-000000000002',
+      'rules-3.0.0',
+      '1.0.0',
+      now(),
+      '{
+        "sessionId":"25000000-0000-0000-0000-000000000002",
+        "diagnosisSetId":"grade3-semester2",
+        "diagnosisSetVersion":"1.0.0",
+        "engineVersion":"rules-3.0.0",
+        "generatedAt":"2026-07-29T00:00:00.000Z",
+        "observedJudgmentCount":1,
+        "stableJudgmentCount":0,
+        "uncertaintyCount":0,
+        "findings":[],
+        "evidence":[],
+        "opportunities":[],
+        "confirmedFindingCount":0,
+        "tentativeFindingCount":0,
+        "responseStyle":{
+          "confirmationCount":1,
+          "provenanceCount":0,
+          "provenanceCoverage":0,
+          "dominantPosition":null,
+          "dominantPositionRate":null,
+          "positionStyleSuspected":false,
+          "fastConfirmationCount":0
+        }
+      }'
+    )$$,
+  'a rules-3 interpretation report with confidence metadata is accepted'
+);
+
+select is(
+  (
+    select count(*)::integer
+    from public.interpretation_runs
+    where session_id = '25000000-0000-0000-0000-000000000002'
+  ),
+  2,
+  'rules-2 and rules-3 runs remain side by side for the same session'
+);
+
+select throws_ok(
+  $$update public.interpretation_runs
+    set generated_at = now()
+    where id = '27000000-0000-0000-0000-000000000001'$$,
+  'P0001',
+  'interpretation runs are versioned and immutable',
+  'the pre-existing rules-2 interpretation remains immutable'
+);
 
 insert into public.parent_report_exports (
   id, session_id, interpretation_run_id, reviewed_by, report
@@ -286,7 +342,12 @@ begin
         'firstSelectionMs', 500,
         'confirmationMs', 200,
         'selectionChanges', 0,
-        'uncertainty', false
+        'uncertainty', false,
+        'presentedChoiceIds', (
+          select jsonb_agg(choice.value ->> 'id' order by choice.ordinality desc)
+          from jsonb_array_elements(judgment.value -> 'choices')
+            with ordinality choice(value, ordinality)
+        )
       ),
       'occurred_at', now()
     ) order by judgment.ordinality
@@ -335,6 +396,28 @@ select ok(
       and last_event_seq = 14
    from public.sessions where id = '25000000-0000-0000-0000-000000000004'),
   'server derives completion status and timestamp instead of trusting the client clock'
+);
+select is(
+  (
+    select event.payload -> 'presentedChoiceIds'
+    from public.observation_events event
+    where event.session_id = '25000000-0000-0000-0000-000000000004'
+      and event.event_type = 'judgment_confirmed'
+    order by event.client_seq
+    limit 1
+  ),
+  (
+    select jsonb_agg(choice.value ->> 'id' order by choice.ordinality desc)
+    from public.diagnosis_sets diagnosis
+    cross join lateral jsonb_array_elements(diagnosis.content -> 'judgments')
+      with ordinality judgment(value, ordinality)
+    cross join lateral jsonb_array_elements(judgment.value -> 'choices')
+      with ordinality choice(value, ordinality)
+    where diagnosis.set_key = 'grade3-semester2'
+      and diagnosis.version = '1.0.0'
+      and judgment.ordinality = 1
+  ),
+  'presented choice IDs pass through the append-only event API in exact non-authored order'
 );
 
 set local role authenticated;

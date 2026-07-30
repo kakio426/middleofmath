@@ -27,6 +27,24 @@ const event: ObservationEvent = {
   occurredAt: session.startedAt
 };
 
+const judgmentEvent: ObservationEvent = {
+  ...event,
+  id: "event-b",
+  clientEventId: "client-b",
+  clientSeq: 2,
+  eventType: "judgment_confirmed",
+  judgmentId: "judgment-a",
+  payload: {
+    choiceId: "choice-b",
+    presentedChoiceIds: ["choice-c", "choice-b", "choice-a"],
+    durationMs: 4_000,
+    firstSelectionMs: 2_000,
+    confirmationMs: 1_000,
+    selectionChanges: 0,
+    uncertainty: false
+  }
+};
+
 describe("IndexedDbSessionStore", () => {
   it("resumes sessions and keeps events append-only and idempotent", async () => {
     const store = new IndexedDbSessionStore(indexedDB, `middle-of-math-test-${crypto.randomUUID()}`);
@@ -36,6 +54,18 @@ describe("IndexedDbSessionStore", () => {
 
     expect((await store.findResumable(session.assignmentId, session.studentId))?.id).toBe(session.id);
     expect(await store.listPending()).toEqual([event]);
+  });
+
+  it("preserves the exact presented choice order in the offline event queue", async () => {
+    const store = new IndexedDbSessionStore(indexedDB, `middle-of-math-test-${crypto.randomUUID()}`);
+    await store.append(judgmentEvent);
+    await store.append(structuredClone(judgmentEvent));
+
+    expect((await store.listPending())[0].payload.presentedChoiceIds).toEqual([
+      "choice-c",
+      "choice-b",
+      "choice-a"
+    ]);
   });
 
   it("rejects a reused idempotency key with a different payload", async () => {

@@ -53,12 +53,21 @@ describe("session use cases", () => {
       sessionId: session.id,
       judgmentId: "j-1",
       interaction: { type: "choice", version: 1 },
-      payload: { choiceId: "c-1", durationMs: 4_000, firstSelectionMs: 2_000, confirmationMs: 2_000, selectionChanges: 0, uncertainty: false }
+      payload: {
+        choiceId: "c-1",
+        presentedChoiceIds: ["c-3", "c-1", "c-2"],
+        durationMs: 4_000,
+        firstSelectionMs: 2_000,
+        confirmationMs: 2_000,
+        selectionChanges: 0,
+        uncertainty: false
+      }
     });
     await new CompleteSession(sessions, queue, clock, ids).execute(session.id);
 
     expect(queue.values[0]).toEqual(firstEvent);
     expect(queue.values.map((event) => event.eventType)).toEqual(["session_started", "judgment_confirmed", "session_completed"]);
+    expect(queue.values[1].payload.presentedChoiceIds).toEqual(["c-3", "c-1", "c-2"]);
     expect((await sessions.get(session.id))?.status).toBe("sync_pending");
   });
 });

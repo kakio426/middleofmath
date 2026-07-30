@@ -53,6 +53,14 @@ export interface JudgmentChoice {
   signalIds?: string[];
 }
 
+export type MeasureUnit = "mL" | "L" | "g" | "kg" | "t";
+export type MeasureMedium = "capacity" | "weight";
+export type LengthUnit = "mm" | "cm" | "m" | "km";
+export interface MeasurePart {
+  value: number;
+  unit: MeasureUnit;
+}
+
 export type JudgmentVisual =
   | { kind: "none" }
   | { kind: "array"; rows: number; columns: number; label: string }
@@ -61,7 +69,65 @@ export type JudgmentVisual =
   | { kind: "division-groups"; total: number; groups: number }
   | { kind: "circle"; showCenter?: boolean; showRadius?: boolean; showDiameter?: boolean }
   | { kind: "fraction-bar"; numerator: number; denominator: number; unknown?: "numerator" | "denominator" }
+  | {
+      kind: "partition-diagrams";
+      diagrams: Array<{
+        label: string;
+        parts: number[];
+        highlightedPart?: number;
+      }>;
+    }
   | { kind: "measurement"; amount: number; unit: "mL" | "L" | "g" | "kg" }
+  | {
+      kind: "length-relation";
+      value: number;
+      fromUnit: LengthUnit;
+      targetUnit: LengthUnit;
+    }
+  | {
+      kind: "unit-relation";
+      medium: MeasureMedium;
+      given: MeasurePart[];
+      targetUnit: MeasureUnit;
+    }
+  | {
+      kind: "measure-referent";
+      medium: MeasureMedium;
+      object: "paper-cup" | "water-bottle" | "watermelon" | "paper-clip";
+      instrument: "beaker" | "scale";
+    }
+  | {
+      kind: "quantity-combine";
+      medium: MeasureMedium;
+      operator: "add" | "subtract";
+      left: MeasurePart[];
+      right: MeasurePart[];
+    }
+  | {
+      kind: "place-value-chart";
+      digits: number[];
+      ask: "value" | "place-name";
+      highlightIndexes?: number[];
+    }
+  | {
+      kind: "angle-figure";
+      degrees: number;
+      mode: "bare" | "protractor";
+      rayLengths?: [number, number];
+      referenceRightAngle?: boolean;
+      protractorPlacement?: "aligned" | "vertex-off" | "baseline-off";
+      label?: string;
+    }
+  | {
+      kind: "polygon-angle-diagram";
+      polygon: "triangle" | "quadrilateral";
+      mode: "find-missing" | "verify-claim";
+      angles: Array<{
+        label: string;
+        value: number | null;
+      }>;
+      diagonal?: boolean;
+    }
   | { kind: "pictograph"; symbol: string; value: number; rows: Array<{ label: string; count: number }> };
 
 export interface InteractionDescriptor {
@@ -121,9 +187,30 @@ export interface ContentValidationIssue {
   severity: "error" | "warning";
 }
 
+export interface ContentValidationGateAttestation {
+  gate: "diagnostic-integrity";
+  gateVersion: string;
+  policy: "enforce" | "warn";
+  enforced: boolean;
+  setKey: string;
+  targetVersion: string;
+  blueprintRevision: string | null;
+  valid: boolean;
+  errorCount: number;
+  warningCount: number;
+  graphRevision?: string;
+  graphDigest?: string;
+  crosswalkRevision?: string;
+  crosswalkDigest?: string;
+  upstreamCommit?: string;
+  upstreamTaxonomyVersion?: string;
+  upstreamOntologyVersion?: string;
+}
+
 export interface ContentValidationResult {
   valid: boolean;
   issues: ContentValidationIssue[];
+  gates?: ContentValidationGateAttestation[];
 }
 
 export interface ContentDraft {
@@ -188,6 +275,7 @@ export type ObservationEventType =
 
 export interface JudgmentConfirmationPayload extends Record<string, unknown> {
   choiceId: string;
+  presentedChoiceIds?: string[];
   durationMs: number;
   firstSelectionMs: number | null;
   confirmationMs: number | null;
@@ -217,6 +305,9 @@ export interface EvidenceItem {
   curriculumAnchorIds: string[];
   selectedChoiceId: string;
   selectedChoiceLabel: string;
+  presentedChoiceIds?: string[];
+  selectedChoicePosition?: number;
+  presentedChoiceCount?: number;
   durationBand: "quick" | "steady" | "long";
   firstSelectionMs: number | null;
   confirmationMs: number | null;
@@ -224,11 +315,44 @@ export interface EvidenceItem {
   uncertainty: boolean;
 }
 
+export type FindingConfidence = "tentative" | "confirmed";
+
+export type TentativeReason =
+  | "insufficient_opportunity"
+  | "single_observation"
+  | "position_style"
+  | "too_fast"
+  | "uncertainty_only"
+  | "data_quality";
+
+export interface SignalOpportunity {
+  signalId: string;
+  opportunityJudgmentIds: string[];
+  observedJudgmentIds: string[];
+  counterJudgmentIds: string[];
+}
+
+export interface ResponseStyleSummary {
+  confirmationCount: number;
+  provenanceCount: number;
+  provenanceCoverage: number;
+  dominantPosition: number | null;
+  dominantPositionRate: number | null;
+  positionStyleSuspected: boolean;
+  fastConfirmationCount: number;
+}
+
 export interface DiagnosisFinding {
   signalId: string;
   title: string;
   severity: Severity;
   evidenceCount: number;
+  confidence: FindingConfidence;
+  tentativeReasons: TentativeReason[];
+  opportunityCount: number;
+  observedJudgmentIds: string[];
+  counterJudgmentIds: string[];
+  confirmationRule: string;
   learnerStageIds: string[];
   curriculumAnchorIds: string[];
   interpretation: string;
@@ -249,6 +373,10 @@ export interface TeacherStudentReport {
   uncertaintyCount: number;
   findings: DiagnosisFinding[];
   evidence: EvidenceItem[];
+  opportunities: SignalOpportunity[];
+  confirmedFindingCount: number;
+  tentativeFindingCount: number;
+  responseStyle: ResponseStyleSummary;
 }
 
 export interface ParentReport {
@@ -269,6 +397,9 @@ export interface ClassSummaryItem {
   studentCount: number;
   evidenceCount: number;
   studentIds: string[];
+  confirmedStudentCount: number;
+  tentativeStudentCount: number;
+  confirmedStudentIds: string[];
   interpretation: string;
   teachingMove: string;
 }

@@ -1,0 +1,176 @@
+{
+  "setKey": "grade4-semester1",
+  "revision": "2026-07-30.2",
+  "upstreamCommit": "3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c",
+  "upstreamTaxonomyVersion": "kr-full-depth-v0.4",
+  "upstreamOntologyVersion": "0.3.0-p3",
+  "snapshotDigest": "sha256:c636ccf0033a8bfd1d808c899bbb569ac58da39a8197d2c9bbc4b9c615eef562",
+  "anchorRows": [
+    {
+      "anchorId": "[4수01-01]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-01]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-01.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-01.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-01.representation"
+      ],
+      "reviewEvidence": "고정 학습맵에서 큰 수의 개념·표현·적용 주제가 성취기준 코드 [4수01-01]에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[4수01-02]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-02]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-02.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-02.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-02.representation"
+      ],
+      "reviewEvidence": "고정 학습맵에서 큰 수의 계열·비교에 해당하는 개념·표현·적용 주제가 코드 [4수01-02]에 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[4수03-02]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-02]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-02.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-02.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-02.representation"
+      ],
+      "reviewEvidence": "고정 학습맵에서 각과 직각의 개념·표현·적용 주제가 성취기준 코드 [4수03-02]에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[4수03-24]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-24]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-24.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-24.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-24.representation"
+      ],
+      "reviewEvidence": "고정 학습맵에서 각도기 측정과 각의 크기 어림 주제가 성취기준 코드 [4수03-24]에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[4수03-25]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-25]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-25.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-25.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-25.representation"
+      ],
+      "reviewEvidence": "고정 학습맵에서 삼각형과 사각형의 내각의 합 주제가 성취기준 코드 [4수03-25]에 직접 연결됨을 확인했다."
+    }
+  ],
+  "stageRows": [
+    {
+      "stageId": "large-number.place-value",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-01.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-01.representation"
+      ],
+      "reviewEvidence": "외부 주제는 성취기준 수준의 개념·표현 구분이며, 자리 숫자와 자리값의 로컬 진단 행동은 Middle of Math가 세분화했다."
+    },
+    {
+      "stageId": "large-number.positional-notation",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-01.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-01.application"
+      ],
+      "reviewEvidence": "외부 주제는 위치적 기수법을 별도 진단 단계로 나누지 않으므로, 같은 숫자의 위치별 값 변화 행동을 로컬에서 세분화했다."
+    },
+    {
+      "stageId": "large-number.read-write",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-01.representation",
+        "kr.mt.math.number-operations.g3-4.s4-01-01.application"
+      ],
+      "reviewEvidence": "외부 표현·적용 주제를 숫자와 한글 읽기의 양방향 전환 행동으로 세분화했으며 학생 진단 근거는 로컬 문항에서 확보한다."
+    },
+    {
+      "stageId": "large-number.sequence",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-02.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-02.representation"
+      ],
+      "reviewEvidence": "외부 성취기준 주제 중 수의 계열을 일정한 크기의 뛰어 세기 행동으로 세분화했으며 선수 관계는 자동 승격하지 않았다."
+    },
+    {
+      "stageId": "large-number.compare",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-02.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-02.representation"
+      ],
+      "reviewEvidence": "외부 적용·표현 주제를 높은 자리부터 처음 다른 자리를 찾는 비교 행동으로 세분화해 직접·전이 문항을 구성했다."
+    },
+    {
+      "stageId": "large-number.compare-reasoning",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-02.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-02.concept"
+      ],
+      "reviewEvidence": "외부 적용·개념 주제를 비교 결과의 근거를 자리 이름과 숫자로 설명하는 행동으로 세분화해 별도 단계로 관찰한다."
+    },
+    {
+      "stageId": "angle.right-angle",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-02.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-02.representation"
+      ],
+      "reviewEvidence": "외부 개념·표현 주제를 꼭짓점과 두 변을 찾고 변의 길이와 관계없이 직각을 알아보는 진단 행동으로 세분화했다."
+    },
+    {
+      "stageId": "angle.classify",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-02.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-02.representation"
+      ],
+      "reviewEvidence": "외부 적용·표현 주제를 직각 기준과 비교하여 예각과 둔각을 구별하는 직접·전이 행동으로 세분화했다."
+    },
+    {
+      "stageId": "angle.protractor-measure",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-24.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-24.representation"
+      ],
+      "reviewEvidence": "외부 적용·표현 주제를 각도기의 중심과 0 눈금을 맞추고 알맞은 방향의 눈금을 읽는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "angle.estimate",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-24.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-24.application"
+      ],
+      "reviewEvidence": "외부 개념·적용 주제를 직각 90도를 기준으로 각의 크기와 방향을 어림하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "angle.triangle-angle-sum",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-25.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-25.application"
+      ],
+      "reviewEvidence": "외부 개념·적용 주제를 삼각형의 세 각의 합으로 빠진 각을 구하고 가능한 삼각형인지 판단하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "angle.quadrilateral-angle-sum",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-25.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-25.representation"
+      ],
+      "reviewEvidence": "외부 개념·표현 주제를 사각형을 삼각형 두 개로 나누어 네 각의 합을 추론하고 적용하는 행동으로 세분화했다."
+    }
+  ],
+  "crosswalkDigest": "sha256:1a8023b8c78e4726b600a7dbc3f4f0a1c88f7097a7a4a01bca3f04828afb4ab3"
+}

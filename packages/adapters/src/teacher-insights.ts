@@ -18,6 +18,7 @@ import type {
   TeacherStudentReport,
   TeacherStudentSnapshot
 } from "@middle-of-math/domain";
+import { normalizeTeacherReport } from "@middle-of-math/domain";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 type JsonRow = Record<string, any>;
@@ -299,14 +300,14 @@ function mapEvent(row: JsonRow): ObservationEvent {
   };
 }
 
-function mapInterpretationRun(row: JsonRow): InterpretationRunRecord {
+export function mapInterpretationRun(row: JsonRow): InterpretationRunRecord {
   return {
     id: String(row.id),
     sessionId: String(row.session_id),
     engineVersion: String(row.engine_version),
     diagnosisSetVersion: String(row.diagnosis_set_version),
     generatedAt: String(row.generated_at),
-    report: row.report as TeacherStudentReport
+    report: normalizeTeacherReport(row.report)
   };
 }
 

@@ -1,0 +1,166 @@
+{
+  "revision": "grade4-placement-2026-07-30.6",
+  "status": "pending-teacher-review",
+  "upstreamSnapshot": "kr-learning-map.grade34.snapshot.json",
+  "upstreamSnapshotDigest": "sha256:c636ccf0033a8bfd1d808c899bbb569ac58da39a8197d2c9bbc4b9c615eef562",
+  "reviewedBy": null,
+  "reviewedAt": null,
+  "reviewEvidence": "DECK6 고정 커밋은 코드·학년군·영역·모듈을 확인하고, 경기도교육청 2025학년도 4학년 수업-평가 계획 예시가 코드·단원·학기를 확인한다. 2026-07-30 교사 A1 승인으로 4학년 1학기 큰 수와 각도만 문항 작성에 사용할 수 있으며, 나머지 미승인 단원은 계속 차단한다.",
+  "reviewLimitations": [
+    "2학기 PDF 부록에는 3~4학년군 성취기준 47개 전체가 포함되므로 PDF 안의 코드 존재만으로 학기 배치를 승인하지 않는다.",
+    "4학년 2학기 단원 문맥과 순서, 1학기 PDF에도 나타나는 [4수03-09], [4수03-10], [4수01-14]의 배치는 교사가 우선 확인한다.",
+    "스냅숏의 pdftotext 줄 번호는 DECK6 상류 기록값이며 추출 도구가 고정되지 않아 로컬에서 재현되지 않는다. 줄 번호를 학기 배치 승인 근거로 사용하지 않는다."
+  ],
+  "sources": [
+    {
+      "id": "deck6-grade34",
+      "kind": "grade-band-module",
+      "url": "https://github.com/DECK6/korean-elementary-learning-map/tree/3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c"
+    },
+    {
+      "id": "goe-grade4-semester1-2025",
+      "kind": "semester-unit-placement",
+      "url": "https://www.goe.go.kr/goe/na/ntt/selectNttInfo.do?bbsId=2675&mi=10961&nttSn=1057308",
+      "attachmentUrl": "https://www.goe.go.kr/resource/old/BBSMSTR_000000030222/BBS_202503061124157060.pdf",
+      "attachmentBytes": 4632051,
+      "attachmentSha256": "614cee22fa9c953efa6a671271e798b4d5232d2e5c87a7b1a2afdde395e7f54c"
+    },
+    {
+      "id": "goe-grade4-semester2-2025",
+      "kind": "semester-unit-placement",
+      "url": "https://www.goe.go.kr/goe/na/ntt/selectNttInfo.do?bbsId=2675&mi=10961&nttSn=109230",
+      "attachmentUrl": "https://www.goe.go.kr/resource/goe/na/bbs_2675/2025/07/f4c15fac-ae7b-46aa-8e16-b8d86b710d44.pdf",
+      "attachmentBytes": 6721390,
+      "attachmentSha256": "934e4dfcc268c7865f74509fd1182434e2bbfcade90033211dd7e34ce3c4952f"
+    }
+  ],
+  "sharingCandidates": {
+    "acrossSemesters": ["[4수04-03]"],
+    "acrossGradeBand": [
+      "[4수01-04]",
+      "[4수01-05]",
+      "[4수01-08]",
+      "[4수04-01]"
+    ]
+  },
+  "semesters": [
+    {
+      "semester": 1,
+      "units": [
+        {
+          "order": 1,
+          "id": "large-numbers",
+          "title": "큰 수",
+          "reviewStatus": "approved",
+          "reviewedBy": "teacher:workspace-owner",
+          "reviewedAt": "2026-07-30T21:33:47+09:00",
+          "anchorIds": ["[4수01-01]", "[4수01-02]"]
+        },
+        {
+          "order": 2,
+          "id": "angles",
+          "title": "각도",
+          "reviewStatus": "approved",
+          "reviewedBy": "teacher:workspace-owner",
+          "reviewedAt": "2026-07-30T21:33:47+09:00",
+          "anchorIds": ["[4수03-02]", "[4수03-24]", "[4수03-25]"]
+        },
+        {
+          "order": 3,
+          "id": "multiplication-division",
+          "title": "곱셈과 나눗셈",
+          "reviewStatus": "pending-teacher-review",
+          "reviewedBy": null,
+          "reviewedAt": null,
+          "anchorIds": ["[4수01-04]", "[4수01-05]", "[4수01-07]", "[4수01-08]"]
+        },
+        {
+          "order": 4,
+          "id": "figure-transform",
+          "title": "평면도형의 이동",
+          "reviewStatus": "pending-teacher-review",
+          "reviewedBy": null,
+          "reviewedAt": null,
+          "anchorIds": ["[4수03-04]", "[4수03-05]"]
+        },
+        {
+          "order": 5,
+          "id": "bar-graphs",
+          "title": "막대그래프",
+          "reviewStatus": "pending-teacher-review",
+          "reviewedBy": null,
+          "reviewedAt": null,
+          "anchorIds": ["[4수04-01]", "[4수04-03]"]
+        },
+        {
+          "order": 6,
+          "id": "patterns-relations",
+          "title": "규칙과 관계",
+          "reviewStatus": "pending-teacher-review",
+          "reviewedBy": null,
+          "reviewedAt": null,
+          "anchorIds": ["[4수02-01]", "[4수02-02]", "[4수02-03]"]
+        }
+      ]
+    },
+    {
+      "semester": 2,
+      "units": [
+        {
+          "order": 1,
+          "id": "triangles",
+          "title": "삼각형",
+          "reviewStatus": "pending-teacher-review",
+          "reviewedBy": null,
+          "reviewedAt": null,
+          "anchorIds": ["[4수03-08]", "[4수03-09]"]
+        },
+        {
+          "order": 2,
+          "id": "fraction-add-subtract",
+          "title": "분수의 덧셈과 뺄셈",
+          "reviewStatus": "pending-teacher-review",
+          "reviewedBy": null,
+          "reviewedAt": null,
+          "anchorIds": ["[4수01-15]"]
+        },
+        {
+          "order": 3,
+          "id": "quadrilaterals",
+          "title": "사각형",
+          "reviewStatus": "pending-teacher-review",
+          "reviewedBy": null,
+          "reviewedAt": null,
+          "anchorIds": ["[4수03-03]", "[4수03-10]"]
+        },
+        {
+          "order": 4,
+          "id": "decimal-add-subtract",
+          "title": "소수의 덧셈과 뺄셈",
+          "reviewStatus": "pending-teacher-review",
+          "reviewedBy": null,
+          "reviewedAt": null,
+          "anchorIds": ["[4수01-13]", "[4수01-14]", "[4수01-16]"]
+        },
+        {
+          "order": 5,
+          "id": "polygons",
+          "title": "다각형",
+          "reviewStatus": "pending-teacher-review",
+          "reviewedBy": null,
+          "reviewedAt": null,
+          "anchorIds": ["[4수03-11]", "[4수03-12]"]
+        },
+        {
+          "order": 6,
+          "id": "line-graphs",
+          "title": "꺾은선그래프",
+          "reviewStatus": "pending-teacher-review",
+          "reviewedBy": null,
+          "reviewedAt": null,
+          "anchorIds": ["[4수04-02]", "[4수04-03]"]
+        }
+      ]
+    }
+  ]
+}

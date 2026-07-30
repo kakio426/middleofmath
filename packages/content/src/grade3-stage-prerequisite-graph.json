@@ -1,0 +1,78 @@
+{
+  "graphRevision": "g3-prerequisite-2026-07-30.1",
+  "sourceSetKey": "grade3-semester1",
+  "reviewEvidence": "고정 학습맵은 3-4학년군만 확인하므로 학기 배치와 로컬 진단 단계 연결은 모두 편집 참고로 제한한다.",
+  "edges": [
+    {
+      "id": "g3-multiplication-to-division",
+      "fromSetKey": "grade3-semester1",
+      "fromStageId": "multiplication.two-digit-by-one",
+      "toSetKey": "grade3-semester2",
+      "toStageId": "division.meaning",
+      "basis": "upstream-anchor-pair",
+      "strength": "soft",
+      "advisory": true,
+      "upstreamTopicId": "kr.mt.math.number-operations.g3-4.s4-01-05.concept",
+      "upstreamPrerequisiteId": "kr.mt.math.number-operations.g3-4.s4-01-04.application",
+      "reviewEvidence": "외부 코드 순서는 학년군 근거일 뿐이며 학기 배치는 로컬 편집 결정이므로 참고 연결로만 사용한다."
+    },
+    {
+      "id": "g3-length-to-capacity",
+      "fromSetKey": "grade3-semester1",
+      "fromStageId": "length.unit-convert",
+      "toSetKey": "grade3-semester2",
+      "toStageId": "measurement.capacity-measure",
+      "basis": "upstream-anchor-pair",
+      "strength": "soft",
+      "advisory": true,
+      "upstreamTopicId": "kr.mt.math.geometry-measurement.g3-4.s4-03-17.concept",
+      "upstreamPrerequisiteId": "kr.mt.math.geometry-measurement.g3-4.s4-03-16.application",
+      "reviewEvidence": "외부 코드 순서는 학년군 근거일 뿐이며 학기 배치는 로컬 편집 결정이므로 참고 연결로만 사용한다."
+    },
+    {
+      "id": "g3-multiplication-semester-sequence",
+      "fromSetKey": "grade3-semester1",
+      "fromStageId": "multiplication.two-digit-by-one",
+      "toSetKey": "grade3-semester2",
+      "toStageId": "multiplication.place-value",
+      "basis": "same-anchor-editorial-sequence",
+      "strength": "hard",
+      "advisory": true,
+      "reviewEvidence": "같은 곱셈 성취기준 안의 단계 순서와 학기 배치는 로컬 편집 결정이며 학생 판정이 아닌 참고 연결이다."
+    },
+    {
+      "id": "g3-division-semester-sequence",
+      "fromSetKey": "grade3-semester1",
+      "fromStageId": "division.multiplication-link",
+      "toSetKey": "grade3-semester2",
+      "toStageId": "division.remainder",
+      "basis": "same-anchor-editorial-sequence",
+      "strength": "hard",
+      "advisory": true,
+      "reviewEvidence": "같은 나눗셈 성취기준 안의 단계 순서와 학기 배치는 로컬 편집 결정이며 학생 판정이 아닌 참고 연결이다."
+    },
+    {
+      "id": "g3-fraction-semester-sequence",
+      "fromSetKey": "grade3-semester1",
+      "fromStageId": "fraction.part-of-whole",
+      "toSetKey": "grade3-semester2",
+      "toStageId": "fraction.part-whole",
+      "basis": "same-anchor-editorial-sequence",
+      "strength": "hard",
+      "advisory": true,
+      "reviewEvidence": "같은 분수 성취기준 안의 단계 순서와 학기 배치는 로컬 편집 결정이며 학생 판정이 아닌 참고 연결이다."
+    },
+    {
+      "id": "g3-length-to-weight",
+      "fromSetKey": "grade3-semester1",
+      "fromStageId": "length.unit-choice",
+      "toSetKey": "grade3-semester2",
+      "toStageId": "measurement.weight-measure",
+      "basis": "local-editorial",
+      "strength": "soft",
+      "advisory": true,
+      "reviewEvidence": "측정 대상에 맞는 단위를 고르는 사고의 전이는 로컬 편집 판단이며 학기 배치와 숙달을 주장하지 않는다."
+    }
+  ],
+  "graphDigest": "sha256:3df7e0f008076ab38ea2b821b51582abd94eec6021a1422b7ee369294e704a47"
+}

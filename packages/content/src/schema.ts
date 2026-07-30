@@ -25,6 +25,11 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
     signalIds: z.array(nonEmptyId).optional()
   });
 
+  const measurePartSchema = z.strictObject({
+    value: z.number().int().nonnegative(),
+    unit: z.enum(["mL", "L", "g", "kg", "t"])
+  });
+
   const visualSchema = z.discriminatedUnion("kind", [
     z.strictObject({ kind: z.literal("none") }),
     z.strictObject({
@@ -64,9 +69,77 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
       unknown: z.enum(["numerator", "denominator"]).optional()
     }),
     z.strictObject({
+      kind: z.literal("partition-diagrams"),
+      diagrams: z.array(z.strictObject({
+        label: copyString,
+        parts: z.array(z.number().positive()).min(2).max(8),
+        highlightedPart: z.number().int().nonnegative().optional()
+      })).min(1).max(3)
+    }),
+    z.strictObject({
       kind: z.literal("measurement"),
       amount: z.number().nonnegative(),
       unit: z.enum(["mL", "L", "g", "kg"])
+    }),
+    z.strictObject({
+      kind: z.literal("length-relation"),
+      value: z.number().int().positive(),
+      fromUnit: z.enum(["mm", "cm", "m", "km"]),
+      targetUnit: z.enum(["mm", "cm", "m", "km"])
+    }),
+    z.strictObject({
+      kind: z.literal("unit-relation"),
+      medium: z.enum(["capacity", "weight"]),
+      given: z.array(measurePartSchema).min(1).max(2),
+      targetUnit: z.enum(["mL", "L", "g", "kg", "t"])
+    }),
+    z.strictObject({
+      kind: z.literal("measure-referent"),
+      medium: z.enum(["capacity", "weight"]),
+      object: z.enum(["paper-cup", "water-bottle", "watermelon", "paper-clip"]),
+      instrument: z.enum(["beaker", "scale"])
+    }),
+    z.strictObject({
+      kind: z.literal("quantity-combine"),
+      medium: z.enum(["capacity", "weight"]),
+      operator: z.enum(["add", "subtract"]),
+      left: z.array(measurePartSchema).min(1).max(2),
+      right: z.array(measurePartSchema).min(1).max(2)
+    }),
+    z.strictObject({
+      kind: z.literal("place-value-chart"),
+      digits: z.array(z.number().int().min(0).max(9)).min(4).max(9),
+      ask: z.enum(["value", "place-name"]),
+      highlightIndexes: z.array(z.number().int().nonnegative())
+        .min(1)
+        .max(2)
+        .optional()
+    }),
+    z.strictObject({
+      kind: z.literal("angle-figure"),
+      degrees: z.number().int().min(1).max(179),
+      mode: z.enum(["bare", "protractor"]),
+      rayLengths: z.tuple([
+        z.number().int().min(20).max(120),
+        z.number().int().min(20).max(120)
+      ]).optional(),
+      referenceRightAngle: z.boolean().optional(),
+      protractorPlacement: z.enum([
+        "aligned",
+        "vertex-off",
+        "baseline-off"
+      ]).optional(),
+      label: copyString.optional()
+    }),
+    z.strictObject({
+      kind: z.literal("polygon-angle-diagram"),
+      polygon: z.enum(["triangle", "quadrilateral"]),
+      mode: z.enum(["find-missing", "verify-claim"]),
+      angles: z.array(z.strictObject({
+        label: copyString,
+        value: z.number().int().min(1).max(179).nullable()
+      })).min(3).max(4),
+      diagonal: z.boolean().optional()
     }),
     z.strictObject({
       kind: z.literal("pictograph"),
@@ -77,7 +150,199 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
         count: z.number().int().nonnegative()
       })).min(1)
     })
-  ]);
+  ]).superRefine((visual, context) => {
+    if (visual.kind === "angle-figure") {
+      if (
+        visual.mode === "bare"
+        && visual.protractorPlacement !== undefined
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: "눈금이 없는 각 그림에는 각도기 배치 상태를 지정할 수 없습니다.",
+          path: ["protractorPlacement"]
+        });
+      }
+      return;
+    }
+    if (visual.kind === "polygon-angle-diagram") {
+      const expectedLength = visual.polygon === "triangle" ? 3 : 4;
+      if (visual.angles.length !== expectedLength) {
+        context.addIssue({
+          code: "custom",
+          message: `${visual.polygon === "triangle" ? "삼각형" : "사각형"}의 각 개수가 맞지 않습니다.`,
+          path: ["angles"]
+        });
+      }
+      const labels = visual.angles.map((angle) => angle.label);
+      if (new Set(labels).size !== labels.length) {
+        context.addIssue({
+          code: "custom",
+          message: "각의 라벨은 서로 달라야 합니다.",
+          path: ["angles"]
+        });
+      }
+      if (visual.polygon === "triangle" && visual.diagonal !== undefined) {
+        context.addIssue({
+          code: "custom",
+          message: "삼각형에는 대각선 표시를 지정할 수 없습니다.",
+          path: ["diagonal"]
+        });
+      }
+      const unknownCount = visual.angles.filter(
+        (angle) => angle.value === null
+      ).length;
+      if (visual.mode === "find-missing") {
+        if (unknownCount !== 1) {
+          context.addIssue({
+            code: "custom",
+            message: "빠진 각을 찾는 그림에는 물음표가 정확히 하나 있어야 합니다.",
+            path: ["angles"]
+          });
+        } else if (visual.angles.length === expectedLength) {
+          const total = visual.polygon === "triangle" ? 180 : 360;
+          const knownSum = visual.angles.reduce(
+            (sum, angle) => sum + (angle.value ?? 0),
+            0
+          );
+          const missing = total - knownSum;
+          if (missing < 1 || missing > 179) {
+            context.addIssue({
+              code: "custom",
+              message: "알려진 각으로 계산한 나머지 각은 1도 이상 179도 이하여야 합니다.",
+              path: ["angles"]
+            });
+          }
+        }
+      } else {
+        if (unknownCount !== 0) {
+          context.addIssue({
+            code: "custom",
+            message: "주장을 확인하는 그림에는 모든 각의 수치가 있어야 합니다.",
+            path: ["angles"]
+          });
+        }
+        const claimSum = visual.angles.reduce(
+          (sum, angle) => sum + (angle.value ?? 0),
+          0
+        );
+        const maximum =
+          visual.polygon === "triangle" ? 358 : 716;
+        if (claimSum > maximum) {
+          context.addIssue({
+            code: "custom",
+            message: "주장에 표시한 각의 합이 허용 범위를 벗어납니다.",
+            path: ["angles"]
+          });
+        }
+      }
+      return;
+    }
+    if (visual.kind === "place-value-chart") {
+      if (visual.digits[0] === 0) {
+        context.addIssue({
+          code: "custom",
+          message: "자리표의 맨 앞 숫자는 0일 수 없습니다.",
+          path: ["digits", 0]
+        });
+      }
+      const highlights = visual.highlightIndexes ?? [];
+      if (new Set(highlights).size !== highlights.length) {
+        context.addIssue({
+          code: "custom",
+          message: "강조할 자리 번호는 중복될 수 없습니다.",
+          path: ["highlightIndexes"]
+        });
+      }
+      highlights.forEach((index, highlightIndex) => {
+        if (index >= visual.digits.length) {
+          context.addIssue({
+            code: "custom",
+            message: "강조할 자리 번호가 자리표 범위를 벗어납니다.",
+            path: ["highlightIndexes", highlightIndex]
+          });
+        }
+      });
+      if (visual.ask === "place-name" && highlights.length > 0) {
+        context.addIssue({
+          code: "custom",
+          message: "자리 이름을 찾는 문항은 정답 위치를 미리 강조할 수 없습니다.",
+          path: ["highlightIndexes"]
+        });
+      }
+      if (visual.ask === "value" && highlights.length === 0) {
+        context.addIssue({
+          code: "custom",
+          message: "자리값을 묻는 문항은 한 자리 또는 두 자리를 강조해야 합니다.",
+          path: ["highlightIndexes"]
+        });
+      }
+      return;
+    }
+    if (visual.kind === "partition-diagrams") {
+      visual.diagrams.forEach((diagram, index) => {
+        if (
+          diagram.highlightedPart !== undefined
+          && diagram.highlightedPart >= diagram.parts.length
+        ) {
+          context.addIssue({
+            code: "custom",
+            message: "색칠한 조각 번호가 그림의 조각 수를 벗어납니다.",
+            path: ["diagrams", index, "highlightedPart"]
+          });
+        }
+      });
+      return;
+    }
+    if (
+      visual.kind !== "unit-relation" &&
+      visual.kind !== "measure-referent" &&
+      visual.kind !== "quantity-combine"
+    ) {
+      return;
+    }
+
+    const allowedUnits = visual.medium === "capacity"
+      ? new Set(["mL", "L"])
+      : new Set(["g", "kg", "t"]);
+    const parts = visual.kind === "unit-relation"
+      ? visual.given
+      : visual.kind === "quantity-combine"
+        ? [...visual.left, ...visual.right]
+        : [];
+
+    for (const [index, part] of parts.entries()) {
+      if (!allowedUnits.has(part.unit)) {
+        context.addIssue({
+          code: "custom",
+          message: `${visual.medium} 그림에 맞지 않는 단위입니다.`,
+          path: [visual.kind === "unit-relation" ? "given" : index < (visual.kind === "quantity-combine" ? visual.left.length : 0) ? "left" : "right"]
+        });
+      }
+    }
+    if (visual.kind === "unit-relation" && !allowedUnits.has(visual.targetUnit)) {
+      context.addIssue({
+        code: "custom",
+        message: `${visual.medium} 그림에 맞지 않는 목표 단위입니다.`,
+        path: ["targetUnit"]
+      });
+    }
+    if (visual.kind === "measure-referent") {
+      const validCapacity =
+        visual.medium === "capacity" &&
+        visual.instrument === "beaker" &&
+        (visual.object === "paper-cup" || visual.object === "water-bottle");
+      const validWeight =
+        visual.medium === "weight" &&
+        visual.instrument === "scale" &&
+        (visual.object === "watermelon" || visual.object === "paper-clip");
+      if (!validCapacity && !validWeight) {
+        context.addIssue({
+          code: "custom",
+          message: "측정 대상과 측정 도구가 측정 종류에 맞지 않습니다."
+        });
+      }
+    }
+  });
 
   return z.strictObject({
     manifest: z.strictObject({

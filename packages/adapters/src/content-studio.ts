@@ -21,6 +21,12 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 
 type JsonRow = Record<string, any>;
 
+function curriculumGradeBand(grade: number): string | null {
+  if (!Number.isInteger(grade) || grade < 1 || grade > 6) return null;
+  const start = grade % 2 === 0 ? grade - 1 : grade;
+  return `${start}-${start + 1}`;
+}
+
 export class SupabaseContentStudioRepository
 implements ContentStudioRepository, PublishedDiagnosisSetRepository, CurriculumAnchorRepository {
   constructor(private readonly client: SupabaseClient) {}
@@ -251,8 +257,19 @@ implements ContentStudioRepository, PublishedDiagnosisSetRepository, CurriculumA
 
   async listApproved(input: { grade?: number; semester?: number; curriculum?: string } = {}): Promise<CurriculumAnchor[]> {
     let query = this.client.from("curriculum_anchors").select("anchor_key, label, source").eq("active", true).order("anchor_key");
-    if (input.grade) query = query.eq("grade", input.grade);
-    if (input.semester) query = query.eq("semester", input.semester);
+    if (input.grade) {
+      const gradeBand = curriculumGradeBand(input.grade);
+      query = gradeBand
+        ? query.or(
+            `grade.eq.${input.grade},and(shared_across_grade_band.eq.true,grade_band.eq.${gradeBand})`
+          )
+        : query.eq("grade", input.grade);
+    }
+    if (input.semester) {
+      query = query.or(
+        `semester.eq.${input.semester},shared_across_semesters.eq.true`
+      );
+    }
     if (input.curriculum) query = query.eq("curriculum", input.curriculum);
     const { data, error } = await query;
     if (error) throw error;

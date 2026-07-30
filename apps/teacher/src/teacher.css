@@ -34,14 +34,14 @@
 .teacher-pending-note { display: flex; gap: var(--space-4); align-items: center; padding: var(--space-4); border-left: 3px solid var(--status-warning); background: var(--surface-selected); }
 .teacher-pending-note span { color: var(--text-secondary); font-size: 14px; }
 .teacher-summary-list { display: grid; }
-.teacher-summary-row { display: grid; grid-template-columns: 44px minmax(280px, 1fr) 86px minmax(130px, .4fr); gap: var(--space-4); align-items: center; padding: var(--space-5); border-top: 1px solid var(--border-subtle); }
+.teacher-summary-row { display: grid; grid-template-columns: 44px minmax(280px, 1fr) 150px minmax(130px, .4fr); gap: var(--space-4); align-items: center; padding: var(--space-5); border-top: 1px solid var(--border-subtle); }
 .teacher-rank { align-self: start; padding-top: 2px; color: var(--accent-primary); font-family: Georgia, serif; }
 .teacher-summary-copy h3 { margin: 0; }
 .teacher-summary-copy p { margin: var(--space-2) 0; color: var(--text-secondary); line-height: 1.6; }
 .teacher-move { display: block; color: var(--accent-primary); font-size: 13px; line-height: 1.5; }
 .teacher-summary-count { display: grid; justify-items: center; }
 .teacher-summary-count strong { font-size: 30px; }
-.teacher-summary-count span { color: var(--text-tertiary); font-size: 12px; }
+.teacher-summary-count span { color: var(--text-tertiary); font-size: 12px; line-height: 1.6; text-align: center; }
 .teacher-student-links { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .teacher-student-links button { padding: 5px 8px; border: 1px solid var(--border-default); background: transparent; color: var(--text-secondary); cursor: pointer; }
 .teacher-report-tabs { display: flex; gap: var(--space-2); border-bottom: 1px solid var(--border-default); }
@@ -54,7 +54,9 @@
 .teacher-findings > button.is-active { background: var(--surface-selected); box-shadow: inset 3px 0 var(--accent-primary); }
 .teacher-findings > button > span:first-child { display: grid; gap: 4px; }
 .teacher-findings small { color: var(--text-tertiary); }
+.teacher-finding-marks { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2); }
 .teacher-interpretation { padding-left: var(--space-4); border-left: 3px solid var(--status-warning); color: var(--text-secondary); font-size: 17px; line-height: 1.7; }
+.teacher-confidence-rule { margin: 0; padding: var(--space-3) var(--space-4); border-left: 3px solid var(--accent-primary); background: var(--surface-tertiary); color: var(--text-secondary); line-height: 1.6; }
 .teacher-question-evidence { display: grid; gap: var(--space-2); padding: var(--space-4); background: var(--surface-tertiary); }
 .teacher-question-evidence span, .teacher-next-move span { color: var(--text-tertiary); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
 .teacher-next-move { padding: var(--space-4); border-top: 2px solid var(--accent-primary); }
@@ -119,6 +121,11 @@
 .teacher-sign-out { justify-content: start; padding-inline: 0; }
 .teacher-export-lock { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: color-mix(in srgb, var(--surface-primary) 82%, transparent); color: var(--text-primary); font-weight: 800; backdrop-filter: blur(4px); }
 .teacher-export-print { display: none; }
+.teacher-prerequisite-note { padding: var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-secondary); }
+.teacher-prerequisite-note > span { display: block; margin-bottom: var(--space-2); color: var(--text-secondary); font-size: 12px; font-weight: 800; }
+.teacher-prerequisite-note ul { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.teacher-prerequisite-note li { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.teacher-prerequisite-note small { color: var(--text-secondary); }
 
 @media (max-width: 900px) {
   .teacher-shell { grid-template-columns: 80px minmax(0, 1fr); }

@@ -100,6 +100,32 @@ function bundle(): TeacherAssignmentEvidenceBundle {
   };
 }
 
+function withTwoHitStage(
+  source: TeacherAssignmentEvidenceBundle,
+  studentIndex = 0
+): TeacherAssignmentEvidenceBundle {
+  const direct = source.diagnosisSet.content.judgments.find(
+    (judgment) => judgment.id === "g3s2-mul-01"
+  )!;
+  source.diagnosisSet.content.judgments.push({
+    ...structuredClone(direct),
+    id: "g3s2-mul-01-transfer",
+    prompt: "24×3과 같은 생각으로 32×2를 먼저 나누어 보세요."
+  });
+  const latest = source.students[studentIndex].sessions.find(
+    (item) => item.session.id === "session-latest"
+  ) ?? source.students[studentIndex].sessions.at(-1)!;
+  latest.events.push({
+    ...event(latest.session.id),
+    id: `event-${latest.session.id}-transfer`,
+    clientEventId: `client-${latest.session.id}-transfer`,
+    clientSeq: 3,
+    judgmentId: "g3s2-mul-01-transfer"
+  });
+  latest.session.lastEventSeq = 3;
+  return source;
+}
+
 class Insights implements TeacherInsightsRepository {
   constructor(readonly value: TeacherAssignmentEvidenceBundle) {}
   async getAssignmentBundle(id: string) { return id === this.value.assignment.id ? this.value : null; }
@@ -177,6 +203,10 @@ describe("teacher assignment insights", () => {
     expect([...reports.runs.keys()]).toEqual(["session-latest"]);
     expect(reports.saveRunCalls).toBe(1);
     expect(result.classSummary.completedStudents).toBe(1);
+    expect(result.students[0].report?.findings[0]).toMatchObject({
+      confidence: "tentative",
+      tentativeReasons: ["insufficient_opportunity", "single_observation"]
+    });
     expect(reports.exports).toHaveLength(0);
   });
 
@@ -254,5 +284,71 @@ describe("teacher assignment insights", () => {
     expect(reports.saveRunCalls).toBe(1);
     expect(reports.exports).toHaveLength(1);
     expect(JSON.stringify(exported.report)).not.toContain("event-session-latest");
+  });
+
+  it("confirms a signal after two distinct hits in one stage", async () => {
+    const source = withTwoHitStage(bundle());
+    const result = await new GenerateAssignmentInsights(
+      new Insights(source),
+      new Reports(),
+      clock
+    ).execute("assignment-1");
+
+    expect(result.students[0].report).toMatchObject({
+      confirmedFindingCount: 1,
+      tentativeFindingCount: 0,
+      findings: [
+        expect.objectContaining({
+          signalId: "multiplication.place-value-loss",
+          confidence: "confirmed",
+          evidenceCount: 2
+        })
+      ]
+    });
+  });
+
+  it("separates confirmed and tentative students in the class summary", async () => {
+    const source = withTwoHitStage(bundle());
+    source.students.push({
+      student: {
+        id: "student-2",
+        rosterKey: "15",
+        displayAlias: "구름",
+        active: true
+      },
+      sessions: [
+        {
+          ...attempt(
+            "student-2-latest",
+            "2026-07-22T02:10:00.000Z",
+            "2026-07-22T01:10:00.000Z"
+          ),
+          session: {
+            ...attempt(
+              "student-2-latest",
+              "2026-07-22T02:10:00.000Z",
+              "2026-07-22T01:10:00.000Z"
+            ).session,
+            studentId: "student-2"
+          }
+        }
+      ]
+    });
+
+    const result = await new GenerateAssignmentInsights(
+      new Insights(source),
+      new Reports(),
+      clock
+    ).execute("assignment-1");
+    const item = result.classSummary.items.find(
+      (candidate) => candidate.signalId === "multiplication.place-value-loss"
+    );
+
+    expect(item).toMatchObject({
+      studentCount: 2,
+      confirmedStudentCount: 1,
+      tentativeStudentCount: 1,
+      confirmedStudentIds: ["student-1"]
+    });
   });
 });

@@ -8,9 +8,15 @@ import {
 import {
   grade3Semester2CompleteDiagnosis,
   grade3Semester2Diagnosis,
+  grade4Semester1Diagnosis,
   parseDiagnosisSet
-} from "@middle-of-math/content";
-import type { DiagnosisSession, DiagnosisSet, Judgment } from "@middle-of-math/domain";
+} from "@middle-of-math/content/runtime";
+import {
+  presentedChoices,
+  type DiagnosisSession,
+  type DiagnosisSet,
+  type Judgment
+} from "@middle-of-math/domain";
 import {
   CryptoIdGenerator,
   createMiddleOfMathClient,
@@ -73,6 +79,10 @@ function publicConfig() {
 const runtimeConfig = publicConfig();
 const demoMode = import.meta.env.VITE_DEMO_MODE === "true";
 const runtimeClient = runtimeConfig && !demoMode ? createMiddleOfMathClient(runtimeConfig) : null;
+const demoContent = typeof window !== "undefined"
+  && new URLSearchParams(window.location.search).get("set") === "grade4-semester1"
+  ? grade4Semester1Diagnosis
+  : grade3Semester2CompleteDiagnosis;
 
 function mapAssignmentRecord(row: StudentAssignmentRecord, content = row.diagnosisSet.content): AssignmentCard | null {
   try {
@@ -160,7 +170,7 @@ export function StudentApp() {
     return saved ? JSON.parse(saved) as StudentContext : null;
   });
   const [assignmentCards, setAssignmentCards] = useState<AssignmentCard[]>(() =>
-    demoMode ? createUnitAssignmentCards(grade3Semester2CompleteDiagnosis) : []
+    demoMode ? createUnitAssignmentCards(demoContent) : []
   );
   const [assignment, setAssignment] = useState<AssignmentCard | null>(null);
   const [session, setSession] = useState<DiagnosisSession | null>(null);
@@ -219,7 +229,37 @@ export function StudentApp() {
     return () => { active = false; };
   }, [config, student, online, gateway, contentStore]);
 
-  const activeContent = assignment?.content ?? assignmentCards[0]?.content ?? grade3Semester2Diagnosis;
+  useEffect(() => {
+    if (!student || screen !== "assignments" || assignmentCards.length === 0) return;
+    let active = true;
+    void Promise.all(
+      assignmentCards.map(async (card) => ({
+        id: card.id,
+        resumable: Boolean(await localStore.findResumable(card.id, student.studentId))
+      }))
+    ).then((states) => {
+      if (!active) return;
+      const resumableIds = new Set(
+        states.filter((state) => state.resumable).map((state) => state.id)
+      );
+      if (resumableIds.size === 0) return;
+      setAssignmentCards((current) => {
+        if (!current.some((card) => resumableIds.has(card.id) && card.status === "new")) {
+          return current;
+        }
+        return current.map((card) =>
+          resumableIds.has(card.id) && card.status === "new"
+            ? { ...card, status: "in_progress" }
+            : card
+        );
+      });
+    });
+    return () => { active = false; };
+  }, [assignmentCards, localStore, screen, student]);
+
+  const activeContent = assignment?.content
+    ?? assignmentCards[0]?.content
+    ?? (demoMode ? demoContent : grade3Semester2Diagnosis);
   const activeJudgments = assignment
     ? judgmentsForAssignment(assignment)
     : activeContent.judgments;
@@ -232,6 +272,13 @@ export function StudentApp() {
         : card.status
   } : card);
   const currentJudgment = activeJudgments[judgmentIndex];
+  const currentPresentedChoices = useMemo(() => {
+    if (!currentJudgment || !session) return [];
+    return presentedChoices(
+      { sessionId: session.id, judgmentId: currentJudgment.id },
+      currentJudgment.choices
+    );
+  }, [currentJudgment, session?.id]);
   const progress = activeJudgments.length > 0
     ? judgmentIndex / activeJudgments.length * 100
     : 0;
@@ -248,7 +295,7 @@ export function StudentApp() {
         : demoMode ? {
             studentId: `demo-${input.rosterKey}`,
             classId: "demo-class",
-            className: "3학년 햇살반",
+            className: `${demoContent.manifest.grade}학년 체험반`,
             rosterKey: input.rosterKey,
             displayAlias: null
           } : (() => { throw new Error("학생 앱의 Supabase 환경변수가 필요합니다."); })();
@@ -339,6 +386,7 @@ export function StudentApp() {
         interaction: currentJudgment.interaction,
         payload: {
           choiceId: selectedChoiceId,
+          presentedChoiceIds: currentPresentedChoices.map((choice) => choice.id),
           durationMs: now - stepStartedAt.current,
           firstSelectionMs,
           confirmationMs: selectedAtMs === null ? null : now - selectedAtMs,
@@ -391,7 +439,7 @@ export function StudentApp() {
     localStorage.removeItem(LOCAL_ASSIGNMENTS_KEY);
     setStudent(null);
     setAssignmentCards(
-      demoMode ? createUnitAssignmentCards(grade3Semester2CompleteDiagnosis) : []
+      demoMode ? createUnitAssignmentCards(demoContent) : []
     );
     setAssignment(null);
     setSession(null);
@@ -407,13 +455,22 @@ export function StudentApp() {
       role="student"
       actions={<><StatusPill tone={demoMode ? "neutral" : online ? "accent" : "warning"}>{demoMode ? "체험 중" : online ? "연결됨" : "이 기기에 저장 중"}</StatusPill>{student && <button className="mom-button mom-button-quiet" onClick={() => void leaveClass()}>나가기</button>}</>}
     >
-      {screen === "join" && <JoinScreen onJoin={joinClass} message={message} configured={Boolean(config)} />}
+      {screen === "join" && (
+        <JoinScreen
+          onJoin={joinClass}
+          message={message}
+          configured={Boolean(config)}
+          grade={demoContent.manifest.grade}
+          semester={demoContent.manifest.semester}
+        />
+      )}
       {screen === "assignments" && student && (
         <AssignmentScreen student={student} assignments={assignments} onStart={startAssignment} saving={saving} message={message} />
       )}
       {screen === "judgment" && currentJudgment && (
         <JudgmentScreen
           judgment={currentJudgment}
+          choices={currentPresentedChoices}
           unitTitle={activeContent.manifest.units.find((unit) => unit.id === currentJudgment.unitId)?.title ?? "수학 활동"}
           progress={progress}
           selectedChoiceId={selectedChoiceId}
@@ -438,14 +495,26 @@ function RuntimeConfigurationError({ appName }: { appName: string }) {
   return <main className="student-centered"><Brand /><div className="mom-panel"><div className="mom-panel-body mom-stack"><h1>{appName} 설정이 필요합니다</h1><p className="mom-muted">운영 환경에는 Supabase URL과 publishable key를 설정해 주세요. 로컬 데모는 <code>VITE_DEMO_MODE=true</code>에서만 열립니다.</p></div></div></main>;
 }
 
-function JoinScreen({ onJoin, message, configured }: { onJoin: (input: { joinCode: string; rosterKey: string; studentSecret: string }) => void; message: string | null; configured: boolean }) {
+function JoinScreen({
+  onJoin,
+  message,
+  configured,
+  grade,
+  semester
+}: {
+  onJoin: (input: { joinCode: string; rosterKey: string; studentSecret: string }) => void;
+  message: string | null;
+  configured: boolean;
+  grade: number;
+  semester: number;
+}) {
   const [joinCode, setJoinCode] = useState(configured ? "" : "MATH27");
   const [rosterKey, setRosterKey] = useState("");
   const [studentSecret, setStudentSecret] = useState(configured ? "" : "STAR27");
   return (
     <section className="student-entry">
       <div className="student-entry-copy">
-        <p className="mom-eyebrow">3학년 2학기 수학</p>
+        <p className="mom-eyebrow">{grade}학년 {semester}학기 수학</p>
         <h1>선생님이 알려준<br />코드로 들어가요</h1>
         <p className="mom-muted">이름은 필요하지 않아요. 선생님이 준 번호와 개인 코드를 사용합니다.</p>
         {!configured && <StatusPill tone="neutral">체험 모드</StatusPill>}
@@ -527,7 +596,7 @@ function AssignmentScreen({ student, assignments, onStart, saving, message }: { 
   );
 }
 
-function JudgmentScreen({ judgment, unitTitle, progress, selectedChoiceId, unknownVisible, saving, onSelect, onConfirm }: { judgment: Judgment; unitTitle: string; progress: number; selectedChoiceId: string | null; unknownVisible: boolean; saving: boolean; onSelect: (choiceId: string) => void; onConfirm: () => void }) {
+function JudgmentScreen({ judgment, choices, unitTitle, progress, selectedChoiceId, unknownVisible, saving, onSelect, onConfirm }: { judgment: Judgment; choices: Judgment["choices"]; unitTitle: string; progress: number; selectedChoiceId: string | null; unknownVisible: boolean; saving: boolean; onSelect: (choiceId: string) => void; onConfirm: () => void }) {
   return (
     <section className="student-judgment">
       <div className="student-progress-wrap"><ProgressLine value={progress} /></div>
@@ -542,7 +611,7 @@ function JudgmentScreen({ judgment, unitTitle, progress, selectedChoiceId, unkno
         </div>
         <div className="student-response mom-stack">
           <div className="mom-choice-list">
-            {judgment.choices.map((choice) => <ChoiceOption key={choice.id} label={choice.label} selected={selectedChoiceId === choice.id} onSelect={() => onSelect(choice.id)} />)}
+            {choices.map((choice) => <ChoiceOption key={choice.id} label={choice.label} selected={selectedChoiceId === choice.id} onSelect={() => onSelect(choice.id)} />)}
           </div>
           <div className={`student-unknown ${unknownVisible ? "is-visible" : ""}`}>
             {unknownVisible && <button type="button" className="mom-button mom-button-quiet mom-button-block" onClick={() => onSelect("__unknown__")}>잘 모르겠어요</button>}

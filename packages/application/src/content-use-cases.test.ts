@@ -3,12 +3,18 @@ import type {
   ContentDraft,
   ContentReviewComment,
   ContentReviewRequest,
+  ContentValidationResult,
   PublishedDiagnosisSet
 } from "@middle-of-math/domain";
-import { diagnosisContentValidator, grade3Semester2Diagnosis } from "../../content/src";
+import {
+  diagnosisContentValidator,
+  diagnosticIntegrityGate,
+  grade3Semester2Diagnosis
+} from "../../content/src";
 import type {
   ContentDraftFilter,
   ContentStudioRepository,
+  DiagnosticIntegrityGate,
   PublishedDiagnosisSetRepository
 } from "./ports";
 import {
@@ -19,6 +25,7 @@ import {
   incrementSemanticVersion,
   PublishDiagnosisSet,
   RequestContentReview,
+  ReviewContentDraft,
   SaveDraftRevision
 } from "./use-cases";
 
@@ -26,6 +33,7 @@ class MemoryContentRepository implements ContentStudioRepository, PublishedDiagn
   drafts = new Map<string, ContentDraft>();
   published = new Map<string, PublishedDiagnosisSet>();
   reviews = new Map<string, ContentReviewRequest>();
+  lastPublishValidation?: ContentValidationResult;
 
   async getCurrentContentMembership() { return null; }
 
@@ -93,6 +101,7 @@ class MemoryContentRepository implements ContentStudioRepository, PublishedDiagn
     return result;
   }
   async publish(input: Parameters<ContentStudioRepository["publish"]>[0]) {
+    this.lastPublishValidation = structuredClone(input.validation);
     const draft = this.drafts.get(input.draftId)!;
     const result: PublishedDiagnosisSet = {
       id: "published-1",
@@ -118,6 +127,40 @@ class MemoryContentRepository implements ContentStudioRepository, PublishedDiagn
 }
 
 const ids = { next: () => "draft-1" };
+
+function attestedGate(
+  configuredIssues: ContentValidationResult["issues"] = []
+): DiagnosticIntegrityGate {
+  return {
+    inspect(input) {
+      const errorCount = configuredIssues.filter((item) => item.severity === "error").length;
+      const warningCount = configuredIssues.filter((item) => item.severity === "warning").length;
+      return {
+        valid: errorCount === 0,
+        issues: structuredClone(configuredIssues),
+        gates: [{
+          gate: "diagnostic-integrity",
+          gateVersion: "gate-test",
+          policy: "enforce",
+          enforced: true,
+          setKey: input.setKey,
+          targetVersion: input.targetVersion,
+          blueprintRevision: "test-1",
+          valid: errorCount === 0,
+          errorCount,
+          warningCount
+        }]
+      };
+    }
+  };
+}
+
+const gateError = {
+  code: "DI_TEST_BLOCK",
+  path: "/learnerStages/0",
+  message: "진단 무결성 실패",
+  severity: "error" as const
+};
 
 describe("content studio use cases", () => {
   it("defaults new content to 1.0.0 and existing edits to the next patch", () => {
@@ -164,7 +207,7 @@ describe("content studio use cases", () => {
       content: incomplete
     });
     expect(saved.content.judgments[0].prompt).toBe("");
-    await expect(new RequestContentReview(repository, diagnosisContentValidator, { next: () => "review-1" }).execute({
+    await expect(new RequestContentReview(repository, diagnosisContentValidator, { next: () => "review-1" }, diagnosticIntegrityGate).execute({
       draftId: draft.id,
       expectedRevision: 2,
       authorId: "author-1"
@@ -208,12 +251,12 @@ describe("content studio use cases", () => {
       content: removedId
     });
 
-    await expect(new RequestContentReview(repository, diagnosisContentValidator, { next: () => "review-1" }).execute({
+    await expect(new RequestContentReview(repository, diagnosisContentValidator, { next: () => "review-1" }, diagnosticIntegrityGate).execute({
       draftId: draft.id,
       expectedRevision: 2,
       authorId: "author-1"
     })).rejects.toBeInstanceOf(ContentValidationError);
-    await expect(new PublishDiagnosisSet(repository, diagnosisContentValidator).execute({
+    await expect(new PublishDiagnosisSet(repository, diagnosisContentValidator, diagnosticIntegrityGate).execute({
       draftId: draft.id,
       expectedRevision: 2,
       reviewerId: "reviewer-1",
@@ -261,14 +304,14 @@ describe("content studio use cases", () => {
       ownerId: "author-1",
       content: structuredClone(grade3Semester2Diagnosis)
     });
-    await expect(new RequestContentReview(repository, diagnosisContentValidator, { next: () => "review-1" }).execute({
+    await expect(new RequestContentReview(repository, diagnosisContentValidator, { next: () => "review-1" }, diagnosticIntegrityGate).execute({
       draftId: draft.id,
       expectedRevision: 2,
       authorId: "author-1",
       reviewerId: "reviewer-1"
     })).rejects.toBeInstanceOf(ContentRevisionConflictError);
 
-    const published = await new PublishDiagnosisSet(repository, diagnosisContentValidator).execute({
+    const published = await new PublishDiagnosisSet(repository, diagnosisContentValidator, diagnosticIntegrityGate).execute({
       draftId: draft.id,
       expectedRevision: 1,
       reviewerId: "reviewer-1",
@@ -277,5 +320,145 @@ describe("content studio use cases", () => {
     });
     expect(published.content.manifest.id).toBe("grade3-semester2");
     expect(await repository.getPublishedByVersion("grade3-semester2", "1.0.1")).toEqual(published);
+  });
+
+  it("blocks review requests when diagnostic integrity reports an error", async () => {
+    const repository = new MemoryContentRepository();
+    const draft = await new CreateContentDraft(
+      repository,
+      diagnosisContentValidator,
+      ids
+    ).execute({
+      setKey: "grade3-semester2",
+      ownerId: "author-1",
+      content: structuredClone(grade3Semester2Diagnosis)
+    });
+
+    await expect(
+      new RequestContentReview(
+        repository,
+        diagnosisContentValidator,
+        { next: () => "review-1" },
+        attestedGate([gateError])
+      ).execute({
+        draftId: draft.id,
+        expectedRevision: 1,
+        authorId: "author-1"
+      })
+    ).rejects.toMatchObject({
+      name: "ContentValidationError",
+      result: {
+        issues: expect.arrayContaining([
+          expect.objectContaining({ code: "DI_TEST_BLOCK" })
+        ])
+      }
+    });
+  });
+
+  it("blocks approval but still allows requesting changes on invalid diagnostic content", async () => {
+    const repository = new MemoryContentRepository();
+    const draft = await new CreateContentDraft(
+      repository,
+      diagnosisContentValidator,
+      ids
+    ).execute({
+      setKey: "grade3-semester2",
+      ownerId: "author-1",
+      content: structuredClone(grade3Semester2Diagnosis)
+    });
+    const review = await repository.requestReview({
+      id: "review-1",
+      draftId: draft.id,
+      expectedRevision: draft.revision,
+      authorId: "author-1",
+      reviewerId: "reviewer-1"
+    });
+
+    const useCase = new ReviewContentDraft(
+      repository,
+      diagnosisContentValidator,
+      attestedGate([gateError])
+    );
+    await expect(useCase.execute({
+      reviewRequestId: review.id,
+      expectedDraftRevision: draft.revision,
+      reviewerId: "reviewer-1",
+      decision: "approve"
+    })).rejects.toBeInstanceOf(ContentValidationError);
+
+    await expect(useCase.execute({
+      reviewRequestId: review.id,
+      expectedDraftRevision: draft.revision,
+      reviewerId: "reviewer-1",
+      decision: "request_changes"
+    })).resolves.toMatchObject({ status: "changes_requested" });
+  });
+
+  it("blocks publication when the diagnostic gate fails", async () => {
+    const repository = new MemoryContentRepository();
+    const draft = await new CreateContentDraft(
+      repository,
+      diagnosisContentValidator,
+      ids
+    ).execute({
+      setKey: "grade3-semester2",
+      ownerId: "author-1",
+      content: structuredClone(grade3Semester2Diagnosis)
+    });
+
+    await expect(
+      new PublishDiagnosisSet(
+        repository,
+        diagnosisContentValidator,
+        attestedGate([gateError])
+      ).execute({
+        draftId: draft.id,
+        expectedRevision: draft.revision,
+        reviewerId: "reviewer-1",
+        version: "1.0.1",
+        releaseNotes: "진단 게이트 실패 확인"
+      })
+    ).rejects.toBeInstanceOf(ContentValidationError);
+  });
+
+  it("passes the merged warning and scoped gate attestation into publication", async () => {
+    const repository = new MemoryContentRepository();
+    const draft = await new CreateContentDraft(
+      repository,
+      diagnosisContentValidator,
+      ids
+    ).execute({
+      setKey: "grade3-semester2",
+      ownerId: "author-1",
+      content: structuredClone(grade3Semester2Diagnosis)
+    });
+    const warning = {
+      code: "DI_TEST_WARNING",
+      path: "/signals",
+      message: "확인이 필요한 경고",
+      severity: "warning" as const
+    };
+
+    await new PublishDiagnosisSet(
+      repository,
+      diagnosisContentValidator,
+      attestedGate([warning])
+    ).execute({
+      draftId: draft.id,
+      expectedRevision: draft.revision,
+      reviewerId: "reviewer-1",
+      version: "1.0.1",
+      releaseNotes: "진단 게이트 기록"
+    });
+
+    expect(repository.lastPublishValidation).toMatchObject({
+      valid: true,
+      issues: [warning],
+      gates: [expect.objectContaining({
+        setKey: "grade3-semester2",
+        targetVersion: "1.0.1",
+        warningCount: 1
+      })]
+    });
   });
 });

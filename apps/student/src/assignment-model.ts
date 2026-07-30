@@ -29,12 +29,12 @@ const CURRICULUM_AREAS = [
   {
     id: "number-operations",
     title: "수와 연산",
-    unitIds: ["multiplication", "division", "fraction"]
+    unitIds: ["large-numbers", "multiplication", "division", "fraction"]
   },
   {
     id: "geometry",
     title: "도형",
-    unitIds: ["circle"]
+    unitIds: ["circle", "angles"]
   },
   {
     id: "measurement",
@@ -49,9 +49,11 @@ const CURRICULUM_AREAS = [
 ] as const;
 
 const UNIT_SYMBOLS: Record<string, string> = {
+  "large-numbers": "만",
   multiplication: "×",
   division: "÷",
   circle: "○",
+  angles: "∠",
   fraction: "¼",
   measurement: "ℓ",
   pictograph: "▦"

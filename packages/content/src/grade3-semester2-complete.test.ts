@@ -39,14 +39,14 @@ async function checksum(
 }
 
 describe("3학년 2학기 완성 문제은행", () => {
-  it("has a canonical checksum for the v2.0.1 review payload", async () => {
+  it("has a canonical checksum for the v2.1.0 review payload", async () => {
     expect(await checksum()).toBe(grade3Semester2CompleteDiagnosis.manifest.checksum);
   });
 
   it("keeps v1 immutable and publishes the expanded bank as a separate v2 review", () => {
     expect(grade3Semester2Diagnosis.manifest.version).toBe("1.0.0");
     expect(grade3Semester2Diagnosis.judgments).toHaveLength(12);
-    expect(grade3Semester2CompleteDiagnosis.manifest.version).toBe("2.0.1");
+    expect(grade3Semester2CompleteDiagnosis.manifest.version).toBe("2.1.0");
     expect(grade3Semester2CompleteDiagnosis.manifest.status).toBe("review");
 
     const result = validateDiagnosisSet(grade3Semester2CompleteDiagnosis, {
@@ -162,7 +162,7 @@ describe("3학년 2학기 완성 문제은행", () => {
     );
   });
 
-  it("includes three-digit by one-digit multiplication without answer-revealing measurement visuals", () => {
+  it("includes three-digit by one-digit multiplication and semantic measurement visuals", () => {
     const multiplicationCopy = grade3Semester2CompleteDiagnosis.judgments
       .filter((item) => item.unitId === "multiplication")
       .map((item) => `${item.context ?? ""} ${item.prompt}`)
@@ -172,7 +172,27 @@ describe("3학년 2학기 완성 문제은행", () => {
     const measurementJudgments = grade3Semester2CompleteDiagnosis.judgments
       .filter((item) => item.unitId === "measurement");
     expect(measurementJudgments).toHaveLength(14);
-    expect(measurementJudgments.every((item) => item.visual.kind === "none")).toBe(true);
+    expect(Object.fromEntries(measurementJudgments.map((item) => [item.id, item.visual.kind]))).toEqual({
+      "g3s2-measure-01": "unit-relation",
+      "g3s2-measure-02": "unit-relation",
+      "g3s2-measure-03": "unit-relation",
+      "g3s2-measure-04": "unit-relation",
+      "g3s2-measure-05": "measure-referent",
+      "g3s2-measure-06": "measure-referent",
+      "g3s2-measure-07": "quantity-combine",
+      "g3s2-measure-08": "quantity-combine",
+      "g3s2-measure-09": "measure-referent",
+      "g3s2-measure-10": "measure-referent",
+      "g3s2-measure-11": "unit-relation",
+      "g3s2-measure-12": "unit-relation",
+      "g3s2-measure-13": "quantity-combine",
+      "g3s2-measure-14": "quantity-combine"
+    });
+    for (const judgment of measurementJudgments) {
+      const correctLabel = judgment.choices.find((choice) => choice.correct)?.label;
+      expect(correctLabel).toBeDefined();
+      expect(JSON.stringify(judgment.visual)).not.toContain(correctLabel);
+    }
   });
 
   it("keeps student copy short and avoids unsupported visual meanings", () => {

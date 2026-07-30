@@ -1,0 +1,19 @@
+Middle of Math
+Copyright (c) 2026 Middle of Math contributors
+
+This project includes a curated, metadata-only snapshot derived from:
+
+  Korean Elementary Learning Map
+  https://github.com/DECK6/korean-elementary-learning-map
+  Commit: 3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c
+  License: MIT
+
+Only identifiers, curriculum codes, grade-band/subject/domain metadata,
+verification status, relationship types, strengths, and file provenance are
+retained. Upstream titles, summaries, evidence criteria, assessment prompts,
+and official curriculum prose are not copied into the Middle of Math snapshot.
+
+The upstream project describes an independent, non-official candidate learning
+map. Its topic and prerequisite relations are used only for editorial
+cross-reference. They do not diagnose an individual learner and do not replace
+review against the Korean national curriculum.

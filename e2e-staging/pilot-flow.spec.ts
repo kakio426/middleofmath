@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const teacherUrl = required("STAGING_TEACHER_URL");
 const studentUrl = required("STAGING_STUDENT_URL");
+const studioUrl = required("STAGING_STUDIO_URL");
 const teacherEmail = required("STAGING_TEACHER_EMAIL");
 const teacherPassword = required("STAGING_TEACHER_PASSWORD");
 
@@ -41,7 +42,14 @@ test("초대 교사부터 학부모 PDF 요청까지 실제 staging 파일럿 �
   await teacher.getByRole("button", { name: "진단 배정" }).click();
   await teacher.getByRole("button", { name: new RegExp(pilotName) }).click();
   await teacher.getByRole("button", { name: "다음 결정" }).click();
-  await teacher.locator(".teacher-decision").first().click();
+  const diagnosisDecision = teacher.locator(".teacher-decision").first();
+  const diagnosisSummary = await diagnosisDecision.textContent();
+  const expectedJudgmentCount = Number(
+    diagnosisSummary?.match(/(\d+)개 판단/)?.[1] ?? 0
+  );
+  expect(expectedJudgmentCount).toBeGreaterThan(0);
+  expect(expectedJudgmentCount).toBeLessThanOrEqual(80);
+  await diagnosisDecision.click();
   await teacher.getByRole("button", { name: "다음 결정" }).click();
   await teacher.getByRole("button", { name: "다음 결정" }).click();
   await teacher.getByRole("button", { name: "이 내용으로 배정" }).click();
@@ -54,11 +62,21 @@ test("초대 교사부터 학부모 PDF 요청까지 실제 staging 파일럿 �
   await student.getByLabel("내 개인 코드").fill(joinSecret!);
   await student.getByRole("button", { name: "활동 확인하기" }).click();
   await student.getByRole("button", { name: "시작하기" }).click();
-  for (let index = 0; index < 12; index += 1) {
+  let observedJudgmentCount = 0;
+  while (
+    observedJudgmentCount < 80
+    && await student.getByRole(
+      "heading",
+      { name: "끝까지 참여했어요" }
+    ).count() === 0
+  ) {
+    await expect(student.locator(".mom-choice").first()).toBeVisible();
     await student.locator(".mom-choice").first().click();
     await student.getByRole("button", { name: "다음", exact: true }).click();
+    observedJudgmentCount += 1;
   }
   await expect(student.getByRole("heading", { name: "끝까지 참여했어요" })).toBeVisible();
+  expect(observedJudgmentCount).toBe(expectedJudgmentCount);
 
   await teacher.getByRole("button", { name: "반 요약" }).click();
   await teacher.getByLabel("현재 클래스").selectOption({ label: pilotName });
@@ -70,6 +88,12 @@ test("초대 교사부터 학부모 PDF 요청까지 실제 staging 파일럿 �
 
   await studentContext.close();
   await teacherContext.close();
+});
+
+test("staging studio가 실제 설정의 로그인 화면을 연다", async ({ page }) => {
+  await page.goto(studioUrl);
+  await expect(page.getByRole("heading", { name: "로그인" })).toBeVisible();
+  await expect(page.getByText("스튜디오 설정이 필요합니다")).toHaveCount(0);
 });
 
 function required(name: string): string {

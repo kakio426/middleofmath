@@ -1,0 +1,704 @@
+{
+  "upstream": {
+    "repository": "DECK6/korean-elementary-learning-map",
+    "commit": "3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c",
+    "license": "MIT",
+    "taxonomyVersion": "kr-full-depth-v0.4",
+    "ontologyVersion": "0.3.0-p3",
+    "generatedAt": "2026-07-09T00:00:00+09:00",
+    "status": "integrated-workstream-candidate",
+    "verificationStatus": "public-doc-derived",
+    "officialStatus": "independent-non-official",
+    "learnerDiagnosisSupported": false
+  },
+  "files": {
+    "curriculum-standards.json": {
+      "bytes": 1913076,
+      "sha256": "aaaebb939c17fcc11a808fef3ae8164823425f74bfe8092a4a66941cb8c33335"
+    },
+    "topics.json": {
+      "bytes": 5387054,
+      "sha256": "80aa059ed305ce4cbeb0df45436c0b204a42cd208204c1cc1e5332c70c4bf5f3"
+    },
+    "dependencies.json": {
+      "bytes": 762739,
+      "sha256": "e09a6137bb70edf2a0b0928c05a4bd3f102c80845846ff13b10767ef4ceafe2c"
+    }
+  },
+  "advisory": {
+    "crosswalkOnly": true,
+    "notLearnerDiagnosis": true,
+    "candidatePrerequisites": true
+  },
+  "standards": [
+    {
+      "key": "kr-2022-elem-math:[4수01-04]",
+      "code": "[4수01-04]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수01-05]",
+      "code": "[4수01-05]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수01-06]",
+      "code": "[4수01-06]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수01-08]",
+      "code": "[4수01-08]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수01-09]",
+      "code": "[4수01-09]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수01-10]",
+      "code": "[4수01-10]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수01-11]",
+      "code": "[4수01-11]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수03-06]",
+      "code": "[4수03-06]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수03-07]",
+      "code": "[4수03-07]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수03-17]",
+      "code": "[4수03-17]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수03-18]",
+      "code": "[4수03-18]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수03-19]",
+      "code": "[4수03-19]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수03-20]",
+      "code": "[4수03-20]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수03-21]",
+      "code": "[4수03-21]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수03-22]",
+      "code": "[4수03-22]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수03-23]",
+      "code": "[4수03-23]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[4수04-01]",
+      "code": "[4수04-01]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked"
+    }
+  ],
+  "topics": [
+    {
+      "id": "kr.mt.math.data-probability.g1-2.s2-04-03.application",
+      "standardKey": "kr-2022-elem-math:[2수04-03]",
+      "gradeBand": "1-2",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g3-4.s4-04-01.application",
+      "standardKey": "kr-2022-elem-math:[4수04-01]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g3-4.s4-04-01.concept",
+      "standardKey": "kr-2022-elem-math:[4수04-01]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g3-4.s4-04-01.representation",
+      "standardKey": "kr-2022-elem-math:[4수04-01]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-05.application",
+      "standardKey": "kr-2022-elem-math:[4수03-05]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-06.application",
+      "standardKey": "kr-2022-elem-math:[4수03-06]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-06.concept",
+      "standardKey": "kr-2022-elem-math:[4수03-06]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-06.representation",
+      "standardKey": "kr-2022-elem-math:[4수03-06]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-07.application",
+      "standardKey": "kr-2022-elem-math:[4수03-07]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-07.concept",
+      "standardKey": "kr-2022-elem-math:[4수03-07]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-07.representation",
+      "standardKey": "kr-2022-elem-math:[4수03-07]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-16.application",
+      "standardKey": "kr-2022-elem-math:[4수03-16]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-17.application",
+      "standardKey": "kr-2022-elem-math:[4수03-17]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-17.concept",
+      "standardKey": "kr-2022-elem-math:[4수03-17]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-17.representation",
+      "standardKey": "kr-2022-elem-math:[4수03-17]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-18.application",
+      "standardKey": "kr-2022-elem-math:[4수03-18]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-18.concept",
+      "standardKey": "kr-2022-elem-math:[4수03-18]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-18.representation",
+      "standardKey": "kr-2022-elem-math:[4수03-18]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-19.application",
+      "standardKey": "kr-2022-elem-math:[4수03-19]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-19.concept",
+      "standardKey": "kr-2022-elem-math:[4수03-19]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-19.representation",
+      "standardKey": "kr-2022-elem-math:[4수03-19]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-20.application",
+      "standardKey": "kr-2022-elem-math:[4수03-20]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-20.concept",
+      "standardKey": "kr-2022-elem-math:[4수03-20]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-20.representation",
+      "standardKey": "kr-2022-elem-math:[4수03-20]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-21.application",
+      "standardKey": "kr-2022-elem-math:[4수03-21]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-21.concept",
+      "standardKey": "kr-2022-elem-math:[4수03-21]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-21.representation",
+      "standardKey": "kr-2022-elem-math:[4수03-21]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-22.application",
+      "standardKey": "kr-2022-elem-math:[4수03-22]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-22.concept",
+      "standardKey": "kr-2022-elem-math:[4수03-22]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-22.representation",
+      "standardKey": "kr-2022-elem-math:[4수03-22]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-23.application",
+      "standardKey": "kr-2022-elem-math:[4수03-23]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-23.concept",
+      "standardKey": "kr-2022-elem-math:[4수03-23]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g3-4.s4-03-23.representation",
+      "standardKey": "kr-2022-elem-math:[4수03-23]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-04.application",
+      "standardKey": "kr-2022-elem-math:[4수01-04]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-04.concept",
+      "standardKey": "kr-2022-elem-math:[4수01-04]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-04.representation",
+      "standardKey": "kr-2022-elem-math:[4수01-04]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-05.application",
+      "standardKey": "kr-2022-elem-math:[4수01-05]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-05.concept",
+      "standardKey": "kr-2022-elem-math:[4수01-05]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-05.representation",
+      "standardKey": "kr-2022-elem-math:[4수01-05]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-06.application",
+      "standardKey": "kr-2022-elem-math:[4수01-06]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-06.concept",
+      "standardKey": "kr-2022-elem-math:[4수01-06]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-06.representation",
+      "standardKey": "kr-2022-elem-math:[4수01-06]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-08.application",
+      "standardKey": "kr-2022-elem-math:[4수01-08]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-08.concept",
+      "standardKey": "kr-2022-elem-math:[4수01-08]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-08.representation",
+      "standardKey": "kr-2022-elem-math:[4수01-08]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-09.application",
+      "standardKey": "kr-2022-elem-math:[4수01-09]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-09.concept",
+      "standardKey": "kr-2022-elem-math:[4수01-09]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-09.representation",
+      "standardKey": "kr-2022-elem-math:[4수01-09]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-10.application",
+      "standardKey": "kr-2022-elem-math:[4수01-10]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-10.concept",
+      "standardKey": "kr-2022-elem-math:[4수01-10]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-10.representation",
+      "standardKey": "kr-2022-elem-math:[4수01-10]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-11.application",
+      "standardKey": "kr-2022-elem-math:[4수01-11]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-11.concept",
+      "standardKey": "kr-2022-elem-math:[4수01-11]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g3-4.s4-01-11.representation",
+      "standardKey": "kr-2022-elem-math:[4수01-11]",
+      "gradeBand": "3-4",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    }
+  ],
+  "dependencies": [
+    {
+      "topicId": "kr.mt.math.number-operations.g3-4.s4-01-04.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g3-4.s4-01-04.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g3-4.s4-01-05.concept",
+      "prerequisiteId": "kr.mt.math.number-operations.g3-4.s4-01-04.application",
+      "relationship": "prerequisite",
+      "strength": "soft",
+      "basis": "official-code sequence within grade-band/domain"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g3-4.s4-03-06.concept",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g3-4.s4-03-05.application",
+      "relationship": "prerequisite",
+      "strength": "soft",
+      "basis": "official-code sequence within grade-band/domain"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g3-4.s4-01-09.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g3-4.s4-01-09.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g3-4.s4-03-17.concept",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g3-4.s4-03-16.application",
+      "relationship": "prerequisite",
+      "strength": "soft",
+      "basis": "official-code sequence within grade-band/domain"
+    },
+    {
+      "topicId": "kr.mt.math.data-probability.g3-4.s4-04-01.concept",
+      "prerequisiteId": "kr.mt.math.data-probability.g1-2.s2-04-03.application",
+      "relationship": "prerequisite",
+      "strength": "soft",
+      "basis": "grade-band progression by domain"
+    }
+  ],
+  "snapshotDigest": "sha256:5bb711591ecd2b7312e4fce53c2ab76b1f8701ce532fc74dab164cca882c639a"
+}

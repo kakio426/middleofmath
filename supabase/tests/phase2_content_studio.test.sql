@@ -82,7 +82,27 @@ select * from public.publish_diagnosis_set(
   2,
   '1.0.0',
   'pgTAP workflow check',
-  '{"valid":true,"issues":[]}'
+  '{
+    "valid": true,
+    "issues": [{
+      "code": "DI_GATE_NOT_ENFORCED",
+      "path": "/",
+      "message": "legacy lineage",
+      "severity": "warning"
+    }],
+    "gates": [{
+      "gate": "diagnostic-integrity",
+      "gateVersion": "gate-1.0.0",
+      "policy": "warn",
+      "enforced": false,
+      "setKey": "phase2-pgtap-content",
+      "targetVersion": "1.0.0",
+      "blueprintRevision": null,
+      "valid": true,
+      "errorCount": 0,
+      "warningCount": 1
+    }]
+  }'
 );
 
 select ok(

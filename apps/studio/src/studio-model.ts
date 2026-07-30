@@ -1,10 +1,41 @@
 import type { DiagnosisSet, Judgment, SignalDefinition } from "@middle-of-math/domain";
-import { validateDiagnosisSet } from "@middle-of-math/content";
+import {
+  curriculumCrosswalkSummary,
+  inspectDiagnosticIntegrity,
+  validateDiagnosisSet,
+  type DiagnosisCoverageBlueprint
+} from "@middle-of-math/content";
 
 export interface StudioIssue {
+  code: string;
   path: string;
   level: "error" | "warning";
   message: string;
+}
+
+export interface StudioDistractorRationaleItem {
+  choiceId: string;
+  choiceLabel: string;
+  misconceptionId: string;
+  misconceptionTitle: string;
+  derivation: string;
+  rationale: string;
+}
+
+export type StudioDistractorRationaleSummary =
+  | {
+      status: "matched";
+      sharedSignalRationale?: string;
+      items: StudioDistractorRationaleItem[];
+    }
+  | {
+      status: "mismatch";
+      message: string;
+      items: [];
+    };
+
+export function getStudioCurriculumProvenance() {
+  return curriculumCrosswalkSummary();
 }
 
 export function cloneAsDraft(content: DiagnosisSet): DiagnosisSet {
@@ -35,12 +66,33 @@ export function updateSignal(
   };
 }
 
-export function collectStudioIssues(content: DiagnosisSet, baseContent?: DiagnosisSet): StudioIssue[] {
-  return validateDiagnosisSet(content, { baseContent }).issues.map((issue) => ({
+export function collectStudioIssues(
+  content: DiagnosisSet,
+  baseContent?: DiagnosisSet,
+  gateContext?: { setKey: string; targetVersion: string }
+): StudioIssue[] {
+  const structural = validateDiagnosisSet(content, { baseContent });
+  const gate = gateContext
+    ? inspectDiagnosticIntegrity({
+        content,
+        setKey: gateContext.setKey,
+        targetVersion: gateContext.targetVersion
+      })
+    : { issues: [] };
+  return [...structural.issues, ...gate.issues].map((issue) => ({
+    code: issue.code,
     path: issue.path,
     level: issue.severity,
     message: issue.message
   }));
+}
+
+export function issueBelongsToJudgment(
+  issuePath: string,
+  judgmentIndex: number
+): boolean {
+  const base = `/judgments/${judgmentIndex}`;
+  return issuePath === base || issuePath.startsWith(`${base}/`);
 }
 
 export function summarizeVisual(judgment: Judgment): string {
@@ -52,9 +104,87 @@ export function summarizeVisual(judgment: Judgment): string {
     case "division-groups": return `${judgment.visual.total}개 · ${judgment.visual.groups}묶음`;
     case "circle": return "원과 선분";
     case "fraction-bar": return `${judgment.visual.denominator}칸 분수 막대`;
-    case "measurement": return `${judgment.visual.amount}${judgment.visual.unit}`;
+    case "partition-diagrams": return `${judgment.visual.diagrams.length}개 등분 그림`;
+    case "measurement": return "기존 측정 도구 그림";
+    case "length-relation": return `${judgment.visual.fromUnit}→${judgment.visual.targetUnit} 길이 단위 관계`;
+    case "unit-relation": return `${judgment.visual.medium === "capacity" ? "들이" : "무게"} 단위 관계`;
+    case "measure-referent": return `${judgment.visual.medium === "capacity" ? "들이" : "무게"} 측정 대상`;
+    case "quantity-combine": return `${judgment.visual.medium === "capacity" ? "들이" : "무게"}의 ${judgment.visual.operator === "add" ? "합" : "차"}`;
+    case "place-value-chart": return `${judgment.visual.digits.length}자리 자리값표`;
+    case "angle-figure": return judgment.visual.mode === "protractor"
+      ? "각도기와 한 각"
+      : "눈금 없는 한 각";
+    case "polygon-angle-diagram": return `${
+      judgment.visual.polygon === "triangle" ? "삼각형" : "사각형"
+    }의 각 그림`;
     case "pictograph": return `그림 1개 = ${judgment.visual.value}개`;
   }
+}
+
+export function summarizeDistractorRationales(
+  content: DiagnosisSet,
+  judgmentId: string,
+  blueprint: DiagnosisCoverageBlueprint
+): StudioDistractorRationaleSummary {
+  const judgment = content.judgments.find((item) => item.id === judgmentId);
+  if (!judgment) {
+    return {
+      status: "mismatch",
+      message: "이 초안의 선택지는 등록된 오답 근거와 일치하지 않습니다.",
+      items: []
+    };
+  }
+
+  const distractors = judgment.choices.filter((choice) => !choice.correct);
+  const rationaleEntries = blueprint.distractors.filter(
+    (entry) => entry.judgmentId === judgmentId
+  );
+  const entriesByChoice = new Map(
+    rationaleEntries.map((entry) => [entry.choiceId, entry])
+  );
+  const hasExactChoiceMatch =
+    rationaleEntries.length === distractors.length
+    && distractors.every((choice) => entriesByChoice.has(choice.id))
+    && rationaleEntries.every((entry) =>
+      distractors.some((choice) => choice.id === entry.choiceId)
+    );
+
+  if (!hasExactChoiceMatch) {
+    return {
+      status: "mismatch",
+      message: "이 초안의 선택지는 등록된 오답 근거와 일치하지 않습니다.",
+      items: []
+    };
+  }
+
+  const items = distractors.map((choice) => {
+    const entry = entriesByChoice.get(choice.id)!;
+    return {
+      choiceId: choice.id,
+      choiceLabel: choice.label,
+      misconceptionId: entry.misconceptionId,
+      misconceptionTitle:
+        blueprint.misconceptionTitles[entry.misconceptionId]
+        ?? entry.misconceptionId,
+      derivation: entry.derivation,
+      rationale: entry.rationale
+    };
+  });
+  const sharedRationales = [
+    ...new Set(
+      rationaleEntries
+        .map((entry) => entry.sharedSignalRationale?.trim())
+        .filter((value): value is string => Boolean(value))
+    )
+  ];
+
+  return {
+    status: "matched",
+    ...(sharedRationales.length === 1
+      ? { sharedSignalRationale: sharedRationales[0] }
+      : {}),
+    items
+  };
 }
 
 export function structurallyEqual(left: unknown, right: unknown): boolean {

@@ -1,0 +1,140 @@
+{
+  "setKey": "grade3-semester1",
+  "revision": "crosswalk-g3s1-2026-07-30.1",
+  "upstreamCommit": "3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c",
+  "upstreamTaxonomyVersion": "kr-full-depth-v0.4",
+  "upstreamOntologyVersion": "0.3.0-p3",
+  "snapshotDigest": "sha256:bf2f29fed186c7ed340cd0dc1f56386950a0e5d11d56296e82bf6255eb54b1ea",
+  "anchorRows": [
+    {
+      "anchorId": "[4수01-04]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-04]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-04.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-04.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-04.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 성취기준 코드와 주제 분해를 확인했으며 학기 배치는 로컬 편집 결정이다."
+    },
+    {
+      "anchorId": "[4수01-05]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-05]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-05.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-05.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-05.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 성취기준 코드와 주제 분해를 확인했으며 학기 배치는 로컬 편집 결정이다."
+    },
+    {
+      "anchorId": "[4수01-06]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-06]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-06.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-06.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-06.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 성취기준 코드와 주제 분해를 확인했으며 학기 배치는 로컬 편집 결정이다."
+    },
+    {
+      "anchorId": "[4수01-09]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-09]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-09.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-09.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-09.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 성취기준 코드와 주제 분해를 확인했으며 학기 배치는 로컬 편집 결정이다."
+    },
+    {
+      "anchorId": "[4수03-16]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-16]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-16.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-16.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-16.representation"
+      ],
+      "reviewEvidence": "고정 커밋에서 길이 성취기준 코드와 주제 분해를 확인했으며 학기 배치는 로컬 편집 결정이다."
+    }
+  ],
+  "stageRows": [
+    {
+      "stageId": "multiplication.equal-groups",
+      "status": "topic-partial",
+      "topicIds": ["kr.mt.math.number-operations.g3-4.s4-01-04.concept"],
+      "reviewEvidence": "외부 자료는 학년군 성취기준 분해이며 학기와 진단 세분화는 Middle of Math의 편집 결정이다. 외부 자료는 학생 진단을 직접 지원하지 않는다.",
+      "predecessorCandidate": {
+        "topicId": "kr.mt.math.number-operations.g3-4.s4-01-04.representation",
+        "prerequisiteId": "kr.mt.math.number-operations.g3-4.s4-01-04.concept",
+        "strength": "hard",
+        "advisory": true,
+        "localStageId": null
+      }
+    },
+    {
+      "stageId": "multiplication.two-digit-by-one",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-04.representation",
+        "kr.mt.math.number-operations.g3-4.s4-01-04.application"
+      ],
+      "reviewEvidence": "외부 자료는 학년군 성취기준 분해이며 학기와 진단 세분화는 Middle of Math의 편집 결정이다. 외부 자료는 학생 진단을 직접 지원하지 않는다."
+    },
+    {
+      "stageId": "division.equal-partition",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-05.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-05.representation"
+      ],
+      "reviewEvidence": "외부 자료는 학년군 성취기준 분해이며 학기와 진단 세분화는 Middle of Math의 편집 결정이다. 외부 자료는 학생 진단을 직접 지원하지 않는다."
+    },
+    {
+      "stageId": "division.multiplication-link",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-05.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-06.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-06.representation",
+        "kr.mt.math.number-operations.g3-4.s4-01-06.application"
+      ],
+      "reviewEvidence": "외부 자료는 학년군 성취기준 분해이며 학기와 진단 세분화는 Middle of Math의 편집 결정이다. 외부 자료는 학생 진단을 직접 지원하지 않는다."
+    },
+    {
+      "stageId": "fraction.equal-partition",
+      "status": "topic-partial",
+      "topicIds": ["kr.mt.math.number-operations.g3-4.s4-01-09.concept"],
+      "reviewEvidence": "외부 자료는 학년군 성취기준 분해이며 학기와 진단 세분화는 Middle of Math의 편집 결정이다. 외부 자료는 학생 진단을 직접 지원하지 않는다."
+    },
+    {
+      "stageId": "fraction.part-of-whole",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-09.representation",
+        "kr.mt.math.number-operations.g3-4.s4-01-09.application"
+      ],
+      "reviewEvidence": "외부 자료는 학년군 성취기준 분해이며 학기와 진단 세분화는 Middle of Math의 편집 결정이다. 외부 자료는 학생 진단을 직접 지원하지 않는다."
+    },
+    {
+      "stageId": "length.unit-choice",
+      "status": "topic-partial",
+      "topicIds": ["kr.mt.math.geometry-measurement.g3-4.s4-03-16.concept"],
+      "reviewEvidence": "외부 자료는 학년군 길이 성취기준 분해이며 학기와 진단 세분화는 Middle of Math의 편집 결정이다. 외부 자료는 학생 진단을 직접 지원하지 않는다."
+    },
+    {
+      "stageId": "length.unit-convert",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-16.representation",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-16.application"
+      ],
+      "reviewEvidence": "외부 자료는 학년군 길이 성취기준 분해이며 학기와 진단 세분화는 Middle of Math의 편집 결정이다. 외부 자료는 학생 진단을 직접 지원하지 않는다."
+    }
+  ],
+  "crosswalkDigest": "sha256:04ac730ff1e941da9ee14ab8105c0054b8989f5ab4068556bb674d19c74f1184"
+}

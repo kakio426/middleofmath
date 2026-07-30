@@ -15,6 +15,36 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  preflight-secrets:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID_STUDENT: ${{ secrets.VERCEL_PROJECT_ID_STUDENT }}
+      VERCEL_PROJECT_ID_TEACHER: ${{ secrets.VERCEL_PROJECT_ID_TEACHER }}
+      VERCEL_PROJECT_ID_STUDIO: ${{ secrets.VERCEL_PROJECT_ID_STUDIO }}
+    steps:
+      - name: Fail before migration or deploy when a secret is missing
+        shell: bash
+        run: |
+          missing=0
+          required=(
+            SUPABASE_ACCESS_TOKEN SUPABASE_DB_PASSWORD SUPABASE_PROJECT_REF
+            VERCEL_TOKEN VERCEL_ORG_ID
+            VERCEL_PROJECT_ID_STUDENT VERCEL_PROJECT_ID_TEACHER VERCEL_PROJECT_ID_STUDIO
+          )
+          for name in "${required[@]}"; do
+            if [[ -z "${!name:-}" ]]; then
+              echo "::error::$name is required in the production environment"
+              missing=1
+            fi
+          done
+          exit "$missing"
+
   preflight:
     runs-on: ubuntu-latest
     steps:
@@ -41,11 +71,12 @@ jobs:
       - run: npm run test:db
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+      - run: npm run test:smoke:contract
       - if: always()
         run: supabase stop --no-backup
 
   migrate:
-    needs: preflight
+    needs: [preflight-secrets, preflight]
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -61,13 +92,17 @@ jobs:
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
           SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
         run: supabase link --project-ref "$SUPABASE_PROJECT_REF" --password "$SUPABASE_DB_PASSWORD" --yes
+      - name: Require every production teacher to be an invited user
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: supabase db query --linked --file supabase/snippets/assert-invited-teachers-only.sql
       - name: Apply exactly the repository migration chain
         env:
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
         run: supabase db push --linked --password "$SUPABASE_DB_PASSWORD" --yes
 
   deploy:
-    needs: migrate
+    needs: [preflight-secrets, migrate]
     runs-on: ubuntu-latest
     environment: production
     strategy:
@@ -101,8 +136,9 @@ jobs:
           npx vercel@56.5.0 deploy --prebuilt --prod --token="$VERCEL_TOKEN"
 
   smoke:
-    needs: deploy
+    needs: [preflight-secrets, deploy]
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: actions/checkout@v4
         with:
@@ -115,7 +151,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Verify production URLs use real configuration
         env:
-          PRODUCTION_STUDENT_URL: https://middle-of-math-student.vercel.app
-          PRODUCTION_TEACHER_URL: https://middle-of-math-teacher.vercel.app
-          PRODUCTION_STUDIO_URL: https://middle-of-math-studio.vercel.app
+          PRODUCTION_STUDENT_URL: ${{ vars.PRODUCTION_STUDENT_URL || 'https://middle-of-math-student.vercel.app' }}
+          PRODUCTION_TEACHER_URL: ${{ vars.PRODUCTION_TEACHER_URL || 'https://middle-of-math-teacher.vercel.app' }}
+          PRODUCTION_STUDIO_URL: ${{ vars.PRODUCTION_STUDIO_URL || 'https://middle-of-math-studio.vercel.app' }}
         run: npm run test:smoke:production

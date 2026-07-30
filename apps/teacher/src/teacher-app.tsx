@@ -13,7 +13,11 @@ import {
   type TeacherProfileRecord
 } from "@middle-of-math/adapters";
 import { AssignDiagnosis, ExportParentReport, GenerateAssignmentInsights, LoadClassInsights } from "@middle-of-math/application";
-import { grade3Semester2Diagnosis } from "@middle-of-math/content";
+import {
+  grade3Semester1Diagnosis,
+  grade3Semester2Diagnosis,
+  incomingPrerequisiteEdges
+} from "@middle-of-math/content/runtime";
 import {
   createParentReport,
   generateClassSummary,
@@ -33,6 +37,7 @@ import {
 } from "@middle-of-math/domain";
 import {
   Brand,
+  ConfidenceMark,
   EmptyState,
   EvidenceRail,
   SeverityMark,
@@ -657,7 +662,7 @@ function ClassSummaryPage({ students, summary, selectedClass, selectedBundle, st
               <article className="teacher-summary-row" key={item.signalId}>
                 <span className="teacher-rank">{String(index + 1).padStart(2, "0")}</span>
                 <div className="teacher-summary-copy"><div className="mom-row-between"><h3>{item.title}</h3><SeverityMark severity={item.severity} /></div><p>{item.interpretation}</p><strong className="teacher-move">다음 수업 · {item.teachingMove}</strong></div>
-                <div className="teacher-summary-count"><strong>{item.studentCount}</strong><span>명 관찰</span></div>
+                <div className="teacher-summary-count"><span>반복 확인 {item.confirmedStudentCount}명 · 추가 관찰 {item.tentativeStudentCount}명</span></div>
                 <div className="teacher-student-links">{related.map((student) => <button key={student.id} onClick={() => onOpenStudent(student.id, student.report?.findings.find((finding) => finding.signalId === item.signalId))}>{studentLabel(student)}</button>)}</div>
               </article>
             );
@@ -694,20 +699,51 @@ function TeacherEvidenceReport({ report, diagnosisSet, selectedFinding, onFindin
   const judgment = evidence ? diagnosisSet.judgments.find((item) => item.id === evidence.judgmentId) : null;
   const stage = judgment ? diagnosisSet.learnerStages.find((item) => item.id === judgment.learnerStageId) : null;
   const anchor = judgment ? diagnosisSet.curriculumAnchors.find((item) => item.id === judgment.curriculumAnchorIds[0]) : null;
+  const prerequisiteStages = stage
+    ? incomingPrerequisiteEdges(diagnosisSet.manifest.id, stage.id)
+        .map((edge) => {
+          const prerequisite = grade3Semester1Diagnosis.learnerStages.find(
+            (item) => item.id === edge.fromStageId
+          );
+          const prerequisiteAnchor = prerequisite
+            ? grade3Semester1Diagnosis.curriculumAnchors.find(
+                (item) => item.id === prerequisite.curriculumAnchorIds[0]
+              )
+            : null;
+          return prerequisite && prerequisiteAnchor
+            ? { edge, prerequisite, prerequisiteAnchor }
+            : null;
+        })
+        .filter((item) => item !== null)
+    : [];
   return (
     <div className="teacher-report-grid">
       <section className="mom-panel">
-        <div className="mom-panel-header"><div><p className="mom-eyebrow">Observed signals</p><h2>우선 살펴볼 판단</h2></div><span className="mom-caption">{report.observedJudgmentCount}개 중 {report.stableJudgmentCount}개 안정</span></div>
+        <div className="mom-panel-header"><div><p className="mom-eyebrow">Observed signals</p><h2>우선 살펴볼 판단</h2></div><span className="mom-caption">관찰 {report.observedJudgmentCount} · 반복 확인 {report.confirmedFindingCount} · 추가 관찰 {report.tentativeFindingCount}</span></div>
         <div className="teacher-findings">
-          {report.findings.map((item) => <button key={item.signalId} className={finding?.signalId === item.signalId ? "is-active" : ""} onClick={() => onFindingSelect(item)}><span><strong>{item.title}</strong><small>근거 {item.evidenceCount}개</small></span><SeverityMark severity={item.severity} /></button>)}
+          {report.findings.map((item) => <button key={item.signalId} className={finding?.signalId === item.signalId ? "is-active" : ""} onClick={() => onFindingSelect(item)}><span><strong>{item.title}</strong><small>근거 {item.evidenceCount}개</small></span><span className="teacher-finding-marks"><ConfidenceMark confidence={item.confidence} /><SeverityMark severity={item.severity} /></span></button>)}
         </div>
       </section>
       <section className="mom-panel teacher-evidence-panel">
         {finding && evidence && judgment && stage && anchor ? <>
-          <div className="mom-panel-header"><div><p className="mom-eyebrow">Evidence trail</p><h2>{finding.title}</h2></div><SeverityMark severity={finding.severity} /></div>
+          <div className="mom-panel-header"><div><p className="mom-eyebrow">Evidence trail</p><h2>{finding.title}</h2></div><span className="teacher-finding-marks"><ConfidenceMark confidence={finding.confidence} /><SeverityMark severity={finding.severity} /></span></div>
           <div className="mom-panel-body mom-stack-lg">
             <p className="teacher-interpretation">{finding.interpretation}</p>
+            <p className="teacher-confidence-rule">{finding.confirmationRule}</p>
             <EvidenceRail anchor={`${anchor.id} ${anchor.label}`} stage={stage.title} evidence={evidence} />
+            {prerequisiteStages.length > 0 && (
+              <aside className="teacher-prerequisite-note">
+                <span>먼저 확인할 이전 학기 단계 (편집 참고)</span>
+                <ul>
+                  {prerequisiteStages.map(({ edge, prerequisite, prerequisiteAnchor }) => (
+                    <li key={edge.id}>
+                      <strong>{prerequisite.shortTitle}</strong>
+                      <small>{prerequisiteAnchor.id} · 참고</small>
+                    </li>
+                  ))}
+                </ul>
+              </aside>
+            )}
             <div className="teacher-question-evidence"><span>학생이 본 판단</span><strong>{judgment.prompt}</strong></div>
             <div className="teacher-next-move"><span>다음 수업에서</span><p>{finding.teachingMove}</p></div>
           </div>
