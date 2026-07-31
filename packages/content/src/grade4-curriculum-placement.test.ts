@@ -9,10 +9,10 @@ const expectedPlacement = [
     units: [
       { order: 1, id: "large-numbers", title: "큰 수", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-07-30T21:33:47+09:00", anchorIds: ["[4수01-01]", "[4수01-02]"] },
       { order: 2, id: "angles", title: "각도", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-07-30T21:33:47+09:00", anchorIds: ["[4수03-02]", "[4수03-24]", "[4수03-25]"] },
-      { order: 3, id: "multiplication-division", title: "곱셈과 나눗셈", reviewStatus: "pending-teacher-review", reviewedBy: null, reviewedAt: null, anchorIds: ["[4수01-04]", "[4수01-05]", "[4수01-07]", "[4수01-08]"] },
-      { order: 4, id: "figure-transform", title: "평면도형의 이동", reviewStatus: "pending-teacher-review", reviewedBy: null, reviewedAt: null, anchorIds: ["[4수03-04]", "[4수03-05]"] },
-      { order: 5, id: "bar-graphs", title: "막대그래프", reviewStatus: "pending-teacher-review", reviewedBy: null, reviewedAt: null, anchorIds: ["[4수04-01]", "[4수04-03]"] },
-      { order: 6, id: "patterns-relations", title: "규칙과 관계", reviewStatus: "pending-teacher-review", reviewedBy: null, reviewedAt: null, anchorIds: ["[4수02-01]", "[4수02-02]", "[4수02-03]"] }
+      { order: 3, id: "multiplication-division", title: "곱셈과 나눗셈", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-07-31T17:38:29+09:00", anchorIds: ["[4수01-04]", "[4수01-05]", "[4수01-07]", "[4수01-08]"] },
+      { order: 4, id: "figure-transform", title: "평면도형의 이동", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-07-31T09:13:00+09:00", anchorIds: ["[4수03-04]", "[4수03-05]"] },
+      { order: 5, id: "bar-graphs", title: "막대그래프", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-07-31T15:04:15+09:00", anchorIds: ["[4수04-01]", "[4수04-03]"] },
+      { order: 6, id: "patterns-relations", title: "규칙과 관계", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-07-31T10:24:21+09:00", anchorIds: ["[4수02-01]", "[4수02-02]", "[4수02-03]"] }
     ]
   },
   {
@@ -121,9 +121,9 @@ describe("4학년 코드·단원·학기 배치 검토 원장", () => {
     )).toBe(true);
   });
 
-  it("A1 부분 승인과 두 학기 여섯 단원을 명시한다", () => {
+  it("A1과 A2로 1학기 전체를 승인하고 두 학기 여섯 단원을 명시한다", () => {
     expect(placementJson).toMatchObject({
-      revision: "grade4-placement-2026-07-30.6",
+      revision: "grade4-placement-2026-07-31.10",
       status: "pending-teacher-review",
       reviewedBy: null,
       reviewedAt: null
@@ -135,15 +135,21 @@ describe("4학년 코드·단원·학기 배치 검토 원장", () => {
       { semester: 1, units: 6 },
       { semester: 2, units: 6 }
     ]);
-    expect(placementJson.semesters[0].units.slice(0, 2).every((unit) =>
+    expect(placementJson.semesters[0].units.filter((unit) =>
       unit.reviewStatus === "approved"
-      && unit.reviewedBy === "teacher:workspace-owner"
-      && unit.reviewedAt === "2026-07-30T21:33:47+09:00"
-    )).toBe(true);
+    ).map((unit) => unit.id)).toEqual([
+      "large-numbers",
+      "angles",
+      "multiplication-division",
+      "figure-transform",
+      "bar-graphs",
+      "patterns-relations"
+    ]);
     expect(placementJson.reviewLimitations).toEqual([
       "2학기 PDF 부록에는 3~4학년군 성취기준 47개 전체가 포함되므로 PDF 안의 코드 존재만으로 학기 배치를 승인하지 않는다.",
       "4학년 2학기 단원 문맥과 순서, 1학기 PDF에도 나타나는 [4수03-09], [4수03-10], [4수01-14]의 배치는 교사가 우선 확인한다.",
-      "스냅숏의 pdftotext 줄 번호는 DECK6 상류 기록값이며 추출 도구가 고정되지 않아 로컬에서 재현되지 않는다. 줄 번호를 학기 배치 승인 근거로 사용하지 않는다."
+      "스냅숏의 pdftotext 줄 번호는 DECK6 상류 기록값이며 추출 도구가 고정되지 않아 로컬에서 재현되지 않는다. 줄 번호를 학기 배치 승인 근거로 사용하지 않는다.",
+      "[4수01-07]의 학생용 요약 라벨은 고정 스냅숏의 세 자리 수 범위의 나눗셈 모듈과 4학년 1학기 단원 배치를 함께 대조해 작성했으며 성취기준 원문을 옮긴 것이 아니다."
     ]);
   });
 

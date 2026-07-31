@@ -15,6 +15,7 @@ import type {
   PrivacySafeDailyAggregate,
   PublishedDiagnosisSet,
   TeacherAssignmentEvidenceBundle,
+  TeacherDistractorNote,
   TeacherSessionEvidenceContext,
   TeacherStudentReport
 } from "@middle-of-math/domain";
@@ -77,6 +78,7 @@ export interface TeacherInsightsRepository {
   getAssignmentBundle(assignmentId: string): Promise<TeacherAssignmentEvidenceBundle | null>;
   listClassAssignmentBundles(classId: string): Promise<TeacherAssignmentEvidenceBundle[]>;
   getSessionEvidence(sessionId: string): Promise<TeacherSessionEvidenceContext | null>;
+  listDistractorNotes(input: { setKey: string; version: string }): Promise<TeacherDistractorNote[]>;
   listDailyAggregates(from: string, to: string): Promise<PrivacySafeDailyAggregate[]>;
 }
 

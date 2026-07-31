@@ -14,6 +14,32 @@ test("교사가 반 요약에서 실제 범위와 학생 근거로 내려간다"
   await expect(page.getByText("현재 해석")).toBeVisible();
 });
 
+test("4학년 1학기 배정은 단원별 요약과 교사용 오답 해석 자리까지 이어진다", async ({ page }) => {
+  await page.goto("/?set=grade4-semester1");
+
+  await expect(page.getByLabel("현재 클래스")).toHaveValue("demo-class");
+  await expect(page.getByLabel("현재 배정")).toHaveValue("demo-assignment");
+  await expect(page.getByText("4학년 햇살반", { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "3단원 · 곱셈과 나눗셈" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "5단원 · 막대그래프" })).toBeVisible();
+  await expect(page.locator(".teacher-summary-unit")).toHaveCount(2);
+
+  await page.getByRole("button", { name: /3번 · 민들레/ }).first().click();
+  await expect(page.getByRole("heading", { name: "3번 · 민들레" })).toBeVisible();
+  await expect(page.getByText("오답 해석", { exact: true })).toBeVisible();
+  await expect(page.getByText(
+    "로컬 데모에서는 오답 해석을 불러오지 않습니다. 실제 기록에서만 표시됩니다."
+  )).toBeVisible();
+
+  await page.getByRole("button", { name: "클래스·학생" }).click();
+  const classTerm = page.getByLabel("학년·학기");
+  await expect(classTerm).toHaveValue("3-2");
+  await expect(classTerm.locator("option")).toHaveText([
+    "3학년 2학기",
+    "4학년 1학기"
+  ]);
+});
+
 test("학부모 공유본은 교사 검토 버튼을 눌렀을 때만 출력한다", async ({ page }) => {
   await page.addInitScript(() => {
     window.print = () => document.body.setAttribute("data-print-requested", "true");

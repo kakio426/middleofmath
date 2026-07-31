@@ -283,16 +283,24 @@ test("측정 14문제의 의미 그림은 휴대전화에서 정답을 보이지
   }
 });
 
-test("4학년 1학기 큰 수와 각도는 데스크톱·태블릿·휴대전화에서 읽기 쉽게 제시된다", async ({ page }) => {
-  test.setTimeout(120_000);
+test("4학년 1학기 승인 단원은 데스크톱·태블릿·휴대전화에서 읽기 쉽게 제시된다", async ({ page }) => {
+  test.setTimeout(240_000);
   const viewports = [
     { width: 1280, height: 720 },
     { width: 768, height: 1024 },
     { width: 390, height: 844 }
   ];
-  const units = ["large-numbers", "angles"] as const;
+  const units = [
+    { id: "large-numbers", summary: "12문제 · 약 6분" },
+    { id: "angles", summary: "12문제 · 약 6분" },
+    { id: "multiplication-division", summary: "12문제 · 약 6분" },
+    { id: "figure-transform", summary: "10문제 · 약 5분" },
+    { id: "bar-graphs", summary: "10문제 · 약 5분" },
+    { id: "patterns-relations", summary: "10문제 · 약 5분" }
+  ] as const;
 
-  for (const [unitIndex, unitId] of units.entries()) {
+  for (const [unitIndex, unit] of units.entries()) {
+    const unitId = unit.id;
     const judgments = grade4Semester1Diagnosis.judgments.filter(
       (judgment) => judgment.unitId === unitId
     );
@@ -313,7 +321,7 @@ test("4학년 1학기 큰 수와 각도는 데스크톱·태블릿·휴대전화
       const card = page.locator(
         `[data-assignment-id="${grade4Semester1Diagnosis.manifest.id}-${unitId}"]`
       );
-      await expect(card).toContainText("12문제 · 약 6분");
+      await expect(card).toContainText(unit.summary);
       await card.getByRole("button", { name: "시작하기" }).click();
 
       for (const [index, judgment] of judgments.entries()) {
@@ -397,8 +405,89 @@ test("4학년 1학기 큰 수와 각도는 데스크톱·태블릿·휴대전화
           const visual = page.locator(".mom-polygon-angle");
           await expect(visual).toBeVisible();
           await expect(
-            visual.locator(".mom-polygon-angle-label")
+            visual.locator(".mom-polygon-angle-value")
           ).toHaveCount(judgment.visual.angles.length);
+        }
+        if (judgment.visual.kind === "grid-transform-diagram") {
+          const visual = page.locator(".mom-grid-transform");
+          await expect(visual).toBeVisible();
+          await expect(visual).not.toHaveAttribute(
+            "aria-label",
+            /오른쪽으로|왼쪽으로|위쪽으로|아래쪽으로|시계 방향|시계 반대 방향|좌우를 뒤집|위아래를 뒤집/
+          );
+          if (judgment.visual.mode === "point-move") {
+            await expect(visual.locator(".mom-transform-point")).toHaveCount(2);
+            await expect(
+              visual.locator(".mom-transform-source-cell")
+            ).toHaveCount(0);
+          } else {
+            await expect(
+              visual.locator(".mom-transform-source-cell")
+            ).toHaveCount((judgment.visual.sourceCells?.length ?? 0) + 1);
+            await expect(
+              visual.locator(".mom-transform-target-cell")
+            ).toHaveCount((judgment.visual.targetCells?.length ?? 0) + 1);
+          }
+          await expect(visual.locator(".mom-transform-axis")).toHaveCount(
+            judgment.visual.mode === "flip-left-right"
+              || judgment.visual.mode === "flip-up-down"
+              ? 1
+              : 0
+          );
+          await expect(visual.locator(".mom-transform-center")).toHaveCount(
+            judgment.visual.mode === "rotate" ? 1 : 0
+          );
+          const visualLayout = await visual.evaluate((element) => {
+            const rect = element.getBoundingClientRect();
+            return {
+              left: rect.left,
+              right: rect.right,
+              parentLeft:
+                element.parentElement?.getBoundingClientRect().left ?? 0,
+              parentRight:
+                element.parentElement?.getBoundingClientRect().right ?? 0
+            };
+          });
+          expect(visualLayout.left, judgment.id).toBeGreaterThanOrEqual(
+            visualLayout.parentLeft - 1
+          );
+          expect(visualLayout.right, judgment.id).toBeLessThanOrEqual(
+            visualLayout.parentRight + 1
+          );
+        }
+        if (judgment.visual.kind === "bar-chart-diagram") {
+          const visual = page.locator(".mom-bar-chart");
+          await expect(visual).toBeVisible();
+          await expect(visual.locator(".mom-bar-mark")).toHaveCount(
+            judgment.visual.mode === "table-match"
+              ? judgment.visual.candidates!.reduce(
+                  (count, candidate) => count + candidate.bars.length,
+                  0
+                )
+              : judgment.visual.bars!.length
+          );
+          await expect(visual.locator(".mom-bar-chart-svg")).toHaveCount(
+            judgment.visual.mode === "table-match" ? 3 : 1
+          );
+          const visualLayout = await visual.evaluate((element) => {
+            const rect = element.getBoundingClientRect();
+            return {
+              left: rect.left,
+              right: rect.right,
+              parentLeft:
+                element.parentElement?.getBoundingClientRect().left ?? 0,
+              parentRight:
+                element.parentElement?.getBoundingClientRect().right ?? 0,
+              overflow: element.scrollWidth > element.clientWidth
+            };
+          });
+          expect(visualLayout.left, judgment.id).toBeGreaterThanOrEqual(
+            visualLayout.parentLeft - 1
+          );
+          expect(visualLayout.right, judgment.id).toBeLessThanOrEqual(
+            visualLayout.parentRight + 1
+          );
+          expect(visualLayout.overflow, judgment.id).toBe(false);
         }
 
         await page.locator(".mom-choice").first().click();

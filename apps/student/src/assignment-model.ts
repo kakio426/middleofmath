@@ -29,12 +29,18 @@ const CURRICULUM_AREAS = [
   {
     id: "number-operations",
     title: "수와 연산",
-    unitIds: ["large-numbers", "multiplication", "division", "fraction"]
+    unitIds: [
+      "large-numbers",
+      "multiplication",
+      "division",
+      "multiplication-division",
+      "fraction"
+    ]
   },
   {
     id: "geometry",
     title: "도형",
-    unitIds: ["circle", "angles"]
+    unitIds: ["circle", "angles", "figure-transform"]
   },
   {
     id: "measurement",
@@ -42,9 +48,14 @@ const CURRICULUM_AREAS = [
     unitIds: ["measurement"]
   },
   {
+    id: "change-relationships",
+    title: "변화와 관계",
+    unitIds: ["patterns-relations"]
+  },
+  {
     id: "data-probability",
     title: "자료와 가능성",
-    unitIds: ["pictograph"]
+    unitIds: ["pictograph", "bar-graphs"]
   }
 ] as const;
 
@@ -52,8 +63,12 @@ const UNIT_SYMBOLS: Record<string, string> = {
   "large-numbers": "만",
   multiplication: "×",
   division: "÷",
+  "multiplication-division": "×",
   circle: "○",
   angles: "∠",
+  "figure-transform": "↻",
+  "patterns-relations": "□",
+  "bar-graphs": "▥",
   fraction: "¼",
   measurement: "ℓ",
   pictograph: "▦"

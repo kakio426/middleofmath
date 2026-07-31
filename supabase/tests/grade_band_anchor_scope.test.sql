@@ -9,8 +9,8 @@ select is(
     from public.curriculum_anchors
     where active and grade_band = '3-4'
   ),
-  23::bigint,
-  'all 23 currently approved [4수] anchors record their 3-4 grade-band provenance'
+  30::bigint,
+  'all 30 currently approved [4수] anchors record their 3-4 grade-band provenance'
 );
 
 select is(
@@ -25,7 +25,7 @@ select is(
 
 update public.curriculum_anchors
 set shared_across_grade_band = true
-where anchor_key = '[4수01-04]';
+where anchor_key = '[4수01-06]';
 
 alter table public.diagnosis_sets disable trigger user;
 alter table public.diagnosis_sets
@@ -43,7 +43,7 @@ select lives_ok(
       '{}'::jsonb,
       '{
         "manifest": {"grade": 4, "semester": 1},
-        "curriculumAnchors": [{"id": "[4수01-04]"}]
+        "curriculumAnchors": [{"id": "[4수01-06]"}]
       }'::jsonb
     )$$,
   'an explicitly approved grade-band anchor can be used by grade 4'
@@ -159,7 +159,7 @@ select ok(
       and shared_across_semesters
       and grade_band = '3-4'
     from public.curriculum_anchors
-    where anchor_key = '[4수01-04]'
+    where anchor_key = '[4수01-06]'
   ),
   'cross-grade and cross-semester approvals are independent explicit flags'
 );

@@ -149,7 +149,7 @@ const registry = new Map([
     crosswalk: grade4Semester1Crosswalk,
     snapshot: grade34LearningMapSnapshot,
     expectedSnapshotDigest: "sha256:c636ccf0033a8bfd1d808c899bbb569ac58da39a8197d2c9bbc4b9c615eef562",
-    expectedCrosswalkDigest: "sha256:1a8023b8c78e4726b600a7dbc3f4f0a1c88f7097a7a4a01bca3f04828afb4ab3"
+    expectedCrosswalkDigest: "sha256:7a9d71ba2421d70e34c1c115c4596c69dc68004eb9da88b05fb0b60f85b09965"
   }]
 ]);
 

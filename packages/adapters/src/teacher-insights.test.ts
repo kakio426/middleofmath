@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { mapInterpretationRun } from "./teacher-insights";
+import {
+  mapInterpretationRun,
+  mapTeacherDistractorNote
+} from "./teacher-insights";
 
 const rowBase = {
   id: "run-1",
@@ -39,6 +42,28 @@ function legacyReport(findings: unknown[] = []) {
 }
 
 describe("teacher insight row mapping", () => {
+  it("maps a teacher-only choice note from snake case", () => {
+    expect(mapTeacherDistractorNote({
+      set_key: "grade4-semester1",
+      version: "1.3.0",
+      judgment_id: "g4s1-bar-05",
+      choice_id: "five",
+      signal_ids: ["bar-graph.unit-value"],
+      misconception_key: "bar-graph.unit-value.tick-count",
+      misconception_title: "눈금 수를 값으로 읽음",
+      teacher_note: "한 칸이 나타내는 수를 먼저 확인해 주세요."
+    })).toEqual({
+      setKey: "grade4-semester1",
+      version: "1.3.0",
+      judgmentId: "g4s1-bar-05",
+      choiceId: "five",
+      signalIds: ["bar-graph.unit-value"],
+      misconceptionKey: "bar-graph.unit-value.tick-count",
+      misconceptionTitle: "눈금 수를 값으로 읽음",
+      teacherNote: "한 칸이 나타내는 수를 먼저 확인해 주세요."
+    });
+  });
+
   it("normalizes a stored rules-2 finding without treating it as confirmed", () => {
     const mapped = mapInterpretationRun({
       ...rowBase,

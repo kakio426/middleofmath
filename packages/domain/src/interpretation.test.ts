@@ -217,6 +217,61 @@ describe("interpretation engine", () => {
     expect(summary.inProgressStudents).toBe(1);
   });
 
+  it("attaches a finding's sole curriculum unit when content is provided", () => {
+    const report = interpretSession(
+      set,
+      [event({ choiceId: "four-one" })],
+      undefined,
+      generatedAt
+    );
+    const summary = generateClassSummary(
+      [{ studentId: "student-a", report }],
+      0,
+      set
+    );
+
+    expect(summary.items[0]).toMatchObject({
+      unitId: set.manifest.units[0].id,
+      unitTitle: set.manifest.units[0].title,
+      unitOrder: set.manifest.units[0].order
+    });
+  });
+
+  it("does not mislabel one signal as a single unit when its evidence spans units", () => {
+    const multiUnitSet = structuredClone(set);
+    multiUnitSet.manifest.units.push({
+      id: "second-unit",
+      order: 2,
+      title: "둘째 단원"
+    });
+    multiUnitSet.learnerStages.push({
+      ...multiUnitSet.learnerStages[0],
+      id: "fraction.second-unit",
+      unitId: "second-unit"
+    });
+    const firstReport = interpretSession(
+      multiUnitSet,
+      [event({ choiceId: "four-one" })],
+      undefined,
+      generatedAt
+    );
+    const secondReport = structuredClone(firstReport);
+    secondReport.findings[0].learnerStageIds = ["fraction.second-unit"];
+
+    const summary = generateClassSummary(
+      [
+        { studentId: "student-a", report: firstReport },
+        { studentId: "student-b", report: secondReport }
+      ],
+      0,
+      multiUnitSet
+    );
+
+    expect(summary.items[0]).not.toHaveProperty("unitId");
+    expect(summary.items[0]).not.toHaveProperty("unitTitle");
+    expect(summary.items[0]).not.toHaveProperty("unitOrder");
+  });
+
   it("confirms the same signal only after two distinct judgments", () => {
     const report = interpretSession(
       set,

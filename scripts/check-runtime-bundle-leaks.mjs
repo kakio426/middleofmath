@@ -9,7 +9,8 @@ const runtimeDistDirectories = [
 const rationaleSources = await Promise.all(
   [
     "../packages/content/src/grade3-semester1-rationales.ts",
-    "../packages/content/src/grade3-semester2-rationales.ts"
+    "../packages/content/src/grade3-semester2-rationales.ts",
+    "../packages/content/src/grade4-semester1-rationales.ts"
   ].map((source) =>
     readFile(fileURLToPath(new URL(source, import.meta.url)), "utf8")
   )

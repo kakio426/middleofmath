@@ -243,17 +243,49 @@ export function interpretSession(
 interface ClassSummaryBucket {
   item: ClassSummaryItem;
   tentativeStudentIds: Set<string>;
+  unitIds: Set<string>;
 }
 
 export function generateClassSummary(
   reports: Array<{ studentId: string; report: TeacherStudentReport }>,
-  inProgressStudents = 0
+  inProgressStudents = 0,
+  diagnosisSet?: DiagnosisSet
 ): ClassSummary {
   const buckets = new Map<string, ClassSummaryBucket>();
+  const stageById = new Map(
+    diagnosisSet?.learnerStages.map((stage) => [stage.id, stage]) ?? []
+  );
+  const unitById = new Map(
+    diagnosisSet?.manifest.units.map((unit) => [unit.id, unit]) ?? []
+  );
+  const findingUnitIds = (finding: DiagnosisFinding) => uniqueInOrder(
+    finding.learnerStageIds
+      .map((stageId) => stageById.get(stageId)?.unitId)
+      .filter((unitId): unitId is string => Boolean(
+        unitId && unitById.has(unitId)
+      ))
+  );
+  const syncUnit = (bucket: ClassSummaryBucket) => {
+    if (bucket.unitIds.size !== 1) {
+      delete bucket.item.unitId;
+      delete bucket.item.unitTitle;
+      delete bucket.item.unitOrder;
+      return;
+    }
+    const unitId = [...bucket.unitIds][0];
+    const unit = unitById.get(unitId);
+    if (!unit) return;
+    bucket.item.unitId = unit.id;
+    bucket.item.unitTitle = unit.title;
+    bucket.item.unitOrder = unit.order;
+  };
   for (const { studentId, report } of reports) {
     for (const finding of report.findings) {
+      const units = findingUnitIds(finding);
       const existing = buckets.get(finding.signalId);
       if (existing) {
+        for (const unitId of units) existing.unitIds.add(unitId);
+        syncUnit(existing);
         existing.item.evidenceCount += finding.evidenceCount;
         existing.item.studentIds = uniqueInOrder([
           ...existing.item.studentIds,
@@ -280,7 +312,7 @@ export function generateClassSummary(
         }
       } else {
         const confirmed = finding.confidence === "confirmed";
-        buckets.set(finding.signalId, {
+        const bucket: ClassSummaryBucket = {
           item: {
             signalId: finding.signalId,
             title: finding.title,
@@ -294,8 +326,11 @@ export function generateClassSummary(
             interpretation: finding.interpretation,
             teachingMove: finding.teachingMove
           },
-          tentativeStudentIds: new Set(confirmed ? [] : [studentId])
-        });
+          tentativeStudentIds: new Set(confirmed ? [] : [studentId]),
+          unitIds: new Set(units)
+        };
+        syncUnit(bucket);
+        buckets.set(finding.signalId, bucket);
       }
     }
   }

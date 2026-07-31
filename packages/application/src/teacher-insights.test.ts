@@ -4,6 +4,7 @@ import type {
   ObservationEvent,
   ParentReportExportRecord,
   TeacherAssignmentEvidenceBundle,
+  TeacherDistractorNote,
   TeacherSessionEvidence,
   TeacherSessionEvidenceContext,
   TeacherStudentReport
@@ -127,7 +128,11 @@ function withTwoHitStage(
 }
 
 class Insights implements TeacherInsightsRepository {
-  constructor(readonly value: TeacherAssignmentEvidenceBundle) {}
+  constructor(
+    readonly value: TeacherAssignmentEvidenceBundle,
+    readonly notes: TeacherDistractorNote[] = [],
+    readonly noteError = false
+  ) {}
   async getAssignmentBundle(id: string) { return id === this.value.assignment.id ? this.value : null; }
   async listClassAssignmentBundles() { return [this.value]; }
   async getSessionEvidence(sessionId: string): Promise<TeacherSessionEvidenceContext | null> {
@@ -142,6 +147,10 @@ class Insights implements TeacherInsightsRepository {
     } : null;
   }
   async listDailyAggregates() { return []; }
+  async listDistractorNotes() {
+    if (this.noteError) throw new Error("notes unavailable");
+    return this.notes;
+  }
 }
 
 class Reports implements ReportRepository {
@@ -208,6 +217,33 @@ describe("teacher assignment insights", () => {
       tentativeReasons: ["insufficient_opportunity", "single_observation"]
     });
     expect(reports.exports).toHaveLength(0);
+  });
+
+  it("returns exact teacher notes and degrades safely when note retrieval fails", async () => {
+    const source = bundle();
+    const note: TeacherDistractorNote = {
+      setKey: "grade3-semester2",
+      version: "1.0.0",
+      judgmentId: "g3s2-mul-01",
+      choiceId: "6",
+      signalIds: ["multiplication.place-value-loss"],
+      misconceptionKey: "multiplication.place-value-loss.partial-product",
+      misconceptionTitle: "부분곱만 사용함",
+      teacherNote: "십의 자리 부분곱을 확인해 주세요."
+    };
+    const ready = await new GenerateAssignmentInsights(
+      new Insights(source, [note]),
+      new Reports(),
+      clock
+    ).execute("assignment-1");
+    expect(ready.distractorNotes).toEqual([note]);
+
+    const degraded = await new GenerateAssignmentInsights(
+      new Insights(bundle(), [], true),
+      new Reports(),
+      clock
+    ).execute("assignment-1");
+    expect(degraded.distractorNotes).toEqual([]);
   });
 
   it("counts each student with active attempts once while keeping completed insights", async () => {
@@ -284,6 +320,7 @@ describe("teacher assignment insights", () => {
     expect(reports.saveRunCalls).toBe(1);
     expect(reports.exports).toHaveLength(1);
     expect(JSON.stringify(exported.report)).not.toContain("event-session-latest");
+    expect(JSON.stringify(exported.report)).not.toContain("teacherNote");
   });
 
   it("confirms a signal after two distinct hits in one stage", async () => {

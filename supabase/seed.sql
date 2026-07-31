@@ -957,7 +957,8 @@ insert into public.diagnosis_sets (
   manifest,
   content,
   published_at,
-  release_notes
+  release_notes,
+  publication_gate
 )
 select
   'grade3-semester2',
@@ -967,6 +968,18 @@ select
   content -> 'manifest',
   content,
   now(),
-  'Phase 1에서 검증한 3학년 2학기 기준 콘텐츠'
+  'Phase 1에서 검증한 3학년 2학기 기준 콘텐츠',
+  jsonb_build_object(
+    'gate', 'diagnostic-integrity',
+    'gateVersion', 'seed-legacy-v1',
+    'setKey', 'grade3-semester2',
+    'targetVersion', '1.0.0',
+    'policy', 'warn',
+    'enforced', false,
+    'valid', true,
+    'errorCount', 0,
+    'warningCount', 1,
+    'blueprintRevision', null
+  )
 from published
 on conflict (set_key, version) do nothing;

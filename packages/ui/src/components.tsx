@@ -227,6 +227,21 @@ type PolygonAngleDiagram = Extract<
   { kind: "polygon-angle-diagram" }
 >;
 
+type GridTransformDiagram = Extract<
+  JudgmentVisual,
+  { kind: "grid-transform-diagram" }
+>;
+
+type RelationPatternDiagram = Extract<
+  JudgmentVisual,
+  { kind: "relation-pattern-diagram" }
+>;
+
+type BarChartDiagram = Extract<
+  JudgmentVisual,
+  { kind: "bar-chart-diagram" }
+>;
+
 type CircleDiagram = Extract<
   JudgmentVisual,
   { kind: "circle" }
@@ -720,6 +735,582 @@ function PolygonAngleDiagramVisual({
   );
 }
 
+function gridCellDescription(cell: { row: number; column: number }): string {
+  return `위에서 ${cell.row + 1}번째 칸, 왼쪽에서 ${cell.column + 1}번째 칸`;
+}
+
+function gridTransformDescription(visual: GridTransformDiagram): string {
+  if (visual.mode === "point-move") {
+    const points = visual.points ?? [];
+    return `${visual.rows}행 ${visual.columns}열 격자. ${points.map(
+      (point) => `${point.label}점은 ${gridCellDescription(point)}의 중심`
+    ).join(", ")}에 표시되어 있습니다.`;
+  }
+  const source = (visual.sourceCells ?? []).map(gridCellDescription).join(", ");
+  const target = (visual.targetCells ?? []).map(gridCellDescription).join(", ");
+  const marker = visual.sourceMarker && visual.targetMarker
+    ? ` 처음 표식은 ${gridCellDescription(visual.sourceMarker)}, 나중 표식은 ${gridCellDescription(visual.targetMarker)}에 있습니다.`
+    : "";
+  const guide = visual.axisIndex !== undefined
+    ? " 점선 기준이 표시되어 있습니다."
+    : visual.center
+      ? ` 중심점은 ${gridCellDescription(visual.center)}의 중심에 표시되어 있습니다.`
+      : "";
+  return `${visual.rows}행 ${visual.columns}열 격자. 처음 도형의 칸은 ${source}이고, 나중 도형의 칸은 ${target}입니다.${marker}${guide}`;
+}
+
+function GridTransformDiagramVisual({
+  visual
+}: {
+  visual: GridTransformDiagram;
+}) {
+  const cellSize = Math.min(
+    28,
+    224 / visual.columns,
+    154 / visual.rows
+  );
+  const gridWidth = visual.columns * cellSize;
+  const gridHeight = visual.rows * cellSize;
+  const originX = (300 - gridWidth) / 2;
+  const originY = 18;
+  const centerOf = (cell: { row: number; column: number }) => ({
+    x: roundCoordinate(originX + (cell.column + 0.5) * cellSize),
+    y: roundCoordinate(originY + (cell.row + 0.5) * cellSize)
+  });
+  const cellRect = (cell: { row: number; column: number }) => ({
+    x: roundCoordinate(originX + cell.column * cellSize + 2),
+    y: roundCoordinate(originY + cell.row * cellSize + 2),
+    width: roundCoordinate(cellSize - 4),
+    height: roundCoordinate(cellSize - 4)
+  });
+  const legendY = roundCoordinate(originY + gridHeight + 26);
+  const axis = visual.axisIndex === undefined
+    ? null
+    : visual.mode === "flip-left-right"
+      ? {
+          x1: originX + visual.axisIndex * cellSize,
+          x2: originX + visual.axisIndex * cellSize,
+          y1: originY - 6,
+          y2: originY + gridHeight + 6
+        }
+      : {
+          x1: originX - 6,
+          x2: originX + gridWidth + 6,
+          y1: originY + visual.axisIndex * cellSize,
+          y2: originY + visual.axisIndex * cellSize
+        };
+
+  return (
+    <svg
+      aria-label={gridTransformDescription(visual)}
+      className="mom-visual mom-grid-transform"
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      viewBox="0 0 300 230"
+    >
+      <g aria-hidden="true">
+        <rect
+          className="mom-transform-grid-background"
+          height={gridHeight}
+          rx="4"
+          width={gridWidth}
+          x={originX}
+          y={originY}
+        />
+        {Array.from({ length: visual.columns + 1 }, (_, index) => (
+          <line
+            className="mom-transform-grid-line"
+            key={`column-${index}`}
+            x1={originX + index * cellSize}
+            x2={originX + index * cellSize}
+            y1={originY}
+            y2={originY + gridHeight}
+          />
+        ))}
+        {Array.from({ length: visual.rows + 1 }, (_, index) => (
+          <line
+            className="mom-transform-grid-line"
+            key={`row-${index}`}
+            x1={originX}
+            x2={originX + gridWidth}
+            y1={originY + index * cellSize}
+            y2={originY + index * cellSize}
+          />
+        ))}
+        {(visual.targetCells ?? []).map((cell) => (
+          <rect
+            className="mom-transform-target-cell"
+            key={`target-${cell.row}-${cell.column}`}
+            {...cellRect(cell)}
+          />
+        ))}
+        {(visual.sourceCells ?? []).map((cell) => (
+          <rect
+            className="mom-transform-source-cell"
+            key={`source-${cell.row}-${cell.column}`}
+            {...cellRect(cell)}
+          />
+        ))}
+        {axis && (
+          <line
+            className="mom-transform-axis"
+            {...axis}
+          />
+        )}
+        {visual.center && (() => {
+          const center = centerOf(visual.center);
+          return (
+            <g className="mom-transform-center">
+              <circle cx={center.x} cy={center.y} r="4" />
+              <path d={`M ${center.x - 9} ${center.y} H ${center.x + 9} M ${center.x} ${center.y - 9} V ${center.y + 9}`} />
+            </g>
+          );
+        })()}
+        {visual.sourceMarker && (() => {
+          const marker = centerOf(visual.sourceMarker);
+          return (
+            <circle
+              className="mom-transform-source-marker"
+              cx={marker.x}
+              cy={marker.y}
+              r={Math.max(3.5, cellSize * 0.13)}
+            />
+          );
+        })()}
+        {visual.targetMarker && (() => {
+          const marker = centerOf(visual.targetMarker);
+          return (
+            <circle
+              className="mom-transform-target-marker"
+              cx={marker.x}
+              cy={marker.y}
+              r={Math.max(3.5, cellSize * 0.13)}
+            />
+          );
+        })()}
+        {(visual.points ?? []).map((point) => {
+          const position = centerOf(point);
+          return (
+            <g className="mom-transform-point" key={point.label}>
+              <circle cx={position.x} cy={position.y} r="5" />
+              <text
+                textAnchor="middle"
+                x={position.x}
+                y={position.y - 9}
+              >
+                {point.label}
+              </text>
+            </g>
+          );
+        })}
+        {visual.mode !== "point-move" && (
+          <g className="mom-transform-legend">
+            <rect className="mom-transform-source-cell" height="12" rx="2" width="12" x="83" y={legendY - 10} />
+            <text x="100" y={legendY}>처음</text>
+            <rect className="mom-transform-target-cell" height="12" rx="2" width="12" x="161" y={legendY - 10} />
+            <text x="178" y={legendY}>나중</text>
+          </g>
+        )}
+      </g>
+    </svg>
+  );
+}
+
+function relationPatternDescription(visual: RelationPatternDiagram): string {
+  if (visual.mode === "number-sequence") {
+    return `수 배열. ${visual.terms!.map((term) => term ?? "빈칸").join(", ")}.`;
+  }
+  if (visual.mode === "figure-sequence") {
+    const figure = visual.figure === "square"
+      ? "정사각형"
+      : visual.figure === "triangle"
+        ? "삼각형"
+        : "원";
+    return `도형 배열. ${visual.counts!.map(
+      (count, index) => `${index + 1}번째 모양은 ${count === null ? "빈칸" : `${figure} ${count}개`}`
+    ).join(", ")}.`;
+  }
+  if (visual.mode === "rule-table") {
+    return `${visual.leftLabel}, ${visual.rightLabel} 대응표. ${visual.rows!.map(
+      (row) => `${row.left}의 짝은 ${row.right}`
+    ).join(", ")}.`;
+  }
+  if (visual.mode === "calculation-array") {
+    return `계산식 배열. ${visual.calculations!.map((item) => {
+      const operator = item.operator === "multiply" ? "곱하기" : "나누기";
+      return `${item.a} ${operator} ${item.b}, 결과 ${item.result ?? "빈칸"}`;
+    }).join(", ")}.`;
+  }
+  const equation = visual.equation!;
+  return `등식. 왼쪽 식은 ${equation.left[0]} 더하기 ${
+    equation.left[1]
+  }. 오른쪽 식은 ${equation.right[0] ?? "빈칸"} 더하기 ${
+    equation.right[1] ?? "빈칸"
+  }. 두 식 사이에 등호가 있습니다.`;
+}
+
+function RelationFigure({
+  count,
+  figure,
+  order
+}: {
+  count: number | null;
+  figure: NonNullable<RelationPatternDiagram["figure"]>;
+  order: number;
+}) {
+  return (
+    <div className="mom-relation-figure-card">
+      <strong>{order}번째</strong>
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 72 62">
+        {count === null ? (
+          <text className="mom-relation-figure-unknown" textAnchor="middle" x="36" y="38">?</text>
+        ) : Array.from({ length: count }, (_, index) => {
+          const x = 15 + (index % 4) * 14;
+          const y = 17 + Math.floor(index / 4) * 14;
+          if (figure === "triangle") {
+            return (
+              <path
+                className="mom-relation-figure-shape"
+                d={`M ${x} ${y - 5} L ${x - 5} ${y + 4} L ${x + 5} ${y + 4} Z`}
+                key={index}
+              />
+            );
+          }
+          if (figure === "circle") {
+            return <circle className="mom-relation-figure-shape" cx={x} cy={y} key={index} r="4.5" />;
+          }
+          return <rect className="mom-relation-figure-shape" height="9" key={index} rx="1" width="9" x={x - 4.5} y={y - 4.5} />;
+        })}
+      </svg>
+    </div>
+  );
+}
+
+function RelationPatternVisual({
+  visual
+}: {
+  visual: RelationPatternDiagram;
+}) {
+  const ariaLabel = relationPatternDescription(visual);
+  if (visual.mode === "number-sequence") {
+    return (
+      <div className="mom-visual mom-relation-pattern mom-relation-number-sequence" role="img" aria-label={ariaLabel}>
+        <div className="mom-relation-sequence-track" aria-hidden="true">
+          {visual.terms!.map((term, index) => (
+            <Fragment key={`${term ?? "blank"}-${index}`}>
+              {index > 0 && <span className="mom-relation-arrow">→</span>}
+              <strong className={term === null ? "is-unknown" : undefined}>
+                {term ?? "?"}
+              </strong>
+            </Fragment>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  if (visual.mode === "figure-sequence") {
+    return (
+      <div className="mom-visual mom-relation-pattern mom-relation-figure-sequence" role="img" aria-label={ariaLabel}>
+        <div className="mom-relation-figure-track" aria-hidden="true">
+          {visual.counts!.map((count, index) => (
+            <RelationFigure
+              count={count}
+              figure={visual.figure!}
+              key={index}
+              order={index + 1}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+  if (visual.mode === "rule-table") {
+    return (
+      <table className="mom-visual mom-relation-pattern mom-relation-table" aria-label={ariaLabel}>
+        <thead>
+          <tr>
+            <th scope="col">{visual.leftLabel}</th>
+            <th scope="col">{visual.rightLabel}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {visual.rows!.map((row) => (
+            <tr key={`${row.left}-${row.right}`}>
+              <td>{row.left}</td>
+              <td>{row.right}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  }
+  if (visual.mode === "calculation-array") {
+    return (
+      <div className="mom-visual mom-relation-pattern mom-relation-calculations" role="img" aria-label={ariaLabel}>
+        <div aria-hidden="true">
+          {visual.calculations!.map((item, index) => (
+            <p key={index}>
+              <span>{item.a}</span>
+              <span>{item.operator === "multiply" ? "×" : "÷"}</span>
+              <span>{item.b}</span>
+              <span>=</span>
+              <strong className={item.result === null ? "is-unknown" : undefined}>
+                {item.result ?? "?"}
+              </strong>
+            </p>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  const equation = visual.equation!;
+  return (
+    <div className="mom-visual mom-relation-pattern mom-relation-equation" role="img" aria-label={ariaLabel}>
+      <p aria-hidden="true">
+        <span>{equation.left[0]}</span>
+        <span>+</span>
+        <span>{equation.left[1]}</span>
+        <span>=</span>
+        <strong className={equation.right[0] === null ? "is-unknown" : undefined}>
+          {equation.right[0] ?? "?"}
+        </strong>
+        <span>+</span>
+        <strong className={equation.right[1] === null ? "is-unknown" : undefined}>
+          {equation.right[1] ?? "?"}
+        </strong>
+      </p>
+    </div>
+  );
+}
+
+function barChartDescription(visual: BarChartDiagram): string {
+  const finalTick = visual.axis.labeledTicks.at(-1)!;
+  const direction = visual.axis.orientation === "vertical" ? "세로" : "가로";
+  const axis = `${direction} 눈금. 0부터 ${finalTick.value}${
+    visual.axis.unitLabel
+  }까지 같은 간격 ${visual.axis.tickCount}칸.`;
+  if (visual.mode === "table-match") {
+    const table = visual.table!.map(
+      (row) => `${row.category} ${row.count}${visual.axis.unitLabel}`
+    ).join(", ");
+    const candidates = visual.candidates!.map((candidate) =>
+      `${candidate.id} 그래프는 ${candidate.bars.map(
+        (bar) => `${bar.category} ${bar.ticks}칸`
+      ).join(", ")}`
+    ).join(". ");
+    return `${axis} 자료표는 ${table}. ${candidates}.`;
+  }
+  const bars = visual.bars!.map(
+    (bar) => `${bar.category} 막대 ${bar.ticks}칸`
+  ).join(", ");
+  return `${axis} ${bars}.`;
+}
+
+function BarChartSvg({
+  axis,
+  bars,
+  compact = false
+}: {
+  axis: BarChartDiagram["axis"];
+  bars: NonNullable<BarChartDiagram["bars"]>;
+  compact?: boolean;
+}) {
+  const width = 360;
+  const height = compact ? 180 : 240;
+  const left = axis.orientation === "vertical" ? 46 : 76;
+  const right = 18;
+  const top = 28;
+  const bottom = axis.orientation === "vertical" ? 48 : 30;
+  const plotWidth = width - left - right;
+  const plotHeight = height - top - bottom;
+  const labeledByIndex = new Map(
+    axis.labeledTicks.map((tick) => [tick.index, tick.value])
+  );
+  const patternIds = bars.map(
+    (_, index) => `mom-bar-pattern-${axis.orientation}-${bars.length}-${index}`
+  );
+
+  return (
+    <svg
+      aria-hidden="true"
+      className="mom-bar-chart-svg"
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      viewBox={`0 0 ${width} ${height}`}
+    >
+      <defs>
+        {patternIds.map((id, index) => (
+          <pattern
+            height="8"
+            id={id}
+            key={id}
+            patternUnits="userSpaceOnUse"
+            width="8"
+          >
+            <rect className="mom-bar-fill" height="8" width="8" />
+            {index % 3 === 1 && (
+              <path className="mom-bar-pattern-line" d="M-2 8 L8 -2 M2 10 L10 2" />
+            )}
+            {index % 3 === 2 && (
+              <circle className="mom-bar-pattern-dot" cx="4" cy="4" r="1.3" />
+            )}
+          </pattern>
+        ))}
+      </defs>
+      <g>
+        {Array.from({ length: axis.tickCount + 1 }, (_, index) => {
+          const x = left + (plotWidth * index) / axis.tickCount;
+          const y = top + plotHeight - (plotHeight * index) / axis.tickCount;
+          const label = labeledByIndex.get(index);
+          return axis.orientation === "vertical" ? (
+            <Fragment key={index}>
+              <line className="mom-bar-grid-line" x1={left} x2={left + plotWidth} y1={y} y2={y} />
+              {label !== undefined && (
+                <text className="mom-bar-axis-label" textAnchor="end" x={left - 8} y={y + 4}>
+                  {label}
+                </text>
+              )}
+            </Fragment>
+          ) : (
+            <Fragment key={index}>
+              <line className="mom-bar-grid-line" x1={x} x2={x} y1={top} y2={top + plotHeight} />
+              {label !== undefined && (
+                <text className="mom-bar-axis-label" textAnchor="middle" x={x} y={top + plotHeight + 20}>
+                  {label}
+                </text>
+              )}
+            </Fragment>
+          );
+        })}
+        <line
+          className="mom-bar-axis-line"
+          x1={left}
+          x2={axis.orientation === "vertical" ? left : left + plotWidth}
+          y1={axis.orientation === "vertical" ? top : top + plotHeight}
+          y2={top + plotHeight}
+        />
+        <line
+          className="mom-bar-axis-line"
+          x1={left}
+          x2={left + plotWidth}
+          y1={top + plotHeight}
+          y2={top + plotHeight}
+        />
+        <text
+          className="mom-bar-unit-label"
+          textAnchor={axis.orientation === "vertical" ? "start" : "end"}
+          x={axis.orientation === "vertical" ? 4 : width - 2}
+          y={14}
+        >
+          ({axis.unitLabel})
+        </text>
+        {bars.map((bar, index) => {
+          if (axis.orientation === "vertical") {
+            const slot = plotWidth / bars.length;
+            const barWidth = Math.min(compact ? 34 : 46, slot * 0.58);
+            const barHeight = (bar.ticks / axis.tickCount) * plotHeight;
+            const x = left + slot * index + (slot - barWidth) / 2;
+            const y = top + plotHeight - barHeight;
+            return (
+              <g key={bar.category}>
+                <rect
+                  className="mom-bar-mark"
+                  fill={`url(#${patternIds[index]})`}
+                  height={barHeight}
+                  rx="3"
+                  width={barWidth}
+                  x={x}
+                  y={y}
+                />
+                <text
+                  className="mom-bar-category-label"
+                  textAnchor="middle"
+                  x={x + barWidth / 2}
+                  y={top + plotHeight + 25}
+                >
+                  {bar.category}
+                </text>
+              </g>
+            );
+          }
+          const slot = plotHeight / bars.length;
+          const barHeight = Math.min(compact ? 22 : 30, slot * 0.58);
+          const barWidth = (bar.ticks / axis.tickCount) * plotWidth;
+          const y = top + slot * index + (slot - barHeight) / 2;
+          return (
+            <g key={bar.category}>
+              <text
+                className="mom-bar-category-label"
+                dominantBaseline="central"
+                textAnchor="end"
+                x={left - 8}
+                y={y + barHeight / 2}
+              >
+                {bar.category}
+              </text>
+              <rect
+                className="mom-bar-mark"
+                fill={`url(#${patternIds[index]})`}
+                height={barHeight}
+                rx="3"
+                width={barWidth}
+                x={left}
+                y={y}
+              />
+            </g>
+          );
+        })}
+      </g>
+    </svg>
+  );
+}
+
+function BarChartVisual({ visual }: { visual: BarChartDiagram }) {
+  const description = barChartDescription(visual);
+  if (visual.mode === "table-match") {
+    return (
+      <div
+        aria-label={description}
+        className="mom-visual mom-bar-chart mom-bar-chart-match"
+        role="img"
+      >
+        <table className="mom-bar-data-table" aria-hidden="true">
+          <thead>
+            <tr>
+              {visual.table!.map((row) => <th key={row.category}>{row.category}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {visual.table!.map((row) => (
+                <td key={row.category}>{row.count}{visual.axis.unitLabel}</td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+        <div className="mom-bar-candidates" aria-hidden="true">
+          {visual.candidates!.map((candidate) => (
+            <div className="mom-bar-candidate" key={candidate.id}>
+              <strong>{candidate.id}</strong>
+              <BarChartSvg axis={visual.axis} bars={candidate.bars} compact />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div
+      aria-label={description}
+      className={`mom-visual mom-bar-chart is-${visual.axis.orientation}`}
+      role="img"
+    >
+      <BarChartSvg axis={visual.axis} bars={visual.bars!} />
+    </div>
+  );
+}
+
 type SemanticMeasureVisual = Extract<
   JudgmentVisual,
   { kind: "unit-relation" | "measure-referent" | "quantity-combine" }
@@ -755,6 +1346,15 @@ export function describeVisual(visual: JudgmentVisual): string | null {
   }
   if (visual.kind === "polygon-angle-diagram") {
     return polygonAngleDescription(visual);
+  }
+  if (visual.kind === "grid-transform-diagram") {
+    return gridTransformDescription(visual);
+  }
+  if (visual.kind === "relation-pattern-diagram") {
+    return relationPatternDescription(visual);
+  }
+  if (visual.kind === "bar-chart-diagram") {
+    return barChartDescription(visual);
   }
   if (visual.kind === "partition-diagrams") {
     return visual.diagrams.map((diagram) => {
@@ -1261,6 +1861,15 @@ export function VisualAid({ visual }: { visual: JudgmentVisual }) {
   if (visual.kind === "polygon-angle-diagram") {
     return <PolygonAngleDiagramVisual visual={visual} />;
   }
+  if (visual.kind === "grid-transform-diagram") {
+    return <GridTransformDiagramVisual visual={visual} />;
+  }
+  if (visual.kind === "relation-pattern-diagram") {
+    return <RelationPatternVisual visual={visual} />;
+  }
+  if (visual.kind === "bar-chart-diagram") {
+    return <BarChartVisual visual={visual} />;
+  }
   if (visual.kind === "pictograph") {
     return (
       <div className="mom-visual mom-pictograph" role="img" aria-label={`그림 한 개는 ${visual.value}개를 나타내는 그림그래프`}>
@@ -1281,17 +1890,20 @@ export function VisualAid({ visual }: { visual: JudgmentVisual }) {
 export function EvidenceRail({
   anchor,
   stage,
-  evidence
+  evidence,
+  choiceNote
 }: {
   anchor: string;
   stage: string;
   evidence: EvidenceItem;
+  choiceNote?: { title: string; text: string };
 }) {
   return (
     <ol className="mom-evidence-rail">
       <li><span>교육과정</span><strong>{anchor}</strong></li>
       <li><span>작은 학습 단계</span><strong>{stage}</strong></li>
       <li><span>관찰 근거</span><strong>{evidence.selectedChoiceLabel}</strong><small>{formatEvidence(evidence)}</small></li>
+      {choiceNote && <li><span>오답 해석</span><strong>{choiceNote.title}</strong><small>{choiceNote.text}</small></li>}
     </ol>
   );
 }

@@ -48,12 +48,12 @@ describe("3학년 2학기 학생 활동 묶음", () => {
     expect(new Set(assignments.map((assignment) => assignment.id)).size).toBe(6);
   });
 
-  it("4학년 큰 수와 각도를 각각 12문제·약 6분의 독립 활동으로 만든다", () => {
+  it("4학년 1학기 여섯 단원을 독립 활동으로 만들고 단원별 문제 수를 표시한다", () => {
     const assignments = createUnitAssignmentCards(
       grade4Semester1Diagnosis
     );
 
-    expect(assignments).toHaveLength(2);
+    expect(assignments).toHaveLength(6);
     expect(assignments[0]).toMatchObject({
       id: "grade4-semester1-large-numbers",
       title: "1단원 · 큰 수",
@@ -74,7 +74,51 @@ describe("3학년 2학기 학생 활동 묶음", () => {
       estimatedMinutes: 6,
       unitId: "angles"
     });
+    expect(assignments[2]).toMatchObject({
+      id: "grade4-semester1-multiplication-division",
+      title: "3단원 · 곱셈과 나눗셈",
+      areaId: "number-operations",
+      areaTitle: "수와 연산",
+      symbol: "×",
+      judgmentCount: 12,
+      estimatedMinutes: 6,
+      unitId: "multiplication-division"
+    });
+    expect(assignments[3]).toMatchObject({
+      id: "grade4-semester1-figure-transform",
+      title: "4단원 · 평면도형의 이동",
+      areaId: "geometry",
+      areaTitle: "도형",
+      symbol: "↻",
+      judgmentCount: 10,
+      estimatedMinutes: 5,
+      unitId: "figure-transform"
+    });
+    expect(assignments[4]).toMatchObject({
+      id: "grade4-semester1-bar-graphs",
+      title: "5단원 · 막대그래프",
+      areaId: "data-probability",
+      areaTitle: "자료와 가능성",
+      symbol: "▥",
+      judgmentCount: 10,
+      estimatedMinutes: 5,
+      unitId: "bar-graphs"
+    });
+    expect(assignments[5]).toMatchObject({
+      id: "grade4-semester1-patterns-relations",
+      title: "6단원 · 규칙과 관계",
+      areaId: "change-relationships",
+      areaTitle: "변화와 관계",
+      symbol: "□",
+      judgmentCount: 10,
+      estimatedMinutes: 5,
+      unitId: "patterns-relations"
+    });
     expect(judgmentsForAssignment(assignments[0])).toHaveLength(12);
     expect(judgmentsForAssignment(assignments[1])).toHaveLength(12);
+    expect(judgmentsForAssignment(assignments[2])).toHaveLength(12);
+    expect(judgmentsForAssignment(assignments[3])).toHaveLength(10);
+    expect(judgmentsForAssignment(assignments[4])).toHaveLength(10);
+    expect(judgmentsForAssignment(assignments[5])).toHaveLength(10);
   });
 });

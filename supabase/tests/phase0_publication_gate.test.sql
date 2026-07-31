@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(12);
+select plan(14);
 
 select is(
   (
@@ -104,6 +104,38 @@ select throws_ok(
   'P0001',
   'publication gate rejected content',
   'an enforced failing attestation is rejected'
+);
+
+select throws_ok(
+  $$select public.publish_diagnosis_set(
+    '42000000-0000-0000-0000-000000000001', 1, '1.0.0', 'missing set scope',
+    '{"valid":true,"issues":[],"gates":[{
+      "gate":"diagnostic-integrity","gateVersion":"gate-1.0.0",
+      "policy":"warn","enforced":false,
+      "targetVersion":"1.0.0",
+      "blueprintRevision":null,"valid":true,
+      "errorCount":0,"warningCount":1
+    }]}'
+  )$$,
+  'P0001',
+  'publication gate attestation required',
+  'the publication RPC requires a gate set key'
+);
+
+select throws_ok(
+  $$select public.publish_diagnosis_set(
+    '42000000-0000-0000-0000-000000000001', 1, '1.0.0', 'missing version scope',
+    '{"valid":true,"issues":[],"gates":[{
+      "gate":"diagnostic-integrity","gateVersion":"gate-1.0.0",
+      "policy":"warn","enforced":false,
+      "setKey":"phase0-gate-content",
+      "blueprintRevision":null,"valid":true,
+      "errorCount":0,"warningCount":1
+    }]}'
+  )$$,
+  'P0001',
+  'publication gate attestation required',
+  'the publication RPC requires a gate target version'
 );
 
 select throws_ok(

@@ -325,6 +325,327 @@ describe("content studio diagnosis validation", () => {
     }
   });
 
+  it("accepts exact grid transformations and rejects impossible coordinates or results", () => {
+    const validateVisual = (visual: any) => {
+      const content = cloneContent() as any;
+      content.judgments[0].visual = visual;
+      return validateDiagnosisSet(content);
+    };
+    const validSlide = {
+      kind: "grid-transform-diagram",
+      mode: "slide",
+      rows: 6,
+      columns: 8,
+      sourceCells: [
+        { row: 1, column: 1 },
+        { row: 2, column: 1 },
+        { row: 2, column: 2 }
+      ],
+      targetCells: [
+        { row: 1, column: 4 },
+        { row: 2, column: 4 },
+        { row: 2, column: 5 }
+      ],
+      sourceMarker: { row: 1, column: 1 },
+      targetMarker: { row: 1, column: 4 },
+      direction: "right",
+      amount: 3
+    };
+    expect(validateVisual(validSlide).valid).toBe(true);
+
+    expect(validateVisual({
+      kind: "grid-transform-diagram",
+      mode: "point-move",
+      rows: 6,
+      columns: 8,
+      points: [
+        { label: "A", row: 4, column: 1 },
+        { label: "B", row: 1, column: 5 }
+      ]
+    }).valid).toBe(true);
+
+    for (const visual of [
+      {
+        ...validSlide,
+        targetCells: [
+          { row: 1, column: 3 },
+          { row: 2, column: 3 },
+          { row: 2, column: 4 }
+        ]
+      },
+      {
+        ...validSlide,
+        sourceMarker: { row: 0, column: 0 }
+      },
+      {
+        kind: "grid-transform-diagram",
+        mode: "point-move",
+        rows: 6,
+        columns: 8,
+        points: [
+          { label: "A", row: 4, column: 1 },
+          { label: "A", row: 1, column: 5 }
+        ]
+      }
+    ]) {
+      expect(validateVisual(visual).issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: "SCHEMA_INVALID" })
+        ])
+      );
+    }
+  });
+
+  it("accepts exact relation-pattern evidence and rejects ambiguous or incorrect math", () => {
+    const validateVisual = (visual: any) => {
+      const content = cloneContent() as any;
+      content.judgments[0].visual = visual;
+      return validateDiagnosisSet(content);
+    };
+    const validVisuals = [
+      {
+        kind: "relation-pattern-diagram",
+        mode: "number-sequence",
+        terms: [2, 6, 18, null, 162]
+      },
+      {
+        kind: "relation-pattern-diagram",
+        mode: "figure-sequence",
+        figure: "square",
+        counts: [3, 5, 7, null],
+        askOrder: 4
+      },
+      {
+        kind: "relation-pattern-diagram",
+        mode: "rule-table",
+        leftLabel: "순서",
+        rightLabel: "개수",
+        rows: [
+          { left: 1, right: 4 },
+          { left: 2, right: 8 },
+          { left: 3, right: 12 }
+        ]
+      },
+      {
+        kind: "relation-pattern-diagram",
+        mode: "calculation-array",
+        calculations: [
+          { a: 11, operator: "multiply", b: 11, result: 121 },
+          { a: 11, operator: "multiply", b: 12, result: 132 },
+          { a: 11, operator: "multiply", b: 13, result: null }
+        ]
+      },
+      {
+        kind: "relation-pattern-diagram",
+        mode: "equal-sign-balance",
+        equation: {
+          operator: "add",
+          left: [45, 18],
+          right: [39, null]
+        }
+      }
+    ];
+    for (const visual of validVisuals) {
+      expect(validateVisual(visual).valid, visual.mode).toBe(true);
+    }
+
+    const invalidVisuals = [
+      {
+        kind: "relation-pattern-diagram",
+        mode: "number-sequence",
+        terms: [2, null, null, 54]
+      },
+      {
+        kind: "relation-pattern-diagram",
+        mode: "figure-sequence",
+        figure: "triangle",
+        counts: [2, 5, 9, null],
+        askOrder: 4
+      },
+      {
+        kind: "relation-pattern-diagram",
+        mode: "rule-table",
+        leftLabel: "순서",
+        rightLabel: "개수",
+        rows: [
+          { left: 1, right: 4 },
+          { left: 2, right: 9 },
+          { left: 3, right: 12 }
+        ]
+      },
+      {
+        kind: "relation-pattern-diagram",
+        mode: "calculation-array",
+        calculations: [
+          { a: 120, operator: "divide", b: 2, result: 60 },
+          { a: 120, operator: "divide", b: 4, result: 31 },
+          { a: 120, operator: "divide", b: 6, result: null }
+        ]
+      },
+      {
+        kind: "relation-pattern-diagram",
+        mode: "equal-sign-balance",
+        equation: {
+          operator: "add",
+          left: [10, 10],
+          right: [19, null]
+        }
+      },
+      {
+        kind: "relation-pattern-diagram",
+        mode: "number-sequence",
+        terms: [2, 6, 18, null],
+        rows: [
+          { left: 1, right: 2 },
+          { left: 2, right: 4 },
+          { left: 3, right: 6 }
+        ]
+      }
+    ];
+    for (const visual of invalidVisuals) {
+      expect(validateVisual(visual).issues, visual.mode).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: "SCHEMA_INVALID" })
+        ])
+      );
+    }
+  });
+
+  it("accepts the five bar-chart evidence modes and rejects misleading scales", () => {
+    const validateVisual = (visual: any) => {
+      const content = cloneContent() as any;
+      content.judgments[0].visual = visual;
+      return validateDiagnosisSet(content);
+    };
+    const axis = {
+      orientation: "vertical",
+      tickCount: 6,
+      labeledTicks: [
+        { index: 0, value: 0 },
+        { index: 6, value: 30 }
+      ],
+      unitLabel: "개"
+    };
+    const bars = [
+      { category: "사과", ticks: 4 },
+      { category: "배", ticks: 2 }
+    ];
+    const validVisuals = [
+      {
+        kind: "bar-chart-diagram",
+        mode: "unit-value",
+        axis,
+        bars
+      },
+      {
+        kind: "bar-chart-diagram",
+        mode: "bar-value",
+        axis,
+        bars,
+        target: "사과"
+      },
+      {
+        kind: "bar-chart-diagram",
+        mode: "bar-difference",
+        axis,
+        bars,
+        comparison: { kind: "pair", categories: ["사과", "배"] }
+      },
+      {
+        kind: "bar-chart-diagram",
+        mode: "table-match",
+        axis,
+        table: [
+          { category: "사과", count: 20 },
+          { category: "배", count: 10 }
+        ],
+        candidates: [
+          { id: "가", bars },
+          {
+            id: "나",
+            bars: [
+              { category: "사과", ticks: 5 },
+              { category: "배", ticks: 2 }
+            ]
+          },
+          {
+            id: "다",
+            bars: [
+              { category: "사과", ticks: 4 },
+              { category: "배", ticks: 3 }
+            ]
+          }
+        ]
+      },
+      {
+        kind: "bar-chart-diagram",
+        mode: "chart-conclusion",
+        axis,
+        bars
+      }
+    ];
+    for (const visual of validVisuals) {
+      expect(validateVisual(visual).valid, visual.mode).toBe(true);
+    }
+
+    const invalidVisuals = [
+      {
+        ...validVisuals[0],
+        axis: {
+          ...axis,
+          labeledTicks: [
+            { index: 0, value: 0 },
+            { index: 1, value: 5 },
+            { index: 6, value: 30 }
+          ]
+        }
+      },
+      {
+        ...validVisuals[1],
+        axis: {
+          ...axis,
+          labeledTicks: [
+            { index: 0, value: 0 },
+            { index: 4, value: 20 },
+            { index: 6, value: 30 }
+          ]
+        }
+      },
+      {
+        ...validVisuals[2],
+        comparison: { kind: "pair", categories: ["사과", "사과"] }
+      },
+      {
+        ...validVisuals[3],
+        candidates: [
+          { id: "가", bars },
+          { id: "나", bars },
+          {
+            id: "다",
+            bars: [
+              { category: "사과", ticks: 4 },
+              { category: "배", ticks: 3 }
+            ]
+          }
+        ]
+      },
+      {
+        ...validVisuals[4],
+        bars: [
+          { category: "사과", ticks: 7 },
+          { category: "배", ticks: 2 }
+        ]
+      }
+    ];
+    for (const visual of invalidVisuals) {
+      expect(validateVisual(visual).issues, visual.mode).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: "SCHEMA_INVALID" })
+        ])
+      );
+    }
+  });
+
   it("keeps IDs from a previously published base immutable", () => {
     const content = cloneContent();
     content.judgments.shift();

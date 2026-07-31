@@ -117,6 +117,33 @@ export function summarizeVisual(judgment: Judgment): string {
     case "polygon-angle-diagram": return `${
       judgment.visual.polygon === "triangle" ? "삼각형" : "사각형"
     }의 각 그림`;
+    case "grid-transform-diagram": return judgment.visual.mode === "point-move"
+      ? "격자에서 두 점의 이동"
+      : "격자에서 처음·나중 도형";
+    case "relation-pattern-diagram": {
+      if (judgment.visual.mode === "number-sequence") {
+        return `수 배열 ${judgment.visual.terms?.map((term) => term ?? "□").join(" → ")}`;
+      }
+      if (judgment.visual.mode === "figure-sequence") {
+        return `도형 개수 ${judgment.visual.counts?.map((count) => count ?? "□").join(" → ")}`;
+      }
+      if (judgment.visual.mode === "rule-table") {
+        return `${judgment.visual.leftLabel} ↔ ${judgment.visual.rightLabel} 대응표`;
+      }
+      if (judgment.visual.mode === "calculation-array") {
+        return `계산식 ${judgment.visual.calculations?.length ?? 0}개 배열`;
+      }
+      return "등호 양쪽의 합 비교";
+    }
+    case "bar-chart-diagram": {
+      if (judgment.visual.mode === "unit-value") {
+        return `${judgment.visual.axis.tickCount}칸 눈금의 한 칸 값`;
+      }
+      if (judgment.visual.mode === "table-match") {
+        return `${judgment.visual.table?.length ?? 0}개 항목 표와 후보 그래프`;
+      }
+      return `${judgment.visual.bars?.length ?? 0}개 항목 막대그래프`;
+    }
     case "pictograph": return `그림 1개 = ${judgment.visual.value}개`;
   }
 }

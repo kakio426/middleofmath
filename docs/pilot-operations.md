@@ -62,7 +62,14 @@ GitHub의 staging·production·staging-retention·production-retention Environme
 
 CI는 세 검사를 모두 통과해야 staging release를 시작한다. release workflow의 `preflight-secrets` job은 migration이나 Vercel deploy 전에 필요한 secret 전체를 확인하며 값 자체는 출력하지 않는다.
 
-현재 교사가 배정할 수 있는 발행 콘텐츠는 `1.0.0`의 12개 판단이다. 64개 판단이 있는 `2.1.0`은 `review` 상태이며 교사의 내용 검토와 별도 발행 결정을 마치기 전에는 배정할 수 없다. staging smoke는 판단 수를 12로 고정하지 않고 교사 화면에 표시된 발행 콘텐츠의 판단 수와 학생이 실제로 푼 수를 비교한다.
+현재 migration chain에 등록된 배정 가능 발행본은
+`grade3-semester2@1.0.0`의 12개 판단과
+`grade4-semester1@1.3.0`의 5개 단원·54개 판단,
+`grade4-semester1@1.4.0`의 6개 단원·66개 판단이다. 64개 판단이 있는
+`grade3-semester2@2.1.0`은 `review` 상태이며 교사의 내용 검토와 별도
+발행 결정을 마치기 전에는 배정할 수 없다. staging smoke는 판단 수를
+특정 값으로 고정하지 않고 교사 화면에 표시된 발행 콘텐츠의 판단 수와
+학생이 실제로 푼 수를 비교한다.
 
 ## 배포 순서
 
@@ -96,4 +103,18 @@ CI는 세 검사를 모두 통과해야 staging release를 시작한다. release
 
 3학년 2학기 2.x 발행 기록의 `publication_gate`에는 `crosswalkRevision`, `crosswalkDigest`, `upstreamCommit`, `upstreamTaxonomyVersion`, `upstreamOntologyVersion`이 있어야 한다. 외부 학습맵 데이터는 빌드나 발행 중 내려받지 않는다. 갱신은 별도의 opt-in refresh 명령으로 확인한 뒤 교과 검수자가 17개 성취기준과 32개 단계의 상태를 다시 승인한다.
 
-`publish_diagnosis_set` RPC를 직접 호출해 증명을 손으로 작성하지 않는다. DB는 증명의 필수 필드, 세트 ID, 목표 버전, 적용 정책과 결과를 확인하고 발행 행에 불변으로 남기지만, 런타임 JSON과 분리된 블루프린트 의미 전체를 SQL에서 다시 계산하지는 않는다. 운영 발행 전에는 `npm test`, `npm run typecheck`, `npm run test:db`가 모두 통과해야 한다.
+`publish_diagnosis_set` RPC를 직접 호출해 증명을 손으로 작성하지 않는다.
+DB는 RPC뿐 아니라 `published` 행의 직접 INSERT에도 gate 존재 여부,
+세트 ID, 목표 버전, 적용 정책, 유효성, 오류 0건을 강제하고 발행 행에
+불변으로 남긴다. 다만 런타임 JSON과 분리된 블루프린트 의미 전체를
+SQL에서 다시 계산하지는 않는다. 운영 발행 전에는 `npm test`,
+`npm run typecheck`, `npm run test:db`가 모두 통과해야 한다.
+
+`202607310007_legacy_publication_gate_backfill.sql`은 이 불변식 도입
+전에 저장된 발행 행만 세트·버전에 고정된 `warn` gate로 한 번
+보정한다. 이후 CHECK 제약과 불변성 트리거가 gate 제거를 차단한다.
+신규 환경의 `seed.sql`도 `grade3-semester2@1.0.0`에 같은 범위의
+레거시 gate를 함께 넣는다. migration 장애를 조사할 때 운영 DB를
+reset하지 말고, `template0`에서 만든 임시 DB에 전체 migration과
+seed를 재생한 뒤 임시 DB를 삭제한다. 현재 전체 체인은 27개 migration,
+16개 pgTAP 파일·260개 assertion이다.

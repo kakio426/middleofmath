@@ -61,6 +61,11 @@ export interface MeasurePart {
   unit: MeasureUnit;
 }
 
+export interface GridCell {
+  row: number;
+  column: number;
+}
+
 export type JudgmentVisual =
   | { kind: "none" }
   | { kind: "array"; rows: number; columns: number; label: string }
@@ -134,6 +139,79 @@ export type JudgmentVisual =
         value: number | null;
       }>;
       diagonal?: boolean;
+    }
+  | {
+      kind: "grid-transform-diagram";
+      mode:
+        | "slide"
+        | "flip-left-right"
+        | "flip-up-down"
+        | "rotate"
+        | "point-move";
+      rows: number;
+      columns: number;
+      sourceCells?: GridCell[];
+      targetCells?: GridCell[];
+      sourceMarker?: GridCell;
+      targetMarker?: GridCell;
+      axisIndex?: number;
+      center?: GridCell;
+      direction?: "up" | "down" | "left" | "right";
+      amount?: number;
+      turn?: "clockwise" | "counterclockwise";
+      points?: Array<GridCell & { label: "A" | "B" }>;
+    }
+  | {
+      kind: "relation-pattern-diagram";
+      mode:
+        | "number-sequence"
+        | "figure-sequence"
+        | "rule-table"
+        | "calculation-array"
+        | "equal-sign-balance";
+      terms?: Array<number | null>;
+      figure?: "square" | "circle" | "triangle";
+      counts?: Array<number | null>;
+      askOrder?: number;
+      leftLabel?: string;
+      rightLabel?: string;
+      rows?: Array<{ left: number; right: number }>;
+      calculations?: Array<{
+        a: number;
+        operator: "multiply" | "divide";
+        b: number;
+        result: number | null;
+      }>;
+      equation?: {
+        operator: "add";
+        left: [number, number];
+        right: [number | null, number | null];
+      };
+    }
+  | {
+      kind: "bar-chart-diagram";
+      mode:
+        | "unit-value"
+        | "bar-value"
+        | "bar-difference"
+        | "table-match"
+        | "chart-conclusion";
+      axis: {
+        orientation: "vertical" | "horizontal";
+        tickCount: number;
+        labeledTicks: Array<{ index: number; value: number }>;
+        unitLabel: string;
+      };
+      bars?: Array<{ category: string; ticks: number }>;
+      target?: string;
+      comparison?:
+        | { kind: "pair"; categories: [string, string] }
+        | { kind: "extremes" };
+      table?: Array<{ category: string; count: number }>;
+      candidates?: Array<{
+        id: "가" | "나" | "다";
+        bars: Array<{ category: string; ticks: number }>;
+      }>;
     }
   | { kind: "pictograph"; symbol: string; value: number; rows: Array<{ label: string; count: number }> };
 
@@ -401,6 +479,9 @@ export interface ClassSummaryItem {
   signalId: string;
   title: string;
   severity: Severity;
+  unitId?: string;
+  unitTitle?: string;
+  unitOrder?: number;
   studentCount: number;
   evidenceCount: number;
   studentIds: string[];
@@ -515,8 +596,20 @@ export interface TeacherAssignmentStudentInsight {
   report?: TeacherStudentReport;
 }
 
+export interface TeacherDistractorNote {
+  setKey: string;
+  version: string;
+  judgmentId: string;
+  choiceId: string;
+  signalIds: string[];
+  misconceptionKey: string;
+  misconceptionTitle: string;
+  teacherNote: string;
+}
+
 export interface TeacherAssignmentInsights {
   bundle: TeacherAssignmentEvidenceBundle;
   classSummary: ClassSummary;
   students: TeacherAssignmentStudentInsight[];
+  distractorNotes: TeacherDistractorNote[];
 }

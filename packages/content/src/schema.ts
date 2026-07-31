@@ -30,6 +30,26 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
     unit: z.enum(["mL", "L", "g", "kg", "t"])
   });
 
+  const gridCellSchema = z.strictObject({
+    row: z.number().int().nonnegative(),
+    column: z.number().int().nonnegative()
+  });
+
+  const barAxisSchema = z.strictObject({
+    orientation: z.enum(["vertical", "horizontal"]),
+    tickCount: z.number().int().min(2).max(12),
+    labeledTicks: z.array(z.strictObject({
+      index: z.number().int().min(0).max(12),
+      value: z.number().int().nonnegative().max(1000)
+    })).min(2).max(4),
+    unitLabel: copyString
+  });
+
+  const barSchema = z.strictObject({
+    category: copyString,
+    ticks: z.number().int().min(0).max(12)
+  });
+
   const visualSchema = z.discriminatedUnion("kind", [
     z.strictObject({ kind: z.literal("none") }),
     z.strictObject({
@@ -150,6 +170,95 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
       diagonal: z.boolean().optional()
     }),
     z.strictObject({
+      kind: z.literal("grid-transform-diagram"),
+      mode: z.enum([
+        "slide",
+        "flip-left-right",
+        "flip-up-down",
+        "rotate",
+        "point-move"
+      ]),
+      rows: z.number().int().min(4).max(8),
+      columns: z.number().int().min(4).max(8),
+      sourceCells: z.array(gridCellSchema).min(1).max(8).optional(),
+      targetCells: z.array(gridCellSchema).min(1).max(8).optional(),
+      sourceMarker: gridCellSchema.optional(),
+      targetMarker: gridCellSchema.optional(),
+      axisIndex: z.number().int().positive().optional(),
+      center: gridCellSchema.optional(),
+      direction: z.enum(["up", "down", "left", "right"]).optional(),
+      amount: z.number().int().positive().max(7).optional(),
+      turn: z.enum(["clockwise", "counterclockwise"]).optional(),
+      points: z.array(gridCellSchema.extend({
+        label: z.enum(["A", "B"])
+      })).length(2).optional()
+    }),
+    z.strictObject({
+      kind: z.literal("relation-pattern-diagram"),
+      mode: z.enum([
+        "number-sequence",
+        "figure-sequence",
+        "rule-table",
+        "calculation-array",
+        "equal-sign-balance"
+      ]),
+      terms: z.array(z.number().int().min(1).max(1000).nullable()).min(4).max(6).optional(),
+      figure: z.enum(["square", "circle", "triangle"]).optional(),
+      counts: z.array(z.number().int().min(1).max(1000).nullable()).min(3).max(4).optional(),
+      askOrder: z.number().int().min(1).max(5).optional(),
+      leftLabel: copyString.optional(),
+      rightLabel: copyString.optional(),
+      rows: z.array(z.strictObject({
+        left: z.number().int().min(1).max(1000),
+        right: z.number().int().min(1).max(1000)
+      })).min(3).max(4).optional(),
+      calculations: z.array(z.strictObject({
+        a: z.number().int().min(1).max(1000),
+        operator: z.enum(["multiply", "divide"]),
+        b: z.number().int().min(1).max(1000),
+        result: z.number().int().min(1).max(1000).nullable()
+      })).min(3).max(5).optional(),
+      equation: z.strictObject({
+        operator: z.literal("add"),
+        left: z.tuple([
+          z.number().int().min(10).max(99),
+          z.number().int().min(10).max(99)
+        ]),
+        right: z.tuple([
+          z.number().int().min(10).max(99).nullable(),
+          z.number().int().min(10).max(99).nullable()
+        ])
+      }).optional()
+    }),
+    z.strictObject({
+      kind: z.literal("bar-chart-diagram"),
+      mode: z.enum([
+        "unit-value",
+        "bar-value",
+        "bar-difference",
+        "table-match",
+        "chart-conclusion"
+      ]),
+      axis: barAxisSchema,
+      bars: z.array(barSchema).min(2).max(6).optional(),
+      target: copyString.optional(),
+      comparison: z.discriminatedUnion("kind", [
+        z.strictObject({
+          kind: z.literal("pair"),
+          categories: z.tuple([copyString, copyString])
+        }),
+        z.strictObject({ kind: z.literal("extremes") })
+      ]).optional(),
+      table: z.array(z.strictObject({
+        category: copyString,
+        count: z.number().int().nonnegative().max(1000)
+      })).min(2).max(6).optional(),
+      candidates: z.array(z.strictObject({
+        id: z.enum(["가", "나", "다"]),
+        bars: z.array(barSchema).min(2).max(6)
+      })).length(3).optional()
+    }),
+    z.strictObject({
       kind: z.literal("pictograph"),
       symbol: copyString,
       value: z.number().positive(),
@@ -159,6 +268,600 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
       })).min(1)
     })
   ]).superRefine((visual, context) => {
+    if (visual.kind === "bar-chart-diagram") {
+      const addIssue = (message: string, path: Array<string | number> = []) =>
+        context.addIssue({ code: "custom", message, path });
+      const optionalFields = [
+        "bars",
+        "target",
+        "comparison",
+        "table",
+        "candidates"
+      ] as const;
+      const fieldsByMode = {
+        "unit-value": ["bars"],
+        "bar-value": ["bars", "target"],
+        "bar-difference": ["bars", "comparison"],
+        "table-match": ["table", "candidates"],
+        "chart-conclusion": ["bars"]
+      } as const;
+      const allowed = new Set<string>(fieldsByMode[visual.mode]);
+      const disallowed = optionalFields.filter(
+        (field) => !allowed.has(field) && visual[field] !== undefined
+      );
+      if (disallowed.length > 0) {
+        addIssue(
+          `${visual.mode} 막대그래프에는 ${disallowed.join(", ")} 필드를 함께 사용할 수 없습니다.`
+        );
+      }
+      const missing = fieldsByMode[visual.mode].filter(
+        (field) => visual[field] === undefined
+      );
+      if (missing.length > 0) {
+        addIssue(
+          `${visual.mode} 막대그래프에는 ${missing.join(", ")} 필드가 필요합니다.`
+        );
+        return;
+      }
+
+      const labeledTicks = visual.axis.labeledTicks;
+      const indexes = labeledTicks.map((tick) => tick.index);
+      if (
+        new Set(indexes).size !== indexes.length
+        || indexes.some((index, position) =>
+          position > 0 && index <= indexes[position - 1]
+        )
+        || labeledTicks[0]?.index !== 0
+        || labeledTicks[0]?.value !== 0
+        || labeledTicks.at(-1)?.index !== visual.axis.tickCount
+      ) {
+        addIssue(
+          "눈금값은 0부터 마지막 칸까지 중복 없이 차례로 표시해야 합니다.",
+          ["axis", "labeledTicks"]
+        );
+        return;
+      }
+      const positiveTicks = labeledTicks.slice(1);
+      const derivedSteps = positiveTicks.map((tick) =>
+        tick.index === 0 ? Number.NaN : tick.value / tick.index
+      );
+      const derivedStep = derivedSteps[0];
+      if (
+        !Number.isInteger(derivedStep)
+        || derivedStep <= 0
+        || derivedSteps.some((step) => step !== derivedStep)
+      ) {
+        addIssue(
+          "표시된 눈금값은 모든 칸에서 같은 양의 정수만큼 커져야 합니다.",
+          ["axis", "labeledTicks"]
+        );
+        return;
+      }
+      if (
+        visual.mode === "unit-value"
+        && labeledTicks.some((tick) => tick.index === 1)
+      ) {
+        addIssue(
+          "눈금 한 칸의 값을 묻는 그림에는 첫째 눈금값을 직접 표시할 수 없습니다.",
+          ["axis", "labeledTicks"]
+        );
+      }
+
+      const validateBars = (
+        bars: Array<{ category: string; ticks: number }>,
+        path: Array<string | number>
+      ) => {
+        const categories = bars.map((bar) => bar.category);
+        if (new Set(categories).size !== categories.length) {
+          addIssue("막대의 항목 이름은 서로 달라야 합니다.", path);
+        }
+        if (bars.some((bar) => bar.ticks > visual.axis.tickCount)) {
+          addIssue("막대는 그래프의 마지막 눈금을 넘을 수 없습니다.", path);
+        }
+      };
+
+      if (visual.mode !== "table-match") {
+        validateBars(visual.bars!, ["bars"]);
+      }
+      if (visual.mode === "bar-value") {
+        const targetBar = visual.bars!.find(
+          (bar) => bar.category === visual.target
+        );
+        if (!targetBar) {
+          addIssue("묻는 항목은 막대그래프에 있어야 합니다.", ["target"]);
+        } else {
+          const targetValue = targetBar.ticks * derivedStep;
+          if (labeledTicks.some((tick) => tick.value === targetValue)) {
+            addIssue(
+              "묻는 막대의 값이 표시된 눈금값과 같으면 안 됩니다.",
+              ["target"]
+            );
+          }
+        }
+      }
+      if (visual.mode === "bar-difference") {
+        const comparison = visual.comparison!;
+        const bars = visual.bars!;
+        const values = comparison.kind === "pair"
+          ? comparison.categories.map((category) =>
+              bars.find((bar) => bar.category === category)
+            )
+          : [
+              bars.reduce((largest, bar) =>
+                bar.ticks > largest.ticks ? bar : largest
+              ),
+              bars.reduce((smallest, bar) =>
+                bar.ticks < smallest.ticks ? bar : smallest
+              )
+            ];
+        if (
+          comparison.kind === "pair"
+          && (
+            comparison.categories[0] === comparison.categories[1]
+            || values.some((bar) => !bar)
+          )
+        ) {
+          addIssue(
+            "비교할 두 항목은 서로 다르고 막대그래프에 있어야 합니다.",
+            ["comparison"]
+          );
+        } else {
+          const difference =
+            Math.abs(values[0]!.ticks - values[1]!.ticks) * derivedStep;
+          if (difference === 0) {
+            addIssue("비교하는 두 막대의 값은 달라야 합니다.", ["comparison"]);
+          }
+          if (labeledTicks.some((tick) => tick.value === difference)) {
+            addIssue(
+              "두 막대의 차가 표시된 눈금값과 같으면 안 됩니다.",
+              ["comparison"]
+            );
+          }
+        }
+      }
+      if (visual.mode === "table-match") {
+        const table = visual.table!;
+        const tableCategories = table.map((row) => row.category);
+        const maximum = visual.axis.tickCount * derivedStep;
+        if (new Set(tableCategories).size !== table.length) {
+          addIssue("표의 항목 이름은 서로 달라야 합니다.", ["table"]);
+        }
+        if (
+          table.some((row) =>
+            row.count > maximum || row.count % derivedStep !== 0
+          )
+        ) {
+          addIssue(
+            "표의 수는 그래프 범위 안에서 눈금 한 칸의 값으로 나누어떨어져야 합니다.",
+            ["table"]
+          );
+        }
+        if (
+          new Set(visual.candidates!.map((candidate) => candidate.id)).size
+          !== visual.candidates!.length
+        ) {
+          addIssue("후보 그래프의 이름은 서로 달라야 합니다.", ["candidates"]);
+        }
+        let matchingCandidateCount = 0;
+        visual.candidates!.forEach((candidate, candidateIndex) => {
+          validateBars(candidate.bars, ["candidates", candidateIndex, "bars"]);
+          if (
+            candidate.bars.length !== table.length
+            || candidate.bars.some(
+              (bar, index) => bar.category !== table[index]?.category
+            )
+          ) {
+            addIssue(
+              "후보 그래프는 표와 같은 항목을 같은 순서로 보여야 합니다.",
+              ["candidates", candidateIndex, "bars"]
+            );
+            return;
+          }
+          if (
+            candidate.bars.every(
+              (bar, index) =>
+                bar.ticks * derivedStep === table[index]?.count
+            )
+          ) {
+            matchingCandidateCount += 1;
+          }
+        });
+        if (matchingCandidateCount !== 1) {
+          addIssue(
+            "표와 정확히 일치하는 후보 그래프가 하나여야 합니다.",
+            ["candidates"]
+          );
+        }
+      }
+      return;
+    }
+
+    if (visual.kind === "relation-pattern-diagram") {
+      const addIssue = (message: string, path: string[] = []) =>
+        context.addIssue({ code: "custom", message, path });
+      const optionalFields = [
+        "terms",
+        "figure",
+        "counts",
+        "askOrder",
+        "leftLabel",
+        "rightLabel",
+        "rows",
+        "calculations",
+        "equation"
+      ] as const;
+      const fieldsByMode = {
+        "number-sequence": ["terms"],
+        "figure-sequence": ["figure", "counts", "askOrder"],
+        "rule-table": ["leftLabel", "rightLabel", "rows"],
+        "calculation-array": ["calculations"],
+        "equal-sign-balance": ["equation"]
+      } as const;
+      const allowed = new Set<string>(fieldsByMode[visual.mode]);
+      const disallowed = optionalFields.filter(
+        (field) => !allowed.has(field) && visual[field] !== undefined
+      );
+      if (disallowed.length > 0) {
+        addIssue(
+          `${visual.mode} 그림에는 ${disallowed.join(", ")} 필드를 함께 사용할 수 없습니다.`
+        );
+      }
+      const missing = fieldsByMode[visual.mode].filter(
+        (field) => visual[field] === undefined
+      );
+      if (missing.length > 0) {
+        addIssue(
+          `${visual.mode} 그림에는 ${missing.join(", ")} 필드가 필요합니다.`
+        );
+        return;
+      }
+
+      const arithmeticCandidates = (values: Array<number | null>) => {
+        const candidates: Array<{ difference: number; completed: number[] }> = [];
+        for (let difference = 1; difference <= 1000; difference += 1) {
+          const firstKnownIndex = values.findIndex((value) => value !== null);
+          const firstKnownValue = values[firstKnownIndex];
+          if (firstKnownIndex < 0 || firstKnownValue === null) continue;
+          const start = firstKnownValue - firstKnownIndex * difference;
+          const completed = values.map((_, index) => start + index * difference);
+          if (
+            completed.every((value) => Number.isInteger(value) && value >= 1 && value <= 1000)
+            && values.every((value, index) => value === null || value === completed[index])
+          ) {
+            candidates.push({ difference, completed });
+          }
+        }
+        return candidates;
+      };
+
+      if (visual.mode === "number-sequence") {
+        const terms = visual.terms!;
+        if (terms.filter((term) => term === null).length !== 1) {
+          addIssue("수 배열에는 답을 나타내는 빈칸이 정확히 하나 있어야 합니다.", ["terms"]);
+          return;
+        }
+        const candidates = arithmeticCandidates(terms).map((candidate) => candidate.completed);
+        for (let factor = 2; factor <= 20; factor += 1) {
+          const firstKnownIndex = terms.findIndex((value) => value !== null);
+          const firstKnownValue = terms[firstKnownIndex];
+          if (firstKnownIndex < 0 || firstKnownValue === null) continue;
+          const divisor = factor ** firstKnownIndex;
+          const start = firstKnownValue / divisor;
+          const completed = terms.map((_, index) => start * factor ** index);
+          if (
+            Number.isInteger(start)
+            && completed.every((value) => Number.isInteger(value) && value >= 1 && value <= 1000)
+            && terms.every((value, index) => value === null || value === completed[index])
+          ) {
+            candidates.push(completed);
+          }
+        }
+        const blankIndex = terms.indexOf(null);
+        const answers = new Set(candidates.map((candidate) => candidate[blankIndex]));
+        if (answers.size !== 1) {
+          addIssue("수 배열은 하나의 증가 규칙과 하나의 답으로 정해져야 합니다.", ["terms"]);
+        }
+        return;
+      }
+
+      if (visual.mode === "figure-sequence") {
+        const counts = visual.counts!;
+        if (counts.filter((count) => count === null).length > 1) {
+          addIssue("도형 배열의 빈칸은 하나를 넘을 수 없습니다.", ["counts"]);
+        }
+        const candidates = arithmeticCandidates(counts);
+        if (candidates.length !== 1) {
+          addIssue("도형 개수는 하나의 일정한 증가 규칙으로 정해져야 합니다.", ["counts"]);
+        }
+        const blankIndex = counts.indexOf(null);
+        const expectedOrder = blankIndex >= 0 ? blankIndex + 1 : counts.length + 1;
+        if (visual.askOrder !== expectedOrder) {
+          addIssue("묻는 순서는 빈칸 또는 바로 다음 도형의 순서와 같아야 합니다.", ["askOrder"]);
+        }
+        return;
+      }
+
+      if (visual.mode === "rule-table") {
+        const rows = visual.rows!;
+        const leftValues = rows.map((row) => row.left);
+        if (
+          new Set(leftValues).size !== rows.length
+          || leftValues.some((value, index) => index > 0 && value <= leftValues[index - 1])
+        ) {
+          addIssue("대응표의 왼쪽 수는 중복 없이 커져야 합니다.", ["rows"]);
+        }
+        const matches = [
+          ...Array.from({ length: 19 }, (_, index) => index + 2).flatMap((factor) => [
+            rows.every((row) => row.right === row.left * factor),
+            rows.every((row) => row.left % factor === 0 && row.right === row.left / factor)
+          ]),
+          ...Array.from({ length: 200 }, (_, index) => index - 100)
+            .filter((amount) => amount !== 0)
+            .map((amount) => rows.every((row) => row.right === row.left + amount))
+        ].filter(Boolean);
+        if (matches.length !== 1) {
+          addIssue("대응표는 하나의 간단한 덧셈·곱셈·나눗셈 관계로 정해져야 합니다.", ["rows"]);
+        }
+        return;
+      }
+
+      if (visual.mode === "calculation-array") {
+        const calculations = visual.calculations!;
+        if (
+          calculations.some((calculation, index) =>
+            (index === calculations.length - 1) !== (calculation.result === null)
+          )
+        ) {
+          addIssue("계산 배열은 마지막 계산의 결과만 빈칸이어야 합니다.", ["calculations"]);
+        }
+        if (new Set(calculations.map((calculation) => calculation.operator)).size !== 1) {
+          addIssue("계산 배열에는 같은 연산을 사용해야 합니다.", ["calculations"]);
+        }
+        const allAEqual = calculations.every((item) => item.a === calculations[0].a);
+        const allBEqual = calculations.every((item) => item.b === calculations[0].b);
+        if (allAEqual === allBEqual) {
+          addIssue("계산 배열은 한 수만 고정하고 다른 수를 바꾸어야 합니다.", ["calculations"]);
+        }
+        const changing = calculations.map((item) => allAEqual ? item.b : item.a);
+        if (arithmeticCandidates(changing).length !== 1) {
+          addIssue("계산 배열에서 바뀌는 수는 일정하게 커져야 합니다.", ["calculations"]);
+        }
+        calculations.slice(0, -1).forEach((item, index) => {
+          const expected = item.operator === "multiply" ? item.a * item.b : item.a / item.b;
+          if (!Number.isInteger(expected) || item.result !== expected) {
+            addIssue("계산 배열의 제시된 결과가 계산과 일치해야 합니다.", ["calculations", String(index), "result"]);
+          }
+        });
+        const last = calculations.at(-1)!;
+        const inferred = last.operator === "multiply" ? last.a * last.b : last.a / last.b;
+        if (!Number.isInteger(inferred) || inferred < 1 || inferred > 1000) {
+          addIssue("마지막 계산의 답은 1부터 1000 사이의 자연수여야 합니다.", ["calculations"]);
+        }
+        return;
+      }
+
+      const equation = visual.equation!;
+      if (equation.right.filter((term) => term === null).length !== 1) {
+        addIssue("등식의 오른쪽에는 빈칸이 정확히 하나 있어야 합니다.", ["equation", "right"]);
+        return;
+      }
+      const leftTotal = equation.left[0] + equation.left[1];
+      const knownRight = equation.right.find((term) => term !== null)!;
+      const answer = leftTotal - knownRight;
+      if (!Number.isInteger(answer) || answer < 10 || answer > 99) {
+        addIssue("등식을 만족하는 빈칸의 수는 두 자리 자연수여야 합니다.", ["equation"]);
+      }
+      return;
+    }
+
+    if (visual.kind === "grid-transform-diagram") {
+      type Cell = { row: number; column: number };
+      const key = (cell: Cell) => `${cell.row}:${cell.column}`;
+      const sameCells = (left: Cell[], right: Cell[]) =>
+        left.length === right.length
+        && [...left].map(key).sort().every(
+          (value, index) => value === [...right].map(key).sort()[index]
+        );
+      const inBounds = (cell: Cell) =>
+        cell.row >= 0
+        && cell.row < visual.rows
+        && cell.column >= 0
+        && cell.column < visual.columns;
+      const addVisualIssue = (message: string, path: string[]) =>
+        context.addIssue({ code: "custom", message, path });
+      const allCells = [
+        ...(visual.sourceCells ?? []),
+        ...(visual.targetCells ?? []),
+        ...(visual.sourceMarker ? [visual.sourceMarker] : []),
+        ...(visual.targetMarker ? [visual.targetMarker] : []),
+        ...(visual.center ? [visual.center] : []),
+        ...(visual.points ?? [])
+      ];
+      if (allCells.some((cell) => !inBounds(cell))) {
+        addVisualIssue("격자 좌표가 격자 범위를 벗어납니다.", []);
+      }
+      for (const [name, cells] of [
+        ["sourceCells", visual.sourceCells],
+        ["targetCells", visual.targetCells]
+      ] as const) {
+        if (cells && new Set(cells.map(key)).size !== cells.length) {
+          addVisualIssue("도형의 칸은 중복될 수 없습니다.", [name]);
+        }
+      }
+
+      if (visual.mode === "point-move") {
+        if (
+          visual.sourceCells
+          || visual.targetCells
+          || visual.sourceMarker
+          || visual.targetMarker
+          || visual.axisIndex !== undefined
+          || visual.center
+          || visual.direction
+          || visual.amount !== undefined
+          || visual.turn
+        ) {
+          addVisualIssue(
+            "점 이동 그림에는 도형 이동용 필드를 함께 사용할 수 없습니다.",
+            []
+          );
+        }
+        if (
+          !visual.points
+          || visual.points.map((point) => point.label).sort().join("") !== "AB"
+          || new Set(visual.points.map(key)).size !== 2
+        ) {
+          addVisualIssue(
+            "점 이동 그림에는 서로 다른 위치의 A점과 B점이 필요합니다.",
+            ["points"]
+          );
+        }
+        return;
+      }
+
+      const source = visual.sourceCells ?? [];
+      const target = visual.targetCells ?? [];
+      if (source.length === 0 || target.length === 0) {
+        addVisualIssue(
+          "도형 이동 그림에는 처음 도형과 나중 도형이 모두 필요합니다.",
+          []
+        );
+        return;
+      }
+      if (visual.points) {
+        addVisualIssue("도형 이동 그림에는 점 이동 필드를 사용할 수 없습니다.", ["points"]);
+      }
+      if (
+        (visual.sourceMarker && !source.some(
+          (cell) => key(cell) === key(visual.sourceMarker as Cell)
+        ))
+        || (visual.targetMarker && !target.some(
+          (cell) => key(cell) === key(visual.targetMarker as Cell)
+        ))
+        || Boolean(visual.sourceMarker) !== Boolean(visual.targetMarker)
+      ) {
+        addVisualIssue(
+          "처음·나중 표식은 각각 도형 안에 한 쌍으로 있어야 합니다.",
+          []
+        );
+      }
+
+      let expected = source;
+      let expectedMarker = visual.sourceMarker;
+      if (visual.mode === "slide") {
+        if (
+          !visual.direction
+          || visual.amount === undefined
+          || visual.axisIndex !== undefined
+          || visual.center
+          || visual.turn
+        ) {
+          addVisualIssue(
+            "밀기에는 방향과 칸 수만 지정해야 합니다.",
+            []
+          );
+          return;
+        }
+        const rowDelta =
+          visual.direction === "down"
+            ? visual.amount
+            : visual.direction === "up"
+              ? -visual.amount
+              : 0;
+        const columnDelta =
+          visual.direction === "right"
+            ? visual.amount
+            : visual.direction === "left"
+              ? -visual.amount
+              : 0;
+        const move = (cell: Cell) => ({
+          row: cell.row + rowDelta,
+          column: cell.column + columnDelta
+        });
+        expected = source.map(move);
+        expectedMarker = visual.sourceMarker
+          ? move(visual.sourceMarker)
+          : undefined;
+      } else if (
+        visual.mode === "flip-left-right"
+        || visual.mode === "flip-up-down"
+      ) {
+        const limit = visual.mode === "flip-left-right"
+          ? visual.columns
+          : visual.rows;
+        if (
+          visual.axisIndex === undefined
+          || visual.axisIndex >= limit
+          || visual.direction
+          || visual.amount !== undefined
+          || visual.center
+          || visual.turn
+        ) {
+          addVisualIssue(
+            "뒤집기에는 격자 안의 기준선 하나만 지정해야 합니다.",
+            ["axisIndex"]
+          );
+          return;
+        }
+        const flip = (cell: Cell) => visual.mode === "flip-left-right"
+          ? {
+              row: cell.row,
+              column: 2 * (visual.axisIndex as number) - 1 - cell.column
+            }
+          : {
+              row: 2 * (visual.axisIndex as number) - 1 - cell.row,
+              column: cell.column
+            };
+        expected = source.map(flip);
+        expectedMarker = visual.sourceMarker
+          ? flip(visual.sourceMarker)
+          : undefined;
+      } else {
+        if (
+          !visual.center
+          || !visual.turn
+          || visual.axisIndex !== undefined
+          || visual.direction
+          || visual.amount !== undefined
+        ) {
+          addVisualIssue(
+            "돌리기에는 중심과 방향을 지정해야 합니다.",
+            []
+          );
+          return;
+        }
+        const center = visual.center;
+        const rotate = (cell: Cell) => visual.turn === "clockwise"
+          ? {
+              row: center.row + cell.column - center.column,
+              column: center.column - cell.row + center.row
+            }
+          : {
+              row: center.row - cell.column + center.column,
+              column: center.column + cell.row - center.row
+            };
+        expected = source.map(rotate);
+        expectedMarker = visual.sourceMarker
+          ? rotate(visual.sourceMarker)
+          : undefined;
+      }
+
+      if (
+        expected.some((cell) => !inBounds(cell))
+        || !sameCells(expected, target)
+        || (
+          expectedMarker
+          && visual.targetMarker
+          && key(expectedMarker) !== key(visual.targetMarker)
+        )
+      ) {
+        addVisualIssue(
+          "나중 도형 또는 표식 위치가 지정한 이동과 일치하지 않습니다.",
+          ["targetCells"]
+        );
+      }
+      return;
+    }
     if (visual.kind === "angle-figure") {
       if (
         visual.mode === "bare"

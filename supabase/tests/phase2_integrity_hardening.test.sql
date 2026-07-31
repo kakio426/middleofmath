@@ -336,8 +336,30 @@ with source as (
   ) as content
   from public.diagnosis_sets where set_key = 'grade3-semester2' and version = '1.0.0'
 )
-insert into public.diagnosis_sets (set_key, version, checksum, status, manifest, content, published_at)
-select 'phase2-checksum-probe', '1.0.0', 'fake', 'published', content -> 'manifest', content, now() from source;
+insert into public.diagnosis_sets (
+  set_key, version, checksum, status, manifest, content, published_at,
+  publication_gate
+)
+select
+  'phase2-checksum-probe',
+  '1.0.0',
+  'fake',
+  'published',
+  content -> 'manifest',
+  content,
+  now(),
+  jsonb_build_object(
+    'gate', 'diagnostic-integrity',
+    'gateVersion', 'phase2-test-v1',
+    'setKey', 'phase2-checksum-probe',
+    'targetVersion', '1.0.0',
+    'policy', 'warn',
+    'enforced', false,
+    'valid', true,
+    'errorCount', 0,
+    'warningCount', 0
+  )
+from source;
 
 select ok(
   (select checksum <> 'fake' and checksum = content #>> '{manifest,checksum}'

@@ -13,6 +13,7 @@ import type {
   TeacherAssignmentEvidenceBundle,
   TeacherAssignmentSnapshot,
   TeacherClassSnapshot,
+  TeacherDistractorNote,
   TeacherSessionEvidence,
   TeacherSessionEvidenceContext,
   TeacherStudentReport,
@@ -111,6 +112,24 @@ export class SupabaseTeacherInsightsRepository implements TeacherInsightsReposit
       student: student.student,
       evidence
     };
+  }
+
+  async listDistractorNotes(input: {
+    setKey: string;
+    version: string;
+  }): Promise<TeacherDistractorNote[]> {
+    const { data, error } = await this.client
+      .from("diagnosis_distractor_notes")
+      .select(`
+        set_key, version, judgment_id, choice_id, signal_ids,
+        misconception_key, misconception_title, teacher_note
+      `)
+      .eq("set_key", input.setKey)
+      .eq("version", input.version)
+      .order("judgment_id")
+      .order("choice_id");
+    if (error) throw error;
+    return (data ?? []).map(mapTeacherDistractorNote);
   }
 
   async listDailyAggregates(from: string, to: string): Promise<PrivacySafeDailyAggregate[]> {
@@ -260,6 +279,21 @@ function mapPublishedDiagnosisSet(row: JsonRow): PublishedDiagnosisSet {
     status: row.status,
     content: row.content,
     publishedAt: String(row.published_at)
+  };
+}
+
+export function mapTeacherDistractorNote(row: JsonRow): TeacherDistractorNote {
+  return {
+    setKey: String(row.set_key),
+    version: String(row.version),
+    judgmentId: String(row.judgment_id),
+    choiceId: String(row.choice_id),
+    signalIds: Array.isArray(row.signal_ids)
+      ? row.signal_ids.map(String)
+      : [],
+    misconceptionKey: String(row.misconception_key),
+    misconceptionTitle: String(row.misconception_title),
+    teacherNote: String(row.teacher_note)
   };
 }
 

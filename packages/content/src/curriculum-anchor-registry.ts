@@ -15,6 +15,13 @@ export interface CurriculumAnchorRegistryEntry {
   source: string;
 }
 
+export interface CurriculumAnchorSetAllowance {
+  anchorId: string;
+  setKey: string;
+  canonical: boolean;
+  coverage: "exact" | "partial";
+}
+
 export const GRADE3_SEMESTER1_CURRICULUM_SOURCE =
   GRADE3_SEMESTER2_CURRICULUM_SOURCE;
 export const GRADE4_SEMESTER1_CURRICULUM_SOURCE =
@@ -107,6 +114,46 @@ export const grade4Semester1AnchorRegistry = Object.freeze([
     source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
   },
   {
+    id: "[4수01-04]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "곱하는 수가 두 자리 수인 곱셈의 계산 원리를 이해하고 계산하기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수01-05]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "나눗셈의 의미를 알고 곱셈과 나눗셈의 관계를 이해하기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수01-07]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "나누는 수가 두 자리 수인 나눗셈의 계산 원리를 이해하고 계산하기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수01-08]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "자연수의 사칙계산 결과를 어림하고 어림한 과정 설명하기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
     id: "[4수03-02]",
     grade: 4,
     semester: 1,
@@ -135,8 +182,153 @@ export const grade4Semester1AnchorRegistry = Object.freeze([
     sharedAcrossGradeBand: false,
     label: "삼각형과 사각형의 내각의 크기의 합을 추론하고 설명하기",
     source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수03-04]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "구체물이나 평면도형의 밀기, 뒤집기, 돌리기 활동을 통하여 그 변화 이해하기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수03-05]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "평면에서 점의 이동을 위치와 방향을 이용하여 설명하기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수02-01]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "다양한 변화 규칙을 찾아 설명하고, 그 규칙을 수나 식으로 나타내기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수02-02]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "계산식의 배열에서 규칙을 찾고, 계산 결과를 추측하기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수02-03]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "등호를 사용하여 크기가 같은 두 양의 관계를 식으로 나타내기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수04-01]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "자료를 수집하여 막대그래프로 나타내고 해석하기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수04-03]",
+    grade: 4,
+    semester: 1,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "탐구 문제를 위한 자료를 수집·정리하여 막대그래프로 나타내고 해석하기",
+    source: GRADE4_SEMESTER1_CURRICULUM_SOURCE
   }
 ] as const satisfies readonly CurriculumAnchorRegistryEntry[]);
+
+export const curriculumAnchorSetAllowList = Object.freeze([
+  {
+    anchorId: "[4수01-04]",
+    setKey: "grade3-semester1",
+    canonical: false,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수01-04]",
+    setKey: "grade3-semester2",
+    canonical: true,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수01-04]",
+    setKey: "grade4-semester1",
+    canonical: false,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수01-05]",
+    setKey: "grade3-semester1",
+    canonical: false,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수01-05]",
+    setKey: "grade3-semester2",
+    canonical: true,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수01-05]",
+    setKey: "grade4-semester1",
+    canonical: false,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수01-07]",
+    setKey: "grade4-semester1",
+    canonical: true,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수01-08]",
+    setKey: "grade3-semester2",
+    canonical: true,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수01-08]",
+    setKey: "grade4-semester1",
+    canonical: false,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수04-01]",
+    setKey: "grade3-semester2",
+    canonical: true,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수04-01]",
+    setKey: "grade4-semester1",
+    canonical: false,
+    coverage: "partial"
+  },
+  {
+    anchorId: "[4수04-03]",
+    setKey: "grade4-semester1",
+    canonical: true,
+    coverage: "partial"
+  }
+] as const satisfies readonly CurriculumAnchorSetAllowance[]);
 
 const semester2RegistryById = new Map(
   grade3Semester2AnchorRegistry.map((anchor) => [anchor.id, anchor])
@@ -185,6 +377,26 @@ export function findAnchorForSet(
     ...grade3Semester2AnchorRegistry,
     ...grade4Semester1AnchorRegistry
   ].filter((anchor) => anchor.id === anchorId);
+  const scopedAllowances = curriculumAnchorSetAllowList.filter(
+    (allowance) => allowance.anchorId === anchorId
+  );
+  if (scopedAllowances.length > 0) {
+    if (!scopedAllowances.some((allowance) => allowance.setKey === setKey)) {
+      return undefined;
+    }
+    const exactAllowed = candidates.find((anchor) =>
+      anchor.grade === scope.grade
+      && anchor.semester === scope.semester
+    );
+    if (exactAllowed) return exactAllowed;
+    const canonical = scopedAllowances.find(
+      (allowance) => allowance.canonical
+    );
+    return candidates.find((anchor) =>
+      canonical?.setKey
+        === `grade${anchor.grade}-semester${anchor.semester}`
+    );
+  }
   const exact = candidates.find((anchor) =>
     anchor.grade === scope.grade
     && anchor.semester === scope.semester

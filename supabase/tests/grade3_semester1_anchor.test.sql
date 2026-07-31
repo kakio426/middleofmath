@@ -26,9 +26,10 @@ select is(
     select count(*)
     from public.curriculum_anchors
     where anchor_key = '[4수03-05]'
+      and grade = 3
   ),
   0::bigint,
-  'the unsupported plane-figure anchor is not registered as semester 1'
+  'the grade 4 point-move anchor is not registered as a grade 3 anchor'
 );
 
 select is(

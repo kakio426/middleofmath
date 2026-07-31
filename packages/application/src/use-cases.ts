@@ -229,6 +229,10 @@ export class GenerateAssignmentInsights {
   async execute(assignmentId: string): Promise<TeacherAssignmentInsights> {
     const bundle = await this.insights.getAssignmentBundle(assignmentId);
     if (!bundle) throw new Error("과제 근거를 찾을 수 없습니다.");
+    const distractorNotes = await this.insights.listDistractorNotes({
+      setKey: bundle.diagnosisSet.setKey,
+      version: bundle.diagnosisSet.version
+    }).catch(() => []);
 
     const studentReports: Array<{ studentId: string; report: TeacherStudentReport }> = [];
     const students = [];
@@ -284,8 +288,13 @@ export class GenerateAssignmentInsights {
 
     return {
       bundle,
-      classSummary: generateClassSummary(studentReports, inProgressStudents),
-      students
+      classSummary: generateClassSummary(
+        studentReports,
+        inProgressStudents,
+        bundle.diagnosisSet.content
+      ),
+      students,
+      distractorNotes
     };
   }
 }
@@ -347,9 +356,10 @@ export class ExportParentReport {
 export class GenerateClassSummary {
   execute(
     reports: Array<{ studentId: string; report: TeacherStudentReport }>,
-    inProgressStudents = 0
+    inProgressStudents = 0,
+    diagnosisSet?: DiagnosisSet
   ): ClassSummary {
-    return generateClassSummary(reports, inProgressStudents);
+    return generateClassSummary(reports, inProgressStudents, diagnosisSet);
   }
 }
 

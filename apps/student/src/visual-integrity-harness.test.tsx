@@ -101,6 +101,106 @@ function expectAngleFigureContract(judgment: Judgment, markup: string) {
   expect(occurrences(markup, "mom-angle-vertex"), judgment.id).toBe(1);
 }
 
+function expectGridTransformContract(judgment: Judgment, markup: string) {
+  if (judgment.visual.kind !== "grid-transform-diagram") return;
+  const visual = judgment.visual;
+  const studentCopy = [
+    judgment.context,
+    judgment.prompt,
+    ...judgment.choices.map((choice) => choice.label)
+  ].filter(Boolean).join(" ");
+  expect(markup, judgment.id).toContain("mom-transform-grid-background");
+  expect(studentCopy, judgment.id).not.toMatch(
+    /흰\s*점|검은\s*점|초록색|노란색/
+  );
+  expect(
+    occurrences(markup, "mom-transform-grid-line"),
+    judgment.id
+  ).toBe(visual.rows + visual.columns + 2);
+  if (visual.mode === "point-move") {
+    expect(occurrences(markup, 'class="mom-transform-point"'), judgment.id)
+      .toBe(2);
+    expect(markup, judgment.id).not.toContain("mom-transform-source-cell");
+  } else {
+    expect(
+      occurrences(markup, "mom-transform-source-cell"),
+      judgment.id
+    ).toBe((visual.sourceCells?.length ?? 0) + 1);
+    expect(
+      occurrences(markup, "mom-transform-target-cell"),
+      judgment.id
+    ).toBe((visual.targetCells?.length ?? 0) + 1);
+  }
+  expect(describeVisual(visual), judgment.id).not.toMatch(
+    /오른쪽으로|왼쪽으로|위쪽으로|아래쪽으로|시계 방향|시계 반대 방향|좌우를 뒤집|위아래를 뒤집/
+  );
+}
+
+function expectRelationPatternContract(judgment: Judgment, markup: string) {
+  if (judgment.visual.kind !== "relation-pattern-diagram") return;
+  const visual = judgment.visual;
+  expect(markup, judgment.id).toContain("mom-relation-pattern");
+  expect(markup, judgment.id).not.toContain(
+    judgment.choices.find((choice) => choice.correct)?.label ?? "__missing__"
+  );
+  expect(describeVisual(visual), judgment.id).not.toContain(
+    judgment.choices.find((choice) => choice.correct)?.label ?? "__missing__"
+  );
+  if (visual.mode === "number-sequence") {
+    expect(occurrences(markup, "mom-relation-arrow"), judgment.id)
+      .toBe((visual.terms?.length ?? 1) - 1);
+    expect(markup, judgment.id).toContain("is-unknown");
+  }
+  if (visual.mode === "figure-sequence") {
+    expect(occurrences(markup, "mom-relation-figure-card"), judgment.id)
+      .toBe(visual.counts?.length ?? 0);
+  }
+  if (visual.mode === "rule-table") {
+    expect(occurrences(markup, "<tbody>"), judgment.id).toBe(1);
+    expect(occurrences(markup, "<tr>"), judgment.id)
+      .toBe((visual.rows?.length ?? 0) + 1);
+  }
+  if (visual.mode === "calculation-array") {
+    expect(occurrences(markup, "<p>"), judgment.id)
+      .toBe(visual.calculations?.length ?? 0);
+  }
+  if (visual.mode === "equal-sign-balance") {
+    expect(markup, judgment.id).toContain("mom-relation-equation");
+    expect(markup, judgment.id).toContain("is-unknown");
+  }
+}
+
+function expectBarChartContract(judgment: Judgment, markup: string) {
+  if (judgment.visual.kind !== "bar-chart-diagram") return;
+  const visual = judgment.visual;
+  expect(markup, judgment.id).toContain("mom-bar-chart");
+  expect(markup, judgment.id).toContain('role="img"');
+  const expectedBars = visual.mode === "table-match"
+    ? visual.candidates!.reduce(
+        (count, candidate) => count + candidate.bars.length,
+        0
+      )
+    : visual.bars!.length;
+  expect(occurrences(markup, "mom-bar-mark"), judgment.id).toBe(expectedBars);
+  expect(occurrences(markup, "mom-bar-axis-line"), judgment.id).toBe(
+    visual.mode === "table-match" ? 6 : 2
+  );
+  expect(
+    [
+      judgment.context,
+      judgment.prompt,
+      ...judgment.choices.map((choice) => choice.label)
+    ].filter(Boolean).join(" "),
+    judgment.id
+  ).not.toMatch(/초록색|노란색|파란색|빨간색/);
+  if (visual.mode !== "table-match") {
+    const correctLabel =
+      judgment.choices.find((choice) => choice.correct)?.label ?? "__missing__";
+    expect(markup, judgment.id).not.toContain(correctLabel);
+    expect(describeVisual(visual), judgment.id).not.toContain(correctLabel);
+  }
+}
+
 function expectPictographContract(judgment: Judgment, markup: string) {
   if (judgment.visual.kind !== "pictograph") return;
   expect(occurrences(markup, "mom-legend"), judgment.id).toBe(1);
@@ -118,9 +218,9 @@ describe("active question-bank visual integrity harness", () => {
     expect(activeSets.map((content) => content.judgments.length)).toEqual([
       16,
       64,
-      24
+      66
     ]);
-    expect(activeJudgments).toHaveLength(104);
+    expect(activeJudgments).toHaveLength(146);
   });
 
   it("renders every visual deterministically with no retired overlay renderer", () => {
@@ -144,6 +244,9 @@ describe("active question-bank visual integrity harness", () => {
       expectCircleContract(judgment, first);
       expectPolygonContract(judgment, first);
       expectAngleFigureContract(judgment, first);
+      expectGridTransformContract(judgment, first);
+      expectRelationPatternContract(judgment, first);
+      expectBarChartContract(judgment, first);
       expectPictographContract(judgment, first);
     }
   });

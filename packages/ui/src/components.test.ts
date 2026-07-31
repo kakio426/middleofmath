@@ -6,6 +6,7 @@ import {
   ChoiceOption,
   ConfidenceMark,
   describeVisual,
+  EvidenceRail,
   ReadableText,
   VisualAid
 } from "./components";
@@ -50,6 +51,43 @@ describe("ReadableText", () => {
 
     expect(markup.match(/class="mom-readable-token"/g)).toHaveLength(3);
     expect(markup).toContain("mom-readable-text");
+  });
+});
+
+describe("EvidenceRail", () => {
+  const evidence = {
+    eventId: "event-1",
+    judgmentId: "judgment-1",
+    learnerStageId: "stage-1",
+    curriculumAnchorIds: ["anchor-1"],
+    selectedChoiceId: "wrong",
+    selectedChoiceLabel: "5명",
+    durationBand: "steady" as const,
+    firstSelectionMs: 3_000,
+    confirmationMs: 1_000,
+    selectionChanges: 0,
+    uncertainty: false
+  };
+
+  it("adds a fourth teacher-only choice interpretation when supplied", () => {
+    const markup = renderToStaticMarkup(createElement(EvidenceRail, {
+      anchor: "[4수04-01]",
+      stage: "눈금 한 칸의 값 읽기",
+      evidence,
+      choiceNote: { title: "눈금 수를 값으로 읽음", text: "한 칸의 값을 다시 확인합니다." }
+    }));
+    expect(markup.match(/<li>/g)).toHaveLength(4);
+    expect(markup).toContain("오답 해석");
+  });
+
+  it("keeps the legacy three-step rail when no choice interpretation exists", () => {
+    const markup = renderToStaticMarkup(createElement(EvidenceRail, {
+      anchor: "[4수04-01]",
+      stage: "눈금 한 칸의 값 읽기",
+      evidence
+    }));
+    expect(markup.match(/<li>/g)).toHaveLength(3);
+    expect(markup).not.toContain("오답 해석");
   });
 });
 
@@ -495,6 +533,230 @@ describe("VisualAid angle diagrams", () => {
     expect(markup.match(/mom-polygon-angle-arc/g)).toHaveLength(4);
     expect(description).toContain("대각선 하나로 두 삼각형으로 나뉘어");
     expect(description).not.toMatch(/360|합은|맞습니다|틀립니다/);
+  });
+});
+
+describe("VisualAid grid transformation diagrams", () => {
+  it("renders exact source and target cells with a marker but no answer wording", () => {
+    const visual: JudgmentVisual = {
+      kind: "grid-transform-diagram",
+      mode: "slide",
+      rows: 6,
+      columns: 8,
+      sourceCells: [
+        { row: 1, column: 1 },
+        { row: 2, column: 1 },
+        { row: 2, column: 2 }
+      ],
+      targetCells: [
+        { row: 1, column: 4 },
+        { row: 2, column: 4 },
+        { row: 2, column: 5 }
+      ],
+      sourceMarker: { row: 1, column: 1 },
+      targetMarker: { row: 1, column: 4 },
+      direction: "right",
+      amount: 3
+    };
+    const first = renderToStaticMarkup(createElement(VisualAid, { visual }));
+    const second = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(first).toBe(second);
+    expect(first.match(/mom-transform-source-cell/g)).toHaveLength(4);
+    expect(first.match(/mom-transform-target-cell/g)).toHaveLength(4);
+    expect(first).toContain("mom-transform-source-marker");
+    expect(first).toContain("mom-transform-target-marker");
+    expect(`${first} ${describeVisual(visual)}`).not.toMatch(
+      /오른쪽으로 3칸|밀었습니다|정답/
+    );
+  });
+
+  it("shows A and B as points rather than turning them into a figure", () => {
+    const visual: JudgmentVisual = {
+      kind: "grid-transform-diagram",
+      mode: "point-move",
+      rows: 6,
+      columns: 8,
+      points: [
+        { label: "A", row: 4, column: 1 },
+        { label: "B", row: 1, column: 5 }
+      ]
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup.match(/class="mom-transform-point"/g)).toHaveLength(2);
+    expect(markup).toContain(">A</text>");
+    expect(markup).toContain(">B</text>");
+    expect(markup).not.toContain("mom-transform-source-cell");
+    expect(describeVisual(visual)).toContain("A점은");
+    expect(describeVisual(visual)).not.toMatch(
+      /오른쪽으로|왼쪽으로|위쪽으로|아래쪽으로/
+    );
+  });
+});
+
+describe("VisualAid relation pattern diagrams", () => {
+  it("renders a number sequence without inferring the missing answer", () => {
+    const visual: JudgmentVisual = {
+      kind: "relation-pattern-diagram",
+      mode: "number-sequence",
+      terms: [2, 6, 18, null, 162]
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup).toContain("mom-relation-number-sequence");
+    expect(markup.match(/mom-relation-arrow/g)).toHaveLength(4);
+    expect(markup).toContain("is-unknown");
+    expect(`${markup} ${describeVisual(visual)}`).not.toContain("54");
+  });
+
+  it("renders each figure count and keeps the next count out of visual and accessibility copy", () => {
+    const visual: JudgmentVisual = {
+      kind: "relation-pattern-diagram",
+      mode: "figure-sequence",
+      figure: "triangle",
+      counts: [2, 5, 8, 11],
+      askOrder: 5
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup.match(/mom-relation-figure-card/g)).toHaveLength(4);
+    expect(markup.match(/mom-relation-figure-shape/g)).toHaveLength(26);
+    expect(`${markup} ${describeVisual(visual)}`).not.toContain("14개");
+  });
+
+  it("renders the equal sign as a relation with one visible blank", () => {
+    const visual: JudgmentVisual = {
+      kind: "relation-pattern-diagram",
+      mode: "equal-sign-balance",
+      equation: {
+        operator: "add",
+        left: [53, 18],
+        right: [null, 26]
+      }
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup).toContain("mom-relation-equation");
+    expect(markup.match(/is-unknown/g)).toHaveLength(1);
+    expect(`${markup} ${describeVisual(visual)}`).not.toContain("45");
+    expect(describeVisual(visual)).not.toMatch(/18는|26와|빈칸와/);
+    expect(describeVisual(visual)).toContain(
+      "오른쪽 식은 빈칸 더하기 26"
+    );
+  });
+
+  it("uses particle-safe accessibility copy for relation tables and calculation arrays", () => {
+    const table: JudgmentVisual = {
+      kind: "relation-pattern-diagram",
+      mode: "rule-table",
+      leftLabel: "순서",
+      rightLabel: "개수",
+      rows: [
+        { left: 1, right: 4 },
+        { left: 2, right: 8 },
+        { left: 3, right: 12 }
+      ]
+    };
+    const calculations: JudgmentVisual = {
+      kind: "relation-pattern-diagram",
+      mode: "calculation-array",
+      calculations: [
+        { a: 11, operator: "multiply", b: 11, result: 121 },
+        { a: 11, operator: "multiply", b: 12, result: 132 },
+        { a: 11, operator: "multiply", b: 13, result: null }
+      ]
+    };
+
+    expect(describeVisual(table)).toContain(
+      "순서, 개수 대응표. 1의 짝은 4, 2의 짝은 8, 3의 짝은 12."
+    );
+    expect(describeVisual(table)).not.toMatch(/순서과|8가/);
+    expect(describeVisual(calculations)).toContain(
+      "11 곱하기 13, 결과 빈칸"
+    );
+    expect(describeVisual(calculations)).not.toMatch(/11는|12는|13는/);
+  });
+});
+
+describe("VisualAid bar chart diagrams", () => {
+  const axis = {
+    orientation: "vertical" as const,
+    tickCount: 6,
+    labeledTicks: [
+      { index: 0, value: 0 },
+      { index: 6, value: 30 }
+    ],
+    unitLabel: "개"
+  };
+
+  it("renders a deterministic chart with one grid line per tick and no answer field", () => {
+    const visual: JudgmentVisual = {
+      kind: "bar-chart-diagram",
+      mode: "bar-value",
+      axis,
+      bars: [
+        { category: "사과", ticks: 4 },
+        { category: "배", ticks: 2 }
+      ],
+      target: "사과"
+    };
+    const first = renderToStaticMarkup(createElement(VisualAid, { visual }));
+    const second = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(first).toBe(second);
+    expect(first.match(/mom-bar-grid-line/g)).toHaveLength(7);
+    expect(first.match(/mom-bar-mark/g)).toHaveLength(2);
+    expect(first).toMatch(
+      /class="mom-bar-unit-label" text-anchor="start" x="4" y="14"/
+    );
+    expect(first).not.toMatch(
+      /class="mom-bar-axis-label"[^>]*x="4" y="14"/
+    );
+    expect(first).toContain("사과");
+    expect(first).toContain("배");
+    expect(`${first} ${describeVisual(visual)}`).not.toContain("20개");
+  });
+
+  it("renders a data table and exactly three candidate graphs on one neutral visual", () => {
+    const visual: JudgmentVisual = {
+      kind: "bar-chart-diagram",
+      mode: "table-match",
+      axis,
+      table: [
+        { category: "사과", count: 20 },
+        { category: "배", count: 10 }
+      ],
+      candidates: [
+        {
+          id: "가",
+          bars: [
+            { category: "사과", ticks: 4 },
+            { category: "배", ticks: 2 }
+          ]
+        },
+        {
+          id: "나",
+          bars: [
+            { category: "사과", ticks: 5 },
+            { category: "배", ticks: 2 }
+          ]
+        },
+        {
+          id: "다",
+          bars: [
+            { category: "사과", ticks: 4 },
+            { category: "배", ticks: 3 }
+          ]
+        }
+      ]
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup).toContain("mom-bar-data-table");
+    expect(markup.match(/mom-bar-candidate"/g)).toHaveLength(3);
+    expect(markup.match(/mom-bar-chart-svg/g)).toHaveLength(3);
+    expect(markup).not.toMatch(/정답|알맞은 그래프/);
   });
 });
 

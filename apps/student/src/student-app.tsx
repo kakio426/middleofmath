@@ -79,7 +79,8 @@ function publicConfig() {
 const runtimeConfig = publicConfig();
 const demoMode = import.meta.env.VITE_DEMO_MODE === "true";
 const runtimeClient = runtimeConfig && !demoMode ? createMiddleOfMathClient(runtimeConfig) : null;
-const demoContent = typeof window !== "undefined"
+const demoContent = demoMode
+  && typeof window !== "undefined"
   && new URLSearchParams(window.location.search).get("set") === "grade4-semester1"
   ? grade4Semester1Diagnosis
   : grade3Semester2CompleteDiagnosis;
