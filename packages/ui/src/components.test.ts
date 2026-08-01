@@ -1,4 +1,4 @@
-import { createElement } from "react";
+import { createElement, Fragment } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import type { JudgmentVisual } from "@middle-of-math/domain";
@@ -51,6 +51,106 @@ describe("ReadableText", () => {
 
     expect(markup.match(/class="mom-readable-token"/g)).toHaveLength(3);
     expect(markup).toContain("mom-readable-text");
+  });
+
+  it("keeps a spaced arithmetic expression in one line-break group", () => {
+    const markup = renderToStaticMarkup(
+      createElement(ReadableText, {
+        text: "20 + 24 ÷ (8 − 4) = ?"
+      })
+    );
+
+    expect(markup.match(/class="mom-readable-token"/g)).toHaveLength(9);
+    expect(markup).toContain(
+      '<span class="mom-readable-keep"><span class="mom-readable-token">20</span> '
+      + '<span class="mom-readable-token">+</span> '
+      + '<span class="mom-readable-token">24</span> '
+      + '<span class="mom-readable-token">÷</span>'
+    );
+    expect(markup).not.toContain("<br");
+  });
+
+  it("keeps each number and comma together while allowing a long list to wrap", () => {
+    const markup = renderToStaticMarkup(
+      createElement(ReadableText, {
+        text: "1, 2, 3, 4, 6, 8, 12, 24"
+      })
+    );
+
+    expect(markup.match(/class="mom-readable-token"/g)).toHaveLength(8);
+    expect(markup).toContain('<span class="mom-readable-token">1,</span>');
+    expect(markup).toContain('<span class="mom-readable-token">12,</span>');
+    expect(markup).toContain('<span class="mom-readable-token">24</span>');
+    expect(markup).not.toContain("mom-readable-keep");
+    expect(markup).not.toContain("<br");
+  });
+
+  it("renders slash fractions as stacked textbook fractions", () => {
+    const markup = renderToStaticMarkup(
+      createElement(ReadableText, {
+        text: "1/4 + 1/3 = ?"
+      })
+    );
+
+    expect(markup.match(/class="mom-stacked-fraction"/g)).toHaveLength(2);
+    expect(markup).toContain('aria-label="4분의 1"');
+    expect(markup).toContain('aria-label="3분의 1"');
+    expect(markup).toContain(
+      '<span class="mom-stacked-fraction-numerator" aria-hidden="true">1</span>'
+    );
+    expect(markup).toContain(
+      '<span class="mom-stacked-fraction-denominator" aria-hidden="true">4</span>'
+    );
+  });
+
+  it("keeps a whole number and stacked fraction together as one mixed number", () => {
+    const markup = renderToStaticMarkup(
+      createElement(ReadableText, {
+        text: "2 1/3"
+      })
+    );
+
+    expect(markup).toContain(
+      '<span class="mom-readable-keep"><span class="mom-readable-token">2</span> '
+    );
+    expect(markup).toContain('aria-label="3분의 1"');
+  });
+
+  it("keeps a mixed number attached when the fraction has a Korean ending", () => {
+    const markup = renderToStaticMarkup(
+      createElement(ReadableText, {
+        text: "2 1/3과 같은 수"
+      })
+    );
+
+    expect(markup.match(/class="mom-readable-keep"/g)).toHaveLength(1);
+    expect(markup).toMatch(
+      /mom-readable-keep[\s\S]*?>2<\/[\s\S]*?aria-label="3분의 1"[\s\S]*?<\/span>과/
+    );
+  });
+
+  it("keeps Korean mixed numbers and the operator in one line-break group", () => {
+    const markup = renderToStaticMarkup(
+      createElement(ReadableText, {
+        text: "1과 2/7 + 2와 3/7을 대분수로 나타내면 얼마일까요?"
+      })
+    );
+
+    expect(markup.match(/class="mom-readable-keep"/g)).toHaveLength(1);
+    expect(markup).toMatch(
+      /mom-readable-keep[\s\S]*?1과[\s\S]*?aria-label="7분의 2"[\s\S]*?>\+<[\s\S]*?2와[\s\S]*?aria-label="7분의 3"/
+    );
+  });
+
+  it("renders fractions inside Korean eojeol without losing the ending", () => {
+    const markup = renderToStaticMarkup(
+      createElement(ReadableText, {
+        text: "3/5와 크기가 같은 분수"
+      })
+    );
+
+    expect(markup).toContain('aria-label="5분의 3"');
+    expect(markup).toContain("</span>와</span>");
   });
 });
 
@@ -168,6 +268,20 @@ describe("VisualAid circle diagrams", () => {
     expect(markup.match(/mom-circle-point-label/g)).toHaveLength(3);
   });
 
+  it("labels a given diameter across the whole segment in metres", () => {
+    const visual: JudgmentVisual = {
+      kind: "circle",
+      mode: "diameter",
+      diameterValue: 20,
+      measurementUnit: "m"
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup).toContain(">20 m</text>");
+    expect(markup).not.toContain("mom-circle-radius-highlight");
+    expect(describeVisual(visual)).toContain("선분 AB의 길이는 20미터");
+  });
+
   it("draws three separately labeled radii for equal-radius comparisons", () => {
     const visual: JudgmentVisual = {
       kind: "circle",
@@ -244,6 +358,218 @@ describe("VisualAid division groups", () => {
 
     expect(markup.match(/묶음 [1-5]/g)).toHaveLength(5);
     expect(markup).not.toContain("한 사람");
+  });
+});
+
+describe("VisualAid upper-grade semantic diagrams", () => {
+  function renderedNet(shape: "cube" | "rectangular-prism" | "cylinder" | "cone") {
+    return renderToStaticMarkup(createElement(VisualAid, {
+      visual: { kind: "solid-diagram", mode: "net", shape }
+    }));
+  }
+
+  function netRectangles(markup: string, prefix: "cube" | "box") {
+    return [...markup.matchAll(new RegExp(`<rect[^>]*data-net-face="${prefix}-\\d+"[^>]*>`, "g"))]
+      .map(([tag]) => {
+        const value = (name: string) => Number(tag.match(new RegExp(`${name}="([^"]+)"`))?.[1]);
+        return { x: value("x"), y: value("y"), width: value("width"), height: value("height") };
+      });
+  }
+
+  function rectanglesShareEdge(
+    left: { x: number; y: number; width: number; height: number },
+    right: { x: number; y: number; width: number; height: number }
+  ) {
+    const vertical = (left.x + left.width === right.x || right.x + right.width === left.x)
+      && Math.min(left.y + left.height, right.y + right.height) > Math.max(left.y, right.y);
+    const horizontal = (left.y + left.height === right.y || right.y + right.height === left.y)
+      && Math.min(left.x + left.width, right.x + right.width) > Math.max(left.x, right.x);
+    return vertical || horizontal;
+  }
+
+  it.each(["cube", "rectangular-prism"] as const)(
+    "%s net has six non-overlapping faces joined by full fold edges",
+    (shape) => {
+      const faces = netRectangles(renderedNet(shape), shape === "cube" ? "cube" : "box");
+      expect(faces).toHaveLength(6);
+      const visited = new Set([0]);
+      while (true) {
+        const next = faces.findIndex((face, index) => !visited.has(index)
+          && [...visited].some((visitedIndex) => rectanglesShareEdge(face, faces[visitedIndex]!)));
+        if (next < 0) break;
+        visited.add(next);
+      }
+      expect(visited.size).toBe(6);
+      for (let left = 0; left < faces.length; left += 1) {
+        for (let right = left + 1; right < faces.length; right += 1) {
+          const overlapWidth = Math.min(faces[left]!.x + faces[left]!.width, faces[right]!.x + faces[right]!.width)
+            - Math.max(faces[left]!.x, faces[right]!.x);
+          const overlapHeight = Math.min(faces[left]!.y + faces[left]!.height, faces[right]!.y + faces[right]!.height)
+            - Math.max(faces[left]!.y, faces[right]!.y);
+          expect(overlapWidth > 0 && overlapHeight > 0).toBe(false);
+        }
+      }
+    }
+  );
+
+  it("joins circular bases to the correct edges of cylinder and cone nets", () => {
+    const cylinder = renderedNet("cylinder");
+    expect(cylinder).toContain('data-net-face="top-base" r="25"');
+    expect(cylinder).toContain('cx="180" cy="47"');
+    expect(cylinder).toContain('cx="180" cy="177"');
+    expect(cylinder).toContain('height="80" width="157.079633" x="101.460184" y="72"');
+
+    const cone = renderedNet("cone");
+    expect(cone).toContain('d="M80 150 A100 100 0 0 1 180 50 L180 150 Z"');
+    expect(cone).toContain('cx="55" cy="150" data-net-face="base" r="25"');
+  });
+
+  it("renders supported unit cubes and an explicit front direction", () => {
+    const visual: JudgmentVisual = {
+      kind: "solid-diagram",
+      mode: "unit-stack",
+      shape: "unit-cubes",
+      cubes: [[0, 0, 0], [0, 0, 1], [1, 0, 0], [0, 1, 0]],
+      frontDirection: "right"
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup.match(/class="mom-unit-cube"/g)).toHaveLength(4);
+    expect(markup).toContain("mom-solid-front-arrow");
+    expect(markup).toContain(">앞</text>");
+    const [, viewBox] = markup.match(/viewBox="([^"]+)"/) ?? [];
+    const [left, top, width, height] = viewBox!.split(" ").map(Number);
+    const pointPairs = [...markup.matchAll(/points="([^"]+)"/g)].flatMap(
+      (match) => match[1].split(" ").map((pair) => pair.split(",").map(Number))
+    );
+    for (const [x, y] of pointPairs) {
+      expect(x).toBeGreaterThanOrEqual(left);
+      expect(x).toBeLessThanOrEqual(left + width);
+      expect(y).toBeGreaterThanOrEqual(top);
+      expect(y).toBeLessThanOrEqual(top + height);
+    }
+  });
+
+  it("describes a solid without exposing its textbook name", () => {
+    const visual: JudgmentVisual = {
+      kind: "solid-diagram",
+      mode: "structure",
+      shape: "triangular-prism"
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup).toContain("mom-solid-diagram");
+    expect(describeVisual(visual)).toContain("서로 평행한 삼각형 면");
+    expect(describeVisual(visual)).not.toContain("삼각기둥");
+  });
+
+  it("keeps every triangular-prism net edge at the same fold length", () => {
+    const visual: JudgmentVisual = {
+      kind: "solid-diagram",
+      mode: "net",
+      shape: "triangular-prism"
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+    const polygons = [...markup.matchAll(/<polygon[^>]+points="([^"]+)"/g)]
+      .map((match) => match[1].split(" ").map((pair) => pair.split(",").map(Number)));
+
+    expect(polygons).toHaveLength(2);
+    for (const triangle of polygons) {
+      const sideLengths = triangle.map(([x1, y1], index) => {
+        const [x2, y2] = triangle[(index + 1) % triangle.length];
+        return Math.hypot(x2 - x1, y2 - y1);
+      });
+      for (const sideLength of sideLengths) {
+        expect(sideLength).toBeCloseTo(42, 5);
+      }
+    }
+    expect(markup.match(/<rect[^>]+height="42"[^>]+width="150"/g)).toHaveLength(3);
+  });
+
+  it("matches a cylinder net side length to the base circumference", () => {
+    const visual: JudgmentVisual = {
+      kind: "solid-diagram",
+      mode: "net",
+      shape: "cylinder"
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+    const width = Number(markup.match(/data-net-face="side"[^>]+width="([^"]+)"/)?.[1]);
+    const radius = Number(markup.match(/data-net-face="top-base"[^>]+r="([^"]+)"/)?.[1]);
+
+    expect(width).toBeCloseTo(2 * Math.PI * radius, 5);
+  });
+
+  it("matches a cone sector arc length to the base circumference", () => {
+    const visual: JudgmentVisual = {
+      kind: "solid-diagram",
+      mode: "net",
+      shape: "cone"
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+    const radius = Number(markup.match(/data-net-face="base"[^>]+r="([^"]+)"/)?.[1]);
+    const sectorRadius = 100;
+    const sectorAngle = Math.PI / 2;
+
+    expect(markup).toContain('d="M80 150 A100 100 0 0 1 180 50 L180 150 Z"');
+    expect(sectorRadius * sectorAngle).toBeCloseTo(2 * Math.PI * radius, 10);
+  });
+
+  it("renders raw equal parts in a chart without precomputing percentages", () => {
+    const visual: JudgmentVisual = {
+      kind: "part-chart-diagram",
+      mode: "strip",
+      totalParts: 10,
+      segments: [
+        { label: "독서", parts: 4 },
+        { label: "운동", parts: 6 }
+      ]
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup.match(/mom-part-chart-piece/g)).toHaveLength(10);
+    expect(markup.match(/data-part-pattern="\d"/g)).toHaveLength(14);
+    const patternIds = [...markup.matchAll(/id="([^"]*mom-part-chart-[^"]*-pattern-\d+)"/g)]
+      .map((match) => match[1]);
+    expect(patternIds).toHaveLength(2);
+    for (const patternId of patternIds) {
+      expect(markup).toContain(`fill="url(#${patternId})"`);
+    }
+    expect(markup).toContain("mom-part-chart-pattern-dot");
+    expect(markup).toContain("mom-part-chart-pattern-mark");
+    expect(markup).toContain("전체 10칸");
+    expect(markup).not.toMatch(/%|퍼센트/);
+  });
+
+  it("keeps all six chart patterns distinct across multiple chart instances", () => {
+    const visual: JudgmentVisual = {
+      kind: "part-chart-diagram",
+      mode: "circle",
+      totalParts: 10,
+      segments: ["가", "나", "다", "라", "마", "바"].map((label, index) => ({
+        label,
+        parts: index < 2 ? 1 : 2
+      }))
+    };
+    const markup = renderToStaticMarkup(createElement(Fragment, null,
+      createElement(VisualAid, { visual }),
+      createElement(VisualAid, { visual })
+    ));
+    const patternIds = [...markup.matchAll(/id="([^"]*mom-part-chart-[^"]*-pattern-\d+)"/g)]
+      .map((match) => match[1]);
+
+    expect(patternIds).toHaveLength(12);
+    expect(new Set(patternIds).size).toBe(12);
+    for (const patternId of patternIds) {
+      expect(markup).toContain(`fill="url(#${patternId})"`);
+    }
+    for (const patternClass of ["is-a", "is-b", "is-c", "is-d", "is-e", "is-f"]) {
+      expect(markup).toContain(`mom-part-chart-pattern-background ${patternClass}`);
+    }
+    expect(markup.match(/mom-part-chart-pattern-dot/g)).toHaveLength(2);
+    expect(markup.match(/mom-part-chart-pattern-mark/g)).toHaveLength(10);
+    expect(markup).toContain("전체 10부분");
+    expect(markup).toContain("원그래프. 전체 10부분 가운데");
+    expect(markup).not.toContain("전체 10칸");
   });
 });
 
@@ -757,6 +1083,243 @@ describe("VisualAid bar chart diagrams", () => {
     expect(markup.match(/mom-bar-candidate"/g)).toHaveLength(3);
     expect(markup.match(/mom-bar-chart-svg/g)).toHaveLength(3);
     expect(markup).not.toMatch(/정답|알맞은 그래프/);
+  });
+});
+
+describe("VisualAid shape accessibility descriptions", () => {
+  it("names the two triangle sides carrying equal-length marks", () => {
+    const visual: JudgmentVisual = {
+      kind: "triangle-figure",
+      mode: "side-angle",
+      angles: [50, null, null],
+      askIndex: 1,
+      equalSideIndexes: [0, 2]
+    };
+
+    const description = describeVisual(visual) ?? "";
+
+    expect(description).toContain("변 ㄴㄷ과 변 ㄱㄴ에 같은 눈금 표시");
+    expect(description).not.toMatch(/이등변삼각형|정답/);
+  });
+
+  it("states raw side and vertex counts without naming the polygon", () => {
+    const visual: JudgmentVisual = {
+      kind: "polygon-figure",
+      mode: "side-count-name",
+      figure: {
+        form: "lattice",
+        vertices: [[0, 0], [4, 0], [5, 2], [4, 4], [2, 3], [0, 4]]
+      }
+    };
+
+    const description = describeVisual(visual) ?? "";
+
+    expect(description).toContain("곧은 변 6개와 꼭짓점 6개");
+    expect(description).not.toMatch(/육각형|정답/);
+  });
+
+  it("describes every board cell, placed cell, and candidate piece group", () => {
+    const visual: JudgmentVisual = {
+      kind: "tile-composition",
+      mode: "fill-remaining",
+      board: [
+        [0, 1, "up"], [0, 1, "down"], [1, 1, "up"], [1, 1, "down"]
+      ],
+      placed: [{
+        piece: "rhombus",
+        cells: [[0, 1, "up"], [0, 1, "down"]]
+      }],
+      candidates: [
+        { id: "가", pieces: ["rhombus"] },
+        { id: "나", pieces: ["triangle", "triangle"] },
+        { id: "다", pieces: ["trapezoid"] }
+      ]
+    };
+
+    const description = describeVisual(visual) ?? "";
+
+    expect(description).toContain("전체 삼각형 격자의 각 칸 위치");
+    expect(description).toContain("가로 0, 세로 1, 위 방향");
+    expect(description).toContain("1번째 마름모 조각이 차지한 칸");
+    expect(description).toContain("가 묶음: 마름모");
+    expect(description).toContain("나 묶음: 정삼각형, 정삼각형");
+    expect(description).toContain("다 묶음: 사다리꼴");
+    expect(description).not.toMatch(/꼭 맞|정답/);
+  });
+
+  it("states tile-count source quantities without calculating the answer", () => {
+    const visual: JudgmentVisual = {
+      kind: "tile-composition",
+      mode: "tile-count",
+      region: [
+        [0, 1, "up"], [0, 1, "down"], [1, 1, "up"], [1, 1, "down"]
+      ],
+      piece: "rhombus"
+    };
+
+    const description = describeVisual(visual) ?? "";
+
+    expect(description).toContain("큰 모양은 작은 삼각형 4칸");
+    expect(description).toContain("마름모 조각 한 개는 작은 삼각형 2칸");
+    expect(description).not.toMatch(/마름모 (?:2개|두 개)|정답/);
+  });
+});
+
+describe("VisualAid perimeter and area diagrams", () => {
+  const activeDiagrams: Array<Extract<
+    JudgmentVisual,
+    { kind: "perimeter-area-diagram" }
+  >> = [
+    { kind: "perimeter-area-diagram", shape: "rectangle", width: 8, height: 5 },
+    { kind: "perimeter-area-diagram", shape: "square", side: 6 },
+    { kind: "perimeter-area-diagram", shape: "rectangle", width: 8, height: 4 },
+    { kind: "perimeter-area-diagram", shape: "square", side: 7 },
+    { kind: "perimeter-area-diagram", shape: "parallelogram", base: 9, height: 4 },
+    { kind: "perimeter-area-diagram", shape: "parallelogram", base: 7, height: 5 },
+    { kind: "perimeter-area-diagram", shape: "triangle", base: 10, height: 6 },
+    { kind: "perimeter-area-diagram", shape: "triangle", base: 8, height: 7 },
+    { kind: "perimeter-area-diagram", shape: "trapezoid", topBase: 6, bottomBase: 10, height: 5 },
+    { kind: "perimeter-area-diagram", shape: "trapezoid", topBase: 8, bottomBase: 14, height: 4 },
+    { kind: "perimeter-area-diagram", shape: "rhombus", diagonal1: 10, diagonal2: 6 },
+    { kind: "perimeter-area-diagram", shape: "rhombus", diagonal1: 12, diagonal2: 8 }
+  ];
+
+  function elementWithClass(markup: string, className: string, index = 0): string {
+    const matches = [...markup.matchAll(new RegExp(
+      `<(?:rect|polygon|line|path)[^>]*class="${className}"[^>]*>`,
+      "g"
+    ))];
+    const element = matches[index]?.[0];
+    if (!element) throw new Error(`Missing ${className} element ${index}`);
+    return element;
+  }
+
+  function numericAttribute(element: string, name: string): number {
+    const value = element.match(new RegExp(`${name}="([^"]+)"`))?.[1];
+    if (value === undefined) throw new Error(`Missing ${name} in ${element}`);
+    return Number(value);
+  }
+
+  function polygonPoints(markup: string): Array<[number, number]> {
+    const element = elementWithClass(markup, "mom-area-shape");
+    const value = element.match(/points="([^"]+)"/)?.[1];
+    if (!value) throw new Error("Missing polygon points");
+    return value.split(" ").map((pair) => pair.split(",").map(Number) as [number, number]);
+  }
+
+  it("keeps all 12 active diagrams proportional and every height perpendicular", () => {
+    for (const visual of activeDiagrams) {
+      const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+      if (visual.shape === "rectangle" || visual.shape === "square") {
+        const rect = elementWithClass(markup, "mom-area-shape");
+        const width = numericAttribute(rect, "width");
+        const height = numericAttribute(rect, "height");
+        const expectedRatio = visual.shape === "square"
+          ? 1
+          : visual.width / visual.height;
+        expect(width / height, JSON.stringify(visual)).toBeCloseTo(expectedRatio, 5);
+        continue;
+      }
+
+      const points = polygonPoints(markup);
+      if (visual.shape === "rhombus") {
+        const [top, right, bottom, left] = points;
+        expect((right![0] - left![0]) / (bottom![1] - top![1]))
+          .toBeCloseTo(visual.diagonal1 / visual.diagonal2, 5);
+        const horizontal = elementWithClass(markup, "mom-area-diagonal", 0);
+        const vertical = elementWithClass(markup, "mom-area-diagonal", 1);
+        expect(numericAttribute(horizontal, "y1")).toBe(numericAttribute(horizontal, "y2"));
+        expect(numericAttribute(vertical, "x1")).toBe(numericAttribute(vertical, "x2"));
+        expect(elementWithClass(markup, "mom-area-right-angle")).toContain('d="M 150 94 h 11 v 11"');
+        continue;
+      }
+
+      const heightLine = elementWithClass(markup, "mom-area-height");
+      const guideX = numericAttribute(heightLine, "x1");
+      const guideTop = numericAttribute(heightLine, "y1");
+      const guideBottom = numericAttribute(heightLine, "y2");
+      expect(numericAttribute(heightLine, "x2"), JSON.stringify(visual)).toBe(guideX);
+      const rightAngle = elementWithClass(markup, "mom-area-right-angle");
+      expect(rightAngle, JSON.stringify(visual)).toContain(
+        `d="M ${guideX} ${guideBottom - 11} h 11 v 11"`
+      );
+
+      if (visual.shape === "parallelogram") {
+        const [topLeft, topRight, bottomRight, bottomLeft] = points;
+        expect(guideX).toBe(topLeft![0]);
+        expect(guideTop).toBe(topLeft![1]);
+        expect(guideBottom).toBe(bottomLeft![1]);
+        expect((topRight![0] - topLeft![0]) / (bottomLeft![1] - topLeft![1]))
+          .toBeCloseTo(visual.base / visual.height, 3);
+      } else if (visual.shape === "triangle") {
+        const [left, right, apex] = points;
+        expect(guideX).toBe(apex![0]);
+        expect(guideTop).toBe(apex![1]);
+        expect(guideBottom).toBe(left![1]);
+        expect((right![0] - left![0]) / (left![1] - apex![1]))
+          .toBeCloseTo(visual.base / visual.height, 3);
+      } else if (visual.shape === "trapezoid") {
+        const [topLeft, topRight, bottomRight, bottomLeft] = points;
+        const topWidth = topRight![0] - topLeft![0];
+        const bottomWidth = bottomRight![0] - bottomLeft![0];
+        const height = bottomLeft![1] - topLeft![1];
+        expect(guideX).toBe(topLeft![0]);
+        expect(guideTop).toBe(topLeft![1]);
+        expect(guideBottom).toBe(bottomLeft![1]);
+        expect(topWidth / bottomWidth).toBeCloseTo(visual.topBase / visual.bottomBase, 3);
+        expect(bottomWidth / height).toBeCloseTo(visual.bottomBase / visual.height, 3);
+      }
+    }
+  });
+
+  it("draws a rectangle in the same proportion as its labeled sides", () => {
+    const visual: JudgmentVisual = {
+      kind: "perimeter-area-diagram",
+      shape: "rectangle",
+      width: 8,
+      height: 4
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup).toContain('height="90"');
+    expect(markup).toContain('width="180"');
+  });
+
+  it("shows a perpendicular height without exposing the area", () => {
+    const visual: JudgmentVisual = {
+      kind: "perimeter-area-diagram",
+      shape: "triangle",
+      base: 10,
+      height: 6
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup).toContain("mom-perimeter-area is-triangle");
+    expect(markup).toContain("mom-area-height");
+    expect(markup).toContain("mom-area-right-angle");
+    expect(markup).toContain('points="50,165 250,165 136,45"');
+    expect(markup).toContain("10 cm");
+    expect(markup).toContain("6 cm");
+    expect(describeVisual(visual)).toBe(
+      "밑변 10센티미터, 높이 6센티미터인 삼각형"
+    );
+    expect(`${markup} ${describeVisual(visual)}`).not.toContain("30 cm²");
+  });
+
+  it("shows both rhombus diagonals and their right angle", () => {
+    const visual: JudgmentVisual = {
+      kind: "perimeter-area-diagram",
+      shape: "rhombus",
+      diagonal1: 12,
+      diagonal2: 8
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup.match(/mom-area-diagonal/g)).toHaveLength(2);
+    expect(markup).toContain("mom-area-right-angle");
+    expect(markup).toContain('points="150,35 255,105 150,175 45,105"');
+    expect(describeVisual(visual)).toContain("12센티미터와 8센티미터");
+    expect(`${markup} ${describeVisual(visual)}`).not.toContain("48 cm²");
   });
 });
 

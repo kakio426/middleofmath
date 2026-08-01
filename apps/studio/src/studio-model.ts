@@ -117,6 +117,29 @@ export function summarizeVisual(judgment: Judgment): string {
     case "polygon-angle-diagram": return `${
       judgment.visual.polygon === "triangle" ? "삼각형" : "사각형"
     }의 각 그림`;
+    case "triangle-figure": return judgment.visual.mode === "side-classify"
+      ? "변의 길이로 분류하는 삼각형"
+      : judgment.visual.mode === "side-angle"
+        ? "같은 변과 각이 표시된 삼각형"
+        : "각의 크기로 분류하는 삼각형";
+    case "quadrilateral-figure": {
+      const labels = {
+        "side-perpendicular": "직각 표시가 있는 사각형",
+        "side-parallel-distance": "평행한 두 변 사이의 거리",
+        "parallel-classify": "평행 표시가 있는 사각형",
+        "equal-side-classify": "같은 변 표시가 있는 사각형",
+        "opposite-angle": "마주 보는 각이 표시된 사각형"
+      } as const;
+      return labels[judgment.visual.mode];
+    }
+    case "polygon-figure": return judgment.visual.mode === "polygon-select"
+      ? "다각형 후보 가·나·다"
+      : judgment.visual.mode === "side-count-name"
+        ? "변의 수를 세는 다각형"
+        : "정다각형 후보 가·나·다";
+    case "tile-composition": return judgment.visual.mode === "fill-remaining"
+      ? "남은 자리를 채우는 모양 조각"
+      : "같은 모양 조각으로 채우기";
     case "grid-transform-diagram": return judgment.visual.mode === "point-move"
       ? "격자에서 두 점의 이동"
       : "격자에서 처음·나중 도형";
@@ -144,6 +167,33 @@ export function summarizeVisual(judgment: Judgment): string {
       }
       return `${judgment.visual.bars?.length ?? 0}개 항목 막대그래프`;
     }
+    case "line-chart-diagram": {
+      const labels = {
+        "tick-unit": "눈금 한 칸의 값",
+        "point-value": "한 점의 값",
+        "step-change": "두 점 사이 변화량",
+        "largest-rise": "가장 크게 증가한 구간",
+        "between-estimate": "두 점 사이 값 어림"
+      } as const;
+      return `${judgment.visual.timeAxis.categories.length}개 시점 꺾은선그래프 · ${labels[judgment.visual.mode]}`;
+    }
+    case "perimeter-area-diagram": {
+      const labels = {
+        rectangle: "직사각형",
+        square: "정사각형",
+        parallelogram: "평행사변형",
+        triangle: "삼각형",
+        trapezoid: "사다리꼴",
+        rhombus: "마름모"
+      } as const;
+      return `길이가 표시된 ${labels[judgment.visual.shape]}`;
+    }
+    case "solid-diagram": return judgment.visual.mode === "unit-stack"
+      ? "앞 방향이 표시된 쌓기나무"
+      : `${judgment.visual.shape} ${judgment.visual.mode === "net" ? "전개도" : "입체 그림"}`;
+    case "part-chart-diagram": return judgment.visual.mode === "strip"
+      ? `${judgment.visual.totalParts}칸 띠그래프`
+      : `${judgment.visual.totalParts}부분 원그래프`;
     case "pictograph": return `그림 1개 = ${judgment.visual.value}개`;
   }
 }

@@ -6,9 +6,15 @@ import {
   SyncObservationEvents
 } from "@middle-of-math/application";
 import {
+  grade3Semester1Diagnosis,
   grade3Semester2CompleteDiagnosis,
   grade3Semester2Diagnosis,
   grade4Semester1Diagnosis,
+  grade4Semester2Diagnosis,
+  grade5Semester1Diagnosis,
+  grade5Semester2Diagnosis,
+  grade6Semester1Diagnosis,
+  grade6Semester2Diagnosis,
   parseDiagnosisSet
 } from "@middle-of-math/content/runtime";
 import {
@@ -79,11 +85,24 @@ function publicConfig() {
 const runtimeConfig = publicConfig();
 const demoMode = import.meta.env.VITE_DEMO_MODE === "true";
 const runtimeClient = runtimeConfig && !demoMode ? createMiddleOfMathClient(runtimeConfig) : null;
-const demoContent = demoMode
-  && typeof window !== "undefined"
-  && new URLSearchParams(window.location.search).get("set") === "grade4-semester1"
-  ? grade4Semester1Diagnosis
-  : grade3Semester2CompleteDiagnosis;
+const requestedDemoSet = demoMode && typeof window !== "undefined"
+  ? new URLSearchParams(window.location.search).get("set")
+  : null;
+const demoContent = requestedDemoSet === "grade3-semester1"
+  ? grade3Semester1Diagnosis
+  : requestedDemoSet === "grade4-semester1"
+    ? grade4Semester1Diagnosis
+  : requestedDemoSet === "grade4-semester2"
+    ? grade4Semester2Diagnosis
+    : requestedDemoSet === "grade5-semester1"
+      ? grade5Semester1Diagnosis
+    : requestedDemoSet === "grade5-semester2"
+      ? grade5Semester2Diagnosis
+    : requestedDemoSet === "grade6-semester1"
+      ? grade6Semester1Diagnosis
+    : requestedDemoSet === "grade6-semester2"
+      ? grade6Semester2Diagnosis
+    : grade3Semester2CompleteDiagnosis;
 
 function mapAssignmentRecord(row: StudentAssignmentRecord, content = row.diagnosisSet.content): AssignmentCard | null {
   try {
@@ -168,7 +187,11 @@ export function StudentApp() {
   const [screen, setScreen] = useState<Screen>(() => localStorage.getItem(LOCAL_CONTEXT_KEY) ? "assignments" : "join");
   const [student, setStudent] = useState<StudentContext | null>(() => {
     const saved = localStorage.getItem(LOCAL_CONTEXT_KEY);
-    return saved ? JSON.parse(saved) as StudentContext : null;
+    if (!saved) return null;
+    const restored = JSON.parse(saved) as StudentContext;
+    return demoMode
+      ? { ...restored, className: `${demoContent.manifest.grade}학년 체험반` }
+      : restored;
   });
   const [assignmentCards, setAssignmentCards] = useState<AssignmentCard[]>(() =>
     demoMode ? createUnitAssignmentCards(demoContent) : []
@@ -276,10 +299,17 @@ export function StudentApp() {
   const currentPresentedChoices = useMemo(() => {
     if (!currentJudgment || !session) return [];
     return presentedChoices(
-      { sessionId: session.id, judgmentId: currentJudgment.id },
+      {
+        sessionId: session.id,
+        judgmentId: currentJudgment.id,
+        judgmentIndex,
+        correctChoiceId: currentJudgment.choices.find(
+          (choice) => choice.correct
+        )?.id
+      },
       currentJudgment.choices
     );
-  }, [currentJudgment, session?.id]);
+  }, [currentJudgment, judgmentIndex, session?.id]);
   const progress = activeJudgments.length > 0
     ? judgmentIndex / activeJudgments.length * 100
     : 0;
@@ -601,7 +631,7 @@ function JudgmentScreen({ judgment, choices, unitTitle, progress, selectedChoice
   return (
     <section className="student-judgment">
       <div className="student-progress-wrap"><ProgressLine value={progress} /></div>
-      <article className="student-judgment-grid">
+      <article className="student-judgment-grid" data-judgment-id={judgment.id}>
         <div className="student-question mom-stack-lg">
           <div>
             <p className="mom-eyebrow">{unitTitle}</p>

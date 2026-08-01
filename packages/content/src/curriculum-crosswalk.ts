@@ -5,15 +5,26 @@ import type {
 import semester1CrosswalkJson from "./grade3-semester1-crosswalk.json";
 import semester2CrosswalkJson from "./grade3-semester2-crosswalk.json";
 import grade4Semester1CrosswalkJson from "./grade4-semester1-crosswalk.json";
+import grade4Semester2CrosswalkJson from "./grade4-semester2-crosswalk.json";
+import grade5Semester1CrosswalkJson from "./grade5-semester1-crosswalk.json";
+import grade5Semester2CrosswalkJson from "./grade5-semester2-crosswalk.json";
+import grade6Semester1CrosswalkJson from "./grade6-semester1-crosswalk.json";
+import grade6Semester2CrosswalkJson from "./grade6-semester2-crosswalk.json";
 import {
   grade3Semester1AnchorRegistry,
   findGrade3Semester2Anchor,
-  grade4Semester1AnchorRegistry
+  grade4Semester1AnchorRegistry,
+  grade4Semester2AnchorRegistry,
+  grade5Semester1AnchorRegistry,
+  grade5Semester2AnchorRegistry,
+  grade6Semester1AnchorRegistry,
+  grade6Semester2AnchorRegistry
 } from "./curriculum-anchor-registry";
 import { jsonSha256 } from "./integrity-digest";
 import semester1SnapshotJson from "./upstream/kr-learning-map.g3s1.snapshot.json";
 import semester2SnapshotJson from "./upstream/kr-learning-map.snapshot.json";
 import grade34SnapshotJson from "./upstream/kr-learning-map.grade34.snapshot.json";
+import grade56SnapshotJson from "./upstream/kr-learning-map.grade56.snapshot.json";
 
 export type AnchorCrosswalkStatus = "matched" | "code-only" | "gap" | "local-only";
 export type StageCrosswalkStatus = "topic-matched" | "topic-partial" | "gap" | "local-only";
@@ -125,12 +136,24 @@ export const grade3Semester1Crosswalk =
   semester1CrosswalkJson as CurriculumCrosswalk;
 export const grade4Semester1Crosswalk =
   grade4Semester1CrosswalkJson as CurriculumCrosswalk;
+export const grade4Semester2Crosswalk =
+  grade4Semester2CrosswalkJson as CurriculumCrosswalk;
+export const grade5Semester1Crosswalk =
+  grade5Semester1CrosswalkJson as CurriculumCrosswalk;
+export const grade5Semester2Crosswalk =
+  grade5Semester2CrosswalkJson as CurriculumCrosswalk;
+export const grade6Semester1Crosswalk =
+  grade6Semester1CrosswalkJson as CurriculumCrosswalk;
+export const grade6Semester2Crosswalk =
+  grade6Semester2CrosswalkJson as CurriculumCrosswalk;
 export const koreanLearningMapSnapshot =
   semester2SnapshotJson as CuratedSnapshot;
 export const grade3Semester1LearningMapSnapshot =
   semester1SnapshotJson as CuratedSnapshot;
 export const grade34LearningMapSnapshot =
   grade34SnapshotJson as CuratedSnapshot;
+export const grade56LearningMapSnapshot =
+  grade56SnapshotJson as CuratedSnapshot;
 
 const registry = new Map([
   [grade3Semester1Crosswalk.setKey, {
@@ -150,8 +173,42 @@ const registry = new Map([
     snapshot: grade34LearningMapSnapshot,
     expectedSnapshotDigest: "sha256:c636ccf0033a8bfd1d808c899bbb569ac58da39a8197d2c9bbc4b9c615eef562",
     expectedCrosswalkDigest: "sha256:7a9d71ba2421d70e34c1c115c4596c69dc68004eb9da88b05fb0b60f85b09965"
+  }],
+  [grade4Semester2Crosswalk.setKey, {
+    crosswalk: grade4Semester2Crosswalk,
+    snapshot: grade34LearningMapSnapshot,
+    expectedSnapshotDigest: "sha256:c636ccf0033a8bfd1d808c899bbb569ac58da39a8197d2c9bbc4b9c615eef562",
+    expectedCrosswalkDigest: "sha256:1c3d1772d232824977f73c3920784fde266ce5e71dbb8483e4ac815b50eeea99"
+  }],
+  [grade5Semester1Crosswalk.setKey, {
+    crosswalk: grade5Semester1Crosswalk,
+    snapshot: grade56LearningMapSnapshot,
+    expectedSnapshotDigest: "sha256:7ec5c6254d89f931c73d1638cefcaf92b8f0102e98ae55258b0d7b3fd6b664cb",
+    expectedCrosswalkDigest: "sha256:c4176ad2da5fd9a4ccd2705d9c1e448850394c731fe79207c2def68ce7af6352"
+  }],
+  [grade5Semester2Crosswalk.setKey, {
+    crosswalk: grade5Semester2Crosswalk,
+    snapshot: grade56LearningMapSnapshot,
+    expectedSnapshotDigest: "sha256:7ec5c6254d89f931c73d1638cefcaf92b8f0102e98ae55258b0d7b3fd6b664cb",
+    expectedCrosswalkDigest: "sha256:ca8d89618d70b480041d00e334f24f6fb1d848b1b61813b38424a5abca143fdb"
+  }],
+  [grade6Semester1Crosswalk.setKey, {
+    crosswalk: grade6Semester1Crosswalk,
+    snapshot: grade56LearningMapSnapshot,
+    expectedSnapshotDigest: "sha256:7ec5c6254d89f931c73d1638cefcaf92b8f0102e98ae55258b0d7b3fd6b664cb",
+    expectedCrosswalkDigest: "sha256:a6c0cebd7eaf5c4859df32decd9bc7033ed1e4d3bc1f80631327b7e515f6e10c"
+  }],
+  [grade6Semester2Crosswalk.setKey, {
+    crosswalk: grade6Semester2Crosswalk,
+    snapshot: grade56LearningMapSnapshot,
+    expectedSnapshotDigest: "sha256:7ec5c6254d89f931c73d1638cefcaf92b8f0102e98ae55258b0d7b3fd6b664cb",
+    expectedCrosswalkDigest: "sha256:75c2deffa24604f04db5fbcd6e9801ffd2cf808db644c3ac5142b1f80eb15f37"
   }]
 ]);
+
+function gradeBandForGrade(grade: number): "1-2" | "3-4" | "5-6" {
+  return grade <= 2 ? "1-2" : grade <= 4 ? "3-4" : "5-6";
+}
 
 function addIssue(
   issues: ContentValidationIssue[],
@@ -175,6 +232,31 @@ function contentLabel(
   }
   if (setKey === grade4Semester1Crosswalk.setKey) {
     return grade4Semester1AnchorRegistry.find(
+      (anchor) => anchor.id === anchorId
+    )?.label;
+  }
+  if (setKey === grade4Semester2Crosswalk.setKey) {
+    return grade4Semester2AnchorRegistry.find(
+      (anchor) => anchor.id === anchorId
+    )?.label;
+  }
+  if (setKey === grade5Semester1Crosswalk.setKey) {
+    return grade5Semester1AnchorRegistry.find(
+      (anchor) => anchor.id === anchorId
+    )?.label;
+  }
+  if (setKey === grade5Semester2Crosswalk.setKey) {
+    return grade5Semester2AnchorRegistry.find(
+      (anchor) => anchor.id === anchorId
+    )?.label;
+  }
+  if (setKey === grade6Semester1Crosswalk.setKey) {
+    return grade6Semester1AnchorRegistry.find(
+      (anchor) => anchor.id === anchorId
+    )?.label;
+  }
+  if (setKey === grade6Semester2Crosswalk.setKey) {
+    return grade6Semester2AnchorRegistry.find(
       (anchor) => anchor.id === anchorId
     )?.label;
   }
@@ -257,6 +339,7 @@ export function inspectCurriculumCrosswalk(
   const contentStages = new Map(
     input.content.learnerStages.map((stage) => [stage.id, stage])
   );
+  const expectedGradeBand = gradeBandForGrade(input.content.manifest.grade);
   const standards = new Map(snapshot.standards.map((row) => [row.key, row]));
   const topics = new Map(snapshot.topics.map((row) => [row.id, row]));
   const dependencies = new Set(
@@ -292,7 +375,7 @@ export function inspectCurriculumCrosswalk(
         addIssue(issues, "CW_UPSTREAM_ID_UNKNOWN", `${path}/standardKey`, `스냅숏에 없는 성취기준 ID입니다: ${row.standardKey}`);
       } else if (
         standard.code !== row.anchorId
-        || standard.gradeBand !== "3-4"
+        || standard.gradeBand !== expectedGradeBand
         || standard.subject !== "Mathematics"
       ) {
         addIssue(issues, "CW_SCOPE_MISMATCH", path, `성취기준 교차표의 학년군·교과 범위가 다릅니다: ${row.anchorId}`);
@@ -303,7 +386,7 @@ export function inspectCurriculumCrosswalk(
       if (!topic) {
         addIssue(issues, "CW_UPSTREAM_ID_UNKNOWN", `${path}/topicIds`, `스냅숏에 없는 주제 ID입니다: ${topicId}`);
       } else if (
-        topic.gradeBand !== "3-4"
+        topic.gradeBand !== expectedGradeBand
         || topic.subject !== "Mathematics"
         || !row.standardKey
         || topic.standardKey !== row.standardKey
@@ -349,7 +432,7 @@ export function inspectCurriculumCrosswalk(
       if (!topic) {
         addIssue(issues, "CW_UPSTREAM_ID_UNKNOWN", `${path}/topicIds`, `스냅숏에 없는 주제 ID입니다: ${topicId}`);
       } else if (
-        topic.gradeBand !== "3-4"
+        topic.gradeBand !== expectedGradeBand
         || topic.subject !== "Mathematics"
         || (stage && topic.standardKey && !stage.curriculumAnchorIds.some(
           (anchorId) => topic.standardKey === `kr-2022-elem-math:${anchorId}`

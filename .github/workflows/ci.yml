@@ -26,6 +26,8 @@ jobs:
           version: latest
 
       - run: npm ci
+      - name: Reproduce pinned curriculum snapshots
+        run: npm run test:crosswalk-repro
       - run: npm run typecheck
       - run: npm test
       - run: npm run build

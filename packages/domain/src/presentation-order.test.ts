@@ -47,6 +47,29 @@ describe("deterministic choice presentation", () => {
     expect(report.authoredFirstFixedSessionIds).toEqual([]);
   });
 
+  it("cycles the correct position within a short activity", () => {
+    for (const sessionId of Array.from({ length: 2_000 }, (_, index) =>
+      `short-session-${index}`
+    )) {
+      const positions = Array.from({ length: 10 }, (_, judgmentIndex) => {
+        const choiceIds = choices.map((choice) => `${choice.id}-${judgmentIndex}`);
+        const correctChoiceId = `choice-a-${judgmentIndex}`;
+        return presentedChoiceIds({
+          sessionId,
+          judgmentId: `short-judgment-${judgmentIndex}`,
+          judgmentIndex,
+          correctChoiceId
+        }, choiceIds).indexOf(correctChoiceId);
+      });
+      const counts = positions.reduce((result, position) => {
+        result[position] += 1;
+        return result;
+      }, [0, 0, 0]);
+      expect(Math.max(...counts), sessionId).toBeLessThanOrEqual(4);
+      expect(Math.min(...counts), sessionId).toBeGreaterThanOrEqual(3);
+    }
+  });
+
   it("ignores malformed balance inputs instead of inventing positions", () => {
     const report = analyzePresentationBalance({
       sessionIds: ["session-a"],

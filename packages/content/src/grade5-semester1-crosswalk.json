@@ -1,0 +1,453 @@
+{
+  "setKey": "grade5-semester1",
+  "revision": "2026-08-01.6",
+  "upstreamCommit": "3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c",
+  "upstreamTaxonomyVersion": "kr-full-depth-v0.4",
+  "upstreamOntologyVersion": "0.3.0-p3",
+  "snapshotDigest": "sha256:7ec5c6254d89f931c73d1638cefcaf92b8f0102e98ae55258b0d7b3fd6b664cb",
+  "anchorRows": [
+    {
+      "anchorId": "[6수01-01]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-01]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-01.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-01.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-01.representation"
+      ],
+      "reviewEvidence": "고정 학습맵에서 자연수의 혼합 계산 개념·표현·적용 주제가 성취기준 코드 [6수01-01]에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수01-04]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-04]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-04.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-04.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-04.representation"
+      ],
+      "reviewEvidence": "고정 학습맵에서 약수·공약수·최대공약수의 개념·표현·적용 후보가 성취기준 코드 [6수01-04]에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수01-05]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-05]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-05.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-05.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-05.representation"
+      ],
+      "reviewEvidence": "고정 학습맵에서 배수·공배수·최소공배수의 개념·표현·적용 후보가 성취기준 코드 [6수01-05]에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수02-01]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수02-01]",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.application",
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.concept",
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.representation"
+      ],
+      "reviewEvidence": "NCIC 원문은 대응표에서 두 양의 규칙을 찾아 설명하고 □·△로 식을 나타내도록 요구한다. 고정 학습맵의 개념·표현·적용 주제는 코드 확인용으로만 사용하며 선택형 진단이 자유 설명 능력까지 관찰한다고 해석하지 않는다."
+    },
+    {
+      "anchorId": "[6수01-06]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-06]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-06.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-06.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-06.representation"
+      ],
+      "reviewEvidence": "NCIC 원문과 고려 사항에 따라 크기가 같은 분수, 약분, 통분, 기약분수를 다룬다. 그림은 교수 활동 근거이나 이번 선택형 진단에서는 답을 노출하거나 장식이 되므로 수치 행동을 직접 관찰한다."
+    },
+    {
+      "anchorId": "[6수01-07]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-07]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-07.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-07.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-07.representation"
+      ],
+      "reviewEvidence": "분모가 다른 분수의 크기를 공통 기준으로 비교하는 선택 행동을 관찰한다. 자유 서술과 토론 능력까지 측정한다고 해석하지 않는다."
+    },
+    {
+      "anchorId": "[6수01-12]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-12]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-12.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-12.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-12.representation"
+      ],
+      "reviewEvidence": "DECK6 모듈명은 분수와 소수의 관계지만 공식 2026 배치에서는 약분과 통분 단원에 속한다. 모듈명을 단원 경계로 쓰지 않고 분수·소수 변환과 비교 행동만 추가한다."
+    },
+    {
+      "anchorId": "[6수01-08]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-08]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-08.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-08.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-08.representation"
+      ],
+      "reviewEvidence": "공식 성취기준의 분모가 다른 분수 덧셈·뺄셈 범위를 따른다. 로컬 진단은 통분 뒤 연산, 결과 약분, 대분수의 자연수 처리와 한 번의 받아올림·받아내림을 나누어 관찰하며 자유 서술 능력까지 측정한다고 해석하지 않는다."
+    },
+    {
+      "anchorId": "[6수03-11]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수03-11]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-11.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-11.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-11.representation"
+      ],
+      "reviewEvidence": "다각형의 테두리를 이루는 모든 변의 길이를 더해 둘레를 구하는 행동을 관찰한다."
+    },
+    {
+      "anchorId": "[6수03-12]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수03-12]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-12.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-12.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-12.representation"
+      ],
+      "reviewEvidence": "넓이에 제곱 단위를 사용하고 실제 대상의 크기에 맞게 cm²와 m²를 고르는 행동을 관찰한다."
+    },
+    {
+      "anchorId": "[6수03-13]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수03-13]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-13.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-13.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-13.representation"
+      ],
+      "reviewEvidence": "직사각형과 정사각형의 가로·세로 관계를 곱셈으로 나타내 넓이를 구하는 행동을 관찰한다."
+    },
+    {
+      "anchorId": "[6수03-14]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수03-14]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.representation"
+      ],
+      "reviewEvidence": "평행사변형·삼각형·사다리꼴·마름모에서 보이는 밑변, 높이, 대각선을 사용해 넓이를 구하는 행동을 도형별로 관찰한다."
+    }
+  ],
+  "stageRows": [
+    {
+      "stageId": "mixed-operations.multiply-first",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-01.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-01.representation"
+      ],
+      "reviewEvidence": "상류는 혼합 계산 전체를 한 성취기준의 개념·표현으로 다루며, 곱셈 우선 판단은 Middle of Math가 결손 위치 확인을 위해 세분화했다."
+    },
+    {
+      "stageId": "mixed-operations.divide-first",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-01.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-01.representation"
+      ],
+      "reviewEvidence": "상류 혼합 계산 개념·표현 주제를 나눗셈 우선 판단으로 분리했으며 학생 진단 근거는 두 로컬 문항에서 확보한다."
+    },
+    {
+      "stageId": "mixed-operations.same-rank-left-to-right",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-01.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-01.application"
+      ],
+      "reviewEvidence": "같은 순위 계산을 왼쪽부터 수행하는 행동은 상류에서 별도 단계가 아니므로 개념·적용 주제 안에서 로컬 단계로 세분화했다."
+    },
+    {
+      "stageId": "mixed-operations.parentheses-first",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-01.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-01.representation"
+      ],
+      "reviewEvidence": "괄호 안 우선 계산은 상류 성취기준 표현에 포함되지만 독립 진단 단계는 아니므로 괄호 처리 행동만 로컬에서 분리했다."
+    },
+    {
+      "stageId": "mixed-operations.full-order",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-01.application"
+      ],
+      "reviewEvidence": "괄호 처리 뒤 곱셈·나눗셈 우선순위까지 이어 적용하는 통합 행동을 상류 적용 주제의 로컬 진단 단계로 세분화했다."
+    },
+    {
+      "stageId": "factors.list-divisors",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-04.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-04.representation"
+      ],
+      "reviewEvidence": "약수 개념과 약수 목록 표현을 나머지 없이 나누어지는 수를 빠짐없이 찾는 로컬 관찰 단계로 세분화했다."
+    },
+    {
+      "stageId": "factors.common-and-greatest",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-04.representation",
+        "kr.mt.math.number-operations.g5-6.s6-01-04.application"
+      ],
+      "reviewEvidence": "두 약수 목록의 공통값과 최대공약수를 찾는 행동을 [6수01-04] 표현·적용 주제의 로컬 단계로 세분화했다."
+    },
+    {
+      "stageId": "multiples.list-multiples",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-05.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-05.representation"
+      ],
+      "reviewEvidence": "배수 개념과 배수 목록 표현을 1배부터 차례로 곱하는 로컬 관찰 단계로 세분화했다. [6수01-04]와 [6수01-05] 사이에는 상류 선후 관계가 없어 약수 단계를 선수로 두지 않았다."
+    },
+    {
+      "stageId": "multiples.common-and-least",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-05.representation",
+        "kr.mt.math.number-operations.g5-6.s6-01-05.application"
+      ],
+      "reviewEvidence": "두 배수 목록의 공통값과 최소공배수를 찾는 행동을 [6수01-05] 표현·적용 주제의 로컬 단계로 세분화했다."
+    },
+    {
+      "stageId": "factors-multiples.apply-in-context",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-04.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-05.application"
+      ],
+      "reviewEvidence": "자연수 실생활에서 나누어 담기와 다시 함께 일어나는 상황을 구별하는 통합 적용 단계다. 약수와 배수의 관계는 공식 지도 고려 사항의 보조 근거로만 사용하고 별도 성취기준 단계로 승격하지 않았다."
+    },
+    {
+      "stageId": "correspondence.pair-from-table",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.concept",
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.representation"
+      ],
+      "reviewEvidence": "완전한 대응표의 두 양을 함께 읽어 표 밖의 새 짝을 찾는 행동으로 세분화했다. 한 양의 수열 규칙만 묻지 않는다."
+    },
+    {
+      "stageId": "correspondence.symbol-expression",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.representation"
+      ],
+      "reviewEvidence": "성취기준 본문에 직접 나온 □·△를 사용해 대응표 모든 행에 맞는 한 연산 식을 고르는 행동이다. 4학년 자연어 라벨 식 고르기는 문서상 참고 선수일 뿐 자동 선수로 승격하지 않는다."
+    },
+    {
+      "stageId": "correspondence.base-and-dependent",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.representation",
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.application"
+      ],
+      "reviewEvidence": "나눗셈 대응표에서 어느 양을 □에 두고 어느 양을 △로 구하는지 구별하는 로컬 표현·적용 단계다."
+    },
+    {
+      "stageId": "correspondence.apply-backward",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.application"
+      ],
+      "reviewEvidence": "주어진 한 연산 기호식을 이용해 △에서 □로 되돌아가 표 밖의 값을 찾는 적용 행동으로 세분화했다."
+    },
+    {
+      "stageId": "correspondence.change-together",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.concept",
+        "kr.mt.math.change-relationships.g5-6.s6-02-01.application"
+      ],
+      "reviewEvidence": "한 양의 변화에만 초점을 두지 말라는 공식 고려 사항을 두 양의 변화량을 함께 계산하는 로컬 관찰 단계로 구현한다."
+    },
+    {
+      "stageId": "frac-equiv.multiply-both",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-06.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-06.representation"
+      ],
+      "reviewEvidence": "분자와 분모에 같은 수를 곱해 크기가 같은 분수를 만드는 한 행동으로 세분화했다."
+    },
+    {
+      "stageId": "frac-equiv.divide-both",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-06.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-06.representation"
+      ],
+      "reviewEvidence": "분자와 분모를 같은 수로 나누어 목표 분모의 같은 크기 분수를 만드는 약분 행동이다."
+    },
+    {
+      "stageId": "frac-equiv.simplest-form",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-06.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-06.representation"
+      ],
+      "reviewEvidence": "최대공약수까지 나누어 기약분수로 나타내는 단계다. 덜 약분한 오답은 의도적으로 정답과 같은 유리수이며 이 단계에서만 허용하고 gcd 계약으로 구별한다."
+    },
+    {
+      "stageId": "frac-equiv.common-denominator",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-06.application"
+      ],
+      "reviewEvidence": "질문에 지정한 두 분모의 공배수를 공통분모로 삼아 한 분수를 바꾸는 통분 행동이다."
+    },
+    {
+      "stageId": "frac-compare.different-denominator",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-07.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-07.concept"
+      ],
+      "reviewEvidence": "분모가 다른 세 분수를 공통 기준으로 바꾸어 가장 크거나 작은 분수를 고르는 행동이다. 후보 자체를 선택지로 쓰므로 원자료 복사 금지의 구조적 예외다."
+    },
+    {
+      "stageId": "frac-decimal.convert",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-12.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-12.representation"
+      ],
+      "reviewEvidence": "분모를 10이나 100으로 만들어 분수와 소수를 서로 바꾸는 관계 표현 단계다."
+    },
+    {
+      "stageId": "frac-decimal.compare",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-12.application"
+      ],
+      "reviewEvidence": "분수와 소수를 같은 형태로 바꾸어 가장 크거나 작은 값을 고르는 적용 단계다. 후보 자체를 선택지로 쓰므로 원자료 복사 금지의 구조적 예외다."
+    },
+    {
+      "stageId": "fa.add-unlike",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-08.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-08.application"
+      ],
+      "reviewEvidence": "분모가 다른 진분수를 통분한 뒤 바뀐 분자를 더하는 행동을 독립 단계로 세분화했다."
+    },
+    {
+      "stageId": "fa.sub-unlike",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-08.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-08.application"
+      ],
+      "reviewEvidence": "분모가 다른 진분수를 통분한 뒤 바뀐 분자를 빼는 행동을 독립 단계로 세분화했다."
+    },
+    {
+      "stageId": "fa.reduce-result",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-08.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-08.representation"
+      ],
+      "reviewEvidence": "연산 결과를 기약분수로 나타내는 마무리 행동이다. 덜 약분한 오답은 이 단계에서만 정답과 같은 유리수로 허용한다."
+    },
+    {
+      "stageId": "fa.mixed-add",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-08.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-08.representation"
+      ],
+      "reviewEvidence": "대분수의 자연수 부분과 분수 부분을 모두 더하는 행동을 로컬 단계로 분리했다."
+    },
+    {
+      "stageId": "fa.carry",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-08.application"
+      ],
+      "reviewEvidence": "대분수 덧셈에서 가분수가 된 분수 부분을 자연수 하나로 받아올리는 행동을 분리했다."
+    },
+    {
+      "stageId": "fa.borrow",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-08.application"
+      ],
+      "reviewEvidence": "대분수 뺄셈에서 자연수 하나를 같은 분모의 분수로 바꾸어 받아내리는 행동을 분리했다."
+    },
+    {
+      "stageId": "pa.perimeter",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-11.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-11.representation"
+      ],
+      "reviewEvidence": "직사각형과 정사각형의 표시된 변을 모두 더해 둘레를 구하는 한 행동으로 세분화했다."
+    },
+    {
+      "stageId": "pa.area-unit",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-12.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-12.application"
+      ],
+      "reviewEvidence": "넓이 단위와 길이 단위를 구별하고 대상 크기에 맞는 제곱 단위를 선택하는 행동이다."
+    },
+    {
+      "stageId": "pa.rectangle-square-area",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-13.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-13.representation"
+      ],
+      "reviewEvidence": "직사각형과 정사각형의 표시된 두 방향 길이를 곱해 넓이를 구하는 행동이다."
+    },
+    {
+      "stageId": "pa.parallelogram-area",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.representation"
+      ],
+      "reviewEvidence": "평행사변형의 밑변과 수직 높이를 골라 곱하는 행동을 독립 단계로 분리했다."
+    },
+    {
+      "stageId": "pa.triangle-area",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.representation"
+      ],
+      "reviewEvidence": "삼각형의 밑변과 높이를 곱한 뒤 2로 나누는 행동을 독립 단계로 분리했다."
+    },
+    {
+      "stageId": "pa.trapezoid-area",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.representation"
+      ],
+      "reviewEvidence": "사다리꼴의 두 평행한 변과 높이를 모두 사용하고 2로 나누는 행동을 분리했다."
+    },
+    {
+      "stageId": "pa.rhombus-area",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-14.representation"
+      ],
+      "reviewEvidence": "마름모의 두 대각선을 곱한 뒤 2로 나누는 행동을 독립 단계로 분리했다."
+    }
+  ],
+  "crosswalkDigest": "sha256:c4176ad2da5fd9a4ccd2705d9c1e448850394c731fe79207c2def68ce7af6352"
+}

@@ -1,0 +1,3422 @@
+{
+  "manifest": {
+    "id": "grade6-semester1",
+    "version": "1.0.0",
+    "checksum": "cb78c6767f88dbd93bcebc7297f662e5b4d0a2cc4517742c970e65f79b96be6b",
+    "title": "6학년 1학기 수학 생각 지도",
+    "shortTitle": "6-1 수학 생각 지도",
+    "grade": 6,
+    "semester": 1,
+    "curriculum": "2022-revised",
+    "status": "review",
+    "units": [
+      {
+        "id": "fraction-division",
+        "order": 1,
+        "title": "분수의 나눗셈"
+      },
+      {
+        "id": "prisms-pyramids",
+        "order": 2,
+        "title": "각기둥과 각뿔"
+      },
+      {
+        "id": "decimal-division",
+        "order": 3,
+        "title": "소수의 나눗셈"
+      },
+      {
+        "id": "ratio-rate",
+        "order": 4,
+        "title": "비와 비율"
+      },
+      {
+        "id": "data-graphs",
+        "order": 5,
+        "title": "여러 가지 그래프"
+      },
+      {
+        "id": "surface-volume",
+        "order": 6,
+        "title": "직육면체의 겉넓이와 부피"
+      }
+    ],
+    "interactionTypes": [
+      {
+        "type": "choice",
+        "version": 1
+      }
+    ],
+    "estimatedMinutes": 31
+  },
+  "curriculumAnchors": [
+    {
+      "id": "[6수01-10]",
+      "label": "분수를 자연수로 나누기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수01-11]",
+      "label": "분수의 나눗셈 원리를 이해하고 계산하기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수03-05]",
+      "label": "각기둥과 각뿔을 알고 구성 요소와 성질 이해하기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수03-06]",
+      "label": "각기둥과 각뿔의 전개도 이해하기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수01-14]",
+      "label": "소수를 자연수로 나누기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수01-15]",
+      "label": "소수의 나눗셈 원리를 이해하고 계산하기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수02-02]",
+      "label": "두 양의 크기를 비교하는 상황에서 비 이해하기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수02-03]",
+      "label": "비율을 이해하고 백분율로 나타내기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수04-02]",
+      "label": "띠그래프와 원그래프를 해석하기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수04-03]",
+      "label": "자료를 띠그래프와 원그래프로 나타내기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수03-17]",
+      "label": "직육면체와 정육면체의 겉넓이 구하기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수03-18]",
+      "label": "부피 단위와 직육면체·정육면체 부피 구하기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    },
+    {
+      "id": "[6수03-19]",
+      "label": "부피와 들이 단위의 관계 이해하기",
+      "source": "2022 개정 수학과 교육과정 및 2026 경기도교육청 6학년 단원 배치표"
+    }
+  ],
+  "learnerStages": [
+    {
+      "id": "fd.fraction-by-natural",
+      "order": 1,
+      "unitId": "fraction-division",
+      "title": "분수를 자연수로 나누기",
+      "shortTitle": "분수를 자연수로 나눔",
+      "curriculumAnchorIds": [
+        "[6수01-10]"
+      ],
+      "prerequisiteStageIds": []
+    },
+    {
+      "id": "fd.mixed-by-natural",
+      "order": 2,
+      "unitId": "fraction-division",
+      "title": "대분수를 자연수로 나누기",
+      "shortTitle": "대분수를 자연수로 나눔",
+      "curriculumAnchorIds": [
+        "[6수01-10]"
+      ],
+      "prerequisiteStageIds": [
+        "fd.fraction-by-natural"
+      ]
+    },
+    {
+      "id": "fd.natural-by-fraction",
+      "order": 3,
+      "unitId": "fraction-division",
+      "title": "자연수를 분수로 나누기",
+      "shortTitle": "자연수를 분수로 나눔",
+      "curriculumAnchorIds": [
+        "[6수01-11]"
+      ],
+      "prerequisiteStageIds": []
+    },
+    {
+      "id": "fd.fraction-by-fraction",
+      "order": 4,
+      "unitId": "fraction-division",
+      "title": "분수를 분수로 나누기",
+      "shortTitle": "분수를 분수로 나눔",
+      "curriculumAnchorIds": [
+        "[6수01-11]"
+      ],
+      "prerequisiteStageIds": [
+        "fd.natural-by-fraction"
+      ]
+    },
+    {
+      "id": "fd.application",
+      "order": 5,
+      "unitId": "fraction-division",
+      "title": "분수 나눗셈을 상황에 적용하기",
+      "shortTitle": "분수 나눗셈을 적용함",
+      "curriculumAnchorIds": [
+        "[6수01-11]"
+      ],
+      "prerequisiteStageIds": [
+        "fd.fraction-by-fraction"
+      ]
+    },
+    {
+      "id": "solid.identify",
+      "order": 6,
+      "unitId": "prisms-pyramids",
+      "title": "각기둥과 각뿔 구별하기",
+      "shortTitle": "각기둥과 각뿔을 구별함",
+      "curriculumAnchorIds": [
+        "[6수03-05]"
+      ],
+      "prerequisiteStageIds": []
+    },
+    {
+      "id": "solid.bases",
+      "order": 7,
+      "unitId": "prisms-pyramids",
+      "title": "각기둥과 각뿔의 밑면 찾기",
+      "shortTitle": "입체도형의 밑면을 찾음",
+      "curriculumAnchorIds": [
+        "[6수03-05]"
+      ],
+      "prerequisiteStageIds": [
+        "solid.identify"
+      ]
+    },
+    {
+      "id": "solid.elements",
+      "order": 8,
+      "unitId": "prisms-pyramids",
+      "title": "각기둥과 각뿔의 면·모서리·꼭짓점 세기",
+      "shortTitle": "입체도형의 구성 요소를 셈",
+      "curriculumAnchorIds": [
+        "[6수03-05]"
+      ],
+      "prerequisiteStageIds": [
+        "solid.bases"
+      ]
+    },
+    {
+      "id": "solid.net",
+      "order": 9,
+      "unitId": "prisms-pyramids",
+      "title": "전개도의 면 구성으로 입체도형 찾기",
+      "shortTitle": "전개도에서 입체도형을 찾음",
+      "curriculumAnchorIds": [
+        "[6수03-06]"
+      ],
+      "prerequisiteStageIds": [
+        "solid.elements"
+      ]
+    },
+    {
+      "id": "solid.side-faces",
+      "order": 10,
+      "unitId": "prisms-pyramids",
+      "title": "밑면의 변 수와 옆면 수 관계 알기",
+      "shortTitle": "밑면과 옆면의 관계를 앎",
+      "curriculumAnchorIds": [
+        "[6수03-06]"
+      ],
+      "prerequisiteStageIds": [
+        "solid.bases"
+      ]
+    },
+    {
+      "id": "dd.decimal-by-natural",
+      "order": 11,
+      "unitId": "decimal-division",
+      "title": "소수를 자연수로 나누기",
+      "shortTitle": "소수를 자연수로 나눔",
+      "curriculumAnchorIds": [
+        "[6수01-14]"
+      ],
+      "prerequisiteStageIds": []
+    },
+    {
+      "id": "dd.zero-quotient",
+      "order": 12,
+      "unitId": "decimal-division",
+      "title": "몫이 1보다 작은 소수 나눗셈 하기",
+      "shortTitle": "몫의 일의 자리에 0을 씀",
+      "curriculumAnchorIds": [
+        "[6수01-14]"
+      ],
+      "prerequisiteStageIds": [
+        "dd.decimal-by-natural"
+      ]
+    },
+    {
+      "id": "dd.natural-by-decimal",
+      "order": 13,
+      "unitId": "decimal-division",
+      "title": "자연수를 소수로 나누기",
+      "shortTitle": "자연수를 소수로 나눔",
+      "curriculumAnchorIds": [
+        "[6수01-15]"
+      ],
+      "prerequisiteStageIds": []
+    },
+    {
+      "id": "dd.decimal-by-decimal",
+      "order": 14,
+      "unitId": "decimal-division",
+      "title": "소수를 소수로 나누기",
+      "shortTitle": "소수를 소수로 나눔",
+      "curriculumAnchorIds": [
+        "[6수01-15]"
+      ],
+      "prerequisiteStageIds": [
+        "dd.natural-by-decimal"
+      ]
+    },
+    {
+      "id": "dd.application",
+      "order": 15,
+      "unitId": "decimal-division",
+      "title": "소수 나눗셈을 상황에 적용하기",
+      "shortTitle": "소수 나눗셈을 적용함",
+      "curriculumAnchorIds": [
+        "[6수01-15]"
+      ],
+      "prerequisiteStageIds": [
+        "dd.decimal-by-decimal"
+      ]
+    },
+    {
+      "id": "ratio.meaning",
+      "order": 16,
+      "unitId": "ratio-rate",
+      "title": "두 양의 관계를 비로 나타내기",
+      "shortTitle": "두 양의 관계를 비로 나타냄",
+      "curriculumAnchorIds": [
+        "[6수02-02]"
+      ],
+      "prerequisiteStageIds": []
+    },
+    {
+      "id": "ratio.equivalent",
+      "order": 17,
+      "unitId": "ratio-rate",
+      "title": "같은 비 찾기",
+      "shortTitle": "같은 비를 찾음",
+      "curriculumAnchorIds": [
+        "[6수02-02]"
+      ],
+      "prerequisiteStageIds": [
+        "ratio.meaning"
+      ]
+    },
+    {
+      "id": "rate.unit",
+      "order": 18,
+      "unitId": "ratio-rate",
+      "title": "기준량을 1로 만든 비율 구하기",
+      "shortTitle": "기준량 1당 크기를 구함",
+      "curriculumAnchorIds": [
+        "[6수02-03]"
+      ],
+      "prerequisiteStageIds": [
+        "ratio.meaning"
+      ]
+    },
+    {
+      "id": "rate.percent",
+      "order": 19,
+      "unitId": "ratio-rate",
+      "title": "비율을 백분율로 나타내기",
+      "shortTitle": "비율을 백분율로 나타냄",
+      "curriculumAnchorIds": [
+        "[6수02-03]"
+      ],
+      "prerequisiteStageIds": [
+        "rate.unit"
+      ]
+    },
+    {
+      "id": "rate.application",
+      "order": 20,
+      "unitId": "ratio-rate",
+      "title": "백분율을 생활 상황에 적용하기",
+      "shortTitle": "백분율을 적용함",
+      "curriculumAnchorIds": [
+        "[6수02-03]"
+      ],
+      "prerequisiteStageIds": [
+        "rate.percent"
+      ]
+    },
+    {
+      "id": "graph.strip-read",
+      "order": 21,
+      "unitId": "data-graphs",
+      "title": "띠그래프에서 비율 읽기",
+      "shortTitle": "띠그래프의 비율을 읽음",
+      "curriculumAnchorIds": [
+        "[6수04-02]"
+      ],
+      "prerequisiteStageIds": []
+    },
+    {
+      "id": "graph.circle-read",
+      "order": 22,
+      "unitId": "data-graphs",
+      "title": "원그래프에서 비율 비교하기",
+      "shortTitle": "원그래프의 비율을 비교함",
+      "curriculumAnchorIds": [
+        "[6수04-02]"
+      ],
+      "prerequisiteStageIds": [
+        "graph.strip-read"
+      ]
+    },
+    {
+      "id": "graph.whole-from-part",
+      "order": 23,
+      "unitId": "data-graphs",
+      "title": "그래프의 비율과 인원으로 전체 구하기",
+      "shortTitle": "부분으로 전체를 구함",
+      "curriculumAnchorIds": [
+        "[6수04-02]"
+      ],
+      "prerequisiteStageIds": [
+        "graph.strip-read"
+      ]
+    },
+    {
+      "id": "graph.construct",
+      "order": 24,
+      "unitId": "data-graphs",
+      "title": "자료를 띠그래프와 원그래프로 나타내기",
+      "shortTitle": "자료를 그래프로 나타냄",
+      "curriculumAnchorIds": [
+        "[6수04-03]"
+      ],
+      "prerequisiteStageIds": [
+        "graph.strip-read"
+      ]
+    },
+    {
+      "id": "graph.choose",
+      "order": 25,
+      "unitId": "data-graphs",
+      "title": "자료의 목적에 맞는 그래프 고르기",
+      "shortTitle": "목적에 맞는 그래프를 고름",
+      "curriculumAnchorIds": [
+        "[6수04-03]"
+      ],
+      "prerequisiteStageIds": [
+        "graph.construct"
+      ]
+    },
+    {
+      "id": "volume.unit",
+      "order": 26,
+      "unitId": "surface-volume",
+      "title": "부피의 단위 이해하기",
+      "shortTitle": "부피 단위를 이해함",
+      "curriculumAnchorIds": [
+        "[6수03-18]"
+      ],
+      "prerequisiteStageIds": []
+    },
+    {
+      "id": "volume.capacity-relation",
+      "order": 27,
+      "unitId": "surface-volume",
+      "title": "세제곱미터와 리터의 관계 이해하기",
+      "shortTitle": "부피와 들이 단위를 바꿈",
+      "curriculumAnchorIds": [
+        "[6수03-19]"
+      ],
+      "prerequisiteStageIds": [
+        "volume.unit"
+      ]
+    },
+    {
+      "id": "volume.box",
+      "order": 28,
+      "unitId": "surface-volume",
+      "title": "직육면체의 부피 구하기",
+      "shortTitle": "직육면체의 부피를 구함",
+      "curriculumAnchorIds": [
+        "[6수03-18]"
+      ],
+      "prerequisiteStageIds": [
+        "volume.unit"
+      ]
+    },
+    {
+      "id": "volume.cube",
+      "order": 29,
+      "unitId": "surface-volume",
+      "title": "정육면체의 부피 구하기",
+      "shortTitle": "정육면체의 부피를 구함",
+      "curriculumAnchorIds": [
+        "[6수03-18]"
+      ],
+      "prerequisiteStageIds": [
+        "volume.box"
+      ]
+    },
+    {
+      "id": "surface.net",
+      "order": 30,
+      "unitId": "surface-volume",
+      "title": "전개도로 직육면체의 겉넓이 이해하기",
+      "shortTitle": "전개도로 겉넓이를 이해함",
+      "curriculumAnchorIds": [
+        "[6수03-17]"
+      ],
+      "prerequisiteStageIds": []
+    },
+    {
+      "id": "surface.calculate",
+      "order": 31,
+      "unitId": "surface-volume",
+      "title": "직육면체와 정육면체의 겉넓이 구하기",
+      "shortTitle": "입체도형의 겉넓이를 구함",
+      "curriculumAnchorIds": [
+        "[6수03-17]"
+      ],
+      "prerequisiteStageIds": [
+        "surface.net"
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "id": "fd.fraction-by-natural",
+      "title": "분수를 자연수로 나눔",
+      "severity": "high",
+      "teacherInterpretation": "분수를 자연수로 나누기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "분수를 자연수로 나눔을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "fd.mixed-by-natural",
+      "title": "대분수를 자연수로 나눔",
+      "severity": "high",
+      "teacherInterpretation": "대분수를 자연수로 나누기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "대분수를 자연수로 나눔을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "fd.natural-by-fraction",
+      "title": "자연수를 분수로 나눔",
+      "severity": "high",
+      "teacherInterpretation": "자연수를 분수로 나누기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "자연수를 분수로 나눔을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "fd.fraction-by-fraction",
+      "title": "분수를 분수로 나눔",
+      "severity": "high",
+      "teacherInterpretation": "분수를 분수로 나누기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "분수를 분수로 나눔을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "fd.application",
+      "title": "분수 나눗셈을 적용함",
+      "severity": "high",
+      "teacherInterpretation": "분수 나눗셈을 상황에 적용하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "분수 나눗셈을 적용함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "solid.identify",
+      "title": "각기둥과 각뿔을 구별함",
+      "severity": "high",
+      "teacherInterpretation": "각기둥과 각뿔 구별하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "각기둥과 각뿔을 구별함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "solid.bases",
+      "title": "입체도형의 밑면을 찾음",
+      "severity": "high",
+      "teacherInterpretation": "각기둥과 각뿔의 밑면 찾기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "입체도형의 밑면을 찾음을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "solid.elements",
+      "title": "입체도형의 구성 요소를 셈",
+      "severity": "high",
+      "teacherInterpretation": "각기둥과 각뿔의 면·모서리·꼭짓점 세기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "입체도형의 구성 요소를 셈을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "solid.net",
+      "title": "전개도에서 입체도형을 찾음",
+      "severity": "high",
+      "teacherInterpretation": "전개도의 면 구성으로 입체도형 찾기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "전개도에서 입체도형을 찾음을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "solid.side-faces",
+      "title": "밑면과 옆면의 관계를 앎",
+      "severity": "high",
+      "teacherInterpretation": "밑면의 변 수와 옆면 수 관계 알기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "밑면과 옆면의 관계를 앎을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "dd.decimal-by-natural",
+      "title": "소수를 자연수로 나눔",
+      "severity": "high",
+      "teacherInterpretation": "소수를 자연수로 나누기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "소수를 자연수로 나눔을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "dd.zero-quotient",
+      "title": "몫의 일의 자리에 0을 씀",
+      "severity": "high",
+      "teacherInterpretation": "몫이 1보다 작은 소수 나눗셈 하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "몫의 일의 자리에 0을 씀을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "dd.natural-by-decimal",
+      "title": "자연수를 소수로 나눔",
+      "severity": "high",
+      "teacherInterpretation": "자연수를 소수로 나누기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "자연수를 소수로 나눔을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "dd.decimal-by-decimal",
+      "title": "소수를 소수로 나눔",
+      "severity": "high",
+      "teacherInterpretation": "소수를 소수로 나누기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "소수를 소수로 나눔을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "dd.application",
+      "title": "소수 나눗셈을 적용함",
+      "severity": "high",
+      "teacherInterpretation": "소수 나눗셈을 상황에 적용하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "소수 나눗셈을 적용함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "ratio.meaning",
+      "title": "두 양의 관계를 비로 나타냄",
+      "severity": "high",
+      "teacherInterpretation": "두 양의 관계를 비로 나타내기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "두 양의 관계를 비로 나타냄을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "ratio.equivalent",
+      "title": "같은 비를 찾음",
+      "severity": "high",
+      "teacherInterpretation": "같은 비 찾기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "같은 비를 찾음을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "rate.unit",
+      "title": "기준량 1당 크기를 구함",
+      "severity": "high",
+      "teacherInterpretation": "기준량을 1로 만든 비율 구하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "기준량 1당 크기를 구함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "rate.percent",
+      "title": "비율을 백분율로 나타냄",
+      "severity": "high",
+      "teacherInterpretation": "비율을 백분율로 나타내기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "비율을 백분율로 나타냄을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "rate.application",
+      "title": "백분율을 적용함",
+      "severity": "high",
+      "teacherInterpretation": "백분율을 생활 상황에 적용하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "백분율을 적용함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "graph.strip-read",
+      "title": "띠그래프의 비율을 읽음",
+      "severity": "high",
+      "teacherInterpretation": "띠그래프에서 비율 읽기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "띠그래프의 비율을 읽음을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "graph.circle-read",
+      "title": "원그래프의 비율을 비교함",
+      "severity": "high",
+      "teacherInterpretation": "원그래프에서 비율 비교하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "원그래프의 비율을 비교함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "graph.whole-from-part",
+      "title": "부분으로 전체를 구함",
+      "severity": "high",
+      "teacherInterpretation": "그래프의 비율과 인원으로 전체 구하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "부분으로 전체를 구함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "graph.construct",
+      "title": "자료를 그래프로 나타냄",
+      "severity": "high",
+      "teacherInterpretation": "자료를 띠그래프와 원그래프로 나타내기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "자료를 그래프로 나타냄을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "graph.choose",
+      "title": "목적에 맞는 그래프를 고름",
+      "severity": "high",
+      "teacherInterpretation": "자료의 목적에 맞는 그래프 고르기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "목적에 맞는 그래프를 고름을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "volume.unit",
+      "title": "부피 단위를 이해함",
+      "severity": "high",
+      "teacherInterpretation": "부피의 단위 이해하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "부피 단위를 이해함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "volume.capacity-relation",
+      "title": "부피와 들이 단위를 바꿈",
+      "severity": "high",
+      "teacherInterpretation": "세제곱미터와 리터의 관계 이해하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "부피와 들이 단위를 바꿈을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "volume.box",
+      "title": "직육면체의 부피를 구함",
+      "severity": "high",
+      "teacherInterpretation": "직육면체의 부피 구하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "직육면체의 부피를 구함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "volume.cube",
+      "title": "정육면체의 부피를 구함",
+      "severity": "high",
+      "teacherInterpretation": "정육면체의 부피 구하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "정육면체의 부피를 구함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "surface.net",
+      "title": "전개도로 겉넓이를 이해함",
+      "severity": "high",
+      "teacherInterpretation": "전개도로 직육면체의 겉넓이 이해하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "전개도로 겉넓이를 이해함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    },
+    {
+      "id": "surface.calculate",
+      "title": "입체도형의 겉넓이를 구함",
+      "severity": "high",
+      "teacherInterpretation": "직육면체와 정육면체의 겉넓이 구하기에서 같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.",
+      "teachingMove": "식을 그림이나 단위와 연결한 뒤, 계산 순서를 한 단계씩 말하게 하세요.",
+      "parentSummary": "입체도형의 겉넓이를 구함을 차근차근 연습하고 있습니다.",
+      "homePrompt": "답을 알려 주기 전에 무엇을 같게 만들거나 몇 배 했는지 설명하게 해주세요."
+    }
+  ],
+  "judgments": [
+    {
+      "id": "g6s1-01-1",
+      "unitId": "fraction-division",
+      "learnerStageId": "fd.fraction-by-natural",
+      "curriculumAnchorIds": [
+        "[6수01-10]"
+      ],
+      "prompt": "3/5 ÷ 2는 얼마인가요?",
+      "context": "계산 결과를 기약분수로 나타내세요.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-01-1-a",
+          "label": "3/10",
+          "correct": true
+        },
+        {
+          "id": "g6s1-01-1-b",
+          "label": "6/5",
+          "correct": false,
+          "signalIds": [
+            "fd.fraction-by-natural"
+          ]
+        },
+        {
+          "id": "g6s1-01-1-c",
+          "label": "3/5",
+          "correct": false,
+          "signalIds": [
+            "fd.fraction-by-natural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-01-2",
+      "unitId": "fraction-division",
+      "learnerStageId": "fd.fraction-by-natural",
+      "curriculumAnchorIds": [
+        "[6수01-10]"
+      ],
+      "prompt": "한 병에 몇 L씩 담나요?",
+      "context": "물 5/6 L를 두 병에 똑같이 나눕니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-01-2-b",
+          "label": "5/12 L",
+          "correct": true
+        },
+        {
+          "id": "g6s1-01-2-c",
+          "label": "5/3 L",
+          "correct": false,
+          "signalIds": [
+            "fd.fraction-by-natural"
+          ]
+        },
+        {
+          "id": "g6s1-01-2-a",
+          "label": "5/6 L",
+          "correct": false,
+          "signalIds": [
+            "fd.fraction-by-natural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-02-1",
+      "unitId": "fraction-division",
+      "learnerStageId": "fd.mixed-by-natural",
+      "curriculumAnchorIds": [
+        "[6수01-10]"
+      ],
+      "prompt": "1과 1/2 ÷ 2는 얼마인가요?",
+      "context": "대분수를 가분수로 고쳐 계산합니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-02-1-c",
+          "label": "3/4",
+          "correct": true
+        },
+        {
+          "id": "g6s1-02-1-a",
+          "label": "1과 1/4",
+          "correct": false,
+          "signalIds": [
+            "fd.mixed-by-natural"
+          ]
+        },
+        {
+          "id": "g6s1-02-1-b",
+          "label": "1/2",
+          "correct": false,
+          "signalIds": [
+            "fd.mixed-by-natural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-02-2",
+      "unitId": "fraction-division",
+      "learnerStageId": "fd.mixed-by-natural",
+      "curriculumAnchorIds": [
+        "[6수01-10]"
+      ],
+      "prompt": "한 명이 받는 끈은 몇 m인가요?",
+      "context": "2와 2/3 m인 끈을 2명에게 똑같이 나눕니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-02-2-a",
+          "label": "1과 1/3 m",
+          "correct": true
+        },
+        {
+          "id": "g6s1-02-2-b",
+          "label": "2와 1/3 m",
+          "correct": false,
+          "signalIds": [
+            "fd.mixed-by-natural"
+          ]
+        },
+        {
+          "id": "g6s1-02-2-c",
+          "label": "2/3 m",
+          "correct": false,
+          "signalIds": [
+            "fd.mixed-by-natural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-03-1",
+      "unitId": "fraction-division",
+      "learnerStageId": "fd.natural-by-fraction",
+      "curriculumAnchorIds": [
+        "[6수01-11]"
+      ],
+      "prompt": "4 ÷ 2/3은 얼마인가요?",
+      "context": "한 칸이 2/3만큼일 때 4 안에 몇 칸이 들어가는지 생각합니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-03-1-b",
+          "label": "6",
+          "correct": true
+        },
+        {
+          "id": "g6s1-03-1-c",
+          "label": "2와 2/3",
+          "correct": false,
+          "signalIds": [
+            "fd.natural-by-fraction"
+          ]
+        },
+        {
+          "id": "g6s1-03-1-a",
+          "label": "3/8",
+          "correct": false,
+          "signalIds": [
+            "fd.natural-by-fraction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-03-2",
+      "unitId": "fraction-division",
+      "learnerStageId": "fd.natural-by-fraction",
+      "curriculumAnchorIds": [
+        "[6수01-11]"
+      ],
+      "prompt": "몇 병 분량인가요?",
+      "context": "주스 3 L를 한 병에 3/4 L씩 담습니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-03-2-c",
+          "label": "4병",
+          "correct": true
+        },
+        {
+          "id": "g6s1-03-2-a",
+          "label": "2와 1/4병",
+          "correct": false,
+          "signalIds": [
+            "fd.natural-by-fraction"
+          ]
+        },
+        {
+          "id": "g6s1-03-2-b",
+          "label": "4/9병",
+          "correct": false,
+          "signalIds": [
+            "fd.natural-by-fraction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-04-1",
+      "unitId": "fraction-division",
+      "learnerStageId": "fd.fraction-by-fraction",
+      "curriculumAnchorIds": [
+        "[6수01-11]"
+      ],
+      "prompt": "3/5 ÷ 2/7은 얼마인가요?",
+      "context": "계산한 결과를 고르세요.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-04-1-a",
+          "label": "2와 1/10",
+          "correct": true
+        },
+        {
+          "id": "g6s1-04-1-b",
+          "label": "6/35",
+          "correct": false,
+          "signalIds": [
+            "fd.fraction-by-fraction"
+          ]
+        },
+        {
+          "id": "g6s1-04-1-c",
+          "label": "10/21",
+          "correct": false,
+          "signalIds": [
+            "fd.fraction-by-fraction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-04-2",
+      "unitId": "fraction-division",
+      "learnerStageId": "fd.fraction-by-fraction",
+      "curriculumAnchorIds": [
+        "[6수01-11]"
+      ],
+      "prompt": "몇 조각 분량인가요?",
+      "context": "색 테이프 5/6 m를 한 조각에 1/4 m씩 자릅니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-04-2-b",
+          "label": "3과 1/3조각",
+          "correct": true
+        },
+        {
+          "id": "g6s1-04-2-c",
+          "label": "5/24조각",
+          "correct": false,
+          "signalIds": [
+            "fd.fraction-by-fraction"
+          ]
+        },
+        {
+          "id": "g6s1-04-2-a",
+          "label": "3/10조각",
+          "correct": false,
+          "signalIds": [
+            "fd.fraction-by-fraction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-05-1",
+      "unitId": "fraction-division",
+      "learnerStageId": "fd.application",
+      "curriculumAnchorIds": [
+        "[6수01-11]"
+      ],
+      "prompt": "몇 봉지 분량인가요?",
+      "context": "밀가루 2와 1/4 kg을 한 봉지에 3/8 kg씩 담습니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-05-1-c",
+          "label": "6봉지",
+          "correct": true
+        },
+        {
+          "id": "g6s1-05-1-a",
+          "label": "1/6봉지",
+          "correct": false,
+          "signalIds": [
+            "fd.application"
+          ]
+        },
+        {
+          "id": "g6s1-05-1-b",
+          "label": "27/32봉지",
+          "correct": false,
+          "signalIds": [
+            "fd.application"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-05-2",
+      "unitId": "fraction-division",
+      "learnerStageId": "fd.application",
+      "curriculumAnchorIds": [
+        "[6수01-11]"
+      ],
+      "prompt": "몇 컵 분량인가요?",
+      "context": "9/10 L의 음료를 한 컵에 3/20 L씩 나눕니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-05-2-a",
+          "label": "6컵",
+          "correct": true
+        },
+        {
+          "id": "g6s1-05-2-b",
+          "label": "1/6컵",
+          "correct": false,
+          "signalIds": [
+            "fd.application"
+          ]
+        },
+        {
+          "id": "g6s1-05-2-c",
+          "label": "27/200컵",
+          "correct": false,
+          "signalIds": [
+            "fd.application"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-06-1",
+      "unitId": "prisms-pyramids",
+      "learnerStageId": "solid.identify",
+      "curriculumAnchorIds": [
+        "[6수03-05]"
+      ],
+      "prompt": "이 입체도형의 이름은 무엇인가요?",
+      "context": "서로 평행하고 합동인 삼각형 두 개가 밑면인 도형입니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "structure",
+        "shape": "triangular-prism"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-06-1-b",
+          "label": "삼각기둥",
+          "correct": true
+        },
+        {
+          "id": "g6s1-06-1-c",
+          "label": "삼각뿔",
+          "correct": false,
+          "signalIds": [
+            "solid.identify"
+          ]
+        },
+        {
+          "id": "g6s1-06-1-a",
+          "label": "사각기둥",
+          "correct": false,
+          "signalIds": [
+            "solid.identify"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-06-2",
+      "unitId": "prisms-pyramids",
+      "learnerStageId": "solid.identify",
+      "curriculumAnchorIds": [
+        "[6수03-05]"
+      ],
+      "prompt": "도형을 바르게 부른 것을 고르세요.",
+      "context": "사각형 밑면의 네 꼭짓점에서 선분이 한 꼭짓점으로 모입니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "structure",
+        "shape": "square-pyramid"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-06-2-c",
+          "label": "사각뿔",
+          "correct": true
+        },
+        {
+          "id": "g6s1-06-2-a",
+          "label": "사각기둥",
+          "correct": false,
+          "signalIds": [
+            "solid.identify"
+          ]
+        },
+        {
+          "id": "g6s1-06-2-b",
+          "label": "삼각뿔",
+          "correct": false,
+          "signalIds": [
+            "solid.identify"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-07-1",
+      "unitId": "prisms-pyramids",
+      "learnerStageId": "solid.bases",
+      "curriculumAnchorIds": [
+        "[6수03-05]"
+      ],
+      "prompt": "밑면은 모두 몇 개인가요?",
+      "context": "삼각기둥을 옆으로 눕혀 놓았습니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "structure",
+        "shape": "triangular-prism"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-07-1-a",
+          "label": "2개",
+          "correct": true
+        },
+        {
+          "id": "g6s1-07-1-b",
+          "label": "3개",
+          "correct": false,
+          "signalIds": [
+            "solid.bases"
+          ]
+        },
+        {
+          "id": "g6s1-07-1-c",
+          "label": "1개",
+          "correct": false,
+          "signalIds": [
+            "solid.bases"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-07-2",
+      "unitId": "prisms-pyramids",
+      "learnerStageId": "solid.bases",
+      "curriculumAnchorIds": [
+        "[6수03-05]"
+      ],
+      "prompt": "밑면은 모두 몇 개인가요?",
+      "context": "사각뿔에서 한 꼭짓점으로 모이지 않는 면을 살펴봅니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "structure",
+        "shape": "square-pyramid"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-07-2-b",
+          "label": "1개",
+          "correct": true
+        },
+        {
+          "id": "g6s1-07-2-c",
+          "label": "4개",
+          "correct": false,
+          "signalIds": [
+            "solid.bases"
+          ]
+        },
+        {
+          "id": "g6s1-07-2-a",
+          "label": "2개",
+          "correct": false,
+          "signalIds": [
+            "solid.bases"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-08-1",
+      "unitId": "prisms-pyramids",
+      "learnerStageId": "solid.elements",
+      "curriculumAnchorIds": [
+        "[6수03-05]"
+      ],
+      "prompt": "꼭짓점은 몇 개인가요?",
+      "context": "삼각기둥의 모든 꼭짓점을 셉니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "structure",
+        "shape": "triangular-prism"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-08-1-c",
+          "label": "6개",
+          "correct": true
+        },
+        {
+          "id": "g6s1-08-1-a",
+          "label": "5개",
+          "correct": false,
+          "signalIds": [
+            "solid.elements"
+          ]
+        },
+        {
+          "id": "g6s1-08-1-b",
+          "label": "9개",
+          "correct": false,
+          "signalIds": [
+            "solid.elements"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-08-2",
+      "unitId": "prisms-pyramids",
+      "learnerStageId": "solid.elements",
+      "curriculumAnchorIds": [
+        "[6수03-05]"
+      ],
+      "prompt": "면은 몇 개인가요?",
+      "context": "사각뿔의 평평한 부분을 빠짐없이 셉니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "structure",
+        "shape": "square-pyramid"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-08-2-a",
+          "label": "5개",
+          "correct": true
+        },
+        {
+          "id": "g6s1-08-2-b",
+          "label": "4개",
+          "correct": false,
+          "signalIds": [
+            "solid.elements"
+          ]
+        },
+        {
+          "id": "g6s1-08-2-c",
+          "label": "8개",
+          "correct": false,
+          "signalIds": [
+            "solid.elements"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-09-1",
+      "unitId": "prisms-pyramids",
+      "learnerStageId": "solid.net",
+      "curriculumAnchorIds": [
+        "[6수03-06]"
+      ],
+      "prompt": "만들 수 있는 입체도형은 무엇인가요?",
+      "context": "삼각형 2개와 직사각형 3개로 된 전개도를 접습니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "net",
+        "shape": "triangular-prism"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-09-1-b",
+          "label": "삼각기둥",
+          "correct": true
+        },
+        {
+          "id": "g6s1-09-1-c",
+          "label": "삼각뿔",
+          "correct": false,
+          "signalIds": [
+            "solid.net"
+          ]
+        },
+        {
+          "id": "g6s1-09-1-a",
+          "label": "사각기둥",
+          "correct": false,
+          "signalIds": [
+            "solid.net"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-09-2",
+      "unitId": "prisms-pyramids",
+      "learnerStageId": "solid.net",
+      "curriculumAnchorIds": [
+        "[6수03-06]"
+      ],
+      "prompt": "접었을 때 만들어지는 도형을 고르세요.",
+      "context": "정사각형 1개 둘레에 삼각형 4개가 이어진 전개도입니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "net",
+        "shape": "square-pyramid"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-09-2-c",
+          "label": "사각뿔",
+          "correct": true
+        },
+        {
+          "id": "g6s1-09-2-a",
+          "label": "사각기둥",
+          "correct": false,
+          "signalIds": [
+            "solid.net"
+          ]
+        },
+        {
+          "id": "g6s1-09-2-b",
+          "label": "삼각뿔",
+          "correct": false,
+          "signalIds": [
+            "solid.net"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-10-1",
+      "unitId": "prisms-pyramids",
+      "learnerStageId": "solid.side-faces",
+      "curriculumAnchorIds": [
+        "[6수03-06]"
+      ],
+      "prompt": "옆면은 몇 개인가요?",
+      "context": "오각형을 밑면으로 하는 각기둥을 생각합니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-10-1-a",
+          "label": "5개",
+          "correct": true
+        },
+        {
+          "id": "g6s1-10-1-b",
+          "label": "7개",
+          "correct": false,
+          "signalIds": [
+            "solid.side-faces"
+          ]
+        },
+        {
+          "id": "g6s1-10-1-c",
+          "label": "3개",
+          "correct": false,
+          "signalIds": [
+            "solid.side-faces"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-10-2",
+      "unitId": "prisms-pyramids",
+      "learnerStageId": "solid.side-faces",
+      "curriculumAnchorIds": [
+        "[6수03-06]"
+      ],
+      "prompt": "삼각형 옆면은 몇 개인가요?",
+      "context": "육각형을 밑면으로 하는 각뿔을 위에서 살펴봅니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-10-2-b",
+          "label": "6개",
+          "correct": true
+        },
+        {
+          "id": "g6s1-10-2-c",
+          "label": "7개",
+          "correct": false,
+          "signalIds": [
+            "solid.side-faces"
+          ]
+        },
+        {
+          "id": "g6s1-10-2-a",
+          "label": "4개",
+          "correct": false,
+          "signalIds": [
+            "solid.side-faces"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-11-1",
+      "unitId": "decimal-division",
+      "learnerStageId": "dd.decimal-by-natural",
+      "curriculumAnchorIds": [
+        "[6수01-14]"
+      ],
+      "prompt": "8.4 ÷ 4는 얼마인가요?",
+      "context": "계산한 뒤 몫의 소수점 위치를 확인하세요.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-11-1-c",
+          "label": "2.1",
+          "correct": true
+        },
+        {
+          "id": "g6s1-11-1-a",
+          "label": "21",
+          "correct": false,
+          "signalIds": [
+            "dd.decimal-by-natural"
+          ]
+        },
+        {
+          "id": "g6s1-11-1-b",
+          "label": "0.21",
+          "correct": false,
+          "signalIds": [
+            "dd.decimal-by-natural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-11-2",
+      "unitId": "decimal-division",
+      "learnerStageId": "dd.decimal-by-natural",
+      "curriculumAnchorIds": [
+        "[6수01-14]"
+      ],
+      "prompt": "한 도막의 길이는 몇 m인가요?",
+      "context": "길이 7.5 m인 줄을 3도막으로 똑같이 자릅니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-11-2-a",
+          "label": "2.5 m",
+          "correct": true
+        },
+        {
+          "id": "g6s1-11-2-b",
+          "label": "25 m",
+          "correct": false,
+          "signalIds": [
+            "dd.decimal-by-natural"
+          ]
+        },
+        {
+          "id": "g6s1-11-2-c",
+          "label": "0.25 m",
+          "correct": false,
+          "signalIds": [
+            "dd.decimal-by-natural"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-12-1",
+      "unitId": "decimal-division",
+      "learnerStageId": "dd.zero-quotient",
+      "curriculumAnchorIds": [
+        "[6수01-14]"
+      ],
+      "prompt": "2.4 ÷ 6의 값을 고르세요.",
+      "context": "몫은 1보다 작습니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-12-1-b",
+          "label": "0.4",
+          "correct": true
+        },
+        {
+          "id": "g6s1-12-1-c",
+          "label": "4",
+          "correct": false,
+          "signalIds": [
+            "dd.zero-quotient"
+          ]
+        },
+        {
+          "id": "g6s1-12-1-a",
+          "label": "0.04",
+          "correct": false,
+          "signalIds": [
+            "dd.zero-quotient"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-12-2",
+      "unitId": "decimal-division",
+      "learnerStageId": "dd.zero-quotient",
+      "curriculumAnchorIds": [
+        "[6수01-14]"
+      ],
+      "prompt": "한 통에 몇 L씩 담나요?",
+      "context": "주스 3.5 L를 5통에 똑같이 나누어 담습니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-12-2-c",
+          "label": "0.7 L",
+          "correct": true
+        },
+        {
+          "id": "g6s1-12-2-a",
+          "label": "7 L",
+          "correct": false,
+          "signalIds": [
+            "dd.zero-quotient"
+          ]
+        },
+        {
+          "id": "g6s1-12-2-b",
+          "label": "0.07 L",
+          "correct": false,
+          "signalIds": [
+            "dd.zero-quotient"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-13-1",
+      "unitId": "decimal-division",
+      "learnerStageId": "dd.natural-by-decimal",
+      "curriculumAnchorIds": [
+        "[6수01-15]"
+      ],
+      "prompt": "6 ÷ 0.3은 얼마인가요?",
+      "context": "나누는 수를 자연수로 바꾸어 계산하세요.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-13-1-a",
+          "label": "20",
+          "correct": true
+        },
+        {
+          "id": "g6s1-13-1-b",
+          "label": "2",
+          "correct": false,
+          "signalIds": [
+            "dd.natural-by-decimal"
+          ]
+        },
+        {
+          "id": "g6s1-13-1-c",
+          "label": "1.8",
+          "correct": false,
+          "signalIds": [
+            "dd.natural-by-decimal"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-13-2",
+      "unitId": "decimal-division",
+      "learnerStageId": "dd.natural-by-decimal",
+      "curriculumAnchorIds": [
+        "[6수01-15]"
+      ],
+      "prompt": "몇 도막으로 자를 수 있나요?",
+      "context": "끈 4 m를 0.8 m씩 자릅니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-13-2-b",
+          "label": "5도막",
+          "correct": true
+        },
+        {
+          "id": "g6s1-13-2-c",
+          "label": "0.5도막",
+          "correct": false,
+          "signalIds": [
+            "dd.natural-by-decimal"
+          ]
+        },
+        {
+          "id": "g6s1-13-2-a",
+          "label": "3.2도막",
+          "correct": false,
+          "signalIds": [
+            "dd.natural-by-decimal"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-14-1",
+      "unitId": "decimal-division",
+      "learnerStageId": "dd.decimal-by-decimal",
+      "curriculumAnchorIds": [
+        "[6수01-15]"
+      ],
+      "prompt": "4.2 ÷ 0.6은 얼마인가요?",
+      "context": "두 수에 같은 수를 곱해 자연수 나눗셈으로 바꾸세요.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-14-1-c",
+          "label": "7",
+          "correct": true
+        },
+        {
+          "id": "g6s1-14-1-a",
+          "label": "0.7",
+          "correct": false,
+          "signalIds": [
+            "dd.decimal-by-decimal"
+          ]
+        },
+        {
+          "id": "g6s1-14-1-b",
+          "label": "1/7",
+          "correct": false,
+          "signalIds": [
+            "dd.decimal-by-decimal"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-14-2",
+      "unitId": "decimal-division",
+      "learnerStageId": "dd.decimal-by-decimal",
+      "curriculumAnchorIds": [
+        "[6수01-15]"
+      ],
+      "prompt": "몇 묶음 분량인가요?",
+      "context": "리본 3.75 m를 1.5 m씩 묶음으로 만듭니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-14-2-a",
+          "label": "2.5묶음",
+          "correct": true
+        },
+        {
+          "id": "g6s1-14-2-b",
+          "label": "0.25묶음",
+          "correct": false,
+          "signalIds": [
+            "dd.decimal-by-decimal"
+          ]
+        },
+        {
+          "id": "g6s1-14-2-c",
+          "label": "0.4묶음",
+          "correct": false,
+          "signalIds": [
+            "dd.decimal-by-decimal"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-15-1",
+      "unitId": "decimal-division",
+      "learnerStageId": "dd.application",
+      "curriculumAnchorIds": [
+        "[6수01-15]"
+      ],
+      "prompt": "휘발유 1 L당 몇 km를 간 셈인가요?",
+      "context": "자동차가 12.6 L로 50.4 km를 갔습니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-15-1-b",
+          "label": "4 km",
+          "correct": true
+        },
+        {
+          "id": "g6s1-15-1-c",
+          "label": "0.25 km",
+          "correct": false,
+          "signalIds": [
+            "dd.application"
+          ]
+        },
+        {
+          "id": "g6s1-15-1-a",
+          "label": "3.8 km",
+          "correct": false,
+          "signalIds": [
+            "dd.application"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-15-2",
+      "unitId": "decimal-division",
+      "learnerStageId": "dd.application",
+      "curriculumAnchorIds": [
+        "[6수01-15]"
+      ],
+      "prompt": "6.25 m는 1.25 m의 몇 배인가요?",
+      "context": "철사 6.25 m와 기준 철사 1.25 m의 길이를 비교합니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-15-2-c",
+          "label": "5배",
+          "correct": true
+        },
+        {
+          "id": "g6s1-15-2-a",
+          "label": "0.2배",
+          "correct": false,
+          "signalIds": [
+            "dd.application"
+          ]
+        },
+        {
+          "id": "g6s1-15-2-b",
+          "label": "6배",
+          "correct": false,
+          "signalIds": [
+            "dd.application"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-16-1",
+      "unitId": "ratio-rate",
+      "learnerStageId": "ratio.meaning",
+      "curriculumAnchorIds": [
+        "[6수02-02]"
+      ],
+      "prompt": "빨간 공 수와 파란 공 수의 비를 쓰세요.",
+      "context": "빨간 공 3개와 파란 공 5개가 있습니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-16-1-a",
+          "label": "3:5",
+          "correct": true
+        },
+        {
+          "id": "g6s1-16-1-b",
+          "label": "8",
+          "correct": false,
+          "signalIds": [
+            "ratio.meaning"
+          ]
+        },
+        {
+          "id": "g6s1-16-1-c",
+          "label": "5:3",
+          "correct": false,
+          "signalIds": [
+            "ratio.meaning"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-16-2",
+      "unitId": "ratio-rate",
+      "learnerStageId": "ratio.meaning",
+      "curriculumAnchorIds": [
+        "[6수02-02]"
+      ],
+      "prompt": "알맞은 비를 고르세요.",
+      "context": "남학생 12명에 대한 여학생 15명의 비를 나타냅니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-16-2-b",
+          "label": "15:12",
+          "correct": true
+        },
+        {
+          "id": "g6s1-16-2-c",
+          "label": "27",
+          "correct": false,
+          "signalIds": [
+            "ratio.meaning"
+          ]
+        },
+        {
+          "id": "g6s1-16-2-a",
+          "label": "12:15",
+          "correct": false,
+          "signalIds": [
+            "ratio.meaning"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-17-1",
+      "unitId": "ratio-rate",
+      "learnerStageId": "ratio.equivalent",
+      "curriculumAnchorIds": [
+        "[6수02-02]"
+      ],
+      "prompt": "알맞은 비는 어느 것인가요?",
+      "context": "2:3과 같은 비를 찾습니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-17-1-c",
+          "label": "6:9",
+          "correct": true
+        },
+        {
+          "id": "g6s1-17-1-a",
+          "label": "4:5",
+          "correct": false,
+          "signalIds": [
+            "ratio.equivalent"
+          ]
+        },
+        {
+          "id": "g6s1-17-1-b",
+          "label": "6:3",
+          "correct": false,
+          "signalIds": [
+            "ratio.equivalent"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-17-2",
+      "unitId": "ratio-rate",
+      "learnerStageId": "ratio.equivalent",
+      "curriculumAnchorIds": [
+        "[6수02-02]"
+      ],
+      "prompt": "원액이 12컵일 때 물은 몇 컵인가요?",
+      "context": "주스 원액과 물의 비 4:5를 그대로 유지합니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-17-2-a",
+          "label": "15컵",
+          "correct": true
+        },
+        {
+          "id": "g6s1-17-2-b",
+          "label": "13컵",
+          "correct": false,
+          "signalIds": [
+            "ratio.equivalent"
+          ]
+        },
+        {
+          "id": "g6s1-17-2-c",
+          "label": "5컵",
+          "correct": false,
+          "signalIds": [
+            "ratio.equivalent"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-18-1",
+      "unitId": "ratio-rate",
+      "learnerStageId": "rate.unit",
+      "curriculumAnchorIds": [
+        "[6수02-03]"
+      ],
+      "prompt": "전체 학생 수에 대한 안경 쓴 학생 수의 비율을 분수로 나타내면 얼마인가요?",
+      "context": "전체 20명 중 안경을 쓴 학생이 5명입니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-18-1-b",
+          "label": "1/4",
+          "correct": true
+        },
+        {
+          "id": "g6s1-18-1-c",
+          "label": "4/1",
+          "correct": false,
+          "signalIds": [
+            "rate.unit"
+          ]
+        },
+        {
+          "id": "g6s1-18-1-a",
+          "label": "15/1",
+          "correct": false,
+          "signalIds": [
+            "rate.unit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-18-2",
+      "unitId": "ratio-rate",
+      "learnerStageId": "rate.unit",
+      "curriculumAnchorIds": [
+        "[6수02-03]"
+      ],
+      "prompt": "1시간당 이동 거리는 얼마인가요?",
+      "context": "거리 180 km를 3시간 동안 이동했습니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-18-2-c",
+          "label": "60 km",
+          "correct": true
+        },
+        {
+          "id": "g6s1-18-2-a",
+          "label": "1/60 km",
+          "correct": false,
+          "signalIds": [
+            "rate.unit"
+          ]
+        },
+        {
+          "id": "g6s1-18-2-b",
+          "label": "177 km",
+          "correct": false,
+          "signalIds": [
+            "rate.unit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-19-1",
+      "unitId": "ratio-rate",
+      "learnerStageId": "rate.percent",
+      "curriculumAnchorIds": [
+        "[6수02-03]"
+      ],
+      "prompt": "알맞은 백분율은 얼마인가요?",
+      "context": "비율 0.35를 백분율로 바꿉니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-19-1-a",
+          "label": "35%",
+          "correct": true
+        },
+        {
+          "id": "g6s1-19-1-b",
+          "label": "0.35%",
+          "correct": false,
+          "signalIds": [
+            "rate.percent"
+          ]
+        },
+        {
+          "id": "g6s1-19-1-c",
+          "label": "3.5%",
+          "correct": false,
+          "signalIds": [
+            "rate.percent"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-19-2",
+      "unitId": "ratio-rate",
+      "learnerStageId": "rate.percent",
+      "curriculumAnchorIds": [
+        "[6수02-03]"
+      ],
+      "prompt": "자전거 등교 학생의 백분율을 구하세요.",
+      "context": "40명 중 12명이 자전거로 등교합니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-19-2-b",
+          "label": "30%",
+          "correct": true
+        },
+        {
+          "id": "g6s1-19-2-c",
+          "label": "0.3%",
+          "correct": false,
+          "signalIds": [
+            "rate.percent"
+          ]
+        },
+        {
+          "id": "g6s1-19-2-a",
+          "label": "3%",
+          "correct": false,
+          "signalIds": [
+            "rate.percent"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-20-1",
+      "unitId": "ratio-rate",
+      "learnerStageId": "rate.application",
+      "curriculumAnchorIds": [
+        "[6수02-03]"
+      ],
+      "prompt": "할인액은 얼마인가요?",
+      "context": "30,000원짜리 가방을 20% 할인합니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-20-1-c",
+          "label": "6,000원",
+          "correct": true
+        },
+        {
+          "id": "g6s1-20-1-a",
+          "label": "600,000원",
+          "correct": false,
+          "signalIds": [
+            "rate.application"
+          ]
+        },
+        {
+          "id": "g6s1-20-1-b",
+          "label": "24,000원",
+          "correct": false,
+          "signalIds": [
+            "rate.application"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-20-2",
+      "unitId": "ratio-rate",
+      "learnerStageId": "rate.application",
+      "curriculumAnchorIds": [
+        "[6수02-03]"
+      ],
+      "prompt": "판매 가격은 얼마인가요?",
+      "context": "정가 50,000원인 옷을 10% 할인해 판매합니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-20-2-a",
+          "label": "45,000원",
+          "correct": true
+        },
+        {
+          "id": "g6s1-20-2-b",
+          "label": "500,000원",
+          "correct": false,
+          "signalIds": [
+            "rate.application"
+          ]
+        },
+        {
+          "id": "g6s1-20-2-c",
+          "label": "5,000원",
+          "correct": false,
+          "signalIds": [
+            "rate.application"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-21-1",
+      "unitId": "data-graphs",
+      "learnerStageId": "graph.strip-read",
+      "curriculumAnchorIds": [
+        "[6수04-02]"
+      ],
+      "prompt": "독서의 비율은 몇 %인가요?",
+      "context": "띠 전체 20칸 중 독서가 8칸입니다.",
+      "visual": {
+        "kind": "part-chart-diagram",
+        "mode": "strip",
+        "totalParts": 20,
+        "segments": [
+          {
+            "label": "독서",
+            "parts": 8
+          },
+          {
+            "label": "운동",
+            "parts": 7
+          },
+          {
+            "label": "음악",
+            "parts": 5
+          }
+        ]
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-21-1-b",
+          "label": "40%",
+          "correct": true
+        },
+        {
+          "id": "g6s1-21-1-c",
+          "label": "8%",
+          "correct": false,
+          "signalIds": [
+            "graph.strip-read"
+          ]
+        },
+        {
+          "id": "g6s1-21-1-a",
+          "label": "60%",
+          "correct": false,
+          "signalIds": [
+            "graph.strip-read"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-21-2",
+      "unitId": "data-graphs",
+      "learnerStageId": "graph.strip-read",
+      "curriculumAnchorIds": [
+        "[6수04-02]"
+      ],
+      "prompt": "과학 항목의 비율을 고르세요.",
+      "context": "학급 희망 활동을 10칸 띠그래프로 나타냈습니다.",
+      "visual": {
+        "kind": "part-chart-diagram",
+        "mode": "strip",
+        "totalParts": 10,
+        "segments": [
+          {
+            "label": "과학",
+            "parts": 3
+          },
+          {
+            "label": "미술",
+            "parts": 4
+          },
+          {
+            "label": "체육",
+            "parts": 3
+          }
+        ]
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-21-2-c",
+          "label": "30%",
+          "correct": true
+        },
+        {
+          "id": "g6s1-21-2-a",
+          "label": "3%",
+          "correct": false,
+          "signalIds": [
+            "graph.strip-read"
+          ]
+        },
+        {
+          "id": "g6s1-21-2-b",
+          "label": "70%",
+          "correct": false,
+          "signalIds": [
+            "graph.strip-read"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-22-1",
+      "unitId": "data-graphs",
+      "learnerStageId": "graph.circle-read",
+      "curriculumAnchorIds": [
+        "[6수04-02]"
+      ],
+      "prompt": "가장 비율이 큰 항목은 무엇인가요?",
+      "context": "한 원을 20부분으로 나눈 원그래프입니다.",
+      "visual": {
+        "kind": "part-chart-diagram",
+        "mode": "circle",
+        "totalParts": 20,
+        "segments": [
+          {
+            "label": "도보",
+            "parts": 10
+          },
+          {
+            "label": "버스",
+            "parts": 6
+          },
+          {
+            "label": "자전거",
+            "parts": 4
+          }
+        ]
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-22-1-a",
+          "label": "도보",
+          "correct": true
+        },
+        {
+          "id": "g6s1-22-1-b",
+          "label": "버스",
+          "correct": false,
+          "signalIds": [
+            "graph.circle-read"
+          ]
+        },
+        {
+          "id": "g6s1-22-1-c",
+          "label": "자전거",
+          "correct": false,
+          "signalIds": [
+            "graph.circle-read"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-22-2",
+      "unitId": "data-graphs",
+      "learnerStageId": "graph.circle-read",
+      "curriculumAnchorIds": [
+        "[6수04-02]"
+      ],
+      "prompt": "가장 비율이 작은 항목을 고르세요.",
+      "context": "좋아하는 계절을 원그래프로 나타냈습니다.",
+      "visual": {
+        "kind": "part-chart-diagram",
+        "mode": "circle",
+        "totalParts": 10,
+        "segments": [
+          {
+            "label": "봄",
+            "parts": 3
+          },
+          {
+            "label": "여름",
+            "parts": 5
+          },
+          {
+            "label": "겨울",
+            "parts": 2
+          }
+        ]
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-22-2-b",
+          "label": "겨울",
+          "correct": true
+        },
+        {
+          "id": "g6s1-22-2-c",
+          "label": "봄",
+          "correct": false,
+          "signalIds": [
+            "graph.circle-read"
+          ]
+        },
+        {
+          "id": "g6s1-22-2-a",
+          "label": "여름",
+          "correct": false,
+          "signalIds": [
+            "graph.circle-read"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-23-1",
+      "unitId": "data-graphs",
+      "learnerStageId": "graph.whole-from-part",
+      "curriculumAnchorIds": [
+        "[6수04-02]"
+      ],
+      "prompt": "조사한 학생은 모두 몇 명인가요?",
+      "context": "독서가 전체의 25%이고 독서를 고른 학생은 8명입니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-23-1-c",
+          "label": "32명",
+          "correct": true
+        },
+        {
+          "id": "g6s1-23-1-a",
+          "label": "200명",
+          "correct": false,
+          "signalIds": [
+            "graph.whole-from-part"
+          ]
+        },
+        {
+          "id": "g6s1-23-1-b",
+          "label": "8명",
+          "correct": false,
+          "signalIds": [
+            "graph.whole-from-part"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-23-2",
+      "unitId": "data-graphs",
+      "learnerStageId": "graph.whole-from-part",
+      "curriculumAnchorIds": [
+        "[6수04-02]"
+      ],
+      "prompt": "전체 학생 수를 구하세요.",
+      "context": "축구 항목이 전체의 40%이고 축구를 고른 학생은 12명입니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-23-2-a",
+          "label": "30명",
+          "correct": true
+        },
+        {
+          "id": "g6s1-23-2-b",
+          "label": "480명",
+          "correct": false,
+          "signalIds": [
+            "graph.whole-from-part"
+          ]
+        },
+        {
+          "id": "g6s1-23-2-c",
+          "label": "12명",
+          "correct": false,
+          "signalIds": [
+            "graph.whole-from-part"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-24-1",
+      "unitId": "data-graphs",
+      "learnerStageId": "graph.construct",
+      "curriculumAnchorIds": [
+        "[6수04-03]"
+      ],
+      "prompt": "배는 몇 칸으로 나타내야 하나요?",
+      "context": "사과 50%, 배 30%, 감 20%를 20칸 띠그래프로 나타냅니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-24-1-b",
+          "label": "6칸",
+          "correct": true
+        },
+        {
+          "id": "g6s1-24-1-c",
+          "label": "10칸",
+          "correct": false,
+          "signalIds": [
+            "graph.construct"
+          ]
+        },
+        {
+          "id": "g6s1-24-1-a",
+          "label": "14칸",
+          "correct": false,
+          "signalIds": [
+            "graph.construct"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-24-2",
+      "unitId": "data-graphs",
+      "learnerStageId": "graph.construct",
+      "curriculumAnchorIds": [
+        "[6수04-03]"
+      ],
+      "prompt": "자전거는 몇 부분으로 나타내나요?",
+      "context": "걷기 40%, 버스 40%, 자전거 20%를 10부분 원그래프로 만듭니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-24-2-c",
+          "label": "2부분",
+          "correct": true
+        },
+        {
+          "id": "g6s1-24-2-a",
+          "label": "4부분",
+          "correct": false,
+          "signalIds": [
+            "graph.construct"
+          ]
+        },
+        {
+          "id": "g6s1-24-2-b",
+          "label": "8부분",
+          "correct": false,
+          "signalIds": [
+            "graph.construct"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-25-1",
+      "unitId": "data-graphs",
+      "learnerStageId": "graph.choose",
+      "curriculumAnchorIds": [
+        "[6수04-03]"
+      ],
+      "prompt": "두 자료에 알맞은 그래프를 순서대로 고르세요.",
+      "context": "한 달 동안의 기온 변화와 한 시점의 운동 종목별 비율을 각각 나타냅니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-25-1-a",
+          "label": "꺾은선그래프, 원그래프",
+          "correct": true
+        },
+        {
+          "id": "g6s1-25-1-b",
+          "label": "원그래프, 꺾은선그래프",
+          "correct": false,
+          "signalIds": [
+            "graph.choose"
+          ]
+        },
+        {
+          "id": "g6s1-25-1-c",
+          "label": "원그래프, 원그래프",
+          "correct": false,
+          "signalIds": [
+            "graph.choose"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-25-2",
+      "unitId": "data-graphs",
+      "learnerStageId": "graph.choose",
+      "curriculumAnchorIds": [
+        "[6수04-03]"
+      ],
+      "prompt": "두 자료에 알맞은 그래프를 순서대로 고르세요.",
+      "context": "날짜별 판매량 변화와 등교 방법별 구성 비율을 각각 나타냅니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-25-2-b",
+          "label": "꺾은선그래프, 띠그래프",
+          "correct": true
+        },
+        {
+          "id": "g6s1-25-2-c",
+          "label": "띠그래프, 꺾은선그래프",
+          "correct": false,
+          "signalIds": [
+            "graph.choose"
+          ]
+        },
+        {
+          "id": "g6s1-25-2-a",
+          "label": "띠그래프, 띠그래프",
+          "correct": false,
+          "signalIds": [
+            "graph.choose"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-26-1",
+      "unitId": "surface-volume",
+      "learnerStageId": "volume.unit",
+      "curriculumAnchorIds": [
+        "[6수03-18]"
+      ],
+      "prompt": "부피를 알맞은 단위로 나타내세요.",
+      "context": "한 모서리가 1 cm인 쌓기나무 8개로 만든 입체입니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "unit-stack",
+        "shape": "unit-cubes",
+        "cubes": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "frontDirection": "right"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-26-1-c",
+          "label": "8 cm³",
+          "correct": true
+        },
+        {
+          "id": "g6s1-26-1-a",
+          "label": "8 cm²",
+          "correct": false,
+          "signalIds": [
+            "volume.unit"
+          ]
+        },
+        {
+          "id": "g6s1-26-1-b",
+          "label": "8 cm",
+          "correct": false,
+          "signalIds": [
+            "volume.unit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-26-2",
+      "unitId": "surface-volume",
+      "learnerStageId": "volume.unit",
+      "curriculumAnchorIds": [
+        "[6수03-18]"
+      ],
+      "prompt": "전체 부피의 단위와 값을 고르세요.",
+      "context": "한 모서리가 1 m인 정육면체가 6개 있습니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-26-2-a",
+          "label": "6 m³",
+          "correct": true
+        },
+        {
+          "id": "g6s1-26-2-b",
+          "label": "6 m²",
+          "correct": false,
+          "signalIds": [
+            "volume.unit"
+          ]
+        },
+        {
+          "id": "g6s1-26-2-c",
+          "label": "6 m",
+          "correct": false,
+          "signalIds": [
+            "volume.unit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-27-1",
+      "unitId": "surface-volume",
+      "learnerStageId": "volume.capacity-relation",
+      "curriculumAnchorIds": [
+        "[6수03-19]"
+      ],
+      "prompt": "몇 L인가요?",
+      "context": "1 m³와 같은 들이를 리터로 나타냅니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-27-1-b",
+          "label": "1000 L",
+          "correct": true
+        },
+        {
+          "id": "g6s1-27-1-c",
+          "label": "10 L",
+          "correct": false,
+          "signalIds": [
+            "volume.capacity-relation"
+          ]
+        },
+        {
+          "id": "g6s1-27-1-a",
+          "label": "100 L",
+          "correct": false,
+          "signalIds": [
+            "volume.capacity-relation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-27-2",
+      "unitId": "surface-volume",
+      "learnerStageId": "volume.capacity-relation",
+      "curriculumAnchorIds": [
+        "[6수03-19]"
+      ],
+      "prompt": "몇 L를 채울 수 있나요?",
+      "context": "수조의 부피가 2 m³입니다. 가득 채울 수 있는 물의 들이를 구합니다.",
+      "visual": {
+        "kind": "none"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-27-2-c",
+          "label": "2000 L",
+          "correct": true
+        },
+        {
+          "id": "g6s1-27-2-a",
+          "label": "20 L",
+          "correct": false,
+          "signalIds": [
+            "volume.capacity-relation"
+          ]
+        },
+        {
+          "id": "g6s1-27-2-b",
+          "label": "200 L",
+          "correct": false,
+          "signalIds": [
+            "volume.capacity-relation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-28-1",
+      "unitId": "surface-volume",
+      "learnerStageId": "volume.box",
+      "curriculumAnchorIds": [
+        "[6수03-18]"
+      ],
+      "prompt": "부피는 얼마인가요?",
+      "context": "가로 5 cm, 세로 3 cm, 높이 4 cm인 직육면체입니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "dimensions",
+        "shape": "rectangular-prism",
+        "width": 5,
+        "depth": 3,
+        "height": 4
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-28-1-a",
+          "label": "60 cm³",
+          "correct": true
+        },
+        {
+          "id": "g6s1-28-1-b",
+          "label": "12 cm³",
+          "correct": false,
+          "signalIds": [
+            "volume.box"
+          ]
+        },
+        {
+          "id": "g6s1-28-1-c",
+          "label": "15 cm³",
+          "correct": false,
+          "signalIds": [
+            "volume.box"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-28-2",
+      "unitId": "surface-volume",
+      "learnerStageId": "volume.box",
+      "curriculumAnchorIds": [
+        "[6수03-18]"
+      ],
+      "prompt": "상자 안쪽의 부피를 구하세요.",
+      "context": "상자의 가로는 8 cm, 세로는 3 cm, 높이는 6 cm입니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "dimensions",
+        "shape": "rectangular-prism",
+        "width": 8,
+        "depth": 3,
+        "height": 6
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-28-2-b",
+          "label": "144 cm³",
+          "correct": true
+        },
+        {
+          "id": "g6s1-28-2-c",
+          "label": "17 cm³",
+          "correct": false,
+          "signalIds": [
+            "volume.box"
+          ]
+        },
+        {
+          "id": "g6s1-28-2-a",
+          "label": "24 cm³",
+          "correct": false,
+          "signalIds": [
+            "volume.box"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-29-1",
+      "unitId": "surface-volume",
+      "learnerStageId": "volume.cube",
+      "curriculumAnchorIds": [
+        "[6수03-18]"
+      ],
+      "prompt": "부피는 얼마인가요?",
+      "context": "한 모서리가 4 cm인 정육면체입니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "dimensions",
+        "shape": "cube",
+        "width": 4
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-29-1-c",
+          "label": "64 cm³",
+          "correct": true
+        },
+        {
+          "id": "g6s1-29-1-a",
+          "label": "16 cm³",
+          "correct": false,
+          "signalIds": [
+            "volume.cube"
+          ]
+        },
+        {
+          "id": "g6s1-29-1-b",
+          "label": "96 cm³",
+          "correct": false,
+          "signalIds": [
+            "volume.cube"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-29-2",
+      "unitId": "surface-volume",
+      "learnerStageId": "volume.cube",
+      "curriculumAnchorIds": [
+        "[6수03-18]"
+      ],
+      "prompt": "상자의 부피를 구하세요.",
+      "context": "모든 모서리 길이가 7 cm인 상자입니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "dimensions",
+        "shape": "cube",
+        "width": 7
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-29-2-a",
+          "label": "343 cm³",
+          "correct": true
+        },
+        {
+          "id": "g6s1-29-2-b",
+          "label": "49 cm³",
+          "correct": false,
+          "signalIds": [
+            "volume.cube"
+          ]
+        },
+        {
+          "id": "g6s1-29-2-c",
+          "label": "294 cm³",
+          "correct": false,
+          "signalIds": [
+            "volume.cube"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-30-1",
+      "unitId": "surface-volume",
+      "learnerStageId": "surface.net",
+      "curriculumAnchorIds": [
+        "[6수03-17]"
+      ],
+      "prompt": "겉넓이를 구할 때 더해야 하는 면은 몇 개인가요?",
+      "context": "직육면체를 모서리를 따라 겹치지 않게 펼쳤습니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "net",
+        "shape": "rectangular-prism"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-30-1-b",
+          "label": "6개",
+          "correct": true
+        },
+        {
+          "id": "g6s1-30-1-c",
+          "label": "4개",
+          "correct": false,
+          "signalIds": [
+            "surface.net"
+          ]
+        },
+        {
+          "id": "g6s1-30-1-a",
+          "label": "5개",
+          "correct": false,
+          "signalIds": [
+            "surface.net"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-30-2",
+      "unitId": "surface-volume",
+      "learnerStageId": "surface.net",
+      "curriculumAnchorIds": [
+        "[6수03-17]"
+      ],
+      "prompt": "정사각형 몇 개의 넓이를 더하나요?",
+      "context": "정육면체의 전개도에서 같은 정사각형을 모두 셉니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "net",
+        "shape": "cube"
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-30-2-c",
+          "label": "6개",
+          "correct": true
+        },
+        {
+          "id": "g6s1-30-2-a",
+          "label": "4개",
+          "correct": false,
+          "signalIds": [
+            "surface.net"
+          ]
+        },
+        {
+          "id": "g6s1-30-2-b",
+          "label": "5개",
+          "correct": false,
+          "signalIds": [
+            "surface.net"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-31-1",
+      "unitId": "surface-volume",
+      "learnerStageId": "surface.calculate",
+      "curriculumAnchorIds": [
+        "[6수03-17]"
+      ],
+      "prompt": "겉넓이는 얼마인가요?",
+      "context": "가로 5 cm, 세로 3 cm, 높이 2 cm인 직육면체입니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "dimensions",
+        "shape": "rectangular-prism",
+        "width": 5,
+        "depth": 3,
+        "height": 2
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-31-1-a",
+          "label": "62 cm²",
+          "correct": true
+        },
+        {
+          "id": "g6s1-31-1-b",
+          "label": "31 cm²",
+          "correct": false,
+          "signalIds": [
+            "surface.calculate"
+          ]
+        },
+        {
+          "id": "g6s1-31-1-c",
+          "label": "30 cm²",
+          "correct": false,
+          "signalIds": [
+            "surface.calculate"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g6s1-31-2",
+      "unitId": "surface-volume",
+      "learnerStageId": "surface.calculate",
+      "curriculumAnchorIds": [
+        "[6수03-17]"
+      ],
+      "prompt": "필요한 종이의 넓이는 얼마인가요?",
+      "context": "한 모서리가 5 cm인 정육면체의 모든 면을 포장합니다.",
+      "visual": {
+        "kind": "solid-diagram",
+        "mode": "dimensions",
+        "shape": "cube",
+        "width": 5
+      },
+      "interaction": {
+        "type": "choice",
+        "version": 1
+      },
+      "choices": [
+        {
+          "id": "g6s1-31-2-b",
+          "label": "150 cm²",
+          "correct": true
+        },
+        {
+          "id": "g6s1-31-2-c",
+          "label": "75 cm²",
+          "correct": false,
+          "signalIds": [
+            "surface.calculate"
+          ]
+        },
+        {
+          "id": "g6s1-31-2-a",
+          "label": "125 cm²",
+          "correct": false,
+          "signalIds": [
+            "surface.calculate"
+          ]
+        }
+      ]
+    }
+  ]
+}

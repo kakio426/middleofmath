@@ -1,6 +1,8 @@
 export interface PresentationSeed {
   readonly sessionId: string;
   readonly judgmentId: string;
+  readonly judgmentIndex?: number;
+  readonly correctChoiceId?: string;
 }
 
 export interface PresentationBalanceJudgment {
@@ -46,12 +48,31 @@ export function presentedChoiceIds(
   seed: PresentationSeed,
   choiceIds: readonly string[]
 ): string[] {
-  return [...choiceIds].sort((left, right) => {
+  const ordered = [...choiceIds].sort((left, right) => {
     const hashDifference = presentationHash(seed, left) - presentationHash(seed, right);
     if (hashDifference !== 0) return hashDifference;
     if (left === right) return 0;
     return left < right ? -1 : 1;
   });
+  if (
+    seed.judgmentIndex === undefined
+    || seed.judgmentIndex < 0
+    || !Number.isInteger(seed.judgmentIndex)
+    || !seed.correctChoiceId
+    || !ordered.includes(seed.correctChoiceId)
+    || ordered.length < 2
+  ) {
+    return ordered;
+  }
+
+  const sessionPhase = presentationHash(
+    { sessionId: seed.sessionId, judgmentId: "presentation-cycle" },
+    "correct-position"
+  ) % ordered.length;
+  const targetPosition = (sessionPhase + seed.judgmentIndex) % ordered.length;
+  const withoutCorrect = ordered.filter((choiceId) => choiceId !== seed.correctChoiceId);
+  withoutCorrect.splice(targetPosition, 0, seed.correctChoiceId);
+  return withoutCorrect;
 }
 
 export function presentedChoices<TChoice extends { id: string }>(
@@ -59,7 +80,16 @@ export function presentedChoices<TChoice extends { id: string }>(
   choices: readonly TChoice[]
 ): TChoice[] {
   const byId = new Map(choices.map((choice) => [choice.id, choice]));
-  return presentedChoiceIds(seed, choices.map((choice) => choice.id))
+  const authoredCorrectChoiceId = choices.find((choice) =>
+    "correct" in choice && choice.correct === true
+  )?.id;
+  return presentedChoiceIds(
+    {
+      ...seed,
+      correctChoiceId: seed.correctChoiceId ?? authoredCorrectChoiceId
+    },
+    choices.map((choice) => choice.id)
+  )
     .map((choiceId) => byId.get(choiceId))
     .filter((choice): choice is TChoice => Boolean(choice));
 }
@@ -67,6 +97,7 @@ export function presentedChoices<TChoice extends { id: string }>(
 export function analyzePresentationBalance(input: {
   sessionIds: readonly string[];
   judgments: readonly PresentationBalanceJudgment[];
+  balanceWithinSession?: boolean;
 }): PresentationBalanceReport {
   const countsByChoiceCount = new Map<number, number[]>();
   const samplesByChoiceCount = new Map<number, number>();
@@ -76,7 +107,7 @@ export function analyzePresentationBalance(input: {
   for (const sessionId of input.sessionIds) {
     const positions: number[] = [];
     let authoredFirstStillFirst = 0;
-    for (const judgment of input.judgments) {
+    for (const [judgmentIndex, judgment] of input.judgments.entries()) {
       if (
         judgment.choiceIds.length < 2
         || !judgment.choiceIds.includes(judgment.correctChoiceId)
@@ -84,7 +115,14 @@ export function analyzePresentationBalance(input: {
         continue;
       }
       const order = presentedChoiceIds(
-        { sessionId, judgmentId: judgment.id },
+        {
+          sessionId,
+          judgmentId: judgment.id,
+          ...(input.balanceWithinSession ? {
+            judgmentIndex,
+            correctChoiceId: judgment.correctChoiceId
+          } : {})
+        },
         judgment.choiceIds
       );
       const position = order.indexOf(judgment.correctChoiceId);

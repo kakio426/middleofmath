@@ -18,12 +18,12 @@ const expectedPlacement = [
   {
     semester: 2,
     units: [
-      { order: 1, id: "triangles", title: "삼각형", reviewStatus: "pending-teacher-review", reviewedBy: null, reviewedAt: null, anchorIds: ["[4수03-08]", "[4수03-09]"] },
-      { order: 2, id: "fraction-add-subtract", title: "분수의 덧셈과 뺄셈", reviewStatus: "pending-teacher-review", reviewedBy: null, reviewedAt: null, anchorIds: ["[4수01-15]"] },
-      { order: 3, id: "quadrilaterals", title: "사각형", reviewStatus: "pending-teacher-review", reviewedBy: null, reviewedAt: null, anchorIds: ["[4수03-03]", "[4수03-10]"] },
-      { order: 4, id: "decimal-add-subtract", title: "소수의 덧셈과 뺄셈", reviewStatus: "pending-teacher-review", reviewedBy: null, reviewedAt: null, anchorIds: ["[4수01-13]", "[4수01-14]", "[4수01-16]"] },
-      { order: 5, id: "polygons", title: "다각형", reviewStatus: "pending-teacher-review", reviewedBy: null, reviewedAt: null, anchorIds: ["[4수03-11]", "[4수03-12]"] },
-      { order: 6, id: "line-graphs", title: "꺾은선그래프", reviewStatus: "pending-teacher-review", reviewedBy: null, reviewedAt: null, anchorIds: ["[4수04-02]", "[4수04-03]"] }
+      { order: 1, id: "triangles", title: "삼각형", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-07-31T18:59:56+09:00", anchorIds: ["[4수03-08]", "[4수03-09]"] },
+      { order: 2, id: "fraction-add-subtract", title: "분수의 덧셈과 뺄셈", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-07-31T20:13:47+09:00", anchorIds: ["[4수01-15]"] },
+      { order: 3, id: "quadrilaterals", title: "사각형", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-07-31T21:34:58+09:00", anchorIds: ["[4수03-03]", "[4수03-10]"] },
+      { order: 4, id: "decimal-add-subtract", title: "소수의 덧셈과 뺄셈", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-07-31T23:42:26+09:00", anchorIds: ["[4수01-13]", "[4수01-14]", "[4수01-16]"] },
+      { order: 5, id: "polygons", title: "다각형", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-08-01T00:39:13+09:00", anchorIds: ["[4수03-11]", "[4수03-12]"] },
+      { order: 6, id: "line-graphs", title: "꺾은선그래프", reviewStatus: "approved", reviewedBy: "teacher:workspace-owner", reviewedAt: "2026-08-01T04:16:40+09:00", anchorIds: ["[4수04-02]", "[4수04-03]"] }
     ]
   }
 ];
@@ -121,12 +121,12 @@ describe("4학년 코드·단원·학기 배치 검토 원장", () => {
     )).toBe(true);
   });
 
-  it("A1과 A2로 1학기 전체를 승인하고 두 학기 여섯 단원을 명시한다", () => {
+  it("A1부터 A3-6까지 승인하고 두 학기 여섯 단원을 명시한다", () => {
     expect(placementJson).toMatchObject({
-      revision: "grade4-placement-2026-07-31.10",
-      status: "pending-teacher-review",
-      reviewedBy: null,
-      reviewedAt: null
+      revision: "grade4-placement-2026-08-01.16",
+      status: "approved",
+      reviewedBy: "teacher:workspace-owner",
+      reviewedAt: "2026-08-01T04:16:40+09:00"
     });
     expect(placementJson.semesters.map((semester) => ({
       semester: semester.semester,
@@ -145,9 +145,13 @@ describe("4학년 코드·단원·학기 배치 검토 원장", () => {
       "bar-graphs",
       "patterns-relations"
     ]);
+    expect(placementJson.semesters[1].units.every((unit) =>
+      unit.reviewStatus === "approved"
+    )).toBe(true);
     expect(placementJson.reviewLimitations).toEqual([
       "2학기 PDF 부록에는 3~4학년군 성취기준 47개 전체가 포함되므로 PDF 안의 코드 존재만으로 학기 배치를 승인하지 않는다.",
-      "4학년 2학기 단원 문맥과 순서, 1학기 PDF에도 나타나는 [4수03-09], [4수03-10], [4수01-14]의 배치는 교사가 우선 확인한다.",
+      "1학기 PDF 부록에도 나타나는 [4수03-10]은 공식 2학기 3단원 행으로 배치를 확정했다. [4수01-13], [4수01-14], [4수01-16]은 2학기 PDF 인쇄면 79~80쪽의 4단원 행으로, [4수03-11], [4수03-12]는 본문 인쇄면 81쪽의 5단원 행으로 배치를 확정했다. 나머지 단원 문맥은 교사가 우선 확인한다.",
+      "2학기 PDF 부록 색인은 다각형을 6단원, 꺾은선그래프를 5단원으로 적어 본문 수업-평가 계획 표와 다르며 삼각형·사각형 단원 번호도 본문과 어긋난다. 학기 단원 배치에는 부록 색인이 아니라 본문 표를 사용한다.",
       "스냅숏의 pdftotext 줄 번호는 DECK6 상류 기록값이며 추출 도구가 고정되지 않아 로컬에서 재현되지 않는다. 줄 번호를 학기 배치 승인 근거로 사용하지 않는다.",
       "[4수01-07]의 학생용 요약 라벨은 고정 스냅숏의 세 자리 수 범위의 나눗셈 모듈과 4학년 1학기 단원 배치를 함께 대조해 작성했으며 성취기준 원문을 옮긴 것이 아니다."
     ]);

@@ -17,6 +17,11 @@ import {
   grade3Semester1Diagnosis,
   grade3Semester2Diagnosis,
   grade4Semester1Diagnosis,
+  grade4Semester2Diagnosis,
+  grade5Semester1Diagnosis,
+  grade5Semester2Diagnosis,
+  grade6Semester1Diagnosis,
+  grade6Semester2Diagnosis,
   incomingPrerequisiteEdges
 } from "@middle-of-math/content/runtime";
 import {
@@ -42,6 +47,7 @@ import {
   ConfidenceMark,
   EmptyState,
   EvidenceRail,
+  ReadableText,
   SeverityMark,
   StatusPill
 } from "@middle-of-math/ui";
@@ -49,13 +55,14 @@ import {
   findChoiceNote,
   groupSummaryByUnit
 } from "./teacher-report-model";
+import { createPairedEvidenceDemoProfiles } from "./teacher-demo-profiles";
 
 type Page = "summary" | "student" | "assignment" | "roster" | "settings";
 type ReportMode = "teacher" | "parent";
-type ClassTermKey = "3-2" | "4-1";
+type ClassTermKey = "3-2" | "4-1" | "4-2" | "5-1" | "5-2" | "6-1" | "6-2";
 type ClassCreationInput = {
   name: string;
-  grade: 3 | 4;
+  grade: 3 | 4 | 5 | 6;
   semester: 1 | 2;
 };
 
@@ -76,7 +83,17 @@ const requestedDemoSetKey = typeof window === "undefined"
   : new URLSearchParams(window.location.search).get("set");
 const content = demoMode && requestedDemoSetKey === "grade4-semester1"
   ? grade4Semester1Diagnosis
-  : grade3Semester2Diagnosis;
+  : demoMode && requestedDemoSetKey === "grade4-semester2"
+    ? grade4Semester2Diagnosis
+    : demoMode && requestedDemoSetKey === "grade5-semester1"
+      ? grade5Semester1Diagnosis
+    : demoMode && requestedDemoSetKey === "grade5-semester2"
+      ? grade5Semester2Diagnosis
+    : demoMode && requestedDemoSetKey === "grade6-semester1"
+      ? grade6Semester1Diagnosis
+    : demoMode && requestedDemoSetKey === "grade6-semester2"
+      ? grade6Semester2Diagnosis
+    : grade3Semester2Diagnosis;
 const packagedPublishedContent: PublishedDiagnosisSet = {
   id: `packaged-${content.manifest.id}-v${content.manifest.version}`,
   setKey: content.manifest.id,
@@ -108,9 +125,117 @@ const grade4DemoProfiles: Record<string, Record<string, number>> = {
   },
   "student-18": { "g4s1-bar-05": 1, "g4s1-bar-06": 1, "g4s1-bar-09": 1, "g4s1-bar-10": 1 }
 };
+const grade4Semester2DemoProfiles: Record<string, Record<string, number>> = {
+  "student-03": {
+    "g4s2-tri-01": 1,
+    "g4s2-tri-02": 1,
+    "g4s2-frac-01": 1,
+    "g4s2-quad-01": 1,
+    "g4s2-quad-02": 1,
+    "g4s2-dec-01": 1,
+    "g4s2-dec-02": 1,
+    "g4s2-poly-01": 1,
+    "g4s2-poly-02": 1,
+    "g4s2-line-01": 1,
+    "g4s2-line-02": 1
+  },
+  "student-07": {
+    "g4s2-tri-05": 1,
+    "g4s2-tri-06": 1,
+    "g4s2-frac-03": 1,
+    "g4s2-frac-04": 1,
+    "g4s2-quad-03": 1,
+    "g4s2-quad-04": 1,
+    "g4s2-dec-03": 1,
+    "g4s2-dec-04": 1,
+    "g4s2-poly-03": 1,
+    "g4s2-poly-04": 1,
+    "g4s2-line-03": 1,
+    "g4s2-line-04": 1
+  },
+  "student-12": {
+    "g4s2-tri-07": 2,
+    "g4s2-tri-08": 2,
+    "g4s2-frac-05": 2,
+    "g4s2-frac-06": 2,
+    "g4s2-quad-05": 2,
+    "g4s2-quad-06": 2,
+    "g4s2-dec-05": 2,
+    "g4s2-dec-06": 2,
+    "g4s2-dec-07": 2,
+    "g4s2-dec-08": 2,
+    "g4s2-poly-05": 2,
+    "g4s2-poly-06": 2,
+    "g4s2-poly-07": 1,
+    "g4s2-poly-08": 1,
+    "g4s2-line-07": 2,
+    "g4s2-line-08": 2
+  },
+  "student-18": {
+    "g4s2-tri-09": 1,
+    "g4s2-tri-10": 1,
+    "g4s2-frac-09": 1,
+    "g4s2-frac-10": 1,
+    "g4s2-quad-07": 1,
+    "g4s2-quad-08": 1,
+    "g4s2-quad-09": 1,
+    "g4s2-quad-10": 1,
+    "g4s2-dec-09": 1,
+    "g4s2-dec-10": 1,
+    "g4s2-poly-09": 1,
+    "g4s2-poly-10": 1,
+    "g4s2-line-09": 1,
+    "g4s2-line-10": 1
+  }
+};
+const grade5Semester1DemoProfiles: Record<string, Record<string, number>> = {
+  "student-03": {
+    "g5s1-mix-01": 1,
+    "g5s1-mix-02": 1,
+    "g5s1-fm-01": 1,
+    "g5s1-fm-02": 1,
+    "g5s1-cor-01": 1,
+    "g5s1-cor-02": 1,
+    "g5s1-frq-01": 1,
+    "g5s1-frq-02": 1,
+    "g5s1-fa-01": 1,
+    "g5s1-fa-02": 1
+  },
+  "student-07": {
+    "g5s1-mix-03": 1,
+    "g5s1-mix-04": 1,
+    "g5s1-fm-03": 1,
+    "g5s1-fm-04": 1,
+    "g5s1-cor-03": 1,
+    "g5s1-cor-04": 1,
+    "g5s1-frq-03": 1,
+    "g5s1-frq-04": 1,
+    "g5s1-fa-03": 1,
+    "g5s1-fa-04": 1
+  },
+  "student-12": { "g5s1-mix-05": 1, "g5s1-frq-05": 1, "g5s1-fa-05": 1 },
+  "student-18": {
+    "g5s1-mix-09": 1,
+    "g5s1-mix-10": 1,
+    "g5s1-fm-09": 1,
+    "g5s1-fm-10": 1,
+    "g5s1-cor-09": 1,
+    "g5s1-cor-10": 1,
+    "g5s1-frq-13": 1,
+    "g5s1-frq-14": 1,
+    "g5s1-fa-11": 1,
+    "g5s1-fa-12": 1
+  }
+};
 const demoProfiles = content.manifest.id === "grade4-semester1"
   ? grade4DemoProfiles
-  : grade3DemoProfiles;
+  : content.manifest.id === "grade4-semester2"
+    ? grade4Semester2DemoProfiles
+    : content.manifest.id === "grade5-semester1"
+      ? grade5Semester1DemoProfiles
+    : content.manifest.grade >= 5
+      ? createPairedEvidenceDemoProfiles(content)
+    : grade3DemoProfiles;
 
 function publicConfig() {
   const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
@@ -799,7 +924,7 @@ function TeacherEvidenceReport({ report, diagnosisSet, choiceNotes, selectedFind
                 </ul>
               </aside>
             )}
-            <div className="teacher-question-evidence"><span>학생이 본 판단</span><strong>{judgment.prompt}</strong></div>
+            <div className="teacher-question-evidence"><span>학생이 본 판단</span><strong><ReadableText text={judgment.prompt} /></strong></div>
             <div className="teacher-next-move"><span>다음 수업에서</span><p>{finding.teachingMove}</p></div>
           </div>
           <footer className="teacher-report-meta">콘텐츠 {report.diagnosisSetVersion} · 해석 {report.engineVersion} · {formatDate(report.generatedAt)}</footer>
@@ -960,6 +1085,11 @@ function ClassTermSelect({
       >
         <option value="3-2">3학년 2학기</option>
         <option value="4-1">4학년 1학기</option>
+        <option value="4-2">4학년 2학기</option>
+        <option value="5-1">5학년 1학기</option>
+        <option value="5-2">5학년 2학기</option>
+        <option value="6-1">6학년 1학기</option>
+        <option value="6-2">6학년 2학기</option>
       </select>
     </label>
   );
@@ -969,9 +1099,13 @@ function classCreationInput(
   name: string,
   term: ClassTermKey
 ): ClassCreationInput {
-  return term === "4-1"
-    ? { name, grade: 4, semester: 1 }
-    : { name, grade: 3, semester: 2 };
+  if (term === "4-1") return { name, grade: 4, semester: 1 };
+  if (term === "4-2") return { name, grade: 4, semester: 2 };
+  if (term === "5-1") return { name, grade: 5, semester: 1 };
+  if (term === "5-2") return { name, grade: 5, semester: 2 };
+  if (term === "6-1") return { name, grade: 6, semester: 1 };
+  if (term === "6-2") return { name, grade: 6, semester: 2 };
+  return { name, grade: 3, semester: 2 };
 }
 
 function SettingsPage({ profile, selectedClass }: { profile: TeacherProfileRecord | null; selectedClass?: TeacherClassRecord }) {

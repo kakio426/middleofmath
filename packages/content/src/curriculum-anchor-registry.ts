@@ -26,6 +26,16 @@ export const GRADE3_SEMESTER1_CURRICULUM_SOURCE =
   GRADE3_SEMESTER2_CURRICULUM_SOURCE;
 export const GRADE4_SEMESTER1_CURRICULUM_SOURCE =
   GRADE3_SEMESTER2_CURRICULUM_SOURCE;
+export const GRADE4_SEMESTER2_CURRICULUM_SOURCE =
+  GRADE3_SEMESTER2_CURRICULUM_SOURCE;
+export const GRADE5_SEMESTER1_CURRICULUM_SOURCE =
+  GRADE3_SEMESTER2_CURRICULUM_SOURCE;
+export const GRADE5_SEMESTER2_CURRICULUM_SOURCE =
+  GRADE3_SEMESTER2_CURRICULUM_SOURCE;
+export const GRADE6_SEMESTER1_CURRICULUM_SOURCE =
+  GRADE3_SEMESTER2_CURRICULUM_SOURCE;
+export const GRADE6_SEMESTER2_CURRICULUM_SOURCE =
+  GRADE3_SEMESTER2_CURRICULUM_SOURCE;
 
 const GRADE3_SHARED_SEMESTER_ANCHOR_IDS = new Set([
   "[4수01-04]",
@@ -255,6 +265,318 @@ export const grade4Semester1AnchorRegistry = Object.freeze([
   }
 ] as const satisfies readonly CurriculumAnchorRegistryEntry[]);
 
+export const grade4Semester2AnchorRegistry = Object.freeze([
+  {
+    id: "[4수04-02]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "연속적으로 변하는 자료를 꺾은선그래프로 나타내고 해석하기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수03-08]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "변의 길이에 따라 이등변삼각형과 정삼각형을 분류하고 성질을 설명하기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수03-09]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "각의 크기에 따라 직각삼각형, 예각삼각형, 둔각삼각형을 분류하기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수01-15]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "분모가 같은 분수의 덧셈과 뺄셈 원리를 이해하고 계산하기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수03-03]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "수선과 평행선을 구별하고 평행선 사이의 거리 구하기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수03-10]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "여러 가지 사각형을 분류하고 그 성질을 탐구하기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수01-13]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "자릿값의 원리로 소수 두 자리 수와 소수 세 자리 수를 이해하고 읽고 쓰기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수01-14]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "소수의 크기를 비교하고 그 방법을 설명하기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수01-16]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "소수 두 자리 수 범위에서 소수의 덧셈과 뺄셈 원리를 이해하고 계산하기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수03-11]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "다각형과 정다각형을 이해하기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  },
+  {
+    id: "[4수03-12]",
+    grade: 4,
+    semester: 2,
+    gradeBand: "3-4",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "주어진 도형으로 여러 가지 모양을 만들거나 채우고 방법을 설명하기",
+    source: GRADE4_SEMESTER2_CURRICULUM_SOURCE
+  }
+] as const satisfies readonly CurriculumAnchorRegistryEntry[]);
+
+export const grade5Semester1AnchorRegistry = Object.freeze([
+  {
+    id: "[6수01-01]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "덧셈, 뺄셈, 곱셈, 나눗셈이 섞인 식의 계산 순서를 알고 계산하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수01-04]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "약수, 공약수, 최대공약수를 이해하고 구하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수01-05]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "배수, 공배수, 최소공배수를 이해하고 구하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수02-01]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "대응표에서 두 양의 규칙을 찾아 기호식으로 나타내기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수01-06]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "크기가 같은 분수를 만들고 약분·통분하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수01-07]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "분모가 다른 분수의 크기를 비교하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수01-12]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "분수와 소수의 관계를 이해하고 크기를 비교하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수01-08]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "분모가 다른 분수의 덧셈과 뺄셈을 계산하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수03-11]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "다각형의 둘레를 구하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수03-12]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "넓이의 표준 단위를 알고 단위를 선택하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수03-13]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "직사각형과 정사각형의 넓이를 구하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  },
+  {
+    id: "[6수03-14]",
+    grade: 5,
+    semester: 1,
+    gradeBand: "5-6",
+    sharedAcrossSemesters: false,
+    sharedAcrossGradeBand: false,
+    label: "평행사변형, 삼각형, 사다리꼴, 마름모의 넓이를 구하기",
+    source: GRADE5_SEMESTER1_CURRICULUM_SOURCE
+  }
+] as const satisfies readonly CurriculumAnchorRegistryEntry[]);
+
+function grade56Entries(
+  grade: 5 | 6,
+  semester: 1 | 2,
+  source: string,
+  entries: ReadonlyArray<{ id: string; label: string; sharedAcrossSemesters?: boolean }>
+): readonly CurriculumAnchorRegistryEntry[] {
+  return Object.freeze(entries.map((entry) => Object.freeze({
+    ...entry,
+    grade,
+    semester,
+    gradeBand: "5-6" as const,
+    sharedAcrossSemesters: entry.sharedAcrossSemesters ?? false,
+    sharedAcrossGradeBand: false as const,
+    source
+  })));
+}
+
+export const grade5Semester2AnchorRegistry = grade56Entries(
+  5,
+  2,
+  GRADE5_SEMESTER2_CURRICULUM_SOURCE,
+  [
+    { id: "[6수01-02]", label: "이상·이하·초과·미만으로 수의 범위 나타내기" },
+    { id: "[6수01-03]", label: "올림·버림·반올림을 이해하고 활용하기" },
+    { id: "[6수01-09]", label: "분수의 곱셈 원리를 이해하고 계산하기" },
+    { id: "[6수03-01]", label: "도형의 합동과 대응 성질 이해하기" },
+    { id: "[6수03-02]", label: "선대칭도형과 점대칭도형 이해하기" },
+    { id: "[6수01-13]", label: "소수의 곱셈 원리를 이해하고 계산하기" },
+    { id: "[6수03-03]", label: "직육면체와 정육면체의 구성 요소와 성질 이해하기" },
+    { id: "[6수03-04]", label: "직육면체와 정육면체의 전개도 이해하기" },
+    { id: "[6수04-01]", label: "평균을 구하고 해석하기" },
+    { id: "[6수04-04]", label: "사건의 가능성을 말로 표현하고 비교하기" },
+    { id: "[6수04-05]", label: "사건의 가능성을 수로 나타내기" },
+    { id: "[6수04-06]", label: "자료로 가능성을 예상하고 판단하기" }
+  ]
+);
+
+export const grade6Semester1AnchorRegistry = grade56Entries(
+  6,
+  1,
+  GRADE6_SEMESTER1_CURRICULUM_SOURCE,
+  [
+    { id: "[6수01-10]", label: "분수를 자연수로 나누기" },
+    { id: "[6수01-11]", label: "분수의 나눗셈 원리를 이해하고 계산하기", sharedAcrossSemesters: true },
+    { id: "[6수03-05]", label: "각기둥과 각뿔을 알고 구성 요소와 성질 이해하기" },
+    { id: "[6수03-06]", label: "각기둥과 각뿔의 전개도 이해하기" },
+    { id: "[6수01-14]", label: "소수를 자연수로 나누기" },
+    { id: "[6수01-15]", label: "소수의 나눗셈 원리를 이해하고 계산하기", sharedAcrossSemesters: true },
+    { id: "[6수02-02]", label: "두 양의 크기를 비교하는 상황에서 비 이해하기" },
+    { id: "[6수02-03]", label: "비율을 이해하고 백분율로 나타내기" },
+    { id: "[6수04-02]", label: "띠그래프와 원그래프를 해석하기" },
+    { id: "[6수04-03]", label: "자료를 띠그래프와 원그래프로 나타내기" },
+    { id: "[6수03-17]", label: "직육면체와 정육면체의 겉넓이 구하기" },
+    { id: "[6수03-18]", label: "부피 단위와 직육면체·정육면체 부피 구하기" },
+    { id: "[6수03-19]", label: "부피와 들이 단위의 관계 이해하기" }
+  ]
+);
+
+export const grade6Semester2AnchorRegistry = grade56Entries(
+  6,
+  2,
+  GRADE6_SEMESTER2_CURRICULUM_SOURCE,
+  [
+    { id: "[6수01-11]", label: "분수의 나눗셈 원리를 이해하고 계산하기", sharedAcrossSemesters: true },
+    { id: "[6수03-09]", label: "쌓기나무로 만든 입체도형을 여러 방향에서 보기" },
+    { id: "[6수03-10]", label: "쌓기나무 모양을 추측하고 필요한 개수 구하기" },
+    { id: "[6수01-15]", label: "소수의 나눗셈 원리를 이해하고 계산하기", sharedAcrossSemesters: true },
+    { id: "[6수02-04]", label: "비의 성질과 비례식의 성질 이해하기" },
+    { id: "[6수02-05]", label: "비례배분하고 문제 해결하기" },
+    { id: "[6수03-15]", label: "원주와 원주율의 관계 이해하기" },
+    { id: "[6수03-16]", label: "원의 넓이 구하기" },
+    { id: "[6수03-07]", label: "원기둥·원뿔·구와 구성 요소 이해하기" },
+    { id: "[6수03-08]", label: "원기둥과 원뿔의 전개도 이해하기" }
+  ]
+);
+
 export const curriculumAnchorSetAllowList = Object.freeze([
   {
     anchorId: "[4수01-04]",
@@ -327,6 +649,12 @@ export const curriculumAnchorSetAllowList = Object.freeze([
     setKey: "grade4-semester1",
     canonical: true,
     coverage: "partial"
+  },
+  {
+    anchorId: "[4수04-03]",
+    setKey: "grade4-semester2",
+    canonical: false,
+    coverage: "partial"
   }
 ] as const satisfies readonly CurriculumAnchorSetAllowance[]);
 
@@ -338,6 +666,12 @@ const semester1RegistryById = new Map(
 );
 const grade4Semester1RegistryById = new Map<string, CurriculumAnchorRegistryEntry>(
   grade4Semester1AnchorRegistry.map((anchor) => [anchor.id, anchor])
+);
+const grade4Semester2RegistryById = new Map<string, CurriculumAnchorRegistryEntry>(
+  grade4Semester2AnchorRegistry.map((anchor) => [anchor.id, anchor])
+);
+const grade5Semester1RegistryById = new Map<string, CurriculumAnchorRegistryEntry>(
+  grade5Semester1AnchorRegistry.map((anchor) => [anchor.id, anchor])
 );
 
 export function findGrade3Semester2Anchor(
@@ -375,7 +709,12 @@ export function findAnchorForSet(
   const candidates = [
     ...grade3Semester1AnchorRegistry,
     ...grade3Semester2AnchorRegistry,
-    ...grade4Semester1AnchorRegistry
+    ...grade4Semester1AnchorRegistry,
+    ...grade4Semester2AnchorRegistry,
+    ...grade5Semester1AnchorRegistry,
+    ...grade5Semester2AnchorRegistry,
+    ...grade6Semester1AnchorRegistry,
+    ...grade6Semester2AnchorRegistry
   ].filter((anchor) => anchor.id === anchorId);
   const scopedAllowances = curriculumAnchorSetAllowList.filter(
     (allowance) => allowance.anchorId === anchorId
@@ -433,6 +772,12 @@ export function grade3Semester1Anchor(id: string): CurriculumAnchor {
   return { id: anchor.id, label: anchor.label, source: anchor.source };
 }
 
+export function grade5Semester1Anchor(id: string): CurriculumAnchor {
+  const anchor = grade5Semester1RegistryById.get(id);
+  if (!anchor) throw new Error(`등록되지 않은 5학년 1학기 성취기준입니다: ${id}`);
+  return { id: anchor.id, label: anchor.label, source: anchor.source };
+}
+
 export function grade3Semester2Anchor(
   id: string,
   revision: "v1" | "v2" = "v2"
@@ -450,6 +795,14 @@ export function grade4Semester1Anchor(id: string): CurriculumAnchor {
   const anchor = grade4Semester1RegistryById.get(id);
   if (!anchor) {
     throw new Error(`등록되지 않은 4학년 1학기 성취기준입니다: ${id}`);
+  }
+  return { id: anchor.id, label: anchor.label, source: anchor.source };
+}
+
+export function grade4Semester2Anchor(id: string): CurriculumAnchor {
+  const anchor = grade4Semester2RegistryById.get(id);
+  if (!anchor) {
+    throw new Error(`등록되지 않은 4학년 2학기 성취기준입니다: ${id}`);
   }
   return { id: anchor.id, label: anchor.label, source: anchor.source };
 }

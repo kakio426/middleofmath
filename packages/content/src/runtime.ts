@@ -14,6 +14,13 @@ export { grade3Semester2Diagnosis } from "./grade3-semester2";
 export { grade3Semester2CompleteDiagnosis } from "./grade3-semester2-complete";
 export { grade3Semester1Diagnosis } from "./grade3-semester1";
 export { grade4Semester1Diagnosis } from "./grade4-semester1";
+export { grade4Semester2Diagnosis } from "./grade4-semester2";
+export { grade5Semester1Diagnosis } from "./grade5-semester1";
+export {
+  grade5Semester2Diagnosis,
+  grade6Semester1Diagnosis,
+  grade6Semester2Diagnosis
+} from "./upper-grade-runtime";
 export {
   incomingPrerequisiteEdges,
   type RuntimeStagePrerequisiteEdge

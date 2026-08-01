@@ -66,6 +66,253 @@ export interface GridCell {
   column: number;
 }
 
+export type QuadrilateralIndex = 0 | 1 | 2 | 3;
+export type LatticePoint = readonly [number, number];
+export type QuadrilateralVertices = readonly [
+  LatticePoint,
+  LatticePoint,
+  LatticePoint,
+  LatticePoint
+];
+
+type QuadrilateralVisualBase = {
+  kind: "quadrilateral-figure";
+};
+
+export type QuadrilateralFigure =
+  | QuadrilateralVisualBase & {
+      mode: "side-perpendicular";
+      vertices: QuadrilateralVertices;
+      baseSideIndex: QuadrilateralIndex;
+      rightAngleVertexIndexes: QuadrilateralIndex[];
+    }
+  | QuadrilateralVisualBase & {
+      mode: "side-parallel-distance";
+      vertices: QuadrilateralVertices;
+      parallelSidePairs: Array<
+        [QuadrilateralIndex, QuadrilateralIndex]
+      >;
+      sideLengthLabels: Array<{
+        sideIndex: QuadrilateralIndex;
+        lengthCm: number;
+      }>;
+      distanceSegment: {
+        fromVertexIndex: QuadrilateralIndex;
+        toSideIndex: QuadrilateralIndex;
+        lengthCm: number;
+      };
+    }
+  | QuadrilateralVisualBase & {
+      mode: "parallel-classify";
+      vertices: QuadrilateralVertices;
+      parallelSidePairs: Array<
+        [QuadrilateralIndex, QuadrilateralIndex]
+      >;
+    }
+  | QuadrilateralVisualBase & {
+      mode: "equal-side-classify";
+      vertices: QuadrilateralVertices;
+      equalSideGroups: QuadrilateralIndex[][];
+    }
+  | QuadrilateralVisualBase & {
+      mode: "opposite-angle";
+      parallelSidePairs: Array<
+        [QuadrilateralIndex, QuadrilateralIndex]
+      >;
+      angles: [
+        number | null,
+        number | null,
+        number | null,
+        number | null
+      ];
+      askAngleIndex: QuadrilateralIndex;
+    };
+
+export type PolygonSideCount = 3 | 4 | 5 | 6 | 7 | 8;
+export type PolygonCandidateId = "가" | "나" | "다";
+
+export type PolygonOutline =
+  | {
+      form: "regular";
+      sideCount: PolygonSideCount;
+      rotationDegrees: number;
+    }
+  | {
+      form: "equiangular";
+      sideCount: 4 | 6;
+      sideLengths: number[];
+    }
+  | {
+      form: "lattice" | "open" | "crossing";
+      vertices: LatticePoint[];
+    }
+  | {
+      form: "curved";
+      vertices: LatticePoint[];
+      curvedSideIndex: number;
+    };
+
+export type PolygonFigure =
+  | {
+      kind: "polygon-figure";
+      mode: "polygon-select" | "regular-select";
+      candidates: Array<{
+        id: PolygonCandidateId;
+        figure: PolygonOutline;
+      }>;
+    }
+  | {
+      kind: "polygon-figure";
+      mode: "side-count-name";
+      figure: PolygonOutline;
+    };
+
+export type TriangleOrientation = "up" | "down";
+export type TriangleCell = readonly [
+  column: number,
+  row: number,
+  orientation: TriangleOrientation
+];
+export type PatternBlockName =
+  | "triangle"
+  | "rhombus"
+  | "trapezoid"
+  | "hexagon";
+
+export type TileCompositionFigure =
+  | {
+      kind: "tile-composition";
+      mode: "fill-remaining";
+      board: TriangleCell[];
+      placed: Array<{
+        piece: PatternBlockName;
+        cells: TriangleCell[];
+      }>;
+      candidates: Array<{
+        id: PolygonCandidateId;
+        pieces: PatternBlockName[];
+      }>;
+    }
+  | {
+      kind: "tile-composition";
+      mode: "tile-count";
+      region: TriangleCell[];
+      piece: PatternBlockName;
+    };
+
+export type LineChartMode =
+  | "tick-unit"
+  | "point-value"
+  | "step-change"
+  | "largest-rise"
+  | "between-estimate";
+
+export type LineChartTarget =
+  | { kind: "point"; categoryIndex: number }
+  | { kind: "interval"; fromIndex: number; toIndex: number }
+  | { kind: "midpoint"; fromIndex: number; toIndex: number };
+
+export interface LineChartDiagram {
+  kind: "line-chart-diagram";
+  mode: LineChartMode;
+  axis: {
+    unitLabel: string;
+    baselineValue: number;
+    tickCount: number;
+    labeledTicks: Array<{ index: number; value: number }>;
+  };
+  timeAxis: {
+    label: string;
+    categories: string[];
+  };
+  points: Array<{ categoryIndex: number; tick: number }>;
+  target?: LineChartTarget;
+}
+
+export type PerimeterAreaDiagram =
+  | {
+      kind: "perimeter-area-diagram";
+      shape: "rectangle";
+      width: number;
+      height: number;
+    }
+  | {
+      kind: "perimeter-area-diagram";
+      shape: "square";
+      side: number;
+    }
+  | {
+      kind: "perimeter-area-diagram";
+      shape: "parallelogram" | "triangle";
+      base: number;
+      height: number;
+    }
+  | {
+      kind: "perimeter-area-diagram";
+      shape: "trapezoid";
+      topBase: number;
+      bottomBase: number;
+      height: number;
+    }
+  | {
+      kind: "perimeter-area-diagram";
+      shape: "rhombus";
+      diagonal1: number;
+      diagonal2: number;
+    };
+
+export type SolidDiagram =
+  | {
+      kind: "solid-diagram";
+      mode: "structure" | "net";
+      shape:
+        | "rectangular-prism"
+        | "cube"
+        | "triangular-prism"
+        | "square-pyramid"
+        | "cylinder"
+        | "cone"
+        | "sphere";
+    }
+  | {
+      kind: "solid-diagram";
+      mode: "dimensions";
+      shape: "rectangular-prism";
+      width: number;
+      depth: number;
+      height: number;
+    }
+  | {
+      kind: "solid-diagram";
+      mode: "dimensions";
+      shape: "cube";
+      width: number;
+    }
+  | {
+      kind: "solid-diagram";
+      mode: "dimensions";
+      shape: "cylinder";
+      radius: number;
+      height: number;
+    }
+  | {
+      kind: "solid-diagram";
+      mode: "unit-stack";
+      shape: "unit-cubes";
+      cubes: Array<readonly [x: number, y: number, z: number]>;
+      frontDirection: "left" | "right";
+    };
+
+export interface PartChartDiagram {
+  kind: "part-chart-diagram";
+  mode: "strip" | "circle";
+  totalParts: 10 | 20;
+  segments: Array<{
+    label: string;
+    parts: number;
+  }>;
+}
+
 export type JudgmentVisual =
   | { kind: "none" }
   | { kind: "array"; rows: number; columns: number; label: string }
@@ -76,6 +323,8 @@ export type JudgmentVisual =
       kind: "circle";
       mode?: "radius" | "diameter" | "equal-radii" | "compass-center" | "compass-radius";
       radiusValue?: number;
+      diameterValue?: number;
+      measurementUnit?: "cm" | "m";
       showCenter?: boolean;
       showRadius?: boolean;
       showDiameter?: boolean;
@@ -141,6 +390,28 @@ export type JudgmentVisual =
       diagonal?: boolean;
     }
   | {
+      kind: "triangle-figure";
+      mode: "side-classify" | "side-angle" | "angle-classify";
+      sides?: [number, number, number];
+      angles?: [
+        number | null,
+        number | null,
+        number | null
+      ];
+      equalSideIndexes?: [
+        0 | 1 | 2,
+        0 | 1 | 2
+      ];
+      askIndex?: 0 | 1 | 2;
+    }
+  | QuadrilateralFigure
+  | PolygonFigure
+  | TileCompositionFigure
+  | LineChartDiagram
+  | PerimeterAreaDiagram
+  | SolidDiagram
+  | PartChartDiagram
+  | {
       kind: "grid-transform-diagram";
       mode:
         | "slide"
@@ -159,6 +430,7 @@ export type JudgmentVisual =
       direction?: "up" | "down" | "left" | "right";
       amount?: number;
       turn?: "clockwise" | "counterclockwise";
+      quarterTurns?: 1 | 2 | 3;
       points?: Array<GridCell & { label: "A" | "B" }>;
     }
   | {

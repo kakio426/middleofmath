@@ -1,9 +1,24 @@
 import type {
   ContentValidationIssue,
   ContentValidationResult,
-  DiagnosisSet
+  DiagnosisSet,
+  LineChartDiagram,
+  PolygonFigure,
+  QuadrilateralFigure,
+  TileCompositionFigure
 } from "@middle-of-math/domain";
+import { lineChartGeometryIssues } from "@middle-of-math/domain";
 import { z } from "zod";
+import {
+  quadrilateralFigureGeometryIssues,
+  quadrilateralSideName
+} from "./quadrilateral-geometry";
+import {
+  polygonFigureExpectedAnswer,
+  polygonFigureGeometryIssues,
+  tileCompositionExpectedAnswer,
+  tileCompositionGeometryIssues
+} from "./polygon-figure-integrity";
 
 export const SUPPORTED_INTERACTIONS = [
   "choice@1",
@@ -16,6 +31,66 @@ const supportedInteractions = new Set<string>(SUPPORTED_INTERACTIONS);
 
 const nonBlankString = z.string().min(1).refine((value) => value.trim().length > 0, "빈 문자열일 수 없습니다.");
 const nonEmptyId = nonBlankString.refine((value) => value === value.trim(), "ID 앞뒤에는 공백을 둘 수 없습니다.");
+
+const lineChartTargetSchema = z.discriminatedUnion("kind", [
+  z.strictObject({
+    kind: z.literal("point"),
+    categoryIndex: z.number().int().min(0).max(5)
+  }),
+  z.strictObject({
+    kind: z.literal("interval"),
+    fromIndex: z.number().int().min(0).max(5),
+    toIndex: z.number().int().min(0).max(5)
+  }),
+  z.strictObject({
+    kind: z.literal("midpoint"),
+    fromIndex: z.number().int().min(0).max(5),
+    toIndex: z.number().int().min(0).max(5)
+  })
+]);
+
+function createLineChartDiagramSchema(copyString: z.ZodType<string>) {
+  return z.strictObject({
+    kind: z.literal("line-chart-diagram"),
+    mode: z.enum([
+      "tick-unit",
+      "point-value",
+      "step-change",
+      "largest-rise",
+      "between-estimate"
+    ]),
+    axis: z.strictObject({
+      unitLabel: copyString,
+      baselineValue: z.number().int().nonnegative().max(1000),
+      tickCount: z.number().int().min(2).max(12),
+      labeledTicks: z.array(z.strictObject({
+        index: z.number().int().min(0).max(12),
+        value: z.number().int().nonnegative().max(2000)
+      })).length(2)
+    }),
+    timeAxis: z.strictObject({
+      label: copyString,
+      categories: z.array(copyString).min(4).max(6)
+    }),
+    points: z.array(z.strictObject({
+      categoryIndex: z.number().int().min(0).max(5),
+      tick: z.number().int().min(0).max(12)
+    })).min(4).max(6),
+    target: lineChartTargetSchema.optional()
+  }).superRefine((visual, context) => {
+    for (const geometryIssue of lineChartGeometryIssues(
+      visual as LineChartDiagram
+    )) {
+      context.addIssue({
+        code: "custom",
+        message: geometryIssue.message,
+        path: geometryIssue.path.split(".")
+      });
+    }
+  });
+}
+
+export const lineChartDiagramSchema = createLineChartDiagramSchema(nonBlankString);
 
 function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
   const choiceSchema = z.strictObject({
@@ -34,6 +109,71 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
     row: z.number().int().nonnegative(),
     column: z.number().int().nonnegative()
   });
+
+  const quadrilateralIndexSchema = z.union([
+    z.literal(0),
+    z.literal(1),
+    z.literal(2),
+    z.literal(3)
+  ]);
+  const latticePointSchema = z.tuple([
+    z.number().int().min(0).max(24),
+    z.number().int().min(0).max(24)
+  ]);
+  const quadrilateralVerticesSchema = z.tuple([
+    latticePointSchema,
+    latticePointSchema,
+    latticePointSchema,
+    latticePointSchema
+  ]);
+  const parallelPairSchema = z.tuple([
+    quadrilateralIndexSchema,
+    quadrilateralIndexSchema
+  ]);
+  const polygonSideCountSchema = z.union([
+    z.literal(3),
+    z.literal(4),
+    z.literal(5),
+    z.literal(6),
+    z.literal(7),
+    z.literal(8)
+  ]);
+  const polygonOutlineSchema = z.discriminatedUnion("form", [
+    z.strictObject({
+      form: z.literal("regular"),
+      sideCount: polygonSideCountSchema,
+      rotationDegrees: z.number().int().min(0).max(355)
+    }),
+    z.strictObject({
+      form: z.literal("equiangular"),
+      sideCount: z.union([z.literal(4), z.literal(6)]),
+      sideLengths: z.array(z.number().int().min(1).max(20)).min(4).max(6)
+    }),
+    z.strictObject({
+      form: z.enum(["lattice", "open", "crossing"]),
+      vertices: z.array(latticePointSchema).min(3).max(9)
+    }),
+    z.strictObject({
+      form: z.literal("curved"),
+      vertices: z.array(latticePointSchema).min(3).max(8),
+      curvedSideIndex: z.number().int().min(0).max(7)
+    })
+  ]);
+  const polygonCandidateSchema = z.strictObject({
+    id: z.enum(["가", "나", "다"]),
+    figure: polygonOutlineSchema
+  });
+  const triangleCellSchema = z.tuple([
+    z.number().int().min(0).max(8),
+    z.number().int().min(0).max(8),
+    z.enum(["up", "down"])
+  ]);
+  const patternBlockSchema = z.enum([
+    "triangle",
+    "rhombus",
+    "trapezoid",
+    "hexagon"
+  ]);
 
   const barAxisSchema = z.strictObject({
     orientation: z.enum(["vertical", "horizontal"]),
@@ -86,9 +226,34 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
         "compass-radius"
       ]).optional(),
       radiusValue: z.number().positive().optional(),
+      diameterValue: z.number().positive().optional(),
+      measurementUnit: z.enum(["cm", "m"]).optional(),
       showCenter: z.boolean().optional(),
       showRadius: z.boolean().optional(),
       showDiameter: z.boolean().optional()
+    }).superRefine((visual, context) => {
+      if (visual.radiusValue !== undefined && visual.diameterValue !== undefined) {
+        context.addIssue({
+          code: "custom",
+          message: "원 그림은 반지름과 지름 길이를 동시에 제시할 수 없습니다."
+        });
+      }
+      if (visual.diameterValue !== undefined && visual.mode !== "diameter") {
+        context.addIssue({
+          code: "custom",
+          message: "diameterValue는 지름 모드에서만 사용할 수 있습니다."
+        });
+      }
+      if (
+        visual.measurementUnit !== undefined
+        && visual.radiusValue === undefined
+        && visual.diameterValue === undefined
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: "길이 단위에는 반지름 또는 지름 값이 필요합니다."
+        });
+      }
     }),
     z.strictObject({
       kind: z.literal("fraction-bar"),
@@ -170,6 +335,145 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
       diagonal: z.boolean().optional()
     }),
     z.strictObject({
+      kind: z.literal("triangle-figure"),
+      mode: z.enum(["side-classify", "side-angle", "angle-classify"]),
+      sides: z.tuple([
+        z.number().int().min(1).max(20),
+        z.number().int().min(1).max(20),
+        z.number().int().min(1).max(20)
+      ]).optional(),
+      angles: z.tuple([
+        z.number().int().min(1).max(179).nullable(),
+        z.number().int().min(1).max(179).nullable(),
+        z.number().int().min(1).max(179).nullable()
+      ]).optional(),
+      equalSideIndexes: z.tuple([
+        z.union([z.literal(0), z.literal(1), z.literal(2)]),
+        z.union([z.literal(0), z.literal(1), z.literal(2)])
+      ]).optional(),
+      askIndex: z.union([
+        z.literal(0),
+        z.literal(1),
+        z.literal(2)
+      ]).optional()
+    }),
+    z.strictObject({
+      kind: z.literal("quadrilateral-figure"),
+      mode: z.enum([
+        "side-perpendicular",
+        "side-parallel-distance",
+        "parallel-classify",
+        "equal-side-classify",
+        "opposite-angle"
+      ]),
+      vertices: quadrilateralVerticesSchema.optional(),
+      baseSideIndex: quadrilateralIndexSchema.optional(),
+      rightAngleVertexIndexes: z.array(quadrilateralIndexSchema)
+        .min(1)
+        .max(4)
+        .optional(),
+      parallelSidePairs: z.array(parallelPairSchema)
+        .min(1)
+        .max(2)
+        .optional(),
+      equalSideGroups: z.array(
+        z.array(quadrilateralIndexSchema).min(2).max(4)
+      ).min(1).max(2).optional(),
+      sideLengthLabels: z.array(z.strictObject({
+        sideIndex: quadrilateralIndexSchema,
+        lengthCm: z.number().int().positive().max(40)
+      })).length(2).optional(),
+      distanceSegment: z.strictObject({
+        fromVertexIndex: quadrilateralIndexSchema,
+        toSideIndex: quadrilateralIndexSchema,
+        lengthCm: z.number().int().positive().max(40)
+      }).optional(),
+      angles: z.tuple([
+        z.number().int().min(20).max(160).nullable(),
+        z.number().int().min(20).max(160).nullable(),
+        z.number().int().min(20).max(160).nullable(),
+        z.number().int().min(20).max(160).nullable()
+      ]).optional(),
+      askAngleIndex: quadrilateralIndexSchema.optional()
+    }),
+    z.strictObject({
+      kind: z.literal("polygon-figure"),
+      mode: z.enum([
+        "polygon-select",
+        "side-count-name",
+        "regular-select"
+      ]),
+      figure: polygonOutlineSchema.optional(),
+      candidates: z.array(polygonCandidateSchema).length(3).optional()
+    }),
+    z.strictObject({
+      kind: z.literal("tile-composition"),
+      mode: z.enum(["fill-remaining", "tile-count"]),
+      board: z.array(triangleCellSchema).min(3).max(12).optional(),
+      placed: z.array(z.strictObject({
+        piece: patternBlockSchema,
+        cells: z.array(triangleCellSchema).min(1).max(6)
+      })).min(1).max(4).optional(),
+      candidates: z.array(z.strictObject({
+        id: z.enum(["가", "나", "다"]),
+        pieces: z.array(patternBlockSchema).min(1).max(3)
+      })).length(3).optional(),
+      region: z.array(triangleCellSchema).min(3).max(12).optional(),
+      piece: patternBlockSchema.optional()
+    }),
+    z.strictObject({
+      kind: z.literal("perimeter-area-diagram"),
+      shape: z.enum([
+        "rectangle",
+        "square",
+        "parallelogram",
+        "triangle",
+        "trapezoid",
+        "rhombus"
+      ]),
+      width: z.number().int().positive().max(50).optional(),
+      height: z.number().int().positive().max(50).optional(),
+      side: z.number().int().positive().max(50).optional(),
+      base: z.number().int().positive().max(50).optional(),
+      topBase: z.number().int().positive().max(50).optional(),
+      bottomBase: z.number().int().positive().max(50).optional(),
+      diagonal1: z.number().int().positive().max(50).optional(),
+      diagonal2: z.number().int().positive().max(50).optional()
+    }),
+    z.strictObject({
+      kind: z.literal("solid-diagram"),
+      mode: z.enum(["structure", "net", "dimensions", "unit-stack"]),
+      shape: z.enum([
+        "rectangular-prism",
+        "cube",
+        "triangular-prism",
+        "square-pyramid",
+        "cylinder",
+        "cone",
+        "sphere",
+        "unit-cubes"
+      ]),
+      width: z.number().int().positive().max(30).optional(),
+      depth: z.number().int().positive().max(30).optional(),
+      height: z.number().int().positive().max(30).optional(),
+      radius: z.number().int().positive().max(20).optional(),
+      cubes: z.array(z.tuple([
+        z.number().int().min(0).max(5),
+        z.number().int().min(0).max(5),
+        z.number().int().min(0).max(5)
+      ])).min(1).max(40).optional(),
+      frontDirection: z.enum(["left", "right"]).optional()
+    }),
+    z.strictObject({
+      kind: z.literal("part-chart-diagram"),
+      mode: z.enum(["strip", "circle"]),
+      totalParts: z.union([z.literal(10), z.literal(20)]),
+      segments: z.array(z.strictObject({
+        label: copyString,
+        parts: z.number().int().positive().max(20)
+      })).min(2).max(6)
+    }),
+    z.strictObject({
       kind: z.literal("grid-transform-diagram"),
       mode: z.enum([
         "slide",
@@ -189,6 +493,7 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
       direction: z.enum(["up", "down", "left", "right"]).optional(),
       amount: z.number().int().positive().max(7).optional(),
       turn: z.enum(["clockwise", "counterclockwise"]).optional(),
+      quarterTurns: z.union([z.literal(1), z.literal(2), z.literal(3)]).optional(),
       points: z.array(gridCellSchema.extend({
         label: z.enum(["A", "B"])
       })).length(2).optional()
@@ -258,6 +563,7 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
         bars: z.array(barSchema).min(2).max(6)
       })).length(3).optional()
     }),
+    createLineChartDiagramSchema(copyString),
     z.strictObject({
       kind: z.literal("pictograph"),
       symbol: copyString,
@@ -268,6 +574,101 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
       })).min(1)
     })
   ]).superRefine((visual, context) => {
+    if (visual.kind === "part-chart-diagram") {
+      const total = visual.segments.reduce((sum, segment) => sum + segment.parts, 0);
+      if (total !== visual.totalParts) {
+        context.addIssue({
+          code: "custom",
+          message: "띠그래프나 원그래프의 조각 합은 전체 칸 수와 같아야 합니다.",
+          path: ["segments"]
+        });
+      }
+      if (new Set(visual.segments.map((segment) => segment.label)).size !== visual.segments.length) {
+        context.addIssue({
+          code: "custom",
+          message: "그래프 항목 이름은 서로 달라야 합니다.",
+          path: ["segments"]
+        });
+      }
+      return;
+    }
+    if (visual.kind === "solid-diagram") {
+      const dimensionFields = ["width", "depth", "height", "radius"] as const;
+      const hasDimension = (field: typeof dimensionFields[number]) => visual[field] !== undefined;
+      if (visual.mode === "unit-stack") {
+        if (visual.shape !== "unit-cubes" || !visual.cubes || !visual.frontDirection
+          || dimensionFields.some(hasDimension)) {
+          context.addIssue({ code: "custom", message: "쌓기나무 그림 필드가 올바르지 않습니다.", path: [] });
+        }
+        const keys = new Set((visual.cubes ?? []).map((cube) => cube.join(",")));
+        if (keys.size !== (visual.cubes ?? []).length) {
+          context.addIssue({ code: "custom", message: "같은 자리에 쌓기나무를 두 번 둘 수 없습니다.", path: ["cubes"] });
+        }
+        for (const [index, cube] of (visual.cubes ?? []).entries()) {
+          const [x, y, z] = cube;
+          if (z > 0 && !keys.has(`${x},${y},${z - 1}`)) {
+            context.addIssue({
+              code: "custom",
+              message: "공중에 떠 있는 쌓기나무를 둘 수 없습니다.",
+              path: ["cubes", index]
+            });
+          }
+        }
+        return;
+      }
+      if (visual.shape === "unit-cubes" || visual.cubes || visual.frontDirection) {
+        context.addIssue({ code: "custom", message: "입체도형 모드와 쌓기나무 필드를 함께 사용할 수 없습니다.", path: [] });
+        return;
+      }
+      if (visual.mode === "structure" || visual.mode === "net") {
+        if (dimensionFields.some(hasDimension)) {
+          context.addIssue({ code: "custom", message: "구조·전개도에는 길이 필드를 넣지 않습니다.", path: [] });
+        }
+        return;
+      }
+      const exactDimensions = visual.shape === "rectangular-prism"
+        ? ["width", "depth", "height"]
+        : visual.shape === "cube"
+          ? ["width"]
+          : visual.shape === "cylinder"
+            ? ["radius", "height"]
+            : [];
+      if (exactDimensions.length === 0
+        || exactDimensions.some((field) => visual[field as keyof typeof visual] === undefined)
+        || dimensionFields.some((field) => !exactDimensions.includes(field) && hasDimension(field))) {
+        context.addIssue({ code: "custom", message: "입체도형의 길이 필드가 올바르지 않습니다.", path: [] });
+      }
+      return;
+    }
+    if (visual.kind === "perimeter-area-diagram") {
+      const expectedFields = {
+        rectangle: ["width", "height"],
+        square: ["side"],
+        parallelogram: ["base", "height"],
+        triangle: ["base", "height"],
+        trapezoid: ["topBase", "bottomBase", "height"],
+        rhombus: ["diagonal1", "diagonal2"]
+      } as const;
+      const numericFields = [
+        "width", "height", "side", "base", "topBase", "bottomBase",
+        "diagonal1", "diagonal2"
+      ] as const;
+      const expected = new Set<string>(expectedFields[visual.shape]);
+      const missing = [...expected].filter(
+        (field) => visual[field as keyof typeof visual] === undefined
+      );
+      const extra = numericFields.filter(
+        (field) => !expected.has(field) && visual[field] !== undefined
+      );
+      if (missing.length > 0 || extra.length > 0) {
+        context.addIssue({
+          code: "custom",
+          message: `${visual.shape} 도형의 길이 필드가 올바르지 않습니다.`,
+          path: []
+        });
+      }
+      return;
+    }
     if (visual.kind === "bar-chart-diagram") {
       const addIssue = (message: string, path: Array<string | number> = []) =>
         context.addIssue({ code: "custom", message, path });
@@ -700,6 +1101,7 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
           || visual.direction
           || visual.amount !== undefined
           || visual.turn
+          || visual.quarterTurns !== undefined
         ) {
           addVisualIssue(
             "점 이동 그림에는 도형 이동용 필드를 함께 사용할 수 없습니다.",
@@ -755,6 +1157,7 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
           || visual.axisIndex !== undefined
           || visual.center
           || visual.turn
+          || visual.quarterTurns !== undefined
         ) {
           addVisualIssue(
             "밀기에는 방향과 칸 수만 지정해야 합니다.",
@@ -796,6 +1199,7 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
           || visual.amount !== undefined
           || visual.center
           || visual.turn
+          || visual.quarterTurns !== undefined
         ) {
           addVisualIssue(
             "뒤집기에는 격자 안의 기준선 하나만 지정해야 합니다.",
@@ -831,7 +1235,7 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
           return;
         }
         const center = visual.center;
-        const rotate = (cell: Cell) => visual.turn === "clockwise"
+        const rotateOnce = (cell: Cell) => visual.turn === "clockwise"
           ? {
               row: center.row + cell.column - center.column,
               column: center.column - cell.row + center.row
@@ -840,6 +1244,9 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
               row: center.row - cell.column + center.column,
               column: center.column + cell.row - center.row
             };
+        const rotate = (cell: Cell) => Array.from(
+          { length: visual.quarterTurns ?? 1 }
+        ).reduce<Cell>((current) => rotateOnce(current), cell);
         expected = source.map(rotate);
         expectedMarker = visual.sourceMarker
           ? rotate(visual.sourceMarker)
@@ -945,6 +1352,222 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
             path: ["angles"]
           });
         }
+      }
+      return;
+    }
+    if (visual.kind === "triangle-figure") {
+      const addTriangleIssue = (message: string, path: PropertyKey[] = []) =>
+        context.addIssue({ code: "custom", message, path });
+      const sides = visual.sides;
+      const angles = visual.angles;
+      if (visual.mode === "side-classify") {
+        if (
+          !sides
+          || angles
+          || visual.equalSideIndexes
+          || visual.askIndex !== undefined
+        ) {
+          addTriangleIssue(
+            "변으로 분류하는 삼각형에는 세 변의 길이만 지정해야 합니다."
+          );
+        }
+      } else if (visual.mode === "side-angle") {
+        if (
+          sides
+          || !angles
+          || !visual.equalSideIndexes
+          || visual.askIndex === undefined
+        ) {
+          addTriangleIssue(
+            "이등변삼각형의 각 그림에는 같은 두 변 표시, 세 각, 물음표 위치가 필요합니다."
+          );
+        }
+      } else if (!angles || sides || visual.equalSideIndexes) {
+        addTriangleIssue(
+          "각으로 분류하는 삼각형에는 세 각이 필요하고 변 길이나 같은 변 표시를 지정할 수 없습니다."
+        );
+      }
+
+      if (
+        sides
+        && (
+          sides[0] + sides[1] <= sides[2]
+          || sides[1] + sides[2] <= sides[0]
+          || sides[2] + sides[0] <= sides[1]
+        )
+      ) {
+        addTriangleIssue("세 변의 길이가 삼각형을 만들 수 없습니다.", ["sides"]);
+      }
+      if (angles) {
+        const unknownIndexes = angles.flatMap((value, index) =>
+          value === null ? [index] : []
+        );
+        const knownSum = angles.reduce<number>(
+          (sum, value) => sum + (value ?? 0),
+          0
+        );
+        if (visual.mode === "angle-classify") {
+          if (
+            unknownIndexes.length !== 0
+            || knownSum !== 180
+            || visual.askIndex !== undefined
+          ) {
+            addTriangleIssue(
+              "각으로 분류하는 삼각형에는 합이 180도인 세 각을 모두 보여야 합니다.",
+              ["angles"]
+            );
+          }
+        }
+        if (
+          visual.mode === "side-angle"
+          && visual.equalSideIndexes
+          && visual.askIndex !== undefined
+        ) {
+          const [left, right] = visual.equalSideIndexes;
+          const asked = visual.askIndex;
+          const given = asked === left
+            ? right
+            : asked === right
+              ? left
+              : undefined;
+          const remaining = [0, 1, 2].find(
+            (index) => index !== left && index !== right
+          );
+          const givenValue = given === undefined ? null : angles[given];
+          if (
+            left === right
+            || given === undefined
+            || remaining === undefined
+            || unknownIndexes.length !== 2
+            || angles[asked] !== null
+            || angles[remaining] !== null
+            || givenValue === null
+            || givenValue * 2 >= 180
+            || givenValue * 3 === 180
+          ) {
+            addTriangleIssue(
+              "이등변삼각형 성질 그림은 같은 두 변의 맞은편에서 한 각만 보여 주고 다른 한 각만 물어야 합니다.",
+              ["angles"]
+            );
+          }
+        }
+      }
+      return;
+    }
+    if (visual.kind === "quadrilateral-figure") {
+      const addQuadrilateralIssue = (
+        message: string,
+        path: PropertyKey[] = []
+      ) => context.addIssue({ code: "custom", message, path });
+      const fieldMatrix = {
+        "side-perpendicular": [
+          "vertices",
+          "baseSideIndex",
+          "rightAngleVertexIndexes"
+        ],
+        "side-parallel-distance": [
+          "vertices",
+          "parallelSidePairs",
+          "sideLengthLabels",
+          "distanceSegment"
+        ],
+        "parallel-classify": [
+          "vertices",
+          "parallelSidePairs"
+        ],
+        "equal-side-classify": [
+          "vertices",
+          "equalSideGroups"
+        ],
+        "opposite-angle": [
+          "parallelSidePairs",
+          "angles",
+          "askAngleIndex"
+        ]
+      } as const;
+      const optionalFields = [
+        "vertices",
+        "baseSideIndex",
+        "rightAngleVertexIndexes",
+        "parallelSidePairs",
+        "equalSideGroups",
+        "sideLengthLabels",
+        "distanceSegment",
+        "angles",
+        "askAngleIndex"
+      ] as const;
+      const required = new Set<string>(fieldMatrix[visual.mode]);
+      let matrixIsValid = true;
+      for (const field of optionalFields) {
+        const isPresent = visual[field] !== undefined;
+        if (required.has(field) !== isPresent) {
+          matrixIsValid = false;
+          addQuadrilateralIssue(
+            required.has(field)
+              ? `${visual.mode} 사각형에는 ${field} 값이 필요합니다.`
+              : `${visual.mode} 사각형에는 ${field} 값을 지정할 수 없습니다.`,
+            [field]
+          );
+        }
+      }
+      if (matrixIsValid) {
+        for (const message of quadrilateralFigureGeometryIssues(
+          visual as unknown as QuadrilateralFigure
+        )) {
+          addQuadrilateralIssue(message);
+        }
+      }
+      return;
+    }
+    if (visual.kind === "polygon-figure") {
+      const sideCountMode = visual.mode === "side-count-name";
+      const matrixIsValid = sideCountMode
+        ? visual.figure !== undefined && visual.candidates === undefined
+        : visual.figure === undefined && visual.candidates !== undefined;
+      if (!matrixIsValid) {
+        context.addIssue({
+          code: "custom",
+          message: sideCountMode
+            ? "변의 수 문항에는 figure 하나만 필요합니다."
+            : "후보 찾기 문항에는 candidates 세 개만 필요합니다.",
+          path: []
+        });
+        return;
+      }
+      for (const message of polygonFigureGeometryIssues(
+        visual as unknown as PolygonFigure
+      )) {
+        context.addIssue({ code: "custom", message, path: [] });
+      }
+      return;
+    }
+    if (visual.kind === "tile-composition") {
+      const fillMode = visual.mode === "fill-remaining";
+      const matrixIsValid = fillMode
+        ? visual.board !== undefined
+          && visual.placed !== undefined
+          && visual.candidates !== undefined
+          && visual.region === undefined
+          && visual.piece === undefined
+        : visual.board === undefined
+          && visual.placed === undefined
+          && visual.candidates === undefined
+          && visual.region !== undefined
+          && visual.piece !== undefined;
+      if (!matrixIsValid) {
+        context.addIssue({
+          code: "custom",
+          message: fillMode
+            ? "남은 자리 문항에는 board·placed·candidates만 필요합니다."
+            : "조각 수 문항에는 region·piece만 필요합니다.",
+          path: []
+        });
+        return;
+      }
+      for (const message of tileCompositionGeometryIssues(
+        visual as unknown as TileCompositionFigure
+      )) {
+        context.addIssue({ code: "custom", message, path: [] });
       }
       return;
     }
@@ -1114,6 +1737,52 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
         config: z.record(z.string(), z.unknown()).optional()
       }),
       choices: z.array(choiceSchema).min(2)
+    }).superRefine((judgment, context) => {
+      if (
+        judgment.visual.kind === "polygon-figure"
+        || judgment.visual.kind === "tile-composition"
+      ) {
+        const correctLabel = judgment.choices.find(
+          (choice) => choice.correct
+        )?.label;
+        const expected = judgment.visual.kind === "polygon-figure"
+          ? polygonFigureExpectedAnswer(
+              judgment.visual as unknown as PolygonFigure
+            )
+          : tileCompositionExpectedAnswer(
+              judgment.visual as unknown as TileCompositionFigure
+            );
+        if (expected !== undefined && correctLabel !== expected) {
+          context.addIssue({
+            code: "custom",
+            message: `그림으로 계산한 정답 ${expected}와 정답 선택지가 일치해야 합니다.`,
+            path: ["choices"]
+          });
+        }
+      }
+      if (
+        judgment.visual.kind !== "quadrilateral-figure"
+        || judgment.visual.mode !== "side-perpendicular"
+        || judgment.visual.baseSideIndex === undefined
+      ) {
+        return;
+      }
+      const baseSideName = quadrilateralSideName(
+        judgment.visual.baseSideIndex
+      );
+      const mentionedSideNames = ([0, 1, 2, 3] as const)
+        .map(quadrilateralSideName)
+        .filter((sideName) => judgment.prompt.includes(sideName));
+      if (
+        mentionedSideNames.length !== 1
+        || mentionedSideNames[0] !== baseSideName
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: `수직 문항의 질문에는 기준 ${baseSideName}만 명시해야 합니다.`,
+          path: ["prompt"]
+        });
+      }
     })).min(1)
   });
 }

@@ -18,6 +18,8 @@ import {
 import { grade3Semester1Diagnosis } from "./grade3-semester1";
 import { grade3Semester2CompleteDiagnosis } from "./grade3-semester2-complete";
 import { inspectGrade4PlacementApproval } from "./grade4-placement-approval";
+import { inspectGrade5PlacementApproval } from "./grade5-placement-approval";
+import { inspectGrade6PlacementApproval } from "./grade6-placement-approval";
 import {
   findStagePrerequisiteGraph,
   registeredStagePrerequisiteGraphs,
@@ -174,9 +176,11 @@ export function inspectDiagnosticIntegrity(
   input: DiagnosticIntegrityInput,
   options: DiagnosticIntegrityOptions = {}
 ): ContentValidationResult {
-  const placementIssues = inspectGrade4PlacementApproval(input.content, {
-    setKey: input.setKey
-  });
+  const placementIssues = [
+    ...inspectGrade4PlacementApproval(input.content, { setKey: input.setKey }),
+    ...inspectGrade5PlacementApproval(input.content, { setKey: input.setKey }),
+    ...inspectGrade6PlacementApproval(input.content, { setKey: input.setKey })
+  ];
   const explicitlyOverridden = Object.prototype.hasOwnProperty.call(options, "blueprint");
   const registeredBlueprint = findCoverageBlueprint(input.setKey);
   const blueprint = explicitlyOverridden ? options.blueprint : registeredBlueprint;

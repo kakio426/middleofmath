@@ -34,28 +34,52 @@ const CURRICULUM_AREAS = [
       "multiplication",
       "division",
       "multiplication-division",
-      "fraction"
+      "mixed-operations",
+      "factors-multiples",
+      "fraction",
+      "fraction-reduction-common-denominator",
+      "fraction-add-subtract",
+      "decimal-add-subtract",
+      "number-range-rounding",
+      "fraction-multiplication",
+      "decimal-multiplication",
+      "fraction-division",
+      "decimal-division"
     ]
   },
   {
     id: "geometry",
     title: "도형",
-    unitIds: ["circle", "angles", "figure-transform"]
+    unitIds: [
+      "circle",
+      "angles",
+      "figure-transform",
+      "triangles",
+      "quadrilaterals",
+      "polygons",
+      "polygon-perimeter-area",
+      "congruence-symmetry",
+      "rectangular-prisms-cubes",
+      "prisms-pyramids",
+      "space-solids",
+      "circle-measure",
+      "cylinder-cone-sphere"
+    ]
   },
   {
     id: "measurement",
     title: "측정",
-    unitIds: ["measurement"]
+    unitIds: ["length", "measurement", "surface-volume"]
   },
   {
     id: "change-relationships",
     title: "변화와 관계",
-    unitIds: ["patterns-relations"]
+    unitIds: ["patterns-relations", "correspondence", "ratio-rate", "proportion"]
   },
   {
     id: "data-probability",
     title: "자료와 가능성",
-    unitIds: ["pictograph", "bar-graphs"]
+    unitIds: ["pictograph", "bar-graphs", "line-graphs", "average-probability", "data-graphs"]
   }
 ] as const;
 
@@ -64,12 +88,40 @@ const UNIT_SYMBOLS: Record<string, string> = {
   multiplication: "×",
   division: "÷",
   "multiplication-division": "×",
+  "mixed-operations": "＋×",
+  "factors-multiples": "약·배",
+  "fraction-reduction-common-denominator": "약·통",
   circle: "○",
   angles: "∠",
   "figure-transform": "↻",
+  triangles: "△",
+  quadrilaterals: "▱",
+  polygons: "⬠",
+  "polygon-perimeter-area": "cm²",
   "patterns-relations": "□",
+  correspondence: "□△",
   "bar-graphs": "▥",
+  "line-graphs": "⌁",
   fraction: "¼",
+  length: "cm",
+  "fraction-add-subtract": "½",
+  "decimal-add-subtract": "0.1",
+  "number-range-rounding": "≈",
+  "fraction-multiplication": "½×",
+  "congruence-symmetry": "≅",
+  "decimal-multiplication": "0.1×",
+  "rectangular-prisms-cubes": "▣",
+  "average-probability": "%",
+  "fraction-division": "½÷",
+  "prisms-pyramids": "◇",
+  "decimal-division": "0.1÷",
+  "ratio-rate": ":",
+  "data-graphs": "◔",
+  "surface-volume": "cm³",
+  "space-solids": "▦",
+  proportion: "∷",
+  "circle-measure": "π",
+  "cylinder-cone-sphere": "◉",
   measurement: "ℓ",
   pictograph: "▦"
 };

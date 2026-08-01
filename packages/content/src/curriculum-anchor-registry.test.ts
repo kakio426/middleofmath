@@ -7,7 +7,11 @@ import {
   grade3Semester2Anchor,
   grade3Semester2AnchorRegistry,
   grade4Semester1Anchor,
-  grade4Semester1AnchorRegistry
+  grade4Semester1AnchorRegistry,
+  grade4Semester2Anchor,
+  grade4Semester2AnchorRegistry,
+  grade5Semester1Anchor,
+  grade5Semester1AnchorRegistry
 } from "./curriculum-anchor-registry";
 import { grade3Semester1Diagnosis } from "./grade3-semester1";
 import { grade3Semester2CompleteDiagnosis } from "./grade3-semester2-complete";
@@ -142,6 +146,113 @@ describe("grade 3 semester 2 curriculum anchor registry", () => {
     expect(() => grade4Semester1Anchor("[4수03-03]")).toThrow("등록되지 않은");
   });
 
+  it("A3-1부터 A3-6까지 승인된 열한 앵커를 4학년 2학기에서 찾는다", () => {
+    expect(grade4Semester2AnchorRegistry.map((anchor) => anchor.id)).toEqual([
+      "[4수04-02]",
+      "[4수03-08]",
+      "[4수03-09]",
+      "[4수01-15]",
+      "[4수03-03]",
+      "[4수03-10]",
+      "[4수01-13]",
+      "[4수01-14]",
+      "[4수01-16]",
+      "[4수03-11]",
+      "[4수03-12]"
+    ]);
+    expect(grade4Semester2Anchor("[4수03-08]")).toMatchObject({
+      label: expect.stringContaining("변의 길이")
+    });
+    expect(grade4Semester2Anchor("[4수03-09]")).toMatchObject({
+      label: expect.stringContaining("각의 크기")
+    });
+    expect(grade4Semester2Anchor("[4수01-15]")).toMatchObject({
+      label: expect.stringContaining("분모가 같은 분수")
+    });
+    expect(findAnchorForSet("grade4-semester2", "[4수03-08]")).toMatchObject({
+      grade: 4,
+      semester: 2,
+      sharedAcrossGradeBand: false
+    });
+    expect(findAnchorForSet("grade4-semester2", "[4수01-15]")).toMatchObject({
+      grade: 4,
+      semester: 2,
+      sharedAcrossSemesters: false
+    });
+    expect(grade4Semester2Anchor("[4수03-03]")).toMatchObject({
+      label: expect.stringContaining("수선")
+    });
+    expect(grade4Semester2Anchor("[4수03-10]")).toMatchObject({
+      label: expect.stringContaining("사각형")
+    });
+    expect(findAnchorForSet("grade4-semester2", "[4수03-10]")).toMatchObject({
+      grade: 4,
+      semester: 2,
+      sharedAcrossSemesters: false
+    });
+    expect(grade4Semester2Anchor("[4수01-13]")).toMatchObject({
+      label: expect.stringContaining("소수 세 자리 수")
+    });
+    expect(grade4Semester2Anchor("[4수01-14]")).toMatchObject({
+      label: expect.stringContaining("크기를 비교")
+    });
+    expect(grade4Semester2Anchor("[4수01-16]")).toMatchObject({
+      label: expect.stringContaining("덧셈과 뺄셈")
+    });
+    expect(findAnchorForSet("grade4-semester2", "[4수01-16]")).toMatchObject({
+      grade: 4,
+      semester: 2,
+      sharedAcrossGradeBand: false
+    });
+    expect(grade4Semester2Anchor("[4수03-11]")).toMatchObject({
+      label: expect.stringContaining("다각형과 정다각형")
+    });
+    expect(grade4Semester2Anchor("[4수03-12]")).toMatchObject({
+      label: expect.stringContaining("모양을 만들거나 채우고")
+    });
+    expect(findAnchorForSet("grade4-semester2", "[4수03-12]")).toMatchObject({
+      grade: 4,
+      semester: 2,
+      sharedAcrossSemesters: false
+    });
+    expect(findAnchorForSet("grade4-semester1", "[4수03-10]")).toBeUndefined();
+    expect(grade4Semester2Anchor("[4수04-02]")).toMatchObject({
+      label: expect.stringContaining("꺾은선그래프")
+    });
+  });
+
+  it("A4-1부터 A4-6까지 승인된 열두 앵커를 5학년 1학기에서 찾는다", () => {
+    expect(grade5Semester1AnchorRegistry.map((anchor) => anchor.id)).toEqual([
+      "[6수01-01]",
+      "[6수01-04]",
+      "[6수01-05]",
+      "[6수02-01]",
+      "[6수01-06]",
+      "[6수01-07]",
+      "[6수01-12]",
+      "[6수01-08]",
+      "[6수03-11]",
+      "[6수03-12]",
+      "[6수03-13]",
+      "[6수03-14]"
+    ]);
+    expect(grade5Semester1Anchor("[6수02-01]")).toMatchObject({
+      label: expect.stringContaining("대응표")
+    });
+    expect(findAnchorForSet("grade5-semester1", "[6수02-01]")).toMatchObject({
+      grade: 5,
+      semester: 1,
+      sharedAcrossGradeBand: false
+    });
+    expect(findAnchorForSet("grade6-semester1", "[6수02-01]")).toBeUndefined();
+    expect(grade5Semester1Anchor("[6수01-12]")).toMatchObject({
+      label: expect.stringContaining("분수와 소수")
+    });
+    expect(grade5Semester1Anchor("[6수01-08]")).toMatchObject({
+      label: expect.stringContaining("덧셈과 뺄셈")
+    });
+  });
+
   it("공유 성취기준은 명시한 세트에서만 찾고 공유 boolean을 켜지 않는다", () => {
     expect(curriculumAnchorSetAllowList).toEqual([
       {
@@ -215,6 +326,12 @@ describe("grade 3 semester 2 curriculum anchor registry", () => {
         setKey: "grade4-semester1",
         canonical: true,
         coverage: "partial"
+      },
+      {
+        anchorId: "[4수04-03]",
+        setKey: "grade4-semester2",
+        canonical: false,
+        coverage: "partial"
       }
     ]);
     expect(findAnchorForSet("grade3-semester2", "[4수04-01]")).toMatchObject({
@@ -231,7 +348,11 @@ describe("grade 3 semester 2 curriculum anchor registry", () => {
     });
     expect(findAnchorForSet("grade3-semester1", "[4수04-01]")).toBeUndefined();
     expect(findAnchorForSet("grade4-semester2", "[4수04-01]")).toBeUndefined();
-    expect(findAnchorForSet("grade4-semester2", "[4수04-03]")).toBeUndefined();
+    expect(findAnchorForSet("grade4-semester2", "[4수04-03]")).toMatchObject({
+      grade: 4,
+      semester: 1,
+      sharedAcrossSemesters: false
+    });
     expect(findAnchorForSet("grade3-semester2", "[4수04-03]")).toBeUndefined();
     expect(findAnchorForSet("grade4-semester2", "[4수01-04]")).toBeUndefined();
     expect(findAnchorForSet("grade4-semester2", "[4수01-05]")).toBeUndefined();

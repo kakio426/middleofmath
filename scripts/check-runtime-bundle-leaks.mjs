@@ -6,24 +6,33 @@ const runtimeDistDirectories = [
   "apps/student/dist",
   "apps/teacher/dist"
 ];
+const contentSourceDirectory = fileURLToPath(new URL(
+  "../packages/content/src",
+  import.meta.url
+));
+const contentSourceEntries = await readdir(contentSourceDirectory);
 const rationaleSources = await Promise.all(
-  [
-    "../packages/content/src/grade3-semester1-rationales.ts",
-    "../packages/content/src/grade3-semester2-rationales.ts",
-    "../packages/content/src/grade4-semester1-rationales.ts"
-  ].map((source) =>
-    readFile(fileURLToPath(new URL(source, import.meta.url)), "utf8")
-  )
+  contentSourceEntries
+    .filter((name) => name.endsWith("-rationales.ts"))
+    .map((name) => readFile(join(contentSourceDirectory, name), "utf8"))
 );
-const prerequisiteGraph = JSON.parse(
-  await readFile(
-    fileURLToPath(new URL(
-      "../packages/content/src/grade3-stage-prerequisite-graph.json",
-      import.meta.url
-    )),
-    "utf8"
-  )
+const contentJsonSources = await Promise.all(
+  contentSourceEntries
+    .filter((name) => name.endsWith(".json"))
+    .map(async (name) => JSON.parse(
+      await readFile(join(contentSourceDirectory, name), "utf8")
+    ))
 );
+
+function collectReviewCopy(value) {
+  if (Array.isArray(value)) return value.flatMap(collectReviewCopy);
+  if (!value || typeof value !== "object") return [];
+  return Object.entries(value).flatMap(([key, nested]) =>
+    key === "reviewEvidence" || key === "reviewLimitations"
+      ? Array.isArray(nested) ? nested : [nested]
+      : collectReviewCopy(nested)
+  ).filter((item) => typeof item === "string");
+}
 const authoredKoreanCopy = [
   ...rationaleSources.flatMap((source) => [
     ...source.matchAll(/"([^"\n]*[가-힣][^"\n]*)"/g)
@@ -35,8 +44,7 @@ const forbiddenAuditCopy = [...new Set([
   "derivation",
   "rationale",
   ...authoredKoreanCopy,
-  prerequisiteGraph.reviewEvidence,
-  ...prerequisiteGraph.edges.map((edge) => edge.reviewEvidence)
+  ...contentJsonSources.flatMap(collectReviewCopy)
 ])];
 
 async function filesUnder(directory) {

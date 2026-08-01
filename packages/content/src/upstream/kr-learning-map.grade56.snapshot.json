@@ -1,0 +1,2499 @@
+{
+  "upstream": {
+    "repository": "DECK6/korean-elementary-learning-map",
+    "commit": "3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c",
+    "license": "MIT",
+    "taxonomyVersion": "kr-full-depth-v0.4",
+    "ontologyVersion": "0.3.0-p3",
+    "generatedAt": "2026-07-09T00:00:00+09:00",
+    "status": "integrated-workstream-candidate",
+    "verificationStatus": "public-doc-derived",
+    "officialStatus": "independent-non-official",
+    "learnerDiagnosisSupported": false
+  },
+  "scope": {
+    "gradeBand": "5-6",
+    "requestedCodes": [
+      "[6수01-01]",
+      "[6수01-04]",
+      "[6수01-05]",
+      "[6수02-01]",
+      "[6수01-06]",
+      "[6수01-07]",
+      "[6수01-12]",
+      "[6수01-08]",
+      "[6수03-11]",
+      "[6수03-12]",
+      "[6수03-13]",
+      "[6수03-14]",
+      "[6수01-02]",
+      "[6수01-03]",
+      "[6수01-09]",
+      "[6수03-01]",
+      "[6수03-02]",
+      "[6수01-13]",
+      "[6수03-03]",
+      "[6수03-04]",
+      "[6수04-01]",
+      "[6수04-04]",
+      "[6수04-05]",
+      "[6수04-06]",
+      "[6수01-10]",
+      "[6수01-11]",
+      "[6수03-05]",
+      "[6수03-06]",
+      "[6수01-14]",
+      "[6수01-15]",
+      "[6수02-02]",
+      "[6수02-03]",
+      "[6수04-02]",
+      "[6수04-03]",
+      "[6수03-17]",
+      "[6수03-18]",
+      "[6수03-19]",
+      "[6수03-09]",
+      "[6수03-10]",
+      "[6수02-04]",
+      "[6수02-05]",
+      "[6수03-15]",
+      "[6수03-16]",
+      "[6수03-07]",
+      "[6수03-08]"
+    ]
+  },
+  "files": {
+    "curriculum-standards.json": {
+      "bytes": 1913076,
+      "sha256": "aaaebb939c17fcc11a808fef3ae8164823425f74bfe8092a4a66941cb8c33335"
+    },
+    "topics.json": {
+      "bytes": 5387054,
+      "sha256": "80aa059ed305ce4cbeb0df45436c0b204a42cd208204c1cc1e5332c70c4bf5f3"
+    },
+    "dependencies.json": {
+      "bytes": 762739,
+      "sha256": "e09a6137bb70edf2a0b0928c05a4bd3f102c80845846ff13b10767ef4ceafe2c"
+    }
+  },
+  "sources": [
+    {
+      "id": "kr-ncic-math-pdf-2022",
+      "name": "교육부 고시 제2022-33호 [별책8] 수학과 교육과정.pdf",
+      "url": "https://ncic.re.kr/inv/org/download.do?year=2022&seq=10003559&orgType=ogi4",
+      "accessDate": "2026-07-09",
+      "sourceType": "official-pdf",
+      "publisher": "교육부",
+      "via": "NCIC 국가교육과정정보센터",
+      "attachmentName": "[별책8] 수학과 교육과정.pdf",
+      "fileSizeBytes": 1938993,
+      "pdfPages": 263,
+      "sha256": "ba7c7c63ad31ba0fd32e5eb8148d696dd73288acce111495c593298112f8f840"
+    }
+  ],
+  "advisory": {
+    "crosswalkOnly": true,
+    "notLearnerDiagnosis": true,
+    "candidatePrerequisites": true,
+    "locatorProvenance": "upstream-recorded",
+    "locatorLocallyReproducible": false,
+    "locatorUsage": "추출 도구·버전·플래그가 고정되지 않은 DECK6 상류 줄 번호다. 로컬 재현이나 학기 배치 승인 근거로 사용하지 않는다."
+  },
+  "standards": [
+    {
+      "key": "kr-2022-elem-math:[6수01-01]",
+      "code": "[6수01-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "자연수의 혼합 계산",
+      "focus": "자연수의 혼합 계산 소주제의 수와 연산 성취기준 [6수01-01]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 967-967",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-01] appears in the 초등학교 5-6학년 수와 연산 section under '자연수의 혼합 계산'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-02]",
+      "code": "[6수01-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "수의 범위와 올림, 버림, 반올림",
+      "focus": "수의 범위와 올림, 버림, 반올림 소주제의 수와 연산 성취기준 [6수01-02]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 971-972",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-02] appears in the 초등학교 5-6학년 수와 연산 section under '수의 범위와 올림, 버림, 반올림'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-03]",
+      "code": "[6수01-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "수의 범위와 올림, 버림, 반올림",
+      "focus": "수의 범위와 올림, 버림, 반올림 소주제의 수와 연산 성취기준 [6수01-03]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 973-974",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-03] appears in the 초등학교 5-6학년 수와 연산 section under '수의 범위와 올림, 버림, 반올림'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-04]",
+      "code": "[6수01-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "약수와 배수",
+      "focus": "약수와 배수 소주제의 수와 연산 성취기준 [6수01-04]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 978-978",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-04] appears in the 초등학교 5-6학년 수와 연산 section under '약수와 배수'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-05]",
+      "code": "[6수01-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "약수와 배수",
+      "focus": "약수와 배수 소주제의 수와 연산 성취기준 [6수01-05]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 979-979",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-05] appears in the 초등학교 5-6학년 수와 연산 section under '약수와 배수'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-06]",
+      "code": "[6수01-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "분수의 덧셈과 뺄셈",
+      "focus": "분수의 덧셈과 뺄셈 소주제의 수와 연산 성취기준 [6수01-06]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 983-983",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-06] appears in the 초등학교 5-6학년 수와 연산 section under '분수의 덧셈과 뺄셈'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-07]",
+      "code": "[6수01-07]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "분수의 덧셈과 뺄셈",
+      "focus": "분수의 덧셈과 뺄셈 소주제의 수와 연산 성취기준 [6수01-07]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 984-984",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-07] appears in the 초등학교 5-6학년 수와 연산 section under '분수의 덧셈과 뺄셈'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-08]",
+      "code": "[6수01-08]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "분수의 덧셈과 뺄셈",
+      "focus": "분수의 덧셈과 뺄셈 소주제의 수와 연산 성취기준 [6수01-08]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 985-985",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-08] appears in the 초등학교 5-6학년 수와 연산 section under '분수의 덧셈과 뺄셈'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-09]",
+      "code": "[6수01-09]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "분수의 곱셈과 나눗셈",
+      "focus": "분수의 곱셈과 나눗셈 소주제의 수와 연산 성취기준 [6수01-09]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 989-989",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-09] appears in the 초등학교 5-6학년 수와 연산 section under '분수의 곱셈과 나눗셈'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-10]",
+      "code": "[6수01-10]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "분수의 곱셈과 나눗셈",
+      "focus": "분수의 곱셈과 나눗셈 소주제의 수와 연산 성취기준 [6수01-10]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 990-990",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-10] appears in the 초등학교 5-6학년 수와 연산 section under '분수의 곱셈과 나눗셈'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-11]",
+      "code": "[6수01-11]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "분수의 곱셈과 나눗셈",
+      "focus": "분수의 곱셈과 나눗셈 소주제의 수와 연산 성취기준 [6수01-11]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 991-991",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-11] appears in the 초등학교 5-6학년 수와 연산 section under '분수의 곱셈과 나눗셈'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-12]",
+      "code": "[6수01-12]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "분수와 소수의 관계",
+      "focus": "분수와 소수의 관계 소주제의 수와 연산 성취기준 [6수01-12]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 995-995",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-12] appears in the 초등학교 5-6학년 수와 연산 section under '분수와 소수의 관계'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-13]",
+      "code": "[6수01-13]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "소수의 곱셈과 나눗셈",
+      "focus": "소수의 곱셈과 나눗셈 소주제의 수와 연산 성취기준 [6수01-13]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 999-999",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-13] appears in the 초등학교 5-6학년 수와 연산 section under '소수의 곱셈과 나눗셈'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-14]",
+      "code": "[6수01-14]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "소수의 곱셈과 나눗셈",
+      "focus": "소수의 곱셈과 나눗셈 소주제의 수와 연산 성취기준 [6수01-14]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1000-1000",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-14] appears in the 초등학교 5-6학년 수와 연산 section under '소수의 곱셈과 나눗셈'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수01-15]",
+      "code": "[6수01-15]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "module": "소수의 곱셈과 나눗셈",
+      "focus": "소수의 곱셈과 나눗셈 소주제의 수와 연산 성취기준 [6수01-15]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1001-1001",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수01-15] appears in the 초등학교 5-6학년 수와 연산 section under '소수의 곱셈과 나눗셈'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수02-01]",
+      "code": "[6수02-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "module": "대응 관계",
+      "focus": "대응 관계 소주제의 변화와 관계 성취기준 [6수02-01]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1055-1056",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수02-01] appears in the 초등학교 5-6학년 변화와 관계 section under '대응 관계'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수02-02]",
+      "code": "[6수02-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "module": "비와 비율",
+      "focus": "비와 비율 소주제의 변화와 관계 성취기준 [6수02-02]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1060-1061",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수02-02] appears in the 초등학교 5-6학년 변화와 관계 section under '비와 비율'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수02-03]",
+      "code": "[6수02-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "module": "비와 비율",
+      "focus": "비와 비율 소주제의 변화와 관계 성취기준 [6수02-03]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1062-1062",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수02-03] appears in the 초등학교 5-6학년 변화와 관계 section under '비와 비율'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수02-04]",
+      "code": "[6수02-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "module": "비례식과 비례배분",
+      "focus": "비례식과 비례배분 소주제의 변화와 관계 성취기준 [6수02-04]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1066-1066",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수02-04] appears in the 초등학교 5-6학년 변화와 관계 section under '비례식과 비례배분'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수02-05]",
+      "code": "[6수02-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "module": "비례식과 비례배분",
+      "focus": "비례식과 비례배분 소주제의 변화와 관계 성취기준 [6수02-05]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1067-1067",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수02-05] appears in the 초등학교 5-6학년 변화와 관계 section under '비례식과 비례배분'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-01]",
+      "code": "[6수03-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "합동과 대칭",
+      "focus": "합동과 대칭 소주제의 도형과 측정 성취기준 [6수03-01]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1106-1106",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-01] appears in the 초등학교 5-6학년 도형과 측정 section under '합동과 대칭'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-02]",
+      "code": "[6수03-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "합동과 대칭",
+      "focus": "합동과 대칭 소주제의 도형과 측정 성취기준 [6수03-02]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1107-1107",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-02] appears in the 초등학교 5-6학년 도형과 측정 section under '합동과 대칭'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-03]",
+      "code": "[6수03-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "직육면체와 정육면체",
+      "focus": "직육면체와 정육면체 소주제의 도형과 측정 성취기준 [6수03-03]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1111-1111",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-03] appears in the 초등학교 5-6학년 도형과 측정 section under '직육면체와 정육면체'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-04]",
+      "code": "[6수03-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "직육면체와 정육면체",
+      "focus": "직육면체와 정육면체 소주제의 도형과 측정 성취기준 [6수03-04]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1112-1112",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-04] appears in the 초등학교 5-6학년 도형과 측정 section under '직육면체와 정육면체'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-05]",
+      "code": "[6수03-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "각기둥과 각뿔",
+      "focus": "각기둥과 각뿔 소주제의 도형과 측정 성취기준 [6수03-05]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1116-1116",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-05] appears in the 초등학교 5-6학년 도형과 측정 section under '각기둥과 각뿔'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-06]",
+      "code": "[6수03-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "각기둥과 각뿔",
+      "focus": "각기둥과 각뿔 소주제의 도형과 측정 성취기준 [6수03-06]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1117-1117",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-06] appears in the 초등학교 5-6학년 도형과 측정 section under '각기둥과 각뿔'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-07]",
+      "code": "[6수03-07]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "원기둥, 원뿔, 구",
+      "focus": "원기둥, 원뿔, 구 소주제의 도형과 측정 성취기준 [6수03-07]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1121-1121",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-07] appears in the 초등학교 5-6학년 도형과 측정 section under '원기둥, 원뿔, 구'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-08]",
+      "code": "[6수03-08]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "원기둥, 원뿔, 구",
+      "focus": "원기둥, 원뿔, 구 소주제의 도형과 측정 성취기준 [6수03-08]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1122-1122",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-08] appears in the 초등학교 5-6학년 도형과 측정 section under '원기둥, 원뿔, 구'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-09]",
+      "code": "[6수03-09]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "입체도형의 공간 감각",
+      "focus": "입체도형의 공간 감각 소주제의 도형과 측정 성취기준 [6수03-09]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1126-1126",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-09] appears in the 초등학교 5-6학년 도형과 측정 section under '입체도형의 공간 감각'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-10]",
+      "code": "[6수03-10]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "입체도형의 공간 감각",
+      "focus": "입체도형의 공간 감각 소주제의 도형과 측정 성취기준 [6수03-10]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1127-1128",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-10] appears in the 초등학교 5-6학년 도형과 측정 section under '입체도형의 공간 감각'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-11]",
+      "code": "[6수03-11]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "다각형의 둘레와 넓이",
+      "focus": "다각형의 둘레와 넓이 소주제의 도형과 측정 성취기준 [6수03-11]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1139-1139",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-11] appears in the 초등학교 5-6학년 도형과 측정 section under '다각형의 둘레와 넓이'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-12]",
+      "code": "[6수03-12]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "다각형의 둘레와 넓이",
+      "focus": "다각형의 둘레와 넓이 소주제의 도형과 측정 성취기준 [6수03-12]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1140-1140",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-12] appears in the 초등학교 5-6학년 도형과 측정 section under '다각형의 둘레와 넓이'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-13]",
+      "code": "[6수03-13]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "다각형의 둘레와 넓이",
+      "focus": "다각형의 둘레와 넓이 소주제의 도형과 측정 성취기준 [6수03-13]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1141-1141",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-13] appears in the 초등학교 5-6학년 도형과 측정 section under '다각형의 둘레와 넓이'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-14]",
+      "code": "[6수03-14]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "다각형의 둘레와 넓이",
+      "focus": "다각형의 둘레와 넓이 소주제의 도형과 측정 성취기준 [6수03-14]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1142-1143",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-14] appears in the 초등학교 5-6학년 도형과 측정 section under '다각형의 둘레와 넓이'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-15]",
+      "code": "[6수03-15]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "원주율과 원의 넓이",
+      "focus": "원주율과 원의 넓이 소주제의 도형과 측정 성취기준 [6수03-15]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1147-1148",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-15] appears in the 초등학교 5-6학년 도형과 측정 section under '원주율과 원의 넓이'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-16]",
+      "code": "[6수03-16]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "원주율과 원의 넓이",
+      "focus": "원주율과 원의 넓이 소주제의 도형과 측정 성취기준 [6수03-16]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1149-1149",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-16] appears in the 초등학교 5-6학년 도형과 측정 section under '원주율과 원의 넓이'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-17]",
+      "code": "[6수03-17]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "입체도형의 겉넓이와 부피",
+      "focus": "입체도형의 겉넓이와 부피 소주제의 도형과 측정 성취기준 [6수03-17]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1153-1153",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-17] appears in the 초등학교 5-6학년 도형과 측정 section under '입체도형의 겉넓이와 부피'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-18]",
+      "code": "[6수03-18]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "입체도형의 겉넓이와 부피",
+      "focus": "입체도형의 겉넓이와 부피 소주제의 도형과 측정 성취기준 [6수03-18]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1154-1154",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-18] appears in the 초등학교 5-6학년 도형과 측정 section under '입체도형의 겉넓이와 부피'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수03-19]",
+      "code": "[6수03-19]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "module": "입체도형의 겉넓이와 부피",
+      "focus": "입체도형의 겉넓이와 부피 소주제의 도형과 측정 성취기준 [6수03-19]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1155-1155",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수03-19] appears in the 초등학교 5-6학년 도형과 측정 section under '입체도형의 겉넓이와 부피'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수04-01]",
+      "code": "[6수04-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "module": "자료의 수집과 정리",
+      "focus": "자료의 수집과 정리 소주제의 자료와 가능성 성취기준 [6수04-01]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1222-1222",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수04-01] appears in the 초등학교 5-6학년 자료와 가능성 section under '자료의 수집과 정리'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수04-02]",
+      "code": "[6수04-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "module": "자료의 수집과 정리",
+      "focus": "자료의 수집과 정리 소주제의 자료와 가능성 성취기준 [6수04-02]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1223-1223",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수04-02] appears in the 초등학교 5-6학년 자료와 가능성 section under '자료의 수집과 정리'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수04-03]",
+      "code": "[6수04-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "module": "자료의 수집과 정리",
+      "focus": "자료의 수집과 정리 소주제의 자료와 가능성 성취기준 [6수04-03]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1224-1225",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수04-03] appears in the 초등학교 5-6학년 자료와 가능성 section under '자료의 수집과 정리'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수04-04]",
+      "code": "[6수04-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "module": "가능성",
+      "focus": "가능성 소주제의 자료와 가능성 성취기준 [6수04-04]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1229-1229",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수04-04] appears in the 초등학교 5-6학년 자료와 가능성 section under '가능성'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수04-05]",
+      "code": "[6수04-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "module": "가능성",
+      "focus": "가능성 소주제의 자료와 가능성 성취기준 [6수04-05]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1230-1230",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수04-05] appears in the 초등학교 5-6학년 자료와 가능성 section under '가능성'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    },
+    {
+      "key": "kr-2022-elem-math:[6수04-06]",
+      "code": "[6수04-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "module": "가능성",
+      "focus": "가능성 소주제의 자료와 가능성 성취기준 [6수04-06]",
+      "sourceRefs": [
+        "kr-ncic-math-pdf-2022"
+      ],
+      "evidence": [
+        {
+          "sourceId": "kr-ncic-math-pdf-2022",
+          "locator": "pdftotext lines 1231-1231",
+          "evidenceType": "official-achievement-standard-code",
+          "basis": "[6수04-06] appears in the 초등학교 5-6학년 자료와 가능성 section under '가능성'. Source text is not reproduced."
+        }
+      ],
+      "verificationStatus": "official-source-checked"
+    }
+  ],
+  "topics": [
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-01.application",
+      "standardKey": "kr-2022-elem-math:[6수02-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-01.concept",
+      "standardKey": "kr-2022-elem-math:[6수02-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-01.representation",
+      "standardKey": "kr-2022-elem-math:[6수02-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-02.application",
+      "standardKey": "kr-2022-elem-math:[6수02-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-02.concept",
+      "standardKey": "kr-2022-elem-math:[6수02-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-02.representation",
+      "standardKey": "kr-2022-elem-math:[6수02-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-03.application",
+      "standardKey": "kr-2022-elem-math:[6수02-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-03.concept",
+      "standardKey": "kr-2022-elem-math:[6수02-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-03.representation",
+      "standardKey": "kr-2022-elem-math:[6수02-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-04.application",
+      "standardKey": "kr-2022-elem-math:[6수02-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-04.concept",
+      "standardKey": "kr-2022-elem-math:[6수02-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-04.representation",
+      "standardKey": "kr-2022-elem-math:[6수02-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-05.application",
+      "standardKey": "kr-2022-elem-math:[6수02-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-05.concept",
+      "standardKey": "kr-2022-elem-math:[6수02-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.change-relationships.g5-6.s6-02-05.representation",
+      "standardKey": "kr-2022-elem-math:[6수02-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Change & Relationships",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-01.application",
+      "standardKey": "kr-2022-elem-math:[6수04-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-01.concept",
+      "standardKey": "kr-2022-elem-math:[6수04-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-01.representation",
+      "standardKey": "kr-2022-elem-math:[6수04-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-02.application",
+      "standardKey": "kr-2022-elem-math:[6수04-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-02.concept",
+      "standardKey": "kr-2022-elem-math:[6수04-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-02.representation",
+      "standardKey": "kr-2022-elem-math:[6수04-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-03.application",
+      "standardKey": "kr-2022-elem-math:[6수04-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-03.concept",
+      "standardKey": "kr-2022-elem-math:[6수04-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-03.representation",
+      "standardKey": "kr-2022-elem-math:[6수04-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-04.application",
+      "standardKey": "kr-2022-elem-math:[6수04-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-04.concept",
+      "standardKey": "kr-2022-elem-math:[6수04-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-04.representation",
+      "standardKey": "kr-2022-elem-math:[6수04-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-05.application",
+      "standardKey": "kr-2022-elem-math:[6수04-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-05.concept",
+      "standardKey": "kr-2022-elem-math:[6수04-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-05.representation",
+      "standardKey": "kr-2022-elem-math:[6수04-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-06.application",
+      "standardKey": "kr-2022-elem-math:[6수04-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-06.concept",
+      "standardKey": "kr-2022-elem-math:[6수04-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.data-probability.g5-6.s6-04-06.representation",
+      "standardKey": "kr-2022-elem-math:[6수04-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Data & Probability",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-01.application",
+      "standardKey": "kr-2022-elem-math:[6수03-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-01.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-01.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-02.application",
+      "standardKey": "kr-2022-elem-math:[6수03-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-02.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-02.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-03.application",
+      "standardKey": "kr-2022-elem-math:[6수03-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-03.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-03.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-04.application",
+      "standardKey": "kr-2022-elem-math:[6수03-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-04.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-04.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-05.application",
+      "standardKey": "kr-2022-elem-math:[6수03-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-05.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-05.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-06.application",
+      "standardKey": "kr-2022-elem-math:[6수03-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-06.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-06.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-07.application",
+      "standardKey": "kr-2022-elem-math:[6수03-07]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-07.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-07]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-07.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-07]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-08.application",
+      "standardKey": "kr-2022-elem-math:[6수03-08]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-08.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-08]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-08.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-08]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-09.application",
+      "standardKey": "kr-2022-elem-math:[6수03-09]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-09.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-09]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-09.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-09]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-10.application",
+      "standardKey": "kr-2022-elem-math:[6수03-10]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-10.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-10]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-10.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-10]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-11.application",
+      "standardKey": "kr-2022-elem-math:[6수03-11]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-11.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-11]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-11.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-11]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-12.application",
+      "standardKey": "kr-2022-elem-math:[6수03-12]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-12.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-12]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-12.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-12]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-13.application",
+      "standardKey": "kr-2022-elem-math:[6수03-13]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-13.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-13]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-13.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-13]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-14.application",
+      "standardKey": "kr-2022-elem-math:[6수03-14]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-14.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-14]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-14.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-14]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-15.application",
+      "standardKey": "kr-2022-elem-math:[6수03-15]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-15.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-15]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-15.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-15]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-16.application",
+      "standardKey": "kr-2022-elem-math:[6수03-16]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-16.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-16]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-16.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-16]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-17.application",
+      "standardKey": "kr-2022-elem-math:[6수03-17]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-17.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-17]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-17.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-17]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-18.application",
+      "standardKey": "kr-2022-elem-math:[6수03-18]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-18.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-18]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-18.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-18]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-19.application",
+      "standardKey": "kr-2022-elem-math:[6수03-19]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-19.concept",
+      "standardKey": "kr-2022-elem-math:[6수03-19]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.geometry-measurement.g5-6.s6-03-19.representation",
+      "standardKey": "kr-2022-elem-math:[6수03-19]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Geometry & Measurement",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-01.application",
+      "standardKey": "kr-2022-elem-math:[6수01-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-01.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-01.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-01]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-02.application",
+      "standardKey": "kr-2022-elem-math:[6수01-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-02.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-02.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-02]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-03.application",
+      "standardKey": "kr-2022-elem-math:[6수01-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-03.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-03.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-03]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-04.application",
+      "standardKey": "kr-2022-elem-math:[6수01-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-04.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-04.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-04]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-05.application",
+      "standardKey": "kr-2022-elem-math:[6수01-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-05.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-05.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-05]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-06.application",
+      "standardKey": "kr-2022-elem-math:[6수01-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-06.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-06.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-06]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-07.application",
+      "standardKey": "kr-2022-elem-math:[6수01-07]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-07.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-07]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-07.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-07]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-08.application",
+      "standardKey": "kr-2022-elem-math:[6수01-08]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-08.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-08]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-08.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-08]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-09.application",
+      "standardKey": "kr-2022-elem-math:[6수01-09]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-09.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-09]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-09.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-09]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-10.application",
+      "standardKey": "kr-2022-elem-math:[6수01-10]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-10.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-10]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-10.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-10]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-11.application",
+      "standardKey": "kr-2022-elem-math:[6수01-11]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-11.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-11]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-11.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-11]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-12.application",
+      "standardKey": "kr-2022-elem-math:[6수01-12]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-12.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-12]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-12.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-12]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-13.application",
+      "standardKey": "kr-2022-elem-math:[6수01-13]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-13.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-13]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-13.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-13]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-14.application",
+      "standardKey": "kr-2022-elem-math:[6수01-14]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-14.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-14]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-14.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-14]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-15.application",
+      "standardKey": "kr-2022-elem-math:[6수01-15]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "assesses"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-15.concept",
+      "standardKey": "kr-2022-elem-math:[6수01-15]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "introduces"
+    },
+    {
+      "id": "kr.mt.math.number-operations.g5-6.s6-01-15.representation",
+      "standardKey": "kr-2022-elem-math:[6수01-15]",
+      "gradeBand": "5-6",
+      "subject": "Mathematics",
+      "domain": "Number & Operations",
+      "verificationStatus": "official-source-checked",
+      "relationship": "supports"
+    }
+  ],
+  "dependencies": [
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-01.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-01.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-04.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-04.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.change-relationships.g5-6.s6-02-01.representation",
+      "prerequisiteId": "kr.mt.math.change-relationships.g5-6.s6-02-01.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-06.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-06.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-08.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-08.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-11.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-11.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-02.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-02.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-09.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-09.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-01.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-01.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-13.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-13.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-03.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-03.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.data-probability.g5-6.s6-04-01.representation",
+      "prerequisiteId": "kr.mt.math.data-probability.g5-6.s6-04-01.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-10.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-10.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-11.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-11.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-05.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-05.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-06.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-06.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-14.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-14.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.number-operations.g5-6.s6-01-15.representation",
+      "prerequisiteId": "kr.mt.math.number-operations.g5-6.s6-01-15.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.change-relationships.g5-6.s6-02-02.representation",
+      "prerequisiteId": "kr.mt.math.change-relationships.g5-6.s6-02-02.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.change-relationships.g5-6.s6-02-03.representation",
+      "prerequisiteId": "kr.mt.math.change-relationships.g5-6.s6-02-03.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.data-probability.g5-6.s6-04-02.representation",
+      "prerequisiteId": "kr.mt.math.data-probability.g5-6.s6-04-02.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.data-probability.g5-6.s6-04-03.representation",
+      "prerequisiteId": "kr.mt.math.data-probability.g5-6.s6-04-03.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-17.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-17.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-18.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-18.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-19.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-19.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-09.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-09.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-10.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-10.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.change-relationships.g5-6.s6-02-04.representation",
+      "prerequisiteId": "kr.mt.math.change-relationships.g5-6.s6-02-04.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.change-relationships.g5-6.s6-02-05.representation",
+      "prerequisiteId": "kr.mt.math.change-relationships.g5-6.s6-02-05.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-15.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-15.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-16.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-16.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-07.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-07.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    },
+    {
+      "topicId": "kr.mt.math.geometry-measurement.g5-6.s6-03-08.representation",
+      "prerequisiteId": "kr.mt.math.geometry-measurement.g5-6.s6-03-08.concept",
+      "relationship": "prerequisite",
+      "strength": "hard",
+      "basis": "within-standard decomposition order"
+    }
+  ],
+  "snapshotDigest": "sha256:7ec5c6254d89f931c73d1638cefcaf92b8f0102e98ae55258b0d7b3fd6b664cb"
+}

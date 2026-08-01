@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import type { DiagnosisSet } from "@middle-of-math/domain";
-import { inspectDiagnosticIntegrity } from "./diagnostic-integrity";
 import { passingDiagnosticIntegritySet } from "./diagnostic-integrity.fixture";
 import {
   grade4CurriculumPlacement,
@@ -40,18 +39,15 @@ function grade4PendingUnitFixture(): DiagnosisSet {
   content.manifest.id = "grade4-semester2";
   content.manifest.semester = 2;
   content.manifest.units = [{
-    id: "triangles",
-    order: 1,
-    title: "삼각형"
+    id: "line-graphs",
+    order: 6,
+    title: "꺾은선그래프"
   }];
-  content.curriculumAnchors = [
-    "[4수03-08]",
-    "[4수03-09]"
-  ].map((id) => ({
-    id,
-    label: "삼각형",
+  content.curriculumAnchors = [{
+    id: "[4수04-02]",
+    label: "꺾은선그래프",
     source: "교육부 고시 제2022-33호 [별책 8] 수학과 교육과정"
-  }));
+  }];
   return content;
 }
 
@@ -69,6 +65,7 @@ function withLargeNumbersApproved(): Grade4CurriculumPlacement {
 
 function withLargeNumbersPending(): Grade4CurriculumPlacement {
   const placement = structuredClone(grade4CurriculumPlacement);
+  placement.status = "pending-teacher-review";
   const unit = placement.semesters[0].units.find(
     (candidate) => candidate.id === "large-numbers"
   );
@@ -93,7 +90,7 @@ function withEveryUnitApproved(): Grade4CurriculumPlacement {
 }
 
 describe("4학년 단원별 배치 승인 게이트", () => {
-  it("A1·A2의 1학기 여섯 단원만 승인되고 2학기 6개 단원은 승인 대기 상태다", () => {
+  it("1·2학기 열두 단원이 A3-6까지 모두 승인되었다", () => {
     const units = grade4CurriculumPlacement.semesters.flatMap(
       (semester) => semester.units
     );
@@ -110,19 +107,26 @@ describe("4학년 단원별 배치 승인 게이트", () => {
       { id: "multiplication-division", reviewedAt: "2026-07-31T17:38:29+09:00" },
       { id: "figure-transform", reviewedAt: "2026-07-31T09:13:00+09:00" },
       { id: "bar-graphs", reviewedAt: "2026-07-31T15:04:15+09:00" },
-      { id: "patterns-relations", reviewedAt: "2026-07-31T10:24:21+09:00" }
+      { id: "patterns-relations", reviewedAt: "2026-07-31T10:24:21+09:00" },
+      { id: "triangles", reviewedAt: "2026-07-31T18:59:56+09:00" },
+      { id: "fraction-add-subtract", reviewedAt: "2026-07-31T20:13:47+09:00" },
+      { id: "quadrilaterals", reviewedAt: "2026-07-31T21:34:58+09:00" },
+      { id: "decimal-add-subtract", reviewedAt: "2026-07-31T23:42:26+09:00" },
+      { id: "polygons", reviewedAt: "2026-08-01T00:39:13+09:00" },
+      { id: "line-graphs", reviewedAt: "2026-08-01T04:16:40+09:00" }
     ]);
     expect(units.filter((unit) =>
       unit.reviewStatus === "pending-teacher-review"
       && unit.reviewedBy === null
       && unit.reviewedAt === null
-    )).toHaveLength(6);
+    )).toHaveLength(0);
+    expect(grade4CurriculumPlacement.status).toBe("approved");
     expect(inspectGrade4PlacementLedger()).toEqual([]);
   });
 
   it("Studio에는 원본을 바꿀 수 없는 읽기 전용 승인 요약만 제공한다", () => {
     const summary = grade4PlacementReviewSummary();
-    expect(summary.revision).toBe("grade4-placement-2026-07-31.10");
+    expect(summary.revision).toBe("grade4-placement-2026-08-01.16");
     expect(summary.units).toHaveLength(12);
     expect(Object.isFrozen(summary)).toBe(true);
     expect(Object.isFrozen(summary.units)).toBe(true);
@@ -209,14 +213,19 @@ describe("4학년 단원별 배치 승인 게이트", () => {
     );
   });
 
-  it("등록된 진단 무결성 게이트도 미승인 단원을 먼저 차단한다", () => {
-    const result = inspectDiagnosticIntegrity({
-      content: grade4PendingUnitFixture(),
-      setKey: "grade4-semester2",
-      targetVersion: "1.0.0"
-    });
-    expect(result.valid).toBe(false);
-    expect(result.issues.map((issue) => issue.code)).toContain(
+  it("승인 원장을 임의로 대기 상태로 되돌리면 꺾은선그래프를 차단한다", () => {
+    const placement = structuredClone(grade4CurriculumPlacement);
+    placement.status = "pending-teacher-review";
+    const unit = placement.semesters[1].units.find(
+      (candidate) => candidate.id === "line-graphs"
+    )!;
+    unit.reviewStatus = "pending-teacher-review";
+    unit.reviewedBy = null;
+    unit.reviewedAt = null;
+    expect(inspectGrade4PlacementApproval(
+      grade4PendingUnitFixture(),
+      { placement }
+    ).map((issue) => issue.code)).toContain(
       "PLACEMENT_UNIT_NOT_APPROVED"
     );
   });
@@ -244,7 +253,7 @@ describe("4학년 단원별 배치 승인 게이트", () => {
   });
 
   it("전역 approved는 12단원 전체 승인과 항상 함께 바뀐다", () => {
-    const partial = withLargeNumbersApproved();
+    const partial = withLargeNumbersPending();
     partial.status = "approved";
     expect(inspectGrade4PlacementLedger(partial).map(
       (issue) => issue.code

@@ -55,7 +55,7 @@ describe("4학년 1학기 A1·A2 진단 콘텐츠", () => {
 
   it("스키마·checksum·A2 배치·진단 무결성 게이트를 모두 통과한다", () => {
     expect(grade4Semester1Diagnosis.manifest.checksum).toBe(
-      "47bc36ddc83e406e82a716feaf3d6f52fd7706dabb0673fa0c95fd4342988109"
+      "469d38973ade98ab7639e181f65dd9dca7ea085497a5fa10656c0d9a324a8bf0"
     );
     expect(grade4Semester1Diagnosis.manifest.checksum).toBe(
       diagnosisContentChecksum(grade4Semester1Diagnosis)
@@ -80,6 +80,23 @@ describe("4학년 1학기 A1·A2 진단 콘텐츠", () => {
       blueprintRevision: "2026-07-31.6",
       crosswalkRevision: "2026-07-31.6"
     });
+  });
+
+  it("큰 수의 곱셈과 나눗셈 상황에서 대상과 장소를 아이가 바로 알 수 있게 말한다", () => {
+    const stadium = grade4Semester1Diagnosis.judgments.find(
+      (judgment) => judgment.id === "g4s1-muldiv-04"
+    );
+    const coloredPaper = grade4Semester1Diagnosis.judgments.find(
+      (judgment) => judgment.id === "g4s1-muldiv-10"
+    );
+
+    expect(stadium?.context).toBe(
+      "경기장에 의자가 한 줄에 235개씩 32줄 있어요."
+    );
+    expect(coloredPaper?.context).toBe(
+      "색종이 500장을 15명에게 32장씩 나누어 주고 20장이 남았어요."
+    );
+    expect(coloredPaper?.context).not.toMatch(/^\d+장을/);
   });
 
   it("각 단계가 서로 다른 direct·transfer 판단을 하나씩 가진다", () => {

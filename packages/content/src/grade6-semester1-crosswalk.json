@@ -1,0 +1,466 @@
+{
+  "setKey": "grade6-semester1",
+  "revision": "2026-08-01.1",
+  "upstreamCommit": "3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c",
+  "upstreamTaxonomyVersion": "kr-full-depth-v0.4",
+  "upstreamOntologyVersion": "0.3.0-p3",
+  "snapshotDigest": "sha256:7ec5c6254d89f931c73d1638cefcaf92b8f0102e98ae55258b0d7b3fd6b664cb",
+  "anchorRows": [
+    {
+      "anchorId": "[6수01-10]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-10]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-10.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-10.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-10.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수01-10]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수01-11]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-11]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-11.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-11.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-11.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수01-11]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수03-05]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수03-05]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수03-05]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수03-06]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수03-06]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-06.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-06.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-06.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수03-06]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수01-14]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-14]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-14.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-14.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-14.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수01-14]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수01-15]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수01-15]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-15.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-15.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-15.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수01-15]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수02-02]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수02-02]",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-02.application",
+        "kr.mt.math.change-relationships.g5-6.s6-02-02.concept",
+        "kr.mt.math.change-relationships.g5-6.s6-02-02.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수02-02]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수02-03]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수02-03]",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.application",
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.concept",
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수02-03]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수04-02]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수04-02]",
+      "topicIds": [
+        "kr.mt.math.data-probability.g5-6.s6-04-02.application",
+        "kr.mt.math.data-probability.g5-6.s6-04-02.concept",
+        "kr.mt.math.data-probability.g5-6.s6-04-02.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수04-02]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수04-03]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수04-03]",
+      "topicIds": [
+        "kr.mt.math.data-probability.g5-6.s6-04-03.application",
+        "kr.mt.math.data-probability.g5-6.s6-04-03.concept",
+        "kr.mt.math.data-probability.g5-6.s6-04-03.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수04-03]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수03-17]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수03-17]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-17.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-17.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-17.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수03-17]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수03-18]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수03-18]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수03-18]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    },
+    {
+      "anchorId": "[6수03-19]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[6수03-19]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-19.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-19.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-19.representation"
+      ],
+      "reviewEvidence": "고정 DECK6 스냅숏에서 [6수03-19]의 개념·표현·적용 주제가 같은 성취기준 코드에 직접 연결됨을 확인했다."
+    }
+  ],
+  "stageRows": [
+    {
+      "stageId": "fd.fraction-by-natural",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-10.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-10.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-10.representation"
+      ],
+      "reviewEvidence": "분수를 자연수로 나누기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "fd.mixed-by-natural",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-10.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-10.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-10.representation"
+      ],
+      "reviewEvidence": "대분수를 자연수로 나누기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "fd.natural-by-fraction",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-11.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-11.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-11.representation"
+      ],
+      "reviewEvidence": "자연수를 분수로 나누기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "fd.fraction-by-fraction",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-11.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-11.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-11.representation"
+      ],
+      "reviewEvidence": "분수를 분수로 나누기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "fd.application",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-11.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-11.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-11.representation"
+      ],
+      "reviewEvidence": "분수 나눗셈을 상황에 적용하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "solid.identify",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.representation"
+      ],
+      "reviewEvidence": "각기둥과 각뿔 구별하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "solid.bases",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.representation"
+      ],
+      "reviewEvidence": "각기둥과 각뿔의 밑면 찾기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "solid.elements",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-05.representation"
+      ],
+      "reviewEvidence": "각기둥과 각뿔의 면·모서리·꼭짓점 세기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "solid.net",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-06.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-06.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-06.representation"
+      ],
+      "reviewEvidence": "전개도의 면 구성으로 입체도형 찾기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "solid.side-faces",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-06.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-06.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-06.representation"
+      ],
+      "reviewEvidence": "밑면의 변 수와 옆면 수 관계 알기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "dd.decimal-by-natural",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-14.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-14.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-14.representation"
+      ],
+      "reviewEvidence": "소수를 자연수로 나누기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "dd.zero-quotient",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-14.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-14.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-14.representation"
+      ],
+      "reviewEvidence": "몫이 1보다 작은 소수 나눗셈 하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "dd.natural-by-decimal",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-15.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-15.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-15.representation"
+      ],
+      "reviewEvidence": "자연수를 소수로 나누기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "dd.decimal-by-decimal",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-15.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-15.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-15.representation"
+      ],
+      "reviewEvidence": "소수를 소수로 나누기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "dd.application",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g5-6.s6-01-15.application",
+        "kr.mt.math.number-operations.g5-6.s6-01-15.concept",
+        "kr.mt.math.number-operations.g5-6.s6-01-15.representation"
+      ],
+      "reviewEvidence": "소수 나눗셈을 상황에 적용하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "ratio.meaning",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-02.application",
+        "kr.mt.math.change-relationships.g5-6.s6-02-02.concept",
+        "kr.mt.math.change-relationships.g5-6.s6-02-02.representation"
+      ],
+      "reviewEvidence": "두 양의 관계를 비로 나타내기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "ratio.equivalent",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-02.application",
+        "kr.mt.math.change-relationships.g5-6.s6-02-02.concept",
+        "kr.mt.math.change-relationships.g5-6.s6-02-02.representation"
+      ],
+      "reviewEvidence": "같은 비 찾기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "rate.unit",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.application",
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.concept",
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.representation"
+      ],
+      "reviewEvidence": "기준량을 1로 만든 비율 구하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "rate.percent",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.application",
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.concept",
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.representation"
+      ],
+      "reviewEvidence": "비율을 백분율로 나타내기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "rate.application",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.application",
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.concept",
+        "kr.mt.math.change-relationships.g5-6.s6-02-03.representation"
+      ],
+      "reviewEvidence": "백분율을 생활 상황에 적용하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "graph.strip-read",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g5-6.s6-04-02.application",
+        "kr.mt.math.data-probability.g5-6.s6-04-02.concept",
+        "kr.mt.math.data-probability.g5-6.s6-04-02.representation"
+      ],
+      "reviewEvidence": "띠그래프에서 비율 읽기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "graph.circle-read",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g5-6.s6-04-02.application",
+        "kr.mt.math.data-probability.g5-6.s6-04-02.concept",
+        "kr.mt.math.data-probability.g5-6.s6-04-02.representation"
+      ],
+      "reviewEvidence": "원그래프에서 비율 비교하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "graph.whole-from-part",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g5-6.s6-04-02.application",
+        "kr.mt.math.data-probability.g5-6.s6-04-02.concept",
+        "kr.mt.math.data-probability.g5-6.s6-04-02.representation"
+      ],
+      "reviewEvidence": "그래프의 비율과 인원으로 전체 구하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "graph.construct",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g5-6.s6-04-03.application",
+        "kr.mt.math.data-probability.g5-6.s6-04-03.concept",
+        "kr.mt.math.data-probability.g5-6.s6-04-03.representation"
+      ],
+      "reviewEvidence": "자료를 띠그래프와 원그래프로 나타내기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "graph.choose",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g5-6.s6-04-03.application",
+        "kr.mt.math.data-probability.g5-6.s6-04-03.concept",
+        "kr.mt.math.data-probability.g5-6.s6-04-03.representation"
+      ],
+      "reviewEvidence": "자료의 목적에 맞는 그래프 고르기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "volume.unit",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.representation"
+      ],
+      "reviewEvidence": "부피의 단위 이해하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "volume.capacity-relation",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-19.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-19.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-19.representation"
+      ],
+      "reviewEvidence": "세제곱미터와 리터의 관계 이해하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "volume.box",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.representation"
+      ],
+      "reviewEvidence": "직육면체의 부피 구하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "volume.cube",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-18.representation"
+      ],
+      "reviewEvidence": "정육면체의 부피 구하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "surface.net",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-17.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-17.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-17.representation"
+      ],
+      "reviewEvidence": "전개도로 직육면체의 겉넓이 이해하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    },
+    {
+      "stageId": "surface.calculate",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-17.application",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-17.concept",
+        "kr.mt.math.geometry-measurement.g5-6.s6-03-17.representation"
+      ],
+      "reviewEvidence": "직육면체와 정육면체의 겉넓이 구하기 행동을 로컬 진단 단계로 세분화했다. 상류 주제는 범위 대조에만 쓰며 학생 결손 판정으로 자동 승격하지 않는다."
+    }
+  ],
+  "crosswalkDigest": "sha256:a6c0cebd7eaf5c4859df32decd9bc7033ed1e4d3bc1f80631327b7e515f6e10c"
+}

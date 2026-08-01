@@ -1,11 +1,27 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment, type ReactNode, useId } from "react";
 import type {
   EvidenceItem,
   FindingConfidence,
   JudgmentVisual,
   MeasurePart,
   MeasureUnit,
-  Severity
+  PatternBlockName,
+  PolygonFigure,
+  PolygonOutline,
+  QuadrilateralFigure,
+  QuadrilateralIndex,
+  Severity,
+  TileCompositionFigure,
+  TriangleCell
+} from "@middle-of-math/domain";
+import {
+  patternBlockCells,
+  patternBlockKoreanNames,
+  polygonConcaveVertexCount,
+  polygonMarkClasses,
+  polygonOutlinePoints,
+  triangleCellKey,
+  triangleCellVertices
 } from "@middle-of-math/domain";
 
 const KEEP_WITH_NEXT = new Set([
@@ -40,7 +56,53 @@ function readableSentences(text: string): string[][] {
 function readableGroups(tokens: string[]): string[][] {
   const groups: string[][] = [];
   for (let index = 0; index < tokens.length; index += 1) {
-    if (KEEP_WITH_NEXT.has(tokens[index]) && tokens[index + 1]) {
+    const mixedNumberLength = (start: number): number => {
+      const whole = tokens[start];
+      const fraction = tokens[start + 1];
+      if (!whole || !fraction) return 0;
+      const isWhole = /^\d+$/.test(whole) || /^\d+(?:과|와)$/.test(whole);
+      const isFraction = /^\d+\/\d+(?:[가-힣]+)?[,.)!?]*$/.test(fraction);
+      return isWhole && isFraction ? 2 : 0;
+    };
+    const firstMixedNumberLength = mixedNumberLength(index);
+    if (firstMixedNumberLength > 0) {
+      let end = index + firstMixedNumberLength;
+      while (/^[+−×÷]$/.test(tokens[end] ?? "")) {
+        const nextMixedNumberLength = mixedNumberLength(end + 1);
+        if (nextMixedNumberLength === 0) break;
+        end += 1 + nextMixedNumberLength;
+      }
+      if (tokens[end] === "=") {
+        end += 1;
+        if (tokens[end] === "?") end += 1;
+      }
+      groups.push(tokens.slice(index, end));
+      index = end - 1;
+    } else if (/^[\d/()+−×÷=?]+$/.test(tokens[index])) {
+      const expression: string[] = [];
+      while (
+        index < tokens.length
+        && /^[\d/()+−×÷=?]+$/.test(tokens[index])
+      ) {
+        expression.push(tokens[index]);
+        index += 1;
+      }
+      index -= 1;
+      if (
+        expression.length >= 3
+        && expression.some((token) => /[()+−×÷=]/.test(token))
+      ) {
+        groups.push(expression);
+      } else if (
+        expression.length === 2
+        && /^\d+$/.test(expression[0])
+        && /^\d+\/\d+$/.test(expression[1])
+      ) {
+        groups.push(expression);
+      } else {
+        groups.push(...expression.map((token) => [token]));
+      }
+    } else if (KEEP_WITH_NEXT.has(tokens[index]) && tokens[index + 1]) {
       groups.push([tokens[index], tokens[index + 1]]);
       index += 1;
     } else {
@@ -48,6 +110,39 @@ function readableGroups(tokens: string[]): string[][] {
     }
   }
   return groups;
+}
+
+function MathToken({ token }: { token: string }) {
+  const matches = [...token.matchAll(/(\d+)\/(\d+)/g)];
+  if (matches.length === 0) return token;
+
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+  for (const [index, match] of matches.entries()) {
+    if (match.index! > cursor) {
+      parts.push(token.slice(cursor, match.index));
+    }
+    const numerator = match[1];
+    const denominator = match[2];
+    parts.push(
+      <span
+        aria-label={`${denominator}분의 ${numerator}`}
+        className="mom-stacked-fraction"
+        key={`${match[0]}-${index}`}
+        role="math"
+      >
+        <span className="mom-stacked-fraction-numerator" aria-hidden="true">
+          {numerator}
+        </span>
+        <span className="mom-stacked-fraction-denominator" aria-hidden="true">
+          {denominator}
+        </span>
+      </span>
+    );
+    cursor = match.index! + match[0].length;
+  }
+  if (cursor < token.length) parts.push(token.slice(cursor));
+  return <>{parts}</>;
 }
 
 export function ReadableText({ text }: { text: string }) {
@@ -64,7 +159,7 @@ export function ReadableText({ text }: { text: string }) {
                   {group.map((token, tokenIndex) => (
                     <Fragment key={`${token}-${tokenIndex}`}>
                       {tokenIndex > 0 && " "}
-                      <span className="mom-readable-token">{token}</span>
+                      <span className="mom-readable-token"><MathToken token={token} /></span>
                     </Fragment>
                   ))}
                 </span>
@@ -242,6 +337,26 @@ type BarChartDiagram = Extract<
   { kind: "bar-chart-diagram" }
 >;
 
+type LineChartDiagram = Extract<
+  JudgmentVisual,
+  { kind: "line-chart-diagram" }
+>;
+
+type PerimeterAreaDiagram = Extract<
+  JudgmentVisual,
+  { kind: "perimeter-area-diagram" }
+>;
+
+type SolidDiagram = Extract<
+  JudgmentVisual,
+  { kind: "solid-diagram" }
+>;
+
+type PartChartDiagram = Extract<
+  JudgmentVisual,
+  { kind: "part-chart-diagram" }
+>;
+
 type CircleDiagram = Extract<
   JudgmentVisual,
   { kind: "circle" }
@@ -264,9 +379,12 @@ function resolvedCircleMode(visual: CircleDiagram): CircleDiagramMode {
 
 function circleDiagramDescription(visual: CircleDiagram): string {
   const mode = resolvedCircleMode(visual);
-  const measurement = visual.radiusValue === undefined
-    ? ""
-    : ` 표시한 길이는 ${visual.radiusValue}센티미터입니다.`;
+  const unitName = visual.measurementUnit === "m" ? "미터" : "센티미터";
+  const measurement = visual.diameterValue !== undefined
+    ? ` 선분 AB의 길이는 ${visual.diameterValue}${unitName}입니다.`
+    : visual.radiusValue !== undefined
+      ? ` 중심 O에서 원 위의 점까지의 길이는 ${visual.radiusValue}${unitName}입니다.`
+      : "";
   if (mode === "diameter") {
     return `원 위의 점 A와 B를 중심 O를 지나 이은 선분이 표시되어 있습니다.${measurement}`;
   }
@@ -730,6 +848,635 @@ function PolygonAngleDiagramVisual({
             </g>
           );
         })}
+      </g>
+    </svg>
+  );
+}
+
+type TriangleFigure = Extract<
+  JudgmentVisual,
+  { kind: "triangle-figure" }
+>;
+
+function completedTriangleAngles(
+  visual: TriangleFigure
+): [number, number, number] | null {
+  const angles = visual.angles;
+  if (!angles) return null;
+  if (
+    visual.mode === "side-angle"
+    && visual.equalSideIndexes
+    && visual.askIndex !== undefined
+  ) {
+    const [left, right] = visual.equalSideIndexes;
+    const givenIndex = visual.askIndex === left ? right : left;
+    const given = angles[givenIndex];
+    const remaining = [0, 1, 2].find(
+      (index) => index !== left && index !== right
+    );
+    if (given !== null && remaining !== undefined) {
+      const completed: [number, number, number] = [0, 0, 0];
+      completed[left] = given;
+      completed[right] = given;
+      completed[remaining] = 180 - given * 2;
+      return completed;
+    }
+  }
+  const knownSum = angles.reduce<number>(
+    (sum, value) => sum + (value ?? 0),
+    0
+  );
+  return angles.map((value) => value ?? 180 - knownSum) as [
+    number,
+    number,
+    number
+  ];
+}
+
+function triangleFigurePoints(visual: TriangleFigure): DiagramPoint[] {
+  const completedAngles = completedTriangleAngles(visual);
+  if (completedAngles) {
+    const angleVisual: PolygonAngleDiagram = {
+      kind: "polygon-angle-diagram",
+      polygon: "triangle",
+      mode: "verify-claim",
+      angles: completedAngles.map((value, index) => ({
+        label: ["ㄱ", "ㄴ", "ㄷ"][index],
+        value
+      }))
+    };
+    const points = triangleDiagramPoints(angleVisual);
+    if (points) return points;
+  }
+  const sides = visual.sides ?? [5, 5, 6];
+  const [oppositeLeft, oppositeRight, base] = sides;
+  const topX =
+    (
+      oppositeRight * oppositeRight
+      + base * base
+      - oppositeLeft * oppositeLeft
+    ) / (2 * base);
+  const topY = Math.sqrt(
+    Math.max(1, oppositeRight * oppositeRight - topX * topX)
+  );
+  return fitDiagramPoints([
+    [0, 0],
+    [base, 0],
+    [topX, topY]
+  ]);
+}
+
+function triangleFigureDescription(visual: TriangleFigure): string {
+  const sides = visual.sides
+    ? `세 변의 길이는 ${visual.sides.join("센티미터, ")}센티미터입니다.`
+    : "";
+  const angles = visual.angles
+    ? `각 표시는 ${visual.angles.flatMap((value, index) => {
+        if (value !== null) return [`${["ㄱ", "ㄴ", "ㄷ"][index]}에 ${value}도`];
+        return visual.askIndex === index
+          ? [`${["ㄱ", "ㄴ", "ㄷ"][index]}에 물음표`]
+          : [];
+      }).join(", ")}입니다.`
+    : "";
+  const triangleSideNames = ["변 ㄴㄷ", "변 ㄷㄱ", "변 ㄱㄴ"];
+  const equalMarks = visual.equalSideIndexes
+    ? `${visual.equalSideIndexes
+        .map((sideIndex) => triangleSideNames[sideIndex])
+        .join("과 ")}에 같은 눈금 표시가 있습니다.`
+    : "";
+  return ["삼각형 ㄱㄴㄷ.", sides, angles, equalMarks]
+    .filter(Boolean)
+    .join(" ");
+}
+
+function sideEndpoints(
+  points: DiagramPoint[],
+  sideIndex: number
+): [DiagramPoint, DiagramPoint] {
+  if (sideIndex === 0) return [points[1], points[2]];
+  if (sideIndex === 1) return [points[2], points[0]];
+  return [points[0], points[1]];
+}
+
+function TriangleFigureVisual({ visual }: { visual: TriangleFigure }) {
+  const points = triangleFigurePoints(visual);
+  const annotations = polygonAngleAnnotations(points);
+  const centroid: DiagramPoint = [
+    points.reduce((sum, point) => sum + point[0], 0) / 3,
+    points.reduce((sum, point) => sum + point[1], 0) / 3
+  ];
+  const equalSideIndexes = visual.equalSideIndexes ?? [];
+  return (
+    <svg
+      aria-label={triangleFigureDescription(visual)}
+      className="mom-visual mom-triangle-figure"
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      viewBox="0 0 240 170"
+    >
+      <g aria-hidden="true">
+        <polygon
+          className="mom-triangle-shape"
+          points={points.map((point) => point.join(",")).join(" ")}
+        />
+        {visual.sides?.map((value, sideIndex) => {
+          const [start, end] = sideEndpoints(points, sideIndex);
+          const midpoint: DiagramPoint = [
+            (start[0] + end[0]) / 2,
+            (start[1] + end[1]) / 2
+          ];
+          const away = unitVector(centroid, midpoint);
+          const labelPoint: DiagramPoint = [
+            midpoint[0] + away[0] * 14,
+            midpoint[1] + away[1] * 14
+          ];
+          return (
+            <g key={`side-${sideIndex}`}>
+              <text
+                className="mom-triangle-side-value"
+                dominantBaseline="central"
+                textAnchor="middle"
+                x={roundCoordinate(labelPoint[0])}
+                y={roundCoordinate(labelPoint[1])}
+              >
+                {value} cm
+              </text>
+            </g>
+          );
+        })}
+        {equalSideIndexes.map((sideIndex) => {
+          const [start, end] = sideEndpoints(points, sideIndex);
+          const midpoint: DiagramPoint = [
+            (start[0] + end[0]) / 2,
+            (start[1] + end[1]) / 2
+          ];
+          const normal = unitVector(start, end);
+          return (
+            <line
+              className="mom-triangle-equal-mark"
+              key={`equal-side-${sideIndex}`}
+              x1={roundCoordinate(midpoint[0] - normal[1] * 6)}
+              x2={roundCoordinate(midpoint[0] + normal[1] * 6)}
+              y1={roundCoordinate(midpoint[1] + normal[0] * 6)}
+              y2={roundCoordinate(midpoint[1] - normal[0] * 6)}
+            />
+          );
+        })}
+        {visual.angles?.map((value, index) => {
+          if (value === null && visual.askIndex !== index) return null;
+          return (
+            <g className="mom-triangle-angle-mark" key={`angle-${index}`}>
+            <path
+              className="mom-triangle-angle-arc"
+              d={annotations[index].arcPath}
+            />
+            <text
+              className="mom-triangle-angle-value"
+              dominantBaseline="central"
+              textAnchor="middle"
+              x={annotations[index].valuePoint[0]}
+              y={annotations[index].valuePoint[1]}
+            >
+              {value === null ? "㉠" : `${value}°`}
+            </text>
+          </g>
+          );
+        })}
+        {points.map((point, index) => (
+          <text
+            className="mom-triangle-vertex-name"
+            key={`vertex-${index}`}
+            textAnchor="middle"
+            x={annotations[index].vertexNamePoint[0]}
+            y={annotations[index].vertexNamePoint[1]}
+          >
+            {["ㄱ", "ㄴ", "ㄷ"][index]}
+          </text>
+        ))}
+      </g>
+    </svg>
+  );
+}
+
+const QUADRILATERAL_VERTEX_NAMES = ["ㄱ", "ㄴ", "ㄷ", "ㄹ"] as const;
+
+function quadrilateralSideEndpoints(
+  points: DiagramPoint[],
+  sideIndex: QuadrilateralIndex
+): [DiagramPoint, DiagramPoint] {
+  return [points[sideIndex], points[(sideIndex + 1) % 4]];
+}
+
+function quadrilateralFigurePoints(
+  visual: QuadrilateralFigure
+): DiagramPoint[] {
+  if (visual.mode !== "opposite-angle") {
+    return fitDiagramPoints(visual.vertices.map(([x, y]) => [x, y]));
+  }
+  const givenIndex = visual.angles.findIndex((value) => value !== null);
+  const given = visual.angles[givenIndex] ?? 70;
+  const lowerLeftAngle = givenIndex % 2 === 1 ? given : 180 - given;
+  const radians = lowerLeftAngle * Math.PI / 180;
+  const slanted = 8;
+  const base = 13;
+  return fitDiagramPoints([
+    [slanted * Math.cos(radians), slanted * Math.sin(radians)],
+    [0, 0],
+    [base, 0],
+    [
+      base + slanted * Math.cos(radians),
+      slanted * Math.sin(radians)
+    ]
+  ]);
+}
+
+function quadrilateralFigureDescription(
+  visual: QuadrilateralFigure
+): string {
+  const parts = ["사각형 ㄱㄴㄷㄹ."];
+  if ("rightAngleVertexIndexes" in visual) {
+    parts.push(
+      `${visual.rightAngleVertexIndexes.map(
+        (index) => `꼭짓점 ${QUADRILATERAL_VERTEX_NAMES[index]}`
+      ).join(", ")}에 직각 표시가 있습니다.`
+    );
+  }
+  if ("parallelSidePairs" in visual) {
+    parts.push(
+      visual.parallelSidePairs.map(([left, right], pairIndex) =>
+        `${["한 개", "두 개"][pairIndex]} 화살표가 변 `
+        + `${QUADRILATERAL_VERTEX_NAMES[left]}`
+        + `${QUADRILATERAL_VERTEX_NAMES[(left + 1) % 4]}과 변 `
+        + `${QUADRILATERAL_VERTEX_NAMES[right]}`
+        + `${QUADRILATERAL_VERTEX_NAMES[(right + 1) % 4]}에 표시되어 있습니다.`
+      ).join(" ")
+    );
+  }
+  if ("equalSideGroups" in visual) {
+    parts.push(
+      visual.equalSideGroups.map((group, groupIndex) =>
+        `${["한 개", "두 개", "세 개"][groupIndex]} 눈금이 `
+        + `${group.map((index) =>
+          `변 ${QUADRILATERAL_VERTEX_NAMES[index]}`
+          + `${QUADRILATERAL_VERTEX_NAMES[(index + 1) % 4]}`
+        ).join(", ")}에 표시되어 있습니다.`
+      ).join(" ")
+    );
+  }
+  if ("sideLengthLabels" in visual) {
+    parts.push(
+      `변의 길이는 ${visual.sideLengthLabels.map((label) =>
+        `변 ${QUADRILATERAL_VERTEX_NAMES[label.sideIndex]}`
+        + `${QUADRILATERAL_VERTEX_NAMES[(label.sideIndex + 1) % 4]}`
+        + ` ${label.lengthCm}센티미터`
+      ).join(", ")}로 표시되어 있습니다.`
+    );
+    parts.push(
+      `두 변 사이에 직각 표시가 있는 ${visual.distanceSegment.lengthCm}센티미터 선분이 있습니다.`
+    );
+  }
+  if ("angles" in visual) {
+    parts.push(
+      `각 표시는 ${visual.angles.flatMap((value, index) => {
+        if (value !== null) {
+          return [`${QUADRILATERAL_VERTEX_NAMES[index]}에 ${value}도`];
+        }
+        return visual.askAngleIndex === index
+          ? [`${QUADRILATERAL_VERTEX_NAMES[index]}에 물음표`]
+          : [];
+      }).join(", ")}입니다.`
+    );
+  }
+  return parts.join(" ");
+}
+
+function quadMarkPath(
+  start: DiagramPoint,
+  end: DiagramPoint,
+  markCount: number
+): string {
+  const midpoint: DiagramPoint = [
+    (start[0] + end[0]) / 2,
+    (start[1] + end[1]) / 2
+  ];
+  const along = unitVector(start, end);
+  const normal: DiagramPoint = [-along[1], along[0]];
+  const offsets = markCount === 1 ? [0] : [-5, 5];
+  return offsets.map((offset) => {
+    const center: DiagramPoint = [
+      midpoint[0] + along[0] * offset,
+      midpoint[1] + along[1] * offset
+    ];
+    const left: DiagramPoint = [
+      center[0] - along[0] * 4 + normal[0] * 3,
+      center[1] - along[1] * 4 + normal[1] * 3
+    ];
+    const right: DiagramPoint = [
+      center[0] + along[0] * 4 + normal[0] * 3,
+      center[1] + along[1] * 4 + normal[1] * 3
+    ];
+    return `M ${roundCoordinate(left[0])} ${roundCoordinate(left[1])} `
+      + `L ${roundCoordinate(center[0])} ${roundCoordinate(center[1])} `
+      + `L ${roundCoordinate(right[0])} ${roundCoordinate(right[1])}`;
+  }).join(" ");
+}
+
+export function quadrilateralFigureLabelPoints(
+  visual: QuadrilateralFigure
+): DiagramPoint[] {
+  const points = quadrilateralFigurePoints(visual);
+  const annotations = polygonAngleAnnotations(points);
+  const centroid: DiagramPoint = [
+    points.reduce((sum, point) => sum + point[0], 0) / 4,
+    points.reduce((sum, point) => sum + point[1], 0) / 4
+  ];
+  const labels: DiagramPoint[] = annotations.map(
+    (annotation) => annotation.vertexNamePoint
+  );
+  if ("sideLengthLabels" in visual) {
+    for (const label of visual.sideLengthLabels) {
+      const [start, end] = quadrilateralSideEndpoints(
+        points,
+        label.sideIndex
+      );
+      const midpoint: DiagramPoint = [
+        (start[0] + end[0]) / 2,
+        (start[1] + end[1]) / 2
+      ];
+      const away = unitVector(centroid, midpoint);
+      labels.push([
+        midpoint[0] + away[0] * 15,
+        midpoint[1] + away[1] * 15
+      ]);
+    }
+  }
+  if ("distanceSegment" in visual) {
+    const source = points[visual.distanceSegment.fromVertexIndex];
+    const [sideStart, sideEnd] = quadrilateralSideEndpoints(
+      points,
+      visual.distanceSegment.toSideIndex
+    );
+    const side = unitVector(sideStart, sideEnd);
+    const rawSide: DiagramPoint = [
+      sideEnd[0] - sideStart[0],
+      sideEnd[1] - sideStart[1]
+    ];
+    const startToSource: DiagramPoint = [
+      source[0] - sideStart[0],
+      source[1] - sideStart[1]
+    ];
+    const projection = (
+      startToSource[0] * rawSide[0]
+      + startToSource[1] * rawSide[1]
+    ) / (
+      rawSide[0] * rawSide[0]
+      + rawSide[1] * rawSide[1]
+    );
+    const foot: DiagramPoint = [
+      sideStart[0] + rawSide[0] * projection,
+      sideStart[1] + rawSide[1] * projection
+    ];
+    labels.push([
+      (source[0] + foot[0]) / 2 + side[0] * 10,
+      (source[1] + foot[1]) / 2 + side[1] * 10
+    ]);
+  }
+  if ("angles" in visual) {
+    visual.angles.forEach((value, index) => {
+      if (value !== null || visual.askAngleIndex === index) {
+        labels.push(annotations[index].valuePoint);
+      }
+    });
+  }
+  return labels;
+}
+
+function QuadrilateralFigureVisual({
+  visual
+}: {
+  visual: QuadrilateralFigure;
+}) {
+  const points = quadrilateralFigurePoints(visual);
+  const annotations = polygonAngleAnnotations(points);
+  const centroid: DiagramPoint = [
+    points.reduce((sum, point) => sum + point[0], 0) / 4,
+    points.reduce((sum, point) => sum + point[1], 0) / 4
+  ];
+  return (
+    <svg
+      aria-label={quadrilateralFigureDescription(visual)}
+      className="mom-visual mom-quadrilateral-figure"
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      viewBox="0 0 240 180"
+    >
+      <g aria-hidden="true">
+        <polygon
+          className="mom-quad-shape"
+          points={points.map((point) => point.join(",")).join(" ")}
+        />
+        {"rightAngleVertexIndexes" in visual
+          && visual.rightAngleVertexIndexes.map((index) => {
+            const vertex = points[index];
+            const previous = points[(index + 3) % 4];
+            const next = points[(index + 1) % 4];
+            const toPrevious = unitVector(vertex, previous);
+            const toNext = unitVector(vertex, next);
+            const first: DiagramPoint = [
+              vertex[0] + toPrevious[0] * 11,
+              vertex[1] + toPrevious[1] * 11
+            ];
+            const corner: DiagramPoint = [
+              first[0] + toNext[0] * 11,
+              first[1] + toNext[1] * 11
+            ];
+            const second: DiagramPoint = [
+              vertex[0] + toNext[0] * 11,
+              vertex[1] + toNext[1] * 11
+            ];
+            return (
+              <path
+                className="mom-quad-right-angle"
+                d={`M ${first.join(" ")} L ${corner.join(" ")} L ${second.join(" ")}`}
+                key={`right-${index}`}
+              />
+            );
+          })}
+        {"parallelSidePairs" in visual
+          && visual.parallelSidePairs.flatMap(([left, right], pairIndex) =>
+            [left, right].map((sideIndex) => {
+              const [start, end] = quadrilateralSideEndpoints(
+                points,
+                sideIndex
+              );
+              return (
+                <path
+                  className="mom-quad-parallel-arrow"
+                  d={quadMarkPath(start, end, pairIndex + 1)}
+                  key={`parallel-${pairIndex}-${sideIndex}`}
+                />
+              );
+            })
+          )}
+        {"equalSideGroups" in visual
+          && visual.equalSideGroups.flatMap((group, groupIndex) =>
+            group.map((sideIndex) => {
+              const [start, end] = quadrilateralSideEndpoints(
+                points,
+                sideIndex
+              );
+              const midpoint: DiagramPoint = [
+                (start[0] + end[0]) / 2,
+                (start[1] + end[1]) / 2
+              ];
+              const along = unitVector(start, end);
+              const normal: DiagramPoint = [-along[1], along[0]];
+              const offsets = groupIndex === 0 ? [0] : [-4, 4];
+              return offsets.map((offset, markIndex) => (
+                <line
+                  className="mom-quad-equal-mark"
+                  key={`equal-${groupIndex}-${sideIndex}-${markIndex}`}
+                  x1={roundCoordinate(
+                    midpoint[0] + along[0] * offset - normal[0] * 6
+                  )}
+                  x2={roundCoordinate(
+                    midpoint[0] + along[0] * offset + normal[0] * 6
+                  )}
+                  y1={roundCoordinate(
+                    midpoint[1] + along[1] * offset - normal[1] * 6
+                  )}
+                  y2={roundCoordinate(
+                    midpoint[1] + along[1] * offset + normal[1] * 6
+                  )}
+                />
+              ));
+            })
+          )}
+        {"sideLengthLabels" in visual
+          && visual.sideLengthLabels.map((label) => {
+            const [start, end] = quadrilateralSideEndpoints(
+              points,
+              label.sideIndex
+            );
+            const midpoint: DiagramPoint = [
+              (start[0] + end[0]) / 2,
+              (start[1] + end[1]) / 2
+            ];
+            const away = unitVector(centroid, midpoint);
+            return (
+              <text
+                className="mom-quad-side-value"
+                dominantBaseline="central"
+                key={`side-value-${label.sideIndex}`}
+                textAnchor="middle"
+                x={roundCoordinate(midpoint[0] + away[0] * 15)}
+                y={roundCoordinate(midpoint[1] + away[1] * 15)}
+              >
+                {label.lengthCm} cm
+              </text>
+            );
+          })}
+        {"distanceSegment" in visual && (() => {
+          const source = points[visual.distanceSegment.fromVertexIndex];
+          const [sideStart, sideEnd] = quadrilateralSideEndpoints(
+            points,
+            visual.distanceSegment.toSideIndex
+          );
+          const side = unitVector(sideStart, sideEnd);
+          const rawSide: DiagramPoint = [
+            sideEnd[0] - sideStart[0],
+            sideEnd[1] - sideStart[1]
+          ];
+          const startToSource: DiagramPoint = [
+            source[0] - sideStart[0],
+            source[1] - sideStart[1]
+          ];
+          const projection = (
+            startToSource[0] * rawSide[0]
+            + startToSource[1] * rawSide[1]
+          ) / (
+            rawSide[0] * rawSide[0]
+            + rawSide[1] * rawSide[1]
+          );
+          const foot: DiagramPoint = [
+            sideStart[0] + rawSide[0] * projection,
+            sideStart[1] + rawSide[1] * projection
+          ];
+          const towardSource = unitVector(foot, source);
+          const labelPoint: DiagramPoint = [
+            (source[0] + foot[0]) / 2 + side[0] * 10,
+            (source[1] + foot[1]) / 2 + side[1] * 10
+          ];
+          const squareA: DiagramPoint = [
+            foot[0] + side[0] * 8,
+            foot[1] + side[1] * 8
+          ];
+          const squareB: DiagramPoint = [
+            squareA[0] + towardSource[0] * 8,
+            squareA[1] + towardSource[1] * 8
+          ];
+          const squareC: DiagramPoint = [
+            foot[0] + towardSource[0] * 8,
+            foot[1] + towardSource[1] * 8
+          ];
+          return (
+            <>
+              <line
+                className="mom-quad-distance-segment"
+                x1={source[0]}
+                x2={foot[0]}
+                y1={source[1]}
+                y2={foot[1]}
+              />
+              <path
+                className="mom-quad-distance-right-angle"
+                d={`M ${squareA.join(" ")} L ${squareB.join(" ")} L ${squareC.join(" ")}`}
+              />
+              <text
+                className="mom-quad-distance-value"
+                dominantBaseline="central"
+                textAnchor="middle"
+                x={roundCoordinate(labelPoint[0])}
+                y={roundCoordinate(labelPoint[1])}
+              >
+                {visual.distanceSegment.lengthCm} cm
+              </text>
+            </>
+          );
+        })()}
+        {"angles" in visual && visual.angles.map((value, index) => {
+          if (value === null && visual.askAngleIndex !== index) return null;
+          return (
+            <g className="mom-quad-angle-mark" key={`angle-${index}`}>
+              <path
+                className="mom-quad-angle-arc"
+                d={annotations[index].arcPath}
+              />
+              <text
+                className="mom-quad-angle-value"
+                dominantBaseline="central"
+                textAnchor="middle"
+                x={annotations[index].valuePoint[0]}
+                y={annotations[index].valuePoint[1]}
+              >
+                {value === null ? "㉠" : `${value}°`}
+              </text>
+            </g>
+          );
+        })}
+        {points.map((point, index) => (
+          <text
+            className="mom-quad-vertex-name"
+            key={`vertex-${index}`}
+            textAnchor="middle"
+            x={annotations[index].vertexNamePoint[0]}
+            y={annotations[index].vertexNamePoint[1]}
+          >
+            {QUADRILATERAL_VERTEX_NAMES[index]}
+          </text>
+        ))}
       </g>
     </svg>
   );
@@ -1311,6 +2058,1020 @@ function BarChartVisual({ visual }: { visual: BarChartDiagram }) {
   );
 }
 
+function lineChartDescription(visual: LineChartDiagram): string {
+  const first = visual.axis.labeledTicks[0]!;
+  const last = visual.axis.labeledTicks.at(-1)!;
+  const wave = visual.axis.baselineValue > 0
+    ? ` 세로축은 물결선 아래를 줄였고 기준값은 ${visual.axis.baselineValue}${visual.axis.unitLabel}입니다.`
+    : "";
+  const axis = `세로축 단위는 ${visual.axis.unitLabel}이고 ${first.value}부터 ${last.value}까지 ${visual.axis.tickCount}칸입니다.${wave}`;
+  const points = [...visual.points]
+    .sort((left, right) => left.categoryIndex - right.categoryIndex)
+    .map((point) => `${visual.timeAxis.categories[point.categoryIndex]} ${point.tick}칸`)
+    .join(", ");
+  return `${axis} 가로축은 ${visual.timeAxis.label}이며 점은 차례로 ${points}입니다.`;
+}
+
+function perimeterAreaDescription(visual: PerimeterAreaDiagram): string {
+  if (visual.shape === "rectangle") {
+    return `가로 ${visual.width}센티미터, 세로 ${visual.height}센티미터인 직사각형`;
+  }
+  if (visual.shape === "square") {
+    return `한 변이 ${visual.side}센티미터인 정사각형`;
+  }
+  if (visual.shape === "parallelogram") {
+    return `밑변 ${visual.base}센티미터, 높이 ${visual.height}센티미터인 평행사변형`;
+  }
+  if (visual.shape === "triangle") {
+    return `밑변 ${visual.base}센티미터, 높이 ${visual.height}센티미터인 삼각형`;
+  }
+  if (visual.shape === "trapezoid") {
+    return `윗변 ${visual.topBase}센티미터, 아랫변 ${visual.bottomBase}센티미터, 높이 ${visual.height}센티미터인 사다리꼴`;
+  }
+  if (visual.shape === "rhombus") {
+    return `두 대각선이 ${visual.diagonal1}센티미터와 ${visual.diagonal2}센티미터인 마름모`;
+  }
+  return "길이가 표시된 도형";
+}
+
+function DimensionLabel({ x, y, children }: {
+  x: number;
+  y: number;
+  children: ReactNode;
+}) {
+  return <text className="mom-area-dimension" textAnchor="middle" x={x} y={y}>{children}</text>;
+}
+
+function HeightGuide({ x, top, bottom }: { x: number; top: number; bottom: number }) {
+  return (
+    <g>
+      <line className="mom-area-height" x1={x} x2={x} y1={top} y2={bottom} />
+      <path className="mom-area-right-angle" d={`M ${x} ${bottom - 11} h 11 v 11`} />
+    </g>
+  );
+}
+
+function fitAreaMeasures(
+  horizontal: number,
+  vertical: number,
+  maxWidth: number,
+  maxHeight: number
+): { width: number; height: number; scale: number } {
+  const scale = Math.min(maxWidth / horizontal, maxHeight / vertical);
+  return {
+    width: roundCoordinate(horizontal * scale),
+    height: roundCoordinate(vertical * scale),
+    scale
+  };
+}
+
+function PerimeterAreaVisual({ visual }: { visual: PerimeterAreaDiagram }) {
+  let body: ReactNode;
+  if (visual.shape === "rectangle") {
+    const fitted = fitAreaMeasures(visual.width, visual.height, 180, 110);
+    const left = roundCoordinate(150 - fitted.width / 2);
+    const top = roundCoordinate(95 - fitted.height / 2);
+    const bottom = roundCoordinate(top + fitted.height);
+    body = <>
+      <rect className="mom-area-shape" height={fitted.height} width={fitted.width} x={left} y={top} />
+      <DimensionLabel x={150} y={bottom + 28}>{visual.width} cm</DimensionLabel>
+      <DimensionLabel x={left - 25} y={100}>{visual.height} cm</DimensionLabel>
+      <path className="mom-area-right-angle" d={`M ${left} ${top + 12} h 12 v -12`} />
+    </>;
+  } else if (visual.shape === "square") {
+    body = <>
+      <rect className="mom-area-shape" height="130" width="130" x="85" y="30" />
+      <DimensionLabel x={150} y={188}>{visual.side} cm</DimensionLabel>
+      <path className="mom-area-right-angle" d="M 85 42 h 12 v -12" />
+      <path className="mom-area-equal-mark" d="M 147 26 v 8 M 147 156 v 8 M 81 91 h 8 M 211 91 h 8" />
+    </>;
+  } else if (visual.shape === "parallelogram") {
+    const fitted = fitAreaMeasures(visual.base, visual.height, 185, 115);
+    const shear = roundCoordinate(Math.min(32, fitted.width * 0.22));
+    const bottomLeft = roundCoordinate(150 - (fitted.width + shear) / 2);
+    const bottomRight = roundCoordinate(bottomLeft + fitted.width);
+    const topLeft = roundCoordinate(bottomLeft + shear);
+    const topRight = roundCoordinate(topLeft + fitted.width);
+    const bottom = 160;
+    const top = roundCoordinate(bottom - fitted.height);
+    body = <>
+      <polygon
+        className="mom-area-shape"
+        points={`${topLeft},${top} ${topRight},${top} ${bottomRight},${bottom} ${bottomLeft},${bottom}`}
+      />
+      <HeightGuide bottom={bottom} top={top} x={topLeft} />
+      <DimensionLabel x={(bottomLeft + bottomRight) / 2} y={190}>{visual.base} cm</DimensionLabel>
+      <DimensionLabel x={topLeft + 23} y={(top + bottom) / 2 + 5}>{visual.height} cm</DimensionLabel>
+    </>;
+  } else if (visual.shape === "triangle") {
+    const fitted = fitAreaMeasures(visual.base, visual.height, 200, 130);
+    const left = roundCoordinate(150 - fitted.width / 2);
+    const right = roundCoordinate(left + fitted.width);
+    const bottom = 165;
+    const top = roundCoordinate(bottom - fitted.height);
+    const apex = roundCoordinate(left + fitted.width * 0.43);
+    body = <>
+      <polygon className="mom-area-shape" points={`${left},${bottom} ${right},${bottom} ${apex},${top}`} />
+      <HeightGuide bottom={bottom} top={top} x={apex} />
+      <DimensionLabel x={150} y={195}>{visual.base} cm</DimensionLabel>
+      <DimensionLabel x={apex + 24} y={(top + bottom) / 2 + 5}>{visual.height} cm</DimensionLabel>
+    </>;
+  } else if (visual.shape === "trapezoid") {
+    const fitted = fitAreaMeasures(visual.bottomBase, visual.height, 200, 120);
+    const topWidth = roundCoordinate(visual.topBase * fitted.scale);
+    const bottomLeft = roundCoordinate(150 - fitted.width / 2);
+    const bottomRight = roundCoordinate(150 + fitted.width / 2);
+    const topLeft = roundCoordinate(150 - topWidth / 2);
+    const topRight = roundCoordinate(150 + topWidth / 2);
+    const bottom = 165;
+    const top = roundCoordinate(bottom - fitted.height);
+    body = <>
+      <polygon
+        className="mom-area-shape"
+        points={`${topLeft},${top} ${topRight},${top} ${bottomRight},${bottom} ${bottomLeft},${bottom}`}
+      />
+      <HeightGuide bottom={bottom} top={top} x={topLeft} />
+      <DimensionLabel x={150} y={top - 12}>{visual.topBase} cm</DimensionLabel>
+      <DimensionLabel x={150} y={195}>{visual.bottomBase} cm</DimensionLabel>
+      <DimensionLabel x={topLeft + 24} y={(top + bottom) / 2 + 5}>{visual.height} cm</DimensionLabel>
+    </>;
+  } else if (visual.shape === "rhombus") {
+    const fitted = fitAreaMeasures(visual.diagonal1, visual.diagonal2, 210, 166);
+    const left = roundCoordinate(150 - fitted.width / 2);
+    const right = roundCoordinate(150 + fitted.width / 2);
+    const top = roundCoordinate(105 - fitted.height / 2);
+    const bottom = roundCoordinate(105 + fitted.height / 2);
+    body = <>
+      <polygon className="mom-area-shape" points={`150,${top} ${right},105 150,${bottom} ${left},105`} />
+      <line className="mom-area-diagonal" x1={left} x2={right} y1="105" y2="105" />
+      <line className="mom-area-diagonal" x1="150" x2="150" y1={top} y2={bottom} />
+      <path className="mom-area-right-angle" d="M 150 94 h 11 v 11" />
+      <DimensionLabel x={150 + fitted.width * 0.27} y={94}>{visual.diagonal1} cm</DimensionLabel>
+      <DimensionLabel x={123} y={105 - fitted.height * 0.24}>{visual.diagonal2} cm</DimensionLabel>
+    </>;
+  } else {
+    body = null;
+  }
+  return (
+    <svg
+      aria-label={perimeterAreaDescription(visual)}
+      className={`mom-visual mom-perimeter-area is-${visual.shape}`}
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      viewBox="0 0 300 210"
+    >
+      <g aria-hidden="true">{body}</g>
+    </svg>
+  );
+}
+
+const SOLID_STRUCTURE_DESCRIPTIONS: Record<Exclude<SolidDiagram["shape"], "unit-cubes">, string> = {
+  "rectangular-prism": "마주 보는 면들이 서로 평행하고, 직사각형 면들로 둘러싸인 입체도형",
+  cube: "크기가 같은 정사각형 면들로 둘러싸인 입체도형",
+  "triangular-prism": "서로 평행한 삼각형 면이 앞뒤에 있고 대응하는 변들이 직사각형 면으로 이어진 입체도형",
+  "square-pyramid": "정사각형 밑면의 네 꼭짓점에서 삼각형 옆면들이 위의 한 점으로 모이는 입체도형",
+  cylinder: "위아래에 서로 평행한 합동인 원 모양 면이 있고 굽은 옆면으로 이어진 입체도형",
+  cone: "아래에 원 모양 면이 있고 굽은 옆면이 위의 한 점으로 모이는 입체도형",
+  sphere: "평평한 면이나 모서리, 꼭짓점이 없이 모든 방향으로 둥근 입체도형"
+};
+
+const SOLID_NET_DESCRIPTIONS: Record<Exclude<SolidDiagram["shape"], "unit-cubes">, string> = {
+  "rectangular-prism": "직사각형 면 여섯 장이 모서리를 따라 이어진 전개도",
+  cube: "크기가 같은 정사각형 면 여섯 장이 모서리를 따라 이어진 전개도",
+  "triangular-prism": "삼각형 면 두 장과 직사각형 면 세 장이 모서리를 따라 이어진 전개도",
+  "square-pyramid": "정사각형 면 한 장 둘레에 삼각형 면 네 장이 이어진 전개도",
+  cylinder: "직사각형 한 장과 같은 크기의 원 두 장으로 된 전개도",
+  cone: "부채꼴 한 장과 원 한 장으로 된 전개도",
+  sphere: "잘라서 평면에 겹치지 않게 펼칠 수 없는 둥근 겉면을 나타낸 그림"
+};
+
+function solidDescription(visual: SolidDiagram): string {
+  if (visual.mode === "unit-stack") {
+    return `앞 방향이 ${visual.frontDirection === "left" ? "왼쪽" : "오른쪽"}으로 표시된 쌓기나무 그림. 쌓기나무의 위치는 ${visual.cubes
+      .map(([x, y, z]) => `가로 ${x + 1}, 세로 ${y + 1}, 높이 ${z + 1}칸`)
+      .join(", ")}입니다.`;
+  }
+  if (visual.mode !== "dimensions") {
+    return visual.mode === "net"
+      ? SOLID_NET_DESCRIPTIONS[visual.shape]
+      : SOLID_STRUCTURE_DESCRIPTIONS[visual.shape];
+  }
+  if (visual.shape === "rectangular-prism") {
+    return `가로 ${visual.width}센티미터, 세로 ${visual.depth}센티미터, 높이 ${visual.height}센티미터인 직육면체`;
+  }
+  if (visual.shape === "cube") {
+    return `한 모서리가 ${visual.width}센티미터인 정육면체`;
+  }
+  return `밑면의 반지름이 ${visual.radius}센티미터, 높이가 ${visual.height}센티미터인 원기둥`;
+}
+
+function BoxStructure({ cube = false }: { cube?: boolean }) {
+  const front = cube ? "92,72 220,72 220,178 92,178" : "72,78 226,78 226,174 72,174";
+  const back = cube ? "126,42 254,42 254,148 126,148" : "116,42 270,42 270,138 116,138";
+  return <>
+    <polygon className="mom-solid-face is-back" points={back} />
+    <polygon className="mom-solid-face is-front" points={front} />
+    <path className="mom-solid-edge" d={cube
+      ? "M92 72 L126 42 M220 72 L254 42 M220 178 L254 148 M92 178 L126 148"
+      : "M72 78 L116 42 M226 78 L270 42 M226 174 L270 138 M72 174 L116 138"} />
+  </>;
+}
+
+function SolidStructure({ shape }: { shape: Exclude<SolidDiagram["shape"], "unit-cubes"> }) {
+  if (shape === "rectangular-prism" || shape === "cube") {
+    return <BoxStructure cube={shape === "cube"} />;
+  }
+  if (shape === "triangular-prism") {
+    return <>
+      <polygon className="mom-solid-face is-back" points="135,42 245,148 92,148" />
+      <polygon className="mom-solid-face is-front" points="105,72 215,178 62,178" />
+      <path className="mom-solid-edge" d="M105 72 L135 42 M215 178 L245 148 M62 178 L92 148" />
+    </>;
+  }
+  if (shape === "square-pyramid") {
+    return <>
+      <polygon className="mom-solid-face is-front" points="55,165 205,183 278,142 128,125" />
+      <path className="mom-solid-edge" d="M165 38 L55 165 L205 183 L278 142 L165 38 M128 125 L165 38 M55 165 L128 125 L278 142" />
+      <path className="mom-solid-hidden" d="M128 125 L205 183" />
+    </>;
+  }
+  if (shape === "cylinder") {
+    return <>
+      <path className="mom-solid-face" d="M92 66 V160 C92 184 248 184 248 160 V66" />
+      <ellipse className="mom-solid-face is-top" cx="170" cy="66" rx="78" ry="25" />
+      <path className="mom-solid-hidden" d="M92 160 C92 136 248 136 248 160" />
+    </>;
+  }
+  if (shape === "cone") {
+    return <>
+      <path className="mom-solid-face" d="M170 35 L82 166 C82 194 258 194 258 166 Z" />
+      <path className="mom-solid-hidden" d="M82 166 C82 138 258 138 258 166" />
+      <path className="mom-solid-edge" d="M82 166 C82 194 258 194 258 166" />
+    </>;
+  }
+  return <>
+    <circle className="mom-solid-face" cx="170" cy="112" r="78" />
+    <ellipse className="mom-solid-hidden" cx="170" cy="112" rx="78" ry="27" />
+  </>;
+}
+
+function SolidNet({ shape }: { shape: Exclude<SolidDiagram["shape"], "unit-cubes"> }) {
+  if (shape === "cylinder") {
+    return <>
+      <rect className="mom-solid-net-face" data-net-face="side" height="80" width="157.079633" x="101.460184" y="72" />
+      <circle className="mom-solid-net-face" cx="180" cy="47" data-net-face="top-base" r="25" />
+      <circle className="mom-solid-net-face" cx="180" cy="177" data-net-face="bottom-base" r="25" />
+    </>;
+  }
+  if (shape === "cone") {
+    return <>
+      <path className="mom-solid-net-face" d="M80 150 A100 100 0 0 1 180 50 L180 150 Z" data-net-face="side-sector" />
+      <circle className="mom-solid-net-face" cx="55" cy="150" data-net-face="base" r="25" />
+    </>;
+  }
+  if (shape === "triangular-prism") {
+    return <>
+      <rect className="mom-solid-net-face" height="42" width="150" x="90" y="46" />
+      <rect className="mom-solid-net-face" height="42" width="150" x="90" y="88" />
+      <rect className="mom-solid-net-face" height="42" width="150" x="90" y="130" />
+      <polygon className="mom-solid-net-face" points="90,88 90,130 53.626933,109" />
+      <polygon className="mom-solid-net-face" points="240,88 240,130 276.373067,109" />
+    </>;
+  }
+  if (shape === "square-pyramid") {
+    return <>
+      <rect className="mom-solid-net-face" height="70" width="70" x="145" y="80" />
+      <polygon className="mom-solid-net-face" points="145,80 215,80 180,34" />
+      <polygon className="mom-solid-net-face" points="145,150 215,150 180,196" />
+      <polygon className="mom-solid-net-face" points="145,80 145,150 99,115" />
+      <polygon className="mom-solid-net-face" points="215,80 215,150 261,115" />
+    </>;
+  }
+  if (shape === "sphere") return <SolidStructure shape="sphere" />;
+  if (shape === "cube") {
+    const size = 42;
+    const faces = [[2,0],[0,1],[1,1],[2,1],[3,1],[2,2]];
+    return <>{faces.map(([column, row], index) => (
+      <rect
+        className="mom-solid-net-face"
+        data-net-face={`cube-${index + 1}`}
+        height={size}
+        key={index}
+        width={size}
+        x={72 + column! * size}
+        y={50 + row! * size}
+      />
+    ))}</>;
+  }
+  const faces = [
+    { x: 50, y: 90, width: 50, height: 42 },
+    { x: 100, y: 90, width: 34, height: 42 },
+    { x: 134, y: 90, width: 50, height: 42 },
+    { x: 184, y: 90, width: 34, height: 42 },
+    { x: 134, y: 56, width: 50, height: 34 },
+    { x: 134, y: 132, width: 50, height: 34 }
+  ];
+  return <>{faces.map((face, index) => (
+    <rect
+      className="mom-solid-net-face"
+      data-net-face={`box-${index + 1}`}
+      height={face.height}
+      key={index}
+      width={face.width}
+      x={face.x}
+      y={face.y}
+    />
+  ))}</>;
+}
+
+function DimensionLabels({ visual }: { visual: Extract<SolidDiagram, { mode: "dimensions" }> }) {
+  if (visual.shape === "cube") {
+    return <DimensionLabel x={156} y={204}>{visual.width} cm</DimensionLabel>;
+  }
+  if (visual.shape === "rectangular-prism") {
+    return <>
+      <DimensionLabel x={148} y={204}>{visual.width} cm</DimensionLabel>
+      <DimensionLabel x={276} y={163}>{visual.depth} cm</DimensionLabel>
+      <DimensionLabel x={45} y={130}>{visual.height} cm</DimensionLabel>
+    </>;
+  }
+  return <>
+    <line className="mom-solid-measure" x1="170" x2="246" y1="66" y2="66" />
+    <DimensionLabel x={210} y={55}>{visual.radius} cm</DimensionLabel>
+    <DimensionLabel x={70} y={120}>{visual.height} cm</DimensionLabel>
+  </>;
+}
+
+function unitCubeOrigin(x: number, y: number, z: number) {
+  return {
+    x: 168 + (x - y) * 34,
+    y: 176 + (x + y) * 17 - z * 34
+  };
+}
+
+function unitStackViewBox(visual: Extract<SolidDiagram, { mode: "unit-stack" }>) {
+  const origins = visual.cubes.map(([x, y, z]) => unitCubeOrigin(x, y, z));
+  const arrowX = visual.frontDirection === "left" ? [30, 96] : [264, 330];
+  const minX = Math.min(...origins.map((origin) => origin.x - 34), ...arrowX) - 12;
+  const maxX = Math.max(...origins.map((origin) => origin.x + 34), ...arrowX) + 12;
+  const minY = Math.min(...origins.map((origin) => origin.y - 17), 190) - 12;
+  const maxY = Math.max(...origins.map((origin) => origin.y + 51), 226) + 12;
+  return `${minX} ${minY} ${maxX - minX} ${maxY - minY}`;
+}
+
+function UnitCube({ x, y, z }: { x: number; y: number; z: number }) {
+  const { x: originX, y: originY } = unitCubeOrigin(x, y, z);
+  return <g className="mom-unit-cube">
+    <polygon className="is-top" points={`${originX},${originY - 17} ${originX + 34},${originY} ${originX},${originY + 17} ${originX - 34},${originY}`} />
+    <polygon className="is-left" points={`${originX - 34},${originY} ${originX},${originY + 17} ${originX},${originY + 51} ${originX - 34},${originY + 34}`} />
+    <polygon className="is-right" points={`${originX + 34},${originY} ${originX},${originY + 17} ${originX},${originY + 51} ${originX + 34},${originY + 34}`} />
+  </g>;
+}
+
+function SolidDiagramVisual({ visual }: { visual: SolidDiagram }) {
+  const body = visual.mode === "unit-stack"
+    ? [...visual.cubes]
+        .sort((left, right) => left[2] - right[2] || left[1] - right[1] || left[0] - right[0])
+        .map(([x, y, z]) => <UnitCube key={`${x}-${y}-${z}`} x={x} y={y} z={z} />)
+    : visual.mode === "net"
+      ? <SolidNet shape={visual.shape} />
+      : <>
+          <SolidStructure shape={visual.shape} />
+          {visual.mode === "dimensions" && <DimensionLabels visual={visual} />}
+        </>;
+  return <svg
+    aria-label={solidDescription(visual)}
+    className={`mom-visual mom-solid-diagram is-${visual.mode} is-${visual.shape}`}
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    role="img"
+    viewBox={visual.mode === "unit-stack" ? unitStackViewBox(visual) : "0 0 360 230"}
+  >
+    <g aria-hidden="true">{body}</g>
+    {visual.mode === "unit-stack" && <g aria-hidden="true" className="mom-solid-front-arrow">
+      <path d={visual.frontDirection === "left" ? "M84 210 H38 L52 198 M38 210 L52 222" : "M276 210 H322 L308 198 M322 210 L308 222"} />
+      <text x={visual.frontDirection === "left" ? 90 : 270} y="216">앞</text>
+    </g>}
+  </svg>;
+}
+
+const PART_CHART_CLASSES = ["is-a", "is-b", "is-c", "is-d", "is-e", "is-f"];
+
+function PartChartPattern({ index, prefix }: { index: number; prefix: string }) {
+  const patternId = `${prefix}-pattern-${index}`;
+  const patternClass = PART_CHART_CLASSES[index];
+  const marks = [
+    <circle className="mom-part-chart-pattern-dot" cx="4" cy="4" key="dots" r="1.7" />,
+    <path className="mom-part-chart-pattern-mark" d="M -2 4 L 4 -2 M 2 12 L 12 2 M 10 14 L 14 10" key="diagonal" />,
+    <path className="mom-part-chart-pattern-mark" d="M 0 3 H 12 M 3 0 V 12" key="grid" />,
+    <path className="mom-part-chart-pattern-mark" d="M 0 4 H 12" key="horizontal" />,
+    <path className="mom-part-chart-pattern-mark" d="M 0 4 L 4 0 L 8 4 L 4 8 Z" key="diamond" />,
+    <path className="mom-part-chart-pattern-mark" d="M 4 0 V 12" key="vertical" />
+  ];
+  return <pattern
+    data-part-pattern={index}
+    height="8"
+    id={patternId}
+    patternUnits="userSpaceOnUse"
+    width="8"
+  >
+    <rect className={`mom-part-chart-pattern-background ${patternClass}`} height="8" width="8" />
+    {marks[index]}
+  </pattern>;
+}
+
+function partChartPatternFill(prefix: string, index: number) {
+  return `url(#${prefix}-pattern-${index})`;
+}
+
+function partChartDescription(visual: PartChartDiagram): string {
+  const partUnit = visual.mode === "strip" ? "칸" : "부분";
+  return `${visual.mode === "strip" ? "띠그래프" : "원그래프"}. 전체 ${visual.totalParts}${partUnit} 가운데 ${visual.segments
+    .map((segment) => `${segment.label} ${segment.parts}${partUnit}`)
+    .join(", ")}으로 나뉘어 있습니다.`;
+}
+
+function PartChartVisual({ visual }: { visual: PartChartDiagram }) {
+  const chartId = useId().replace(/[^a-zA-Z0-9_-]/g, "") || "chart";
+  const patternPrefix = `mom-part-chart-${chartId}`;
+  const unitSegments = visual.segments.flatMap((segment, segmentIndex) =>
+    Array.from({ length: segment.parts }, () => segmentIndex)
+  );
+  return <svg
+    aria-label={partChartDescription(visual)}
+    className={`mom-visual mom-part-chart is-${visual.mode}`}
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    role="img"
+    viewBox="0 0 360 230"
+  >
+    <defs>
+      {visual.segments.map((segment, index) => (
+        <PartChartPattern index={index} key={segment.label} prefix={patternPrefix} />
+      ))}
+    </defs>
+    <g aria-hidden="true">
+      {visual.mode === "strip" ? (
+        <>
+          {unitSegments.map((segmentIndex, index) => (
+            <rect
+              className={`mom-part-chart-piece ${PART_CHART_CLASSES[segmentIndex]}`}
+              data-part-pattern={segmentIndex}
+              fill={partChartPatternFill(patternPrefix, segmentIndex)}
+              height="72"
+              key={index}
+              width={320 / visual.totalParts}
+              x={20 + index * 320 / visual.totalParts}
+              y="45"
+            />
+          ))}
+          <text className="mom-part-chart-total" textAnchor="middle" x="180" y="30">전체 {visual.totalParts}칸</text>
+        </>
+      ) : <>
+        <text className="mom-part-chart-total" textAnchor="middle" x="180" y="16">전체 {visual.totalParts}부분</text>
+        {unitSegments.map((segmentIndex, index) => {
+        const start = index / visual.totalParts * Math.PI * 2 - Math.PI / 2;
+        const end = (index + 1) / visual.totalParts * Math.PI * 2 - Math.PI / 2;
+        const x1 = 180 + 78 * Math.cos(start);
+        const y1 = 100 + 78 * Math.sin(start);
+        const x2 = 180 + 78 * Math.cos(end);
+        const y2 = 100 + 78 * Math.sin(end);
+        return <path
+          className={`mom-part-chart-piece ${PART_CHART_CLASSES[segmentIndex]}`}
+          data-part-pattern={segmentIndex}
+          d={`M 180 100 L ${roundCoordinate(x1)} ${roundCoordinate(y1)} A 78 78 0 0 1 ${roundCoordinate(x2)} ${roundCoordinate(y2)} Z`}
+          fill={partChartPatternFill(patternPrefix, segmentIndex)}
+          key={index}
+        />;
+      })}</>}
+      <g className="mom-part-chart-legend">
+        {visual.segments.map((segment, index) => {
+          const x = 28 + (index % 3) * 108;
+          const y = 178 + Math.floor(index / 3) * 26;
+          return <g key={segment.label}>
+            <rect
+              className={`mom-part-chart-key ${PART_CHART_CLASSES[index]}`}
+              data-part-pattern={index}
+              fill={partChartPatternFill(patternPrefix, index)}
+              height="14"
+              rx="2"
+              width="14"
+              x={x}
+              y={y - 12}
+            />
+            <text x={x + 20} y={y}>{segment.label}</text>
+          </g>;
+        })}
+      </g>
+    </g>
+  </svg>;
+}
+
+function LineChartVisual({ visual }: { visual: LineChartDiagram }) {
+  const width = 430;
+  const height = 310;
+  const left = 58;
+  const right = 22;
+  const top = 48;
+  const bottom = 98;
+  const plotWidth = width - left - right;
+  const plotHeight = height - top - bottom;
+  const ordered = [...visual.points].sort(
+    (a, b) => a.categoryIndex - b.categoryIndex
+  );
+  const xForIndex = (index: number) => left + (
+    visual.timeAxis.categories.length === 1
+      ? 0
+      : plotWidth * index / (visual.timeAxis.categories.length - 1)
+  );
+  const yForTick = (tick: number) => top + plotHeight - plotHeight * tick / visual.axis.tickCount;
+  const path = ordered.map((point, index) =>
+    `${index === 0 ? "M" : "L"} ${xForIndex(point.categoryIndex)} ${yForTick(point.tick)}`
+  ).join(" ");
+  const labels = new Map(visual.axis.labeledTicks.map((tick) => [tick.index, tick.value]));
+
+  return (
+    <div
+      aria-label={lineChartDescription(visual)}
+      className={`mom-visual mom-line-chart is-${visual.mode}`}
+      role="img"
+    >
+      <svg
+        aria-hidden="true"
+        className="mom-line-chart-svg"
+        focusable="false"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox={`0 0 ${width} ${height}`}
+      >
+        {Array.from({ length: visual.axis.tickCount + 1 }, (_, tick) => {
+          const y = yForTick(tick);
+          return (
+            <Fragment key={tick}>
+              <line className="mom-line-grid-line" x1={left} x2={left + plotWidth} y1={y} y2={y} />
+              <line className="mom-line-tick" x1={left - 5} x2={left} y1={y} y2={y} />
+              {labels.has(tick) && (
+                <text className="mom-line-axis-label" textAnchor="end" x={left - 10} y={y + 5}>
+                  {labels.get(tick)}
+                </text>
+              )}
+            </Fragment>
+          );
+        })}
+        <line className="mom-line-axis" x1={left} x2={left} y1={top} y2={top + plotHeight} />
+        <line className="mom-line-axis" x1={left} x2={left + plotWidth} y1={top + plotHeight} y2={top + plotHeight} />
+        {visual.axis.baselineValue > 0 && (
+          <path className="mom-line-wave" d={`M ${left - 7} ${top + plotHeight - 8} l 5 4 l -5 4 l 5 4`} />
+        )}
+        <text className="mom-line-unit-label" x="8" y="18">({visual.axis.unitLabel})</text>
+        <path className="mom-line-series" d={path} />
+        {ordered.map((point) => {
+          const isTarget = visual.target?.kind === "point"
+            && visual.target.categoryIndex === point.categoryIndex;
+          const categoryAnchor = point.categoryIndex === 0
+            ? "start"
+            : point.categoryIndex === visual.timeAxis.categories.length - 1
+              ? "end"
+              : "middle";
+          return (
+            <g key={point.categoryIndex}>
+              {isTarget && (
+                <circle
+                  className="mom-line-target-ring"
+                  cx={xForIndex(point.categoryIndex)}
+                  cy={yForTick(point.tick)}
+                  r="10"
+                />
+              )}
+              <circle
+                className="mom-line-point"
+                cx={xForIndex(point.categoryIndex)}
+                cy={yForTick(point.tick)}
+                r="9"
+              />
+              <text
+                className="mom-line-category-label"
+                textAnchor={categoryAnchor}
+                x={xForIndex(point.categoryIndex)}
+                y={top + plotHeight + 24 + (point.categoryIndex % 2) * 26}
+              >
+                {visual.timeAxis.categories[point.categoryIndex]}
+              </text>
+            </g>
+          );
+        })}
+        <text className="mom-line-time-label" textAnchor="end" x={width - 2} y={height - 4}>
+          ({visual.timeAxis.label})
+        </text>
+      </svg>
+    </div>
+  );
+}
+
+type SvgPoint = readonly [number, number];
+
+function fitPoints(
+  points: readonly SvgPoint[],
+  width: number,
+  height: number,
+  padding: number
+): SvgPoint[] {
+  const xs = points.map(([x]) => x);
+  const ys = points.map(([, y]) => y);
+  const minimumX = Math.min(...xs);
+  const maximumX = Math.max(...xs);
+  const minimumY = Math.min(...ys);
+  const maximumY = Math.max(...ys);
+  const scale = Math.min(
+    (width - padding * 2) / Math.max(1, maximumX - minimumX),
+    (height - padding * 2) / Math.max(1, maximumY - minimumY)
+  );
+  const usedWidth = (maximumX - minimumX) * scale;
+  const usedHeight = (maximumY - minimumY) * scale;
+  const offsetX = (width - usedWidth) / 2;
+  const offsetY = (height - usedHeight) / 2;
+  return points.map(([x, y]) => [
+    offsetX + (x - minimumX) * scale,
+    offsetY + (y - minimumY) * scale
+  ] as const);
+}
+
+function polygonPath(outline: PolygonOutline, points: readonly SvgPoint[]): string {
+  const path = [`M ${points[0][0]} ${points[0][1]}`];
+  const edgeCount = outline.form === "open" ? points.length - 1 : points.length;
+  for (let index = 0; index < edgeCount; index += 1) {
+    const start = points[index];
+    const end = points[(index + 1) % points.length];
+    if (outline.form === "curved" && index === outline.curvedSideIndex) {
+      const dx = end[0] - start[0];
+      const dy = end[1] - start[1];
+      const length = Math.max(1, Math.hypot(dx, dy));
+      const curve = Math.min(18, Math.max(10, length * .28));
+      const control: SvgPoint = [
+        (start[0] + end[0]) / 2 - dy / length * curve,
+        (start[1] + end[1]) / 2 + dx / length * curve
+      ];
+      path.push(`Q ${control[0]} ${control[1]} ${end[0]} ${end[1]}`);
+    } else {
+      path.push(`L ${end[0]} ${end[1]}`);
+    }
+  }
+  if (outline.form !== "open") path.push("Z");
+  return path.join(" ");
+}
+
+function sideMarkPaths(
+  points: readonly SvgPoint[],
+  sideClasses: readonly number[]
+): string[] {
+  return sideClasses.flatMap((markClass, index) => {
+    const start = points[index];
+    const end = points[(index + 1) % points.length];
+    const dx = end[0] - start[0];
+    const dy = end[1] - start[1];
+    const length = Math.max(1, Math.hypot(dx, dy));
+    const along: SvgPoint = [dx / length, dy / length];
+    const normal: SvgPoint = [-along[1], along[0]];
+    const count = markClass + 1;
+    return Array.from({ length: count }, (_, markIndex) => {
+      const offset = (markIndex - (count - 1) / 2) * 6;
+      const center: SvgPoint = [
+        (start[0] + end[0]) / 2 + along[0] * offset,
+        (start[1] + end[1]) / 2 + along[1] * offset
+      ];
+      return `M ${center[0] - normal[0] * 4} ${center[1] - normal[1] * 4} `
+        + `L ${center[0] + normal[0] * 4} ${center[1] + normal[1] * 4}`;
+    });
+  });
+}
+
+function angleMarkPaths(
+  points: readonly SvgPoint[],
+  angleClasses: readonly number[]
+): string[] {
+  return angleClasses.flatMap((markClass, index) => {
+    const vertex = points[index];
+    const previous = points[(index + points.length - 1) % points.length];
+    const next = points[(index + 1) % points.length];
+    const previousLength = Math.max(1, Math.hypot(
+      previous[0] - vertex[0], previous[1] - vertex[1]
+    ));
+    const nextLength = Math.max(1, Math.hypot(
+      next[0] - vertex[0], next[1] - vertex[1]
+    ));
+    const toPrevious: SvgPoint = [
+      (previous[0] - vertex[0]) / previousLength,
+      (previous[1] - vertex[1]) / previousLength
+    ];
+    const toNext: SvgPoint = [
+      (next[0] - vertex[0]) / nextLength,
+      (next[1] - vertex[1]) / nextLength
+    ];
+    return Array.from({ length: markClass + 1 }, (_, markIndex) => {
+      const radius = 8 + markIndex * 4;
+      const first: SvgPoint = [
+        vertex[0] + toPrevious[0] * radius,
+        vertex[1] + toPrevious[1] * radius
+      ];
+      const second: SvgPoint = [
+        vertex[0] + toNext[0] * radius,
+        vertex[1] + toNext[1] * radius
+      ];
+      const control: SvgPoint = [
+        vertex[0] + (toPrevious[0] + toNext[0]) * radius * .72,
+        vertex[1] + (toPrevious[1] + toNext[1]) * radius * .72
+      ];
+      return `M ${first[0]} ${first[1]} Q ${control[0]} ${control[1]} ${second[0]} ${second[1]}`;
+    });
+  });
+}
+
+function PolygonOutlineSvg({
+  outline,
+  showMarks
+}: {
+  outline: PolygonOutline;
+  showMarks: boolean;
+}) {
+  const points = fitPoints(polygonOutlinePoints(outline), 120, 100, 17);
+  const marks = showMarks
+    ? polygonMarkClasses(outline)
+    : { sideClasses: [], angleClasses: [] };
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 120 100">
+      <path className="mom-polygon-outline" d={polygonPath(outline, points)} />
+      {sideMarkPaths(points, marks.sideClasses).map((path, index) => (
+        <path className="mom-polygon-side-mark" d={path} key={`side-${index}`} />
+      ))}
+      {angleMarkPaths(points, marks.angleClasses).map((path, index) => (
+        <path className="mom-polygon-angle-mark" d={path} key={`angle-${index}`} />
+      ))}
+      {outline.form === "open" && [points[0], points.at(-1)!].map((point, index) => (
+        <circle
+          className="mom-polygon-open-end"
+          cx={point[0]}
+          cy={point[1]}
+          key={`open-${index}`}
+          r="3.5"
+        />
+      ))}
+    </svg>
+  );
+}
+
+function polygonFigureDescription(visual: PolygonFigure): string {
+  if (visual.mode === "side-count-name") {
+    const sideCount = visual.figure.form === "regular"
+      || visual.figure.form === "equiangular"
+      ? visual.figure.sideCount
+      : visual.figure.form === "open"
+        ? visual.figure.vertices.length - 1
+        : visual.figure.vertices.length;
+    const concaveCount = polygonConcaveVertexCount(visual.figure);
+    const countLabel = ["영", "한", "두", "세", "네", "다섯", "여섯"]
+      [concaveCount] ?? String(concaveCount);
+    return `곧은 변 ${sideCount}개와 꼭짓점 ${sideCount}개가 이어진 닫힌 모양. 안쪽으로 들어간 꼭짓점이 ${countLabel} 곳 있습니다.`;
+  }
+  const descriptions = visual.candidates.map(({ id, figure }) => {
+    const sideCount = figure.form === "regular" || figure.form === "equiangular"
+      ? figure.sideCount
+      : figure.form === "open"
+        ? figure.vertices.length - 1
+        : figure.vertices.length;
+    if (visual.mode === "polygon-select") {
+      if (figure.form === "open") {
+        return `${id}: 곧은 선분 ${sideCount}개가 이어지지만 두 끝은 만나지 않음`;
+      }
+      if (figure.form === "curved") {
+        return `${id}: 선 ${sideCount}개가 이어져 닫혔고 그중 한 곳은 굽은 선`;
+      }
+      return `${id}: 곧은 선분 ${sideCount}개가 이어져 닫힌 모양`;
+    }
+    const marks = polygonMarkClasses(figure);
+    const sideKinds = new Set(marks.sideClasses).size;
+    const angleKinds = new Set(marks.angleClasses).size;
+    return `${id}: 변의 길이 표시는 ${sideKinds}종류, 각의 크기 표시는 ${angleKinds}종류`;
+  });
+  return descriptions.join(". ");
+}
+
+function PolygonFigureVisual({ visual }: { visual: PolygonFigure }) {
+  if (visual.mode === "side-count-name") {
+    return (
+      <div
+        aria-label={polygonFigureDescription(visual)}
+        className="mom-visual mom-polygon-figure is-single"
+        role="img"
+      >
+        <PolygonOutlineSvg outline={visual.figure} showMarks={false} />
+      </div>
+    );
+  }
+  return (
+    <div
+      aria-label={polygonFigureDescription(visual)}
+      className="mom-visual mom-polygon-figure"
+      role="img"
+    >
+      {visual.candidates.map((candidate) => (
+        <div className="mom-polygon-candidate" key={candidate.id}>
+          <strong aria-hidden="true">{candidate.id}</strong>
+          <PolygonOutlineSvg
+            outline={candidate.figure}
+            showMarks={visual.mode === "regular-select"}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function latticeCartesian([column, row]: readonly [number, number]): SvgPoint {
+  return [column + row * .5, row * Math.sqrt(3) / 2];
+}
+
+const TRIANGLE_CELL_UNIT = 36;
+const TRIANGLE_CELL_PADDING = 6;
+
+function compactTriangleCellCanvas(cells: readonly TriangleCell[]): {
+  width: number;
+  height: number;
+} {
+  const points = cells.flatMap((cell) =>
+    triangleCellVertices(cell).map(latticeCartesian)
+  );
+  const xs = points.map(([x]) => x);
+  const ys = points.map(([, y]) => y);
+  return {
+    width: Math.ceil(
+      (Math.max(...xs) - Math.min(...xs)) * TRIANGLE_CELL_UNIT
+      + TRIANGLE_CELL_PADDING * 2
+    ),
+    height: Math.ceil(
+      (Math.max(...ys) - Math.min(...ys)) * TRIANGLE_CELL_UNIT
+      + TRIANGLE_CELL_PADDING * 2
+    )
+  };
+}
+
+function equallyScaledTriangleCells(
+  cells: readonly TriangleCell[],
+  width: number,
+  height: number
+): Array<{ cell: TriangleCell; points: SvgPoint[] }> {
+  const raw = cells.map((cell) => ({
+    cell,
+    points: triangleCellVertices(cell).map(latticeCartesian)
+  }));
+  const flat = raw.flatMap((entry) => entry.points);
+  const minimumX = Math.min(...flat.map(([x]) => x));
+  const maximumX = Math.max(...flat.map(([x]) => x));
+  const minimumY = Math.min(...flat.map(([, y]) => y));
+  const maximumY = Math.max(...flat.map(([, y]) => y));
+  const unit = TRIANGLE_CELL_UNIT;
+  const offsetX = (width - (maximumX - minimumX) * unit) / 2;
+  const offsetY = (height - (maximumY - minimumY) * unit) / 2;
+  const fitted = flat.map(([x, y]) => [
+    offsetX + (x - minimumX) * unit,
+    offsetY + (y - minimumY) * unit
+  ] as SvgPoint);
+  let cursor = 0;
+  return raw.map((entry) => ({
+    cell: entry.cell,
+    points: fitted.slice(cursor, cursor += entry.points.length)
+  }));
+}
+
+function TriangleCellSvg({
+  cells,
+  placedCells = [],
+  className,
+  compact = false
+}: {
+  cells: readonly TriangleCell[];
+  placedCells?: readonly TriangleCell[];
+  className?: string;
+  compact?: boolean;
+}) {
+  const placedKeys = new Set(placedCells.map(triangleCellKey));
+  const canvas = compact
+    ? compactTriangleCellCanvas(cells)
+    : { width: 180, height: 125 };
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      focusable="false"
+      height={canvas.height}
+      preserveAspectRatio="xMidYMid meet"
+      viewBox={`0 0 ${canvas.width} ${canvas.height}`}
+      width={canvas.width}
+    >
+      {equallyScaledTriangleCells(
+        cells,
+        canvas.width,
+        canvas.height
+      ).map(({ cell, points }) => (
+        <polygon
+          className={placedKeys.has(triangleCellKey(cell))
+            ? "mom-tile-cell is-placed"
+            : "mom-tile-cell"}
+          key={triangleCellKey(cell)}
+          points={points.map((point) => point.join(",")).join(" ")}
+        />
+      ))}
+    </svg>
+  );
+}
+
+function PatternPieceIcon({ piece }: { piece: PatternBlockName }) {
+  const cells = patternBlockCells(piece, piece === "hexagon" ? 1 : 0, piece === "hexagon" ? 1 : 0);
+  return (
+    <span
+      className={`mom-pattern-piece is-${piece}`}
+      title={patternBlockKoreanNames[piece]}
+    >
+      <TriangleCellSvg
+        cells={cells}
+        className="mom-pattern-piece-svg"
+        compact
+      />
+      <span>{patternBlockKoreanNames[piece]}</span>
+    </span>
+  );
+}
+
+function tileCompositionDescription(visual: TileCompositionFigure): string {
+  const describeCells = (cells: readonly TriangleCell[]) => cells
+    .map(([column, row, orientation]) =>
+      `가로 ${column}, 세로 ${row}, ${orientation === "up" ? "위" : "아래"} 방향`
+    )
+    .join("; ");
+  if (visual.mode === "tile-count") {
+    const pieceCells = patternBlockCells(visual.piece);
+    return [
+      `큰 모양은 작은 삼각형 ${visual.region.length}칸입니다.`,
+      `큰 모양의 각 칸 위치는 ${describeCells(visual.region)}입니다.`,
+      `기준 ${patternBlockKoreanNames[visual.piece]} 조각 한 개는 작은 삼각형 ${pieceCells.length}칸입니다.`
+    ].join(" ");
+  }
+  const placed = visual.placed.map(({ piece, cells }, index) =>
+    `${index + 1}번째 ${patternBlockKoreanNames[piece]} 조각이 차지한 칸은 ${describeCells(cells)}`
+  ).join(". ");
+  const candidates = visual.candidates.map(({ id, pieces }) =>
+    `${id} 묶음: ${pieces.map((piece) => patternBlockKoreanNames[piece]).join(", ")}`
+  ).join(". ");
+  return [
+    `전체 삼각형 격자의 각 칸 위치는 ${describeCells(visual.board)}입니다.`,
+    `${placed}.`,
+    candidates
+  ].join(" ");
+}
+
+function TileCompositionVisual({ visual }: { visual: TileCompositionFigure }) {
+  if (visual.mode === "tile-count") {
+    return (
+      <div
+        aria-label={tileCompositionDescription(visual)}
+        className="mom-visual mom-tile-composition is-count"
+        role="img"
+      >
+        <div className="mom-tile-board">
+          <TriangleCellSvg cells={visual.region} />
+        </div>
+        <div className="mom-tile-key" aria-hidden="true">
+          <span>기준 조각 1개</span>
+          <PatternPieceIcon piece={visual.piece} />
+        </div>
+      </div>
+    );
+  }
+  const placedCells = visual.placed.flatMap((placed) => placed.cells);
+  return (
+    <div
+      aria-label={tileCompositionDescription(visual)}
+      className="mom-visual mom-tile-composition is-fill"
+      role="img"
+    >
+      <div className="mom-tile-board">
+        <TriangleCellSvg cells={visual.board} placedCells={placedCells} />
+      </div>
+      <div className="mom-tile-candidates" aria-hidden="true">
+        {visual.candidates.map((candidate) => (
+          <div className="mom-tile-candidate" key={candidate.id}>
+            <strong>{candidate.id}</strong>
+            <div>
+              {candidate.pieces.map((piece, index) => (
+                <PatternPieceIcon key={`${piece}-${index}`} piece={piece} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 type SemanticMeasureVisual = Extract<
   JudgmentVisual,
   { kind: "unit-relation" | "measure-referent" | "quantity-combine" }
@@ -1347,6 +3108,18 @@ export function describeVisual(visual: JudgmentVisual): string | null {
   if (visual.kind === "polygon-angle-diagram") {
     return polygonAngleDescription(visual);
   }
+  if (visual.kind === "triangle-figure") {
+    return triangleFigureDescription(visual);
+  }
+  if (visual.kind === "quadrilateral-figure") {
+    return quadrilateralFigureDescription(visual);
+  }
+  if (visual.kind === "polygon-figure") {
+    return polygonFigureDescription(visual);
+  }
+  if (visual.kind === "tile-composition") {
+    return tileCompositionDescription(visual);
+  }
   if (visual.kind === "grid-transform-diagram") {
     return gridTransformDescription(visual);
   }
@@ -1355,6 +3128,18 @@ export function describeVisual(visual: JudgmentVisual): string | null {
   }
   if (visual.kind === "bar-chart-diagram") {
     return barChartDescription(visual);
+  }
+  if (visual.kind === "line-chart-diagram") {
+    return lineChartDescription(visual);
+  }
+  if (visual.kind === "perimeter-area-diagram") {
+    return perimeterAreaDescription(visual);
+  }
+  if (visual.kind === "solid-diagram") {
+    return solidDescription(visual);
+  }
+  if (visual.kind === "part-chart-diagram") {
+    return partChartDescription(visual);
   }
   if (visual.kind === "partition-diagrams") {
     return visual.diagrams.map((diagram) => {
@@ -1413,10 +3198,12 @@ function CirclePointLabel({
 
 function CircleMeasurement({
   value,
+  unit = "cm",
   x,
   y
 }: {
   value: number | undefined;
+  unit?: "cm" | "m";
   x: number;
   y: number;
 }) {
@@ -1429,7 +3216,7 @@ function CircleMeasurement({
       x={x}
       y={y}
     >
-      {value} cm
+      {value} {unit}
     </text>
   );
 }
@@ -1467,7 +3254,7 @@ function CircleDiagramVisual({
           {mode === "compass-radius" && (
             <g className="mom-circle-dimension">
               <path d="M90 133 H132 M90 128 V138 M132 128 V138" />
-              <CircleMeasurement value={visual.radiusValue} x={111} y={146} />
+              <CircleMeasurement value={visual.radiusValue} unit={visual.measurementUnit} x={111} y={146} />
             </g>
           )}
         </g>
@@ -1493,18 +3280,25 @@ function CircleDiagramVisual({
             <circle className="mom-circle-point" cx="120" cy="80" r="2.8" />
             <CirclePointLabel label="O" x={111} y={91} />
             <CirclePointLabel label="A" x={174} y={49} />
-            <CircleMeasurement value={visual.radiusValue} x={146} y={61} />
+            <CircleMeasurement value={visual.radiusValue} unit={visual.measurementUnit} x={146} y={61} />
           </>
         )}
         {mode === "diameter" && (
           <>
             <line className="mom-circle-diameter-segment" x1="68" x2="172" y1="80" y2="80" />
-            <line className="mom-circle-radius-highlight" x1="120" x2="172" y1="80" y2="80" />
+            {visual.diameterValue === undefined && (
+              <line className="mom-circle-radius-highlight" x1="120" x2="172" y1="80" y2="80" />
+            )}
             <circle className="mom-circle-point" cx="120" cy="80" r="2.8" />
             <CirclePointLabel label="A" x={58} y={84} />
             <CirclePointLabel label="O" x={120} y={94} />
             <CirclePointLabel label="B" x={182} y={84} />
-            <CircleMeasurement value={visual.radiusValue} x={146} y={68} />
+            <CircleMeasurement
+              value={visual.diameterValue ?? visual.radiusValue}
+              unit={visual.measurementUnit}
+              x={visual.diameterValue === undefined ? 146 : 120}
+              y={68}
+            />
           </>
         )}
         {mode === "equal-radii" && (
@@ -1517,7 +3311,7 @@ function CircleDiagramVisual({
             <CirclePointLabel label="A" x={174} y={49} />
             <CirclePointLabel label="B" x={89} y={22} />
             <CirclePointLabel label="C" x={66} y={113} />
-            <CircleMeasurement value={visual.radiusValue} x={146} y={61} />
+            <CircleMeasurement value={visual.radiusValue} unit={visual.measurementUnit} x={146} y={61} />
           </>
         )}
         {mode === "center" && (
@@ -1861,6 +3655,18 @@ export function VisualAid({ visual }: { visual: JudgmentVisual }) {
   if (visual.kind === "polygon-angle-diagram") {
     return <PolygonAngleDiagramVisual visual={visual} />;
   }
+  if (visual.kind === "triangle-figure") {
+    return <TriangleFigureVisual visual={visual} />;
+  }
+  if (visual.kind === "quadrilateral-figure") {
+    return <QuadrilateralFigureVisual visual={visual} />;
+  }
+  if (visual.kind === "polygon-figure") {
+    return <PolygonFigureVisual visual={visual} />;
+  }
+  if (visual.kind === "tile-composition") {
+    return <TileCompositionVisual visual={visual} />;
+  }
   if (visual.kind === "grid-transform-diagram") {
     return <GridTransformDiagramVisual visual={visual} />;
   }
@@ -1869,6 +3675,18 @@ export function VisualAid({ visual }: { visual: JudgmentVisual }) {
   }
   if (visual.kind === "bar-chart-diagram") {
     return <BarChartVisual visual={visual} />;
+  }
+  if (visual.kind === "line-chart-diagram") {
+    return <LineChartVisual visual={visual} />;
+  }
+  if (visual.kind === "perimeter-area-diagram") {
+    return <PerimeterAreaVisual visual={visual} />;
+  }
+  if (visual.kind === "solid-diagram") {
+    return <SolidDiagramVisual visual={visual} />;
+  }
+  if (visual.kind === "part-chart-diagram") {
+    return <PartChartVisual visual={visual} />;
   }
   if (visual.kind === "pictograph") {
     return (
@@ -1902,7 +3720,7 @@ export function EvidenceRail({
     <ol className="mom-evidence-rail">
       <li><span>교육과정</span><strong>{anchor}</strong></li>
       <li><span>작은 학습 단계</span><strong>{stage}</strong></li>
-      <li><span>관찰 근거</span><strong>{evidence.selectedChoiceLabel}</strong><small>{formatEvidence(evidence)}</small></li>
+      <li><span>관찰 근거</span><strong><ReadableText text={evidence.selectedChoiceLabel} /></strong><small>{formatEvidence(evidence)}</small></li>
       {choiceNote && <li><span>오답 해석</span><strong>{choiceNote.title}</strong><small>{choiceNote.text}</small></li>}
     </ol>
   );

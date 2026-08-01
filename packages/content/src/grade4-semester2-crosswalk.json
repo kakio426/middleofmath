@@ -1,0 +1,416 @@
+{
+  "setKey": "grade4-semester2",
+  "revision": "2026-08-01.6",
+  "upstreamCommit": "3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c",
+  "upstreamTaxonomyVersion": "kr-full-depth-v0.4",
+  "upstreamOntologyVersion": "0.3.0-p3",
+  "snapshotDigest": "sha256:c636ccf0033a8bfd1d808c899bbb569ac58da39a8197d2c9bbc4b9c615eef562",
+  "anchorRows": [
+    {
+      "anchorId": "[4수03-08]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-08]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-08.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-08.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-08.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 여러 가지 삼각형 모듈과 공식 4학년 2학기 단원 행을 대조해 변 길이에 따른 분류와 성질 단계로 세분화했다."
+    },
+    {
+      "anchorId": "[4수03-09]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-09]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-09.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-09.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-09.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 여러 가지 삼각형 모듈과 공식 4학년 2학기 단원 행을 대조해 각의 크기에 따른 분류 단계로 세분화했다."
+    },
+    {
+      "anchorId": "[4수01-15]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-15]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-15.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-15.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-15.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 분수의 덧셈과 뺄셈 모듈과 공식 4학년 2학기 2단원 행을 대조해 동분모 계산 행동으로 세분화했다."
+    },
+    {
+      "anchorId": "[4수03-03]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-03]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-03.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-03.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-03.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 도형의 기초 모듈과 공식 4학년 2학기 3단원 행을 대조해 수직·평행 관계와 평행한 두 변 사이의 거리 행동으로 세분화했다."
+    },
+    {
+      "anchorId": "[4수03-10]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-10]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-10.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-10.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-10.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 여러 가지 사각형 모듈과 공식 4학년 2학기 3단원 행을 대조해 사각형 분류와 성질 적용 행동으로 세분화했다."
+    },
+    {
+      "anchorId": "[4수01-13]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-13]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-13.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-13.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-13.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 소수 모듈과 공식 4학년 2학기 4단원 행을 대조해 소수 두 자리 수와 세 자리 수의 읽기·쓰기 및 자릿값 행동으로 세분화했다."
+    },
+    {
+      "anchorId": "[4수01-14]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-14]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-14.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-14.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-14.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 소수 모듈과 공식 4학년 2학기 4단원 행을 대조해 같은 자리끼리 소수의 크기를 비교하는 행동으로 세분화했다."
+    },
+    {
+      "anchorId": "[4수01-16]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수01-16]",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-16.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-16.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-16.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 소수의 덧셈과 뺄셈 모듈과 공식 4학년 2학기 4단원 행을 대조해 소수 두 자리 수 범위의 계산 행동으로 세분화했다."
+    },
+    {
+      "anchorId": "[4수03-11]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-11]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-11.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-11.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-11.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 다각형 모듈과 공식 4학년 2학기 본문 인쇄면 81쪽의 5단원 행을 대조해 다각형 판별·이름·정다각형 조건 행동으로 세분화했다."
+    },
+    {
+      "anchorId": "[4수03-12]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수03-12]",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-12.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-12.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-12.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 다각형 구성 모듈과 공식 4학년 2학기 본문 5단원 행을 대조해 남은 자리 완성과 정해진 조각으로 채우는 판단 행동으로 세분화했다."
+    },
+    {
+      "anchorId": "[4수04-02]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수04-02]",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-02.application",
+        "kr.mt.math.data-probability.g3-4.s4-04-02.concept",
+        "kr.mt.math.data-probability.g3-4.s4-04-02.representation"
+      ],
+      "reviewEvidence": "고정 학습맵의 꺾은선그래프 모듈과 공식 4학년 2학기 6단원 행을 대조해 눈금·점·변화량·구간·중간값 읽기 행동으로 세분화했다."
+    },
+    {
+      "anchorId": "[4수04-03]",
+      "status": "matched",
+      "standardKey": "kr-2022-elem-math:[4수04-03]",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-03.application",
+        "kr.mt.math.data-probability.g3-4.s4-04-03.concept",
+        "kr.mt.math.data-probability.g3-4.s4-04-03.representation"
+      ],
+      "reviewEvidence": "자료 수집·그래프 작성 전체가 아니라 이미 제시된 꺾은선그래프의 변화 구간을 해석하는 일부 행동에만 재사용했다."
+    }
+  ],
+  "stageRows": [
+    {
+      "stageId": "triangles.classify-isosceles",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-08.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-08.representation"
+      ],
+      "reviewEvidence": "세 변의 길이를 비교하여 같은 길이인 두 변이 있는 삼각형을 구별하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "triangles.classify-equilateral",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-08.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-08.representation"
+      ],
+      "reviewEvidence": "세 변을 빠짐없이 비교하여 길이가 모두 같은 삼각형을 구별하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "triangles.isosceles-equal-angles",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-08.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-08.concept"
+      ],
+      "reviewEvidence": "길이가 같은 두 변의 맞은편 두 각이 같은 성질을 이용하여 물음표 각을 구하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "triangles.classify-right",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-09.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-09.representation"
+      ],
+      "reviewEvidence": "세 각 중 직각이 하나 있는지를 확인해 직각삼각형을 구별하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "triangles.classify-acute-obtuse",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-09.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-09.concept"
+      ],
+      "reviewEvidence": "가장 큰 각을 직각과 비교하여 예각삼각형과 둔각삼각형을 구별하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "frac-ops.add-same-denominator",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-15.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-15.representation"
+      ],
+      "reviewEvidence": "분모가 같은 두 진분수에서 분모는 유지하고 분자끼리 더하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "frac-ops.sum-to-mixed",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-15.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-15.representation"
+      ],
+      "reviewEvidence": "합이 1보다 큰 동분모 덧셈 결과를 대분수로 나타내는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "frac-ops.subtract-same-denominator",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-15.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-15.representation"
+      ],
+      "reviewEvidence": "분모가 같은 두 진분수에서 분모는 유지하고 분자끼리 빼는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "frac-ops.whole-minus-fraction",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-15.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-15.concept"
+      ],
+      "reviewEvidence": "1을 주어진 분모의 가분수로 바꾸어 진분수를 빼는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "frac-ops.mixed-add",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-15.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-15.concept"
+      ],
+      "reviewEvidence": "받아올림 없이 자연수 부분과 분수 부분을 나누어 대분수끼리 더하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "quad.perpendicular-side",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-03.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-03.representation"
+      ],
+      "reviewEvidence": "직각 표시를 근거로 기준 변과 수직인 변을 찾는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "quad.parallel-side-distance",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-03.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-03.representation"
+      ],
+      "reviewEvidence": "평행한 두 변 사이의 거리를 두 변에 수직인 선분의 길이로 읽는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "quad.trapezoid-parallel-pair",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-10.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-10.representation"
+      ],
+      "reviewEvidence": "평행한 변 한 쌍의 표시를 확인해 사다리꼴로 분류하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "quad.rhombus-equal-sides",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-10.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-10.representation"
+      ],
+      "reviewEvidence": "네 변의 같은 길이 표시와 직각 조건을 구분해 마름모로 분류하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "quad.parallelogram-opposite-angle",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-10.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-10.concept"
+      ],
+      "reviewEvidence": "평행사변형의 마주 보는 두 각이 같은 성질을 이용해 물음표 각을 구하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "decimal.read-write",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-13.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-13.representation"
+      ],
+      "reviewEvidence": "소수점 아래의 0과 자릿값을 지키며 소수 두 자리 수와 세 자리 수를 읽고 쓰는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "decimal.compose-place-value",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-13.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-13.representation"
+      ],
+      "reviewEvidence": "0.1과 0.01의 개수를 각각 알맞은 자리에 놓아 하나의 소수로 나타내는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "decimal.compare",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-14.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-14.concept",
+        "kr.mt.math.number-operations.g3-4.s4-01-14.representation"
+      ],
+      "reviewEvidence": "정수 부분부터 같은 자리끼리 차례로 살펴 여러 소수의 크기를 비교하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "decimal.add",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-16.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-16.concept"
+      ],
+      "reviewEvidence": "소수점을 맞추고 빈 자리에 0을 채운 뒤 받아올림을 하여 소수를 더하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "decimal.subtract",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.number-operations.g3-4.s4-01-16.application",
+        "kr.mt.math.number-operations.g3-4.s4-01-16.concept"
+      ],
+      "reviewEvidence": "소수점을 맞추고 빈 자리에 0을 채운 뒤 받아내림을 하여 소수를 빼는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "polygon.identify-closed-straight",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-11.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-11.representation"
+      ],
+      "reviewEvidence": "곧은 선으로 둘러싸여 끝이 모두 이어진 도형인지 확인해 다각형을 판별하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "polygon.name-by-side-count",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-11.concept",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-11.representation"
+      ],
+      "reviewEvidence": "오목한 꼭짓점을 포함한 도형에서도 변의 수를 빠짐없이 세어 다각형의 이름을 정하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "polygon.regular-two-conditions",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-11.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-11.concept"
+      ],
+      "reviewEvidence": "모든 변의 길이와 모든 각의 크기가 각각 같은지를 함께 확인해 정다각형을 판별하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "polygon.fill-remaining-space",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-12.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-12.representation"
+      ],
+      "reviewEvidence": "이미 놓인 조각은 그대로 두고 남은 자리의 칸 수와 모양을 모두 확인해 알맞은 조각 묶음을 고르는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "polygon.tile-count-pieces",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-12.application",
+        "kr.mt.math.geometry-measurement.g3-4.s4-03-12.concept"
+      ],
+      "reviewEvidence": "정해진 모양 조각 하나의 크기를 기준으로 영역을 빈틈없이 채우는 데 필요한 조각 수를 정하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "line-graph.tick-unit",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-02.concept",
+        "kr.mt.math.data-probability.g3-4.s4-04-02.representation"
+      ],
+      "reviewEvidence": "표시된 두 눈금값과 칸 수로 세로 눈금 한 칸의 값을 정하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "line-graph.point-value",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-02.concept",
+        "kr.mt.math.data-probability.g3-4.s4-04-02.representation"
+      ],
+      "reviewEvidence": "기준값과 눈금 한 칸의 값을 이용해 특정 시점의 점이 나타내는 값을 읽는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "line-graph.step-change",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-02.application",
+        "kr.mt.math.data-probability.g3-4.s4-04-02.concept"
+      ],
+      "reviewEvidence": "이웃한 두 시점의 값을 읽고 차이를 구해 증가·감소한 양을 해석하는 행동으로 세분화했다."
+    },
+    {
+      "stageId": "line-graph.largest-rise",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-02.application",
+        "kr.mt.math.data-probability.g3-4.s4-04-03.application"
+      ],
+      "reviewEvidence": "각 구간의 방향과 변화량을 비교하여 가장 크게 증가한 구간을 찾는 해석 행동으로 세분화했다."
+    },
+    {
+      "stageId": "line-graph.between-estimate",
+      "status": "topic-partial",
+      "topicIds": [
+        "kr.mt.math.data-probability.g3-4.s4-04-02.application",
+        "kr.mt.math.data-probability.g3-4.s4-04-03.application"
+      ],
+      "reviewEvidence": "이웃한 두 점을 이은 선의 높이로 중간 시점의 값을 어림하는 해석 행동으로 세분화했다."
+    }
+  ],
+  "crosswalkDigest": "sha256:1c3d1772d232824977f73c3920784fde266ce5e71dbb8483e4ac815b50eeea99"
+}

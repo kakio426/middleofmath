@@ -29,7 +29,7 @@ import type {
   Judgment,
   SignalDefinition
 } from "@middle-of-math/domain";
-import { Brand, ChoiceOption, ProgressLine, StatusPill, VisualAid } from "@middle-of-math/ui";
+import { Brand, ChoiceOption, ProgressLine, ReadableText, StatusPill, VisualAid } from "@middle-of-math/ui";
 import {
   cloneAsDraft,
   collectStudioIssues,
@@ -1017,10 +1017,15 @@ function PreviewRail({ judgment, judgmentIndex, stageTitle, issues }: { judgment
   const [unknownVisible, setUnknownVisible] = useState(false);
   const previewChoices = useMemo(
     () => presentedChoices(
-      { sessionId: "studio-preview", judgmentId: judgment.id },
+      {
+        sessionId: "studio-preview",
+        judgmentId: judgment.id,
+        judgmentIndex,
+        correctChoiceId: judgment.choices.find((choice) => choice.correct)?.id
+      },
       judgment.choices
     ),
-    [judgment]
+    [judgment, judgmentIndex]
   );
   useEffect(() => {
     setUnknownVisible(false);
@@ -1037,8 +1042,8 @@ function PreviewRail({ judgment, judgmentIndex, stageTitle, issues }: { judgment
         <div className="studio-tablet-top"><Brand compact /><span>연결됨</span></div>
         <div className="studio-tablet-progress"><ProgressLine value={42} /></div>
         <div className="studio-tablet-content">
-          {judgment.context && <p className="mom-muted">{judgment.context}</p>}
-          <h2>{judgment.prompt}</h2>
+          {judgment.context && <p className="mom-muted mom-readable-text"><ReadableText text={judgment.context} /></p>}
+          <h2 className="mom-readable-text"><ReadableText text={judgment.prompt} /></h2>
           <VisualAid visual={judgment.visual} />
           <div className="mom-choice-list">{previewChoices.map((choice) => <ChoiceOption key={choice.id} label={choice.label || "빈 선택지"} selected={false} onSelect={() => undefined} />)}</div>
           {unknownVisible
