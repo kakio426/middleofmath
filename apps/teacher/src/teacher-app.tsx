@@ -44,16 +44,17 @@ import {
 } from "@middle-of-math/domain";
 import {
   Brand,
-  ConfidenceMark,
   EmptyState,
-  EvidenceRail,
   ReadableText,
   SeverityMark,
   StatusPill
 } from "@middle-of-math/ui";
 import {
+  buildTeacherReportView,
   findChoiceNote,
-  groupSummaryByUnit
+  groupSummaryByUnit,
+  type TeacherReportEvidenceView,
+  type TeacherReportFindingView
 } from "./teacher-report-model";
 import { createPairedEvidenceDemoProfiles } from "./teacher-demo-profiles";
 
@@ -94,6 +95,16 @@ const content = demoMode && requestedDemoSetKey === "grade4-semester1"
     : demoMode && requestedDemoSetKey === "grade6-semester2"
       ? grade6Semester2Diagnosis
     : grade3Semester2Diagnosis;
+const diagnosisCatalog: readonly DiagnosisSet[] = [
+  grade3Semester1Diagnosis,
+  grade3Semester2Diagnosis,
+  grade4Semester1Diagnosis,
+  grade4Semester2Diagnosis,
+  grade5Semester1Diagnosis,
+  grade5Semester2Diagnosis,
+  grade6Semester1Diagnosis,
+  grade6Semester2Diagnosis
+];
 const packagedPublishedContent: PublishedDiagnosisSet = {
   id: `packaged-${content.manifest.id}-v${content.manifest.version}`,
   setKey: content.manifest.id,
@@ -456,7 +467,7 @@ export function TeacherApp() {
         .catch(() => {
           if (!active || generation !== authGeneration.current) return;
           setLoadState("error");
-          setNotice("교사 프로필과 클래스 데이터를 불러오지 못했습니다.");
+          setNotice("교사 정보와 학급 정보를 불러오지 못했습니다.");
         });
     };
     void client.auth.getSession().then(({ data }) => {
@@ -538,14 +549,14 @@ export function TeacherApp() {
     selectedClassIdRef.current = classId;
     setSelectedClassId(classId);
     setSelectedFinding(null);
-    await loadClassContext(classId).catch(() => setNotice("선택한 클래스의 기록을 불러오지 못했습니다."));
+    await loadClassContext(classId).catch(() => setNotice("선택한 학급의 기록을 불러오지 못했습니다."));
   }
 
   async function changeAssignment(assignmentId: string): Promise<void> {
     selectedAssignmentIdRef.current = assignmentId;
     setSelectedAssignmentId(assignmentId);
     setSelectedFinding(null);
-    await loadAssignmentInsights(assignmentId).catch(() => setNotice("선택한 배정은 지금 해석할 수 없습니다."));
+    await loadAssignmentInsights(assignmentId).catch(() => setNotice("선택한 진단의 결과를 지금 불러올 수 없습니다."));
   }
 
   async function signIn(email: string, password: string) {
@@ -582,7 +593,7 @@ export function TeacherApp() {
       return;
     }
     const targetClass = selectedClass;
-    if (!targetClass) throw new Error("학생을 추가할 클래스를 먼저 만들어 주세요.");
+    if (!targetClass) throw new Error("학생을 추가할 학급을 먼저 만들어 주세요.");
     const mutationAuthGeneration = authGeneration.current;
     const saved = client
       ? await new SupabaseTeacherGateway(client).addStudent({ classId: targetClass.id, rosterKey, displayAlias: alias })
@@ -602,7 +613,7 @@ export function TeacherApp() {
   async function rotateStudentJoinSecret(studentId: string): Promise<void> {
     const student = students.find((item) => item.id === studentId);
     if (!student) throw new Error("학생을 찾을 수 없습니다.");
-    const targetClassName = selectedClass?.name ?? "선택한 클래스";
+    const targetClassName = selectedClass?.name ?? "선택한 학급";
     const mutationAuthGeneration = authGeneration.current;
     const joinSecret = client
       ? await new SupabaseTeacherGateway(client).rotateStudentJoinSecret(studentId)
@@ -635,7 +646,7 @@ export function TeacherApp() {
 
   async function rotateJoinCode(): Promise<void> {
     const targetClass = selectedClass;
-    if (!targetClass) throw new Error("활성 클래스가 없습니다.");
+    if (!targetClass) throw new Error("선택된 학급이 없습니다.");
     const mutationAuthGeneration = authGeneration.current;
     const joinCode = client
       ? await new SupabaseTeacherGateway(client).rotateJoinCode(targetClass.id)
@@ -652,7 +663,7 @@ export function TeacherApp() {
     closesAt?: string;
   }): Promise<void> {
     if (!client) {
-      setNotice(`${input.diagnosis.content.manifest.title} v${input.diagnosis.version}을 데모 클래스에 배정했습니다.`);
+      setNotice(`${input.diagnosis.content.manifest.title} v${input.diagnosis.version}을 데모 학급에 배정했습니다.`);
       return;
     }
     const mutationAuthGeneration = authGeneration.current;
@@ -671,7 +682,7 @@ export function TeacherApp() {
     const targetClass = teacherClasses.find((item) => item.id === input.classId);
     if (selectedClassIdRef.current === input.classId) await loadClassContext(input.classId, selectedAssignmentIdRef.current);
     if (mutationAuthGeneration !== authGeneration.current) return;
-    setNotice(`${input.diagnosis.content.manifest.title} v${input.diagnosis.version}을 ${targetClass?.name ?? "클래스"}에 배정했습니다.`);
+    setNotice(`${input.diagnosis.content.manifest.title} v${input.diagnosis.version}을 ${targetClass?.name ?? "학급"}에 배정했습니다.`);
   }
 
   async function exportParentReport(): Promise<void> {
@@ -701,10 +712,10 @@ export function TeacherApp() {
       ).execute({ sessionId, reviewedBy });
       if (mutationAuthGeneration !== authGeneration.current) return;
       setPrintExport(snapshot);
-      setNotice("교사 검토 시점의 학부모 공유본을 기록했습니다. 인쇄 창을 엽니다.");
+      setNotice("교사가 확인한 가정 공유용 결과표를 저장했습니다. 인쇄 창을 엽니다.");
     } catch (error) {
       if (mutationAuthGeneration === authGeneration.current) {
-        setNotice(error instanceof Error ? error.message : "학부모 공유본을 만들지 못했습니다.");
+        setNotice(error instanceof Error ? error.message : "가정 공유용 결과표를 만들지 못했습니다.");
       }
     } finally {
       if (mutationAuthGeneration === authGeneration.current) {
@@ -722,15 +733,15 @@ export function TeacherApp() {
       <aside className="teacher-sidebar">
         <Brand />
         <div className="teacher-class-switcher">
-          <span>현재 클래스</span>
-          <strong>{selectedClass?.name ?? "클래스 없음"}</strong>
+          <span>현재 학급</span>
+          <strong>{selectedClass?.name ?? "학급 없음"}</strong>
           <small>{selectedClass?.joinCode ? `입장 코드 ${selectedClass.joinCode}` : "코드는 재발급할 때만 표시됩니다"}</small>
         </div>
         <nav aria-label="교사 메뉴">
           <NavButton active={page === "summary"} onClick={() => setPage("summary")} icon="∑">반 요약</NavButton>
-          <NavButton active={page === "student"} onClick={() => setPage("student")} icon="↳">학생 리포트</NavButton>
+          <NavButton active={page === "student"} onClick={() => setPage("student")} icon="↳">학생 분석지</NavButton>
           <NavButton active={page === "assignment"} onClick={() => setPage("assignment")} icon="＋">진단 배정</NavButton>
-          <NavButton active={page === "roster"} onClick={() => setPage("roster")} icon="№">클래스·학생</NavButton>
+          <NavButton active={page === "roster"} onClick={() => setPage("roster")} icon="№">학급·학생</NavButton>
           <NavButton active={page === "settings"} onClick={() => setPage("settings")} icon="·">설정</NavButton>
         </nav>
         <div className="teacher-sidebar-foot">
@@ -743,7 +754,7 @@ export function TeacherApp() {
         {notice && <div className="teacher-notice" role="status">{notice}<button onClick={() => setNotice(null)} aria-label="알림 닫기">×</button></div>}
         <TeacherContextBar classes={teacherClasses} assignments={assignmentBundles} selectedClassId={selectedClassId} selectedAssignmentId={selectedAssignmentId} state={loadState} onClassChange={changeClass} onAssignmentChange={changeAssignment} />
         {page === "summary" && <ClassSummaryPage students={students} summary={summary} selectedClass={selectedClass} selectedBundle={selectedBundle} state={loadState} onOpenStudent={openStudent} />}
-        {page === "student" && (selectedStudent ? <StudentReportPage student={selectedStudent} students={students} diagnosisSet={selectedBundle?.diagnosisSet.content ?? content} choiceNotes={insights?.distractorNotes ?? []} reportMode={reportMode} parentReport={parentReport} selectedFinding={selectedFinding} exporting={exportingParentReport} onExport={exportParentReport} onStudentChange={(id) => openStudent(id)} onModeChange={setReportMode} onFindingSelect={setSelectedFinding} /> : <div className="teacher-page"><EmptyState title="학생이 없습니다" description="클래스·학생 화면에서 번호를 먼저 추가해 주세요." /></div>)}
+        {page === "student" && (selectedStudent ? <StudentReportPage student={selectedStudent} students={students} diagnosisSet={selectedBundle?.diagnosisSet.content ?? content} choiceNotes={insights?.distractorNotes ?? []} reportMode={reportMode} parentReport={parentReport} selectedFinding={selectedFinding} exporting={exportingParentReport} onExport={exportParentReport} onStudentChange={(id) => openStudent(id)} onModeChange={setReportMode} onFindingSelect={setSelectedFinding} /> : <div className="teacher-page"><EmptyState title="학생이 없습니다" description="학급·학생 화면에서 번호를 먼저 추가해 주세요." /></div>)}
         {page === "assignment" && <AssignmentPage diagnosisSets={publishedContents} classes={teacherClasses} onAssigned={assignDiagnosis} onCreateClass={createTeacherClass} />}
         {page === "roster" && <RosterPage students={students} classes={teacherClasses} selectedClass={selectedClass} onAdd={addStudent} onCreateClass={createTeacherClass} onRotate={rotateJoinCode} onRotateStudent={rotateStudentJoinSecret} />}
         {page === "settings" && <SettingsPage profile={profile} selectedClass={selectedClass} />}
@@ -755,7 +766,7 @@ export function TeacherApp() {
 }
 
 function TeacherConfigurationError() {
-  return <main className="teacher-auth-loading"><Brand /><div className="mom-panel"><div className="mom-panel-body mom-stack"><h1>교사 앱 설정이 필요합니다</h1><p className="mom-muted">운영 환경에는 Supabase URL과 publishable key를 설정해 주세요. 로컬 데모는 <code>VITE_DEMO_MODE=true</code>에서만 열립니다.</p></div></div></main>;
+  return <main className="teacher-auth-loading"><Brand /><div className="mom-panel"><div className="mom-panel-body mom-stack"><h1>서비스 준비가 완료되지 않았습니다</h1><p className="mom-muted">관리자에게 교사용 서비스 설정을 확인해 달라고 요청해 주세요.</p></div></div></main>;
 }
 
 function TeacherLogin({ onSubmit, error }: { onSubmit: (email: string, password: string) => Promise<void>; error: string | null }) {
@@ -767,11 +778,11 @@ function TeacherLogin({ onSubmit, error }: { onSubmit: (email: string, password:
         <Brand />
         <p className="mom-eyebrow">교사 대시보드</p>
         <h1>정답보다<br />생각의 중간을 봅니다</h1>
-        <p>반복해서 나타난 판단 신호부터 보고, 학생의 근거까지 한 단계씩 내려갑니다.</p>
+        <p>여러 문항에서 반복된 생각부터 살펴보고, 학생의 실제 응답을 한 단계씩 확인합니다.</p>
       </section>
       <form className="mom-panel teacher-login-form" onSubmit={(event) => { event.preventDefault(); void onSubmit(email, password); }}>
         <div className="mom-panel-body mom-stack-lg">
-          <div><p className="mom-eyebrow">Invited teachers only</p><h2>교사 로그인</h2><p className="mom-muted">파일럿은 관리자에게 초대받은 교사만 사용할 수 있습니다.</p></div>
+          <div><p className="mom-eyebrow">초대받은 교사 전용</p><h2>교사 로그인</h2><p className="mom-muted">시범 운영 기간에는 관리자에게 초대받은 교사만 사용할 수 있습니다.</p></div>
           <label className="mom-input-group">이메일<input className="mom-input" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required /></label>
           <label className="mom-input-group">비밀번호<input className="mom-input" type="password" minLength={8} autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required /></label>
           {error && <p className="mom-form-error" role="alert">{error}</p>}
@@ -793,12 +804,12 @@ function TeacherContextBar({ classes, assignments, selectedClassId, selectedAssi
 }) {
   const active = assignments.find((bundle) => bundle.assignment.id === selectedAssignmentId);
   return (
-    <section className="teacher-context-spine" aria-label="리포트 범위">
+    <section className="teacher-context-spine" aria-label="분석 범위">
       <div className="teacher-context-index">01</div>
-      <label><span>클래스</span><select aria-label="현재 클래스" value={selectedClassId} disabled={!classes.length || state === "syncing"} onChange={(event) => void onClassChange(event.target.value)}>{classes.length ? classes.map((item) => <option value={item.id} key={item.id}>{item.name}</option>) : <option value="">클래스 없음</option>}</select></label>
+      <label><span>학급</span><select aria-label="현재 학급" value={selectedClassId} disabled={!classes.length || state === "syncing"} onChange={(event) => void onClassChange(event.target.value)}>{classes.length ? classes.map((item) => <option value={item.id} key={item.id}>{item.name}</option>) : <option value="">학급 없음</option>}</select></label>
       <div className="teacher-context-arrow" aria-hidden="true">→</div>
-      <label><span>배정</span><select aria-label="현재 배정" value={selectedAssignmentId} disabled={!assignments.length || state === "syncing"} onChange={(event) => void onAssignmentChange(event.target.value)}>{assignments.length ? assignments.map((bundle) => <option value={bundle.assignment.id} key={bundle.assignment.id}>{bundle.diagnosisSet.content.manifest.shortTitle} · v{bundle.diagnosisSet.version} · {formatDate(bundle.assignment.opensAt)}</option>) : <option value="">배정 없음</option>}</select></label>
-      <div className="teacher-context-proof"><span>{state === "syncing" ? "동기화 중" : state === "error" ? "불러오기 실패" : active ? "버전 고정" : "배정 대기"}</span><strong>{active ? `${active.diagnosisSet.checksum.slice(0, 10)}…` : "—"}</strong></div>
+      <label><span>진단 활동</span><select aria-label="현재 진단 활동" value={selectedAssignmentId} disabled={!assignments.length || state === "syncing"} onChange={(event) => void onAssignmentChange(event.target.value)}>{assignments.length ? assignments.map((bundle) => <option value={bundle.assignment.id} key={bundle.assignment.id}>{bundle.diagnosisSet.content.manifest.shortTitle} · v{bundle.diagnosisSet.version} · {formatDate(bundle.assignment.opensAt)}</option>) : <option value="">진단 활동 없음</option>}</select></label>
+      <div className="teacher-context-proof"><span>{state === "syncing" ? "불러오는 중" : state === "error" ? "불러오기 실패" : active ? "진단 선택됨" : "진단 선택 필요"}</span><strong>{active ? `${active.diagnosisSet.content.judgments.length}문항` : "—"}</strong></div>
     </section>
   );
 }
@@ -808,32 +819,32 @@ function ClassSummaryPage({ students, summary, selectedClass, selectedBundle, st
   const unitGroups = groupSummaryByUnit(summary);
   return (
     <div className="teacher-page mom-stack-lg">
-      <PageHeader eyebrow={`${selectedClass?.name ?? "클래스 선택 필요"} · ${selectedBundle?.diagnosisSet.content.manifest.title ?? "배정 선택 필요"}`} title="반에서 함께 다시 볼 생각" description="학생별 최신 완료 세션만 모았습니다. 진행 중·해석 대기 기록은 신호 집계에 넣지 않습니다." />
+      <PageHeader eyebrow={`${selectedClass?.name ?? "학급 선택 필요"} · ${selectedBundle?.diagnosisSet.content.manifest.title ?? "진단 선택 필요"}`} title="반에서 함께 다시 볼 생각" description="학생별로 가장 최근에 마친 활동을 모았습니다. 진행 중이거나 결과를 준비하는 기록은 반 요약에 포함하지 않습니다." />
       <section className="teacher-metrics" aria-label="진단 현황">
-        <Metric value={`${summary.completedStudents}명`} label="완료·해석" />
+        <Metric value={`${summary.completedStudents}명`} label="결과 준비 완료" />
         <Metric value={`${summary.inProgressStudents}명`} label="진행 중" />
         <Metric value={`${students.filter((student) => student.status === "not_started").length}명`} label="시작 전" />
-        <Metric value={pending ? `${pending}명` : `${selectedBundle?.diagnosisSet.content.judgments.length ?? 0}개`} label={pending ? "해석 대기" : "판단 단위"} />
+        <Metric value={pending ? `${pending}명` : `${selectedBundle?.diagnosisSet.content.judgments.length ?? 0}개`} label={pending ? "결과 준비 중" : "진단 문항"} />
       </section>
-      {!selectedClass && <EmptyState title="첫 클래스를 만들어 주세요" description="클래스·학생 화면에서 학년·학기를 선택해 파일럿 클래스를 만들 수 있습니다." />}
-      {selectedClass && !selectedBundle && state !== "syncing" && <EmptyState title="아직 배정된 진단이 없습니다" description="진단 배정 화면에서 검수 완료된 콘텐츠 버전을 이 클래스에 배정해 주세요." />}
-      {state === "error" && <EmptyState title="기록을 불러오지 못했습니다" description="네트워크 연결을 확인한 뒤 클래스나 배정을 다시 선택해 주세요." />}
-      {pending > 0 && <div className="teacher-pending-note" role="status"><strong>{pending}명 해석 대기</strong><span>콘텐츠 checksum 또는 상호작용 버전을 확인한 뒤 새 엔진 실행으로 다시 해석합니다. 원본 이벤트는 바꾸지 않습니다.</span></div>}
+      {!selectedClass && <EmptyState title="첫 학급을 만들어 주세요" description="학급·학생 화면에서 학년·학기를 선택해 학급을 만들 수 있습니다." />}
+      {selectedClass && !selectedBundle && state !== "syncing" && <EmptyState title="아직 배정된 진단이 없습니다" description="진단 배정 화면에서 검토가 끝난 진단을 이 학급에 배정해 주세요." />}
+      {state === "error" && <EmptyState title="기록을 불러오지 못했습니다" description="네트워크 연결을 확인한 뒤 학급이나 진단 활동을 다시 선택해 주세요." />}
+      {pending > 0 && <div className="teacher-pending-note" role="status"><strong>{pending}명 결과 준비 중</strong><span>아직 결과를 만들 수 없는 활동 기록입니다. 잠시 뒤에도 그대로라면 담당자에게 확인해 주세요.</span></div>}
       {selectedBundle && state !== "error" && (
       <section className="mom-panel teacher-summary-panel">
-        <div className="mom-panel-header"><div><p className="mom-eyebrow">Common signals</p><h2>학생 수가 많은 순서</h2></div><span className="mom-caption">{summary.items[0] ? "최신 엔진 해석" : "집계할 반복 신호 없음"}</span></div>
+        <div className="mom-panel-header"><div><p className="mom-eyebrow">반에서 함께 볼 내용</p><h2>학생 수가 많은 순서</h2></div><span className="mom-caption">{summary.items[0] ? "최근 완료 기록 기준" : "반복된 생각 없음"}</span></div>
         <div className="teacher-summary-list">
-          {!summary.items.length && <EmptyState title={state === "syncing" ? "실제 기록을 동기화하고 있습니다" : "함께 다시 볼 반복 신호가 없습니다"} description={state === "syncing" ? "세션, 이벤트, 콘텐츠 버전을 확인하고 있습니다." : "완료 기록이 생기거나 반복 신호가 나타나면 이곳에 표시됩니다."} />}
+          {!summary.items.length && <EmptyState title={state === "syncing" ? "학생 활동 기록을 불러오고 있습니다" : "함께 다시 볼 내용이 없습니다"} description={state === "syncing" ? "학생이 마친 활동을 확인하고 있습니다." : "완료 기록이 생기거나 여러 문항에서 비슷한 생각이 반복되면 이곳에 표시됩니다."} />}
           {unitGroups.map((group) => (
             <section className="teacher-summary-unit" key={group.unitId}>
-              <header><span>{String(group.unitOrder).padStart(2, "0")}</span><h3>{group.unitOrder}단원 · {group.unitTitle}</h3><small>{group.items.length}개 신호</small></header>
+              <header><span>{String(group.unitOrder).padStart(2, "0")}</span><h3>{group.unitOrder}단원 · {group.unitTitle}</h3><small>{group.items.length}개 살펴볼 내용</small></header>
               {group.items.map((item, index) => {
                 const related = students.filter((student) => item.studentIds.includes(student.id) && student.report);
                 return (
                   <article className="teacher-summary-row" key={item.signalId}>
                     <span className="teacher-rank">{String(index + 1).padStart(2, "0")}</span>
-                    <div className="teacher-summary-copy"><div className="mom-row-between"><h3>{item.title}</h3><SeverityMark severity={item.severity} /></div><p>{item.interpretation}</p><strong className="teacher-move">다음 수업 · {item.teachingMove}</strong></div>
-                    <div className="teacher-summary-count"><span>반복 확인 {item.confirmedStudentCount}명 · 추가 관찰 {item.tentativeStudentCount}명</span></div>
+                    <div className="teacher-summary-copy"><div className="mom-row-between"><h3>{teacherDisplayCopy(item.title)}</h3><SeverityMark severity={item.severity} /></div><p>{teacherDisplayCopy(item.interpretation)}</p><strong className="teacher-move">다음 수업 · {teacherDisplayCopy(item.teachingMove)}</strong></div>
+                    <div className="teacher-summary-count"><span>같은 생각이 반복됨 {item.confirmedStudentCount}명 · 한 번 더 확인 필요 {item.tentativeStudentCount}명</span></div>
                     <div className="teacher-student-links">{related.map((student) => <button key={student.id} onClick={() => onOpenStudent(student.id, student.report?.findings.find((finding) => finding.signalId === item.signalId))}>{studentLabel(student)}</button>)}</div>
                   </article>
                 );
@@ -852,86 +863,202 @@ function StudentReportPage({ student, students, diagnosisSet, choiceNotes, repor
   const attempts = [...student.attempts].sort((a, b) => b.session.startedAt.localeCompare(a.session.startedAt));
   return (
     <div className={`teacher-page mom-stack-lg ${reportMode === "parent" ? "is-parent-preview" : ""}`}>
-      <PageHeader eyebrow="학생 리포트" title={studentLabel(student)} description="교사용 근거 리포트와 학부모 공유용 요약은 목적과 문장을 분리합니다." action={<select className="mom-input teacher-student-select" value={student.id} onChange={(event) => onStudentChange(event.target.value)}>{students.map((item) => <option key={item.id} value={item.id}>{studentLabel(item)}</option>)}</select>} />
+      <PageHeader eyebrow="학생 분석지" title={studentLabel(student)} description="교사용 분석지와 가정 공유용 결과표를 구분해 제공합니다." action={<select className="mom-input teacher-student-select" value={student.id} onChange={(event) => onStudentChange(event.target.value)}>{students.map((item) => <option key={item.id} value={item.id}>{studentLabel(item)}</option>)}</select>} />
       <div className="teacher-report-tabs" role="tablist">
-        <button role="tab" aria-selected={reportMode === "teacher"} onClick={() => onModeChange("teacher")}>교사용 근거 리포트</button>
-        <button role="tab" aria-selected={reportMode === "parent"} onClick={() => onModeChange("parent")}>학부모 공유 리포트</button>
+        <button role="tab" aria-selected={reportMode === "teacher"} onClick={() => onModeChange("teacher")}>교사용 분석지</button>
+        <button role="tab" aria-selected={reportMode === "parent"} onClick={() => onModeChange("parent")}>가정 공유용 결과표</button>
       </div>
-      {student.status === "interpretation_pending" && <EmptyState title="해석 대기 중입니다" description={student.pendingReason === "checksum_mismatch" ? "배정된 콘텐츠 checksum을 확인하고 있습니다. 이 기록은 반 요약에 포함되지 않습니다." : "현재 엔진이 지원하지 않는 상호작용 버전입니다. 지원 엔진 배포 뒤 새 해석 실행을 만듭니다."} />}
-      {!report && student.status !== "interpretation_pending" && <EmptyState title="완료된 기록이 아직 없습니다" description="학생이 활동을 마치면 교사용 근거와 학부모용 요약을 따로 만들 수 있습니다." />}
-      {report && reportMode === "teacher" && <TeacherEvidenceReport report={report} diagnosisSet={diagnosisSet} choiceNotes={choiceNotes} selectedFinding={selectedFinding} onFindingSelect={onFindingSelect} />}
+      {student.status === "interpretation_pending" && <EmptyState title="결과를 준비하고 있습니다" description="아직 결과를 만들 수 없는 활동 기록입니다. 잠시 뒤에도 그대로라면 담당자에게 확인해 주세요." />}
+      {!report && student.status !== "interpretation_pending" && <EmptyState title="완료된 기록이 아직 없습니다" description="학생이 활동을 마치면 교사용 분석지와 가정 공유용 결과표를 확인할 수 있습니다." />}
+      {report && reportMode === "teacher" && <TeacherEvidenceReport studentName={studentLabel(student)} report={report} diagnosisSet={diagnosisSet} choiceNotes={choiceNotes} selectedFinding={selectedFinding} onFindingSelect={onFindingSelect} />}
       {report && reportMode === "parent" && parentReport && <ParentShareReport report={parentReport} exporting={exporting} onExport={onExport} />}
-      <section className="mom-panel teacher-attempts"><div className="mom-panel-header"><div><p className="mom-eyebrow">Attempt history</p><h2>시도 이력</h2></div><span className="mom-caption">최신 완료 1건만 반 요약에 사용</span></div>{attempts.length ? <ol>{attempts.map((attempt) => <li key={attempt.session.id}><div><strong>{formatDateTime(attempt.session.startedAt)}</strong><span>{attempt.session.completedAt ? `완료 ${formatDateTime(attempt.session.completedAt)}` : "진행 중"}</span></div><StatusPill tone={attempt.session.id === student.latestCompletedSessionId ? "accent" : attempt.session.status === "completed" ? "neutral" : "warning"}>{attempt.session.id === student.latestCompletedSessionId ? "현재 해석" : attempt.session.status === "completed" ? "이전 완료" : "진행 중"}</StatusPill></li>)}</ol> : <p className="mom-panel-body mom-muted">아직 시작한 시도가 없습니다.</p>}</section>
+      <section className="mom-panel teacher-attempts"><div className="mom-panel-header"><div><p className="mom-eyebrow">활동 기록</p><h2>진단 참여 기록</h2></div><span className="mom-caption">가장 최근에 마친 활동만 반 요약에 사용</span></div>{attempts.length ? <ol>{attempts.map((attempt) => <li key={attempt.session.id}><div><strong>{formatDateTime(attempt.session.startedAt)}</strong><span>{attempt.session.completedAt ? `완료 ${formatDateTime(attempt.session.completedAt)}` : "진행 중"}</span></div><StatusPill tone={attempt.session.id === student.latestCompletedSessionId ? "accent" : attempt.session.status === "completed" ? "neutral" : "warning"}>{attempt.session.id === student.latestCompletedSessionId ? "현재 분석에 사용" : attempt.session.status === "completed" ? "이전 완료" : "진행 중"}</StatusPill></li>)}</ol> : <p className="mom-panel-body mom-muted">아직 시작한 활동이 없습니다.</p>}</section>
     </div>
   );
 }
 
-function TeacherEvidenceReport({ report, diagnosisSet, choiceNotes, selectedFinding, onFindingSelect }: { report: TeacherStudentReport; diagnosisSet: DiagnosisSet; choiceNotes: TeacherDistractorNote[]; selectedFinding: DiagnosisFinding | null; onFindingSelect: (finding: DiagnosisFinding | null) => void }) {
-  const finding = selectedFinding ?? report.findings[0];
-  const evidence = finding?.evidence[0];
-  const judgment = evidence ? diagnosisSet.judgments.find((item) => item.id === evidence.judgmentId) : null;
-  const stage = judgment ? diagnosisSet.learnerStages.find((item) => item.id === judgment.learnerStageId) : null;
-  const anchor = judgment ? diagnosisSet.curriculumAnchors.find((item) => item.id === judgment.curriculumAnchorIds[0]) : null;
-  const choiceNote = demoMode
-    ? {
-        title: "로컬 데모 안내",
-        text: "로컬 데모에서는 오답 해석을 불러오지 않습니다. 실제 기록에서만 표시됩니다."
-      }
-    : findChoiceNote(choiceNotes, evidence);
-  const prerequisiteStages = stage
-    ? incomingPrerequisiteEdges(diagnosisSet.manifest.id, stage.id)
-        .map((edge) => {
-          const prerequisite = grade3Semester1Diagnosis.learnerStages.find(
-            (item) => item.id === edge.fromStageId
-          );
-          const prerequisiteAnchor = prerequisite
-            ? grade3Semester1Diagnosis.curriculumAnchors.find(
-                (item) => item.id === prerequisite.curriculumAnchorIds[0]
-              )
-            : null;
-          return prerequisite && prerequisiteAnchor
-            ? { edge, prerequisite, prerequisiteAnchor }
-            : null;
-        })
-        .filter((item) => item !== null)
-    : [];
+function TeacherEvidenceReport({ studentName, report, diagnosisSet, choiceNotes, selectedFinding, onFindingSelect }: { studentName: string; report: TeacherStudentReport; diagnosisSet: DiagnosisSet; choiceNotes: TeacherDistractorNote[]; selectedFinding: DiagnosisFinding | null; onFindingSelect: (finding: DiagnosisFinding | null) => void }) {
+  const prerequisiteLinks = diagnosisSet.learnerStages.flatMap((stage) =>
+    incomingPrerequisiteEdges(diagnosisSet.manifest.id, stage.id)
+  );
+  const view = buildTeacherReportView(
+    report,
+    diagnosisSet,
+    diagnosisCatalog,
+    prerequisiteLinks
+  );
+
+  useEffect(() => {
+    if (!selectedFinding) return;
+    const target = document.getElementById(findingDomId(selectedFinding.signalId));
+    target?.scrollIntoView({ block: "start", behavior: "smooth" });
+  }, [selectedFinding]);
+
   return (
-    <div className="teacher-report-grid">
-      <section className="mom-panel">
-        <div className="mom-panel-header"><div><p className="mom-eyebrow">Observed signals</p><h2>우선 살펴볼 판단</h2></div><span className="mom-caption">관찰 {report.observedJudgmentCount} · 반복 확인 {report.confirmedFindingCount} · 추가 관찰 {report.tentativeFindingCount}</span></div>
-        <div className="teacher-findings">
-          {report.findings.map((item) => <button key={item.signalId} className={finding?.signalId === item.signalId ? "is-active" : ""} onClick={() => onFindingSelect(item)}><span><strong>{item.title}</strong><small>근거 {item.evidenceCount}개</small></span><span className="teacher-finding-marks"><ConfidenceMark confidence={item.confidence} /><SeverityMark severity={item.severity} /></span></button>)}
+    <section className="teacher-analysis-sheet" aria-label={`${studentName} 교사용 수학 생각 분석지`}>
+      <header className="teacher-analysis-header">
+        <div>
+          <p className="mom-eyebrow">교사용 분석지</p>
+          <h2>{studentName}의 수학 생각 분석지</h2>
+          <p>{diagnosisSet.manifest.title} · {formatDate(report.generatedAt)}</p>
         </div>
+        <button className="mom-button mom-button-secondary teacher-analysis-print" onClick={() => window.print()}>교사용 분석지 인쇄</button>
+      </header>
+
+      <dl className="teacher-analysis-metrics" aria-label="관찰 결과 요약">
+        <div><dt>답한 문항</dt><dd>{report.observedJudgmentCount}</dd></div>
+        <div><dt>같은 생각이 반복됨</dt><dd>{report.confirmedFindingCount}</dd></div>
+        <div><dt>한 번 더 확인 필요</dt><dd>{report.tentativeFindingCount}</dd></div>
+        <div><dt>잘 모르겠어요</dt><dd>{report.uncertaintyCount}</dd></div>
+      </dl>
+
+      <aside className="teacher-analysis-scope">
+        <strong>이 분석지가 말하는 범위</strong>
+        <p>이번 활동에서 학생이 답한 {report.observedJudgmentCount}개 문항을 바탕으로 생각의 특징을 정리했습니다. 한 문항의 오답만으로 어려움을 단정하지 않습니다. 서로 다른 두 문항에서 비슷한 생각이 반복될 때만 ‘같은 생각이 반복됨’으로 표시합니다.</p>
+      </aside>
+      {view.dataQualityNotice && <aside className="teacher-analysis-quality"><strong>응답 기록에서 확인할 점</strong><p>{view.dataQualityNotice}</p></aside>}
+
+      {view.findings.length > 0 ? <>
+        <nav className="teacher-findings" aria-label="분석지에서 살펴볼 내용">
+          <span>살펴볼 내용</span>
+          {view.findings.map(({ finding, statusLabel }, index) => (
+            <button key={finding.signalId} className={selectedFinding?.signalId === finding.signalId ? "is-active" : ""} aria-current={selectedFinding?.signalId === finding.signalId ? "true" : undefined} onClick={() => onFindingSelect(finding)}>
+              <span><small>{String(index + 1).padStart(2, "0")} · {statusLabel}</small><strong>{teacherDisplayCopy(finding.title)}</strong></span>
+              <span className="teacher-finding-marks"><small>학생 응답 {finding.evidenceCount}건</small><small>{severityLabel(finding.severity)}</small></span>
+            </button>
+          ))}
+        </nav>
+
+        <div className="teacher-analysis-findings">
+          {view.findings.map((findingView, index) => (
+            <TeacherFindingArticle
+              key={findingView.finding.signalId}
+              index={index}
+              findingView={findingView}
+              choiceNotes={choiceNotes}
+              highlighted={selectedFinding?.signalId === findingView.finding.signalId}
+            />
+          ))}
+        </div>
+      </> : <EmptyState title="먼저 살펴볼 내용이 없습니다" description="이번 기록에서는 여러 문항에 걸쳐 반복되거나 한 번 더 확인할 생각의 특징이 나타나지 않았습니다. 이 결과만으로 모든 학습 단계를 익혔다고 단정하지는 않습니다." />}
+
+      {view.unobservedSignals.length > 0 && (
+        <details className="teacher-unobserved-signals">
+          <summary>이번 활동에서 어려움이 나타나지 않은 내용 {view.unobservedSignals.length}개</summary>
+          <p>해당 내용을 확인하는 문항에서는 바르게 해결했습니다. 다만 이번 활동의 결과만으로 학습 단계 전체를 익혔다고 단정하지는 않습니다.</p>
+          <ul>{view.unobservedSignals.map((signal) => <li key={signal.id}>{teacherDisplayCopy(signal.title)}</li>)}</ul>
+        </details>
+      )}
+
+      <footer className="teacher-report-meta">진단 {report.diagnosisSetVersion} · 작성일 {formatDate(report.generatedAt)}</footer>
+    </section>
+  );
+}
+
+function TeacherFindingArticle({ index, findingView, choiceNotes, highlighted }: { index: number; findingView: TeacherReportFindingView; choiceNotes: TeacherDistractorNote[]; highlighted: boolean }) {
+  const { finding } = findingView;
+  return (
+    <article id={findingDomId(finding.signalId)} className={`teacher-analysis-finding severity-${finding.severity}${highlighted ? " is-highlighted" : ""}`} aria-labelledby={`${findingDomId(finding.signalId)}-title`}>
+      <header className="teacher-analysis-finding-header">
+        <span className="teacher-analysis-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+        <div>
+          <p>{findingView.statusLabel}</p>
+          <h3 id={`${findingDomId(finding.signalId)}-title`}>{teacherDisplayCopy(finding.title)}</h3>
+        </div>
+        <div className="teacher-analysis-priority"><span>수업 우선순위</span><strong>{severityLabel(finding.severity)}</strong></div>
+      </header>
+
+      <LearningStagePath findingView={findingView} />
+
+      <section className="teacher-analysis-section" aria-labelledby={`${findingDomId(finding.signalId)}-evidence`}>
+        <div className="teacher-analysis-section-label"><span>01</span><h4 id={`${findingDomId(finding.signalId)}-evidence`}>학생 응답 기록 {findingView.observedEvidence.length}건</h4></div>
+        <ol className="teacher-analysis-evidence-list">
+          {findingView.observedEvidence.map((item, evidenceIndex) => (
+            <TeacherEvidenceLine key={item.evidence.eventId} item={item} index={evidenceIndex} choiceNotes={choiceNotes} />
+          ))}
+        </ol>
       </section>
-      <section className="mom-panel teacher-evidence-panel">
-        {finding && evidence && judgment && stage && anchor ? <>
-          <div className="mom-panel-header"><div><p className="mom-eyebrow">Evidence trail</p><h2>{finding.title}</h2></div><span className="teacher-finding-marks"><ConfidenceMark confidence={finding.confidence} /><SeverityMark severity={finding.severity} /></span></div>
-          <div className="mom-panel-body mom-stack-lg">
-            <p className="teacher-interpretation">{finding.interpretation}</p>
-            <p className="teacher-confidence-rule">{finding.confirmationRule}</p>
-            <EvidenceRail anchor={`${anchor.id} ${anchor.label}`} stage={stage.title} evidence={evidence} choiceNote={choiceNote} />
-            {!choiceNote && <p className="teacher-choice-note-empty">이 근거에는 오답 해석이 없습니다.</p>}
-            {prerequisiteStages.length > 0 && (
-              <aside className="teacher-prerequisite-note">
-                <span>먼저 확인할 이전 학기 단계 (편집 참고)</span>
-                <ul>
-                  {prerequisiteStages.map(({ edge, prerequisite, prerequisiteAnchor }) => (
-                    <li key={edge.id}>
-                      <strong>{prerequisite.shortTitle}</strong>
-                      <small>{prerequisiteAnchor.id} · 참고</small>
-                    </li>
-                  ))}
-                </ul>
-              </aside>
-            )}
-            <div className="teacher-question-evidence"><span>학생이 본 판단</span><strong><ReadableText text={judgment.prompt} /></strong></div>
-            <div className="teacher-next-move"><span>다음 수업에서</span><p>{finding.teachingMove}</p></div>
-          </div>
-          <footer className="teacher-report-meta">콘텐츠 {report.diagnosisSetVersion} · 해석 {report.engineVersion} · {formatDate(report.generatedAt)}</footer>
-        </> : <EmptyState title="관찰 신호가 없습니다" description="이 기록에서는 우선 확인할 반복 신호가 나타나지 않았습니다." />}
-      </section>
+
+      {findingView.counterEvidence.length > 0 && (
+        <aside className="teacher-counter-evidence">
+          <strong>다르게 해결한 문항 {findingView.counterEvidence.length}건</strong>
+          <p>같은 내용을 묻는 다른 문항에서는 바르게 해결했습니다. 한 가지 어려움으로 단정하지 않고 두 응답을 함께 살펴봅니다.</p>
+          <ul>{findingView.counterEvidence.map((item) => <li key={item.evidence.eventId}><ReadableText text={item.judgment?.prompt ?? item.evidence.judgmentId} /> — <strong><ReadableText text={item.evidence.selectedChoiceLabel} /></strong></li>)}</ul>
+        </aside>
+      )}
+
+      <div className="teacher-analysis-interpretation">
+        <div><span>왜 이렇게 표시했나요?</span><p>{teacherDisplayCopy(finding.confirmationRule)}</p></div>
+        <div><span>교사가 참고할 점</span><p>{teacherDisplayCopy(finding.interpretation)}</p></div>
+      </div>
+
+      <div className="teacher-next-move"><span>3분 확인 활동</span><p>{teacherDisplayCopy(finding.teachingMove)}</p></div>
+
+      <details className="teacher-raw-evidence">
+        <summary>문항별 상세 응답 보기</summary>
+        <p>아래의 풀이 시간과 선택 변경 정보는 결과를 살펴볼 때 참고하는 자료입니다. 이것만으로 학생의 수학 수준을 단정하지 않습니다.</p>
+        {findingView.dataQualityNotes.length > 0 && <p className="teacher-quality-notes">{findingView.dataQualityNotes.join(" · ")}</p>}
+        <dl>{findingView.observedEvidence.map(({ evidence }) => <div key={evidence.eventId}><dt>{evidence.judgmentId}</dt><dd>{formatEvidenceRecord(evidence)}</dd></div>)}</dl>
+      </details>
+    </article>
+  );
+}
+
+function LearningStagePath({ findingView }: { findingView: TeacherReportFindingView }) {
+  const path = [
+    { label: "선행 단계", stages: findingView.prerequisiteStages, current: false },
+    { label: "현재 관찰", stages: findingView.currentStages, current: true },
+    { label: "이어지는 단계", stages: findingView.nextStages, current: false }
+  ];
+  return (
+    <div className="teacher-stage-path" aria-label="학습 단계 경로">
+      {path.map((group, index) => <div className={`teacher-stage-node${group.current ? " is-current" : ""}`} key={group.label}>
+        {index > 0 && <span className="teacher-stage-arrow" aria-hidden="true">→</span>}
+        <div><span>{group.label}</span>{group.stages.length > 0 ? group.stages.map(({ setKey, stage, anchorLabels }) => <p key={`${setKey}:${stage.id}`}><strong>{stage.shortTitle}</strong><small>{anchorLabels[0] ?? setKey}</small></p>) : <p><em>연결된 단계가 없습니다</em></p>}</div>
+      </div>)}
     </div>
   );
+}
+
+function TeacherEvidenceLine({ item, index, choiceNotes }: { item: TeacherReportEvidenceView; index: number; choiceNotes: TeacherDistractorNote[] }) {
+  const choiceNote = demoMode
+    ? { title: "데모 화면 안내", text: "데모 화면에서는 학생의 선택에 대한 교사용 설명을 표시하지 않습니다. 실제 활동 기록에서 확인할 수 있습니다." }
+    : findChoiceNote(choiceNotes, item.evidence);
+  return (
+    <li>
+      <div className="teacher-evidence-index">{String(index + 1).padStart(2, "0")}</div>
+      <div className="teacher-evidence-copy">
+        <p className="teacher-evidence-meta">{item.anchorLabels.join(" · ")} · {item.stage?.stage.shortTitle ?? item.evidence.learnerStageId}</p>
+        {item.judgment?.context && <p className="teacher-evidence-context"><ReadableText text={item.judgment.context} /></p>}
+        <div className="teacher-question-evidence"><span>학생이 본 문제</span><strong><ReadableText text={item.judgment?.prompt ?? item.evidence.judgmentId} /></strong></div>
+        <p className="teacher-selected-evidence"><span>학생의 선택</span><strong><ReadableText text={item.evidence.selectedChoiceLabel} /></strong></p>
+        {choiceNote ? <div className="teacher-choice-interpretation"><span>이 선택에서 확인할 생각</span><strong>{choiceNote.title}</strong><p>{choiceNote.text}</p></div> : <p className="teacher-choice-note-empty">이 선택에 대한 교사용 설명이 아직 없습니다.</p>}
+      </div>
+    </li>
+  );
+}
+
+function findingDomId(signalId: string) {
+  return `teacher-finding-${signalId.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
+}
+
+function severityLabel(severity: DiagnosisFinding["severity"]) {
+  return severity === "high" ? "먼저 확인" : severity === "medium" ? "계속 살펴보기" : "응답 더 살펴보기";
+}
+
+function teacherDisplayCopy(value: string): string {
+  return value
+    .replaceAll("같은 오답 전략이 두 문항에 반복되는지 확인할 필요가 있습니다.", "비슷한 풀이 방식이 여러 문항에서 반복되는지 확인해 주세요.")
+    .replaceAll("판단 시작점에 발판 필요", "생각을 시작할 단서가 필요함")
+    .replaceAll("판단을 시작할 기준", "생각을 시작할 단서")
+    .replaceAll("현재 콘텐츠에 정의되지 않은 선택이 있어 추가 검토가 필요합니다.", "현재 기록만으로 생각의 특징을 정하기 어려워 한 번 더 확인해야 합니다.")
+    .replaceAll("원본 이벤트와 콘텐츠 버전을 확인하세요.", "활동 기록을 다시 확인해 주세요.")
+    .replaceAll("추가 관찰 필요", "한 번 더 확인 필요");
+}
+
+function formatEvidenceRecord(evidence: TeacherReportEvidenceView["evidence"]) {
+  const duration = evidence.durationBand === "quick" ? "빠른 선택" : evidence.durationBand === "long" ? "오래 고민" : "충분히 고민";
+  return `${duration} · 선택 변경 ${evidence.selectionChanges}회${evidence.uncertainty ? " · 잘 모르겠어요 사용" : ""}`;
 }
 
 function ParentShareReport({ report, exporting, onExport }: { report: ParentReport; exporting: boolean; onExport: () => Promise<void> }) {
@@ -945,7 +1072,7 @@ function ParentShareDocument({ report, action }: { report: ParentReport; action?
       <div className="parent-report-intro"><span aria-hidden="true">∴</span><p>{report.participation}<br />{report.closing}</p></div>
       <section><p className="parent-section-number">01</p><h2>지금 잘 이어가고 있어요</h2><ul>{report.strengths.map((strength) => <li key={strength}>{strength}</li>)}</ul></section>
       <section><p className="parent-section-number">02</p><h2>함께 연습하고 있어요</h2><div className="parent-support-list">{report.supportAreas.map((area) => <article key={area.title}><h3>{area.title}</h3><p>{area.observation}</p><strong>집에서 이렇게 물어봐 주세요</strong><p>{area.homePrompt}</p></article>)}</div></section>
-      <footer>{report.disclaimer}<br />학생 번호, 클래스 코드, 정오답 수는 이 공유 문서에 포함하지 않습니다.</footer>
+      <footer>{report.disclaimer}<br />학생 번호, 학급 코드, 정오답 수는 이 공유 문서에 포함하지 않습니다.</footer>
     </section>
   );
 }
@@ -1001,15 +1128,15 @@ function AssignmentPage({ diagnosisSets, classes, onAssigned, onCreateClass }: {
   }
   return (
     <div className="teacher-page mom-stack-lg">
-      <PageHeader eyebrow="진단 배정" title="한 번에 한 결정씩 배정합니다" description="이미 시작된 배정의 콘텐츠 버전은 바뀌지 않습니다." />
-      <ol className="teacher-stepper"><li className={step >= 1 ? "is-active" : ""}>1 클래스</li><li className={step >= 2 ? "is-active" : ""}>2 진단</li><li className={step >= 3 ? "is-active" : ""}>3 일정</li><li className={step >= 4 ? "is-active" : ""}>4 검토</li></ol>
+      <PageHeader eyebrow="진단 배정" title="진단 활동을 배정합니다" description="학급과 진단, 운영 기간을 차례로 선택해 주세요." />
+      <ol className="teacher-stepper"><li className={step >= 1 ? "is-active" : ""}>1 학급</li><li className={step >= 2 ? "is-active" : ""}>2 진단</li><li className={step >= 3 ? "is-active" : ""}>3 일정</li><li className={step >= 4 ? "is-active" : ""}>4 확인</li></ol>
       <section className="mom-panel teacher-assignment-panel"><div className="mom-panel-body mom-stack-lg">
-        {step === 1 && <DecisionBlock number="01" title="어느 반에 배정할까요?" description="로그인한 교사가 소유한 활성 클래스만 표시합니다.">{classes.length === 0 ? <div className="mom-stack"><p className="mom-muted">첫 클래스를 만들면 입장 코드가 한 번 표시됩니다.</p><label className="mom-input-group">클래스 이름<input className="mom-input" value={newClassName} onChange={(event) => setNewClassName(event.target.value.slice(0, 60))} /></label><ClassTermSelect value={newClassTerm} onChange={setNewClassTerm} /><button type="button" className="mom-button mom-button-secondary" disabled={!newClassName.trim()} onClick={() => void onCreateClass(classCreationInput(newClassName.trim(), newClassTerm)).catch((cause) => setError(cause instanceof Error ? cause.message : "클래스를 만들지 못했습니다."))}>클래스 만들기</button></div> : classes.map((item) => <button type="button" key={item.id} className={`teacher-decision ${selectedClass?.id === item.id ? "is-selected" : ""}`} onClick={() => setSelectedClassId(item.id)}><strong>{item.name}</strong><span>{item.grade}학년 {item.semester}학기</span></button>)}</DecisionBlock>}
-        {step === 2 && <DecisionBlock number="02" title="어떤 진단을 사용할까요?" description="검수 완료된 발행 버전만 선택할 수 있습니다.">{diagnosisSets.length === 0 ? <p className="mom-form-error">배정할 수 있는 발행 콘텐츠가 없습니다.</p> : diagnosisSets.map((diagnosis) => <button key={diagnosis.id} className={`teacher-decision ${selected?.id === diagnosis.id ? "is-selected" : ""}`} onClick={() => setSelectedId(diagnosis.id)}><strong>{diagnosis.content.manifest.title}</strong><span>v{diagnosis.version} · {diagnosis.content.manifest.units.length}개 단원 · {diagnosis.content.judgments.length}개 판단 · 약 {diagnosis.content.manifest.estimatedMinutes}분</span></button>)}</DecisionBlock>}
+        {step === 1 && <DecisionBlock number="01" title="어느 반에 배정할까요?" description="내가 만든 학급만 표시합니다.">{classes.length === 0 ? <div className="mom-stack"><p className="mom-muted">첫 학급을 만들면 입장 코드가 한 번 표시됩니다.</p><label className="mom-input-group">학급 이름<input className="mom-input" value={newClassName} onChange={(event) => setNewClassName(event.target.value.slice(0, 60))} /></label><ClassTermSelect value={newClassTerm} onChange={setNewClassTerm} /><button type="button" className="mom-button mom-button-secondary" disabled={!newClassName.trim()} onClick={() => void onCreateClass(classCreationInput(newClassName.trim(), newClassTerm)).catch((cause) => setError(cause instanceof Error ? cause.message : "학급을 만들지 못했습니다."))}>학급 만들기</button></div> : classes.map((item) => <button type="button" key={item.id} className={`teacher-decision ${selectedClass?.id === item.id ? "is-selected" : ""}`} onClick={() => setSelectedClassId(item.id)}><strong>{item.name}</strong><span>{item.grade}학년 {item.semester}학기</span></button>)}</DecisionBlock>}
+        {step === 2 && <DecisionBlock number="02" title="어떤 진단을 사용할까요?" description="검토가 끝난 진단만 선택할 수 있습니다.">{diagnosisSets.length === 0 ? <p className="mom-form-error">지금 배정할 수 있는 진단이 없습니다.</p> : diagnosisSets.map((diagnosis) => <button key={diagnosis.id} className={`teacher-decision ${selected?.id === diagnosis.id ? "is-selected" : ""}`} onClick={() => setSelectedId(diagnosis.id)}><strong>{diagnosis.content.manifest.title}</strong><span>v{diagnosis.version} · {diagnosis.content.manifest.units.length}개 단원 · {diagnosis.content.judgments.length}개 문항 · 약 {diagnosis.content.manifest.estimatedMinutes}분</span></button>)}</DecisionBlock>}
         {step === 3 && <DecisionBlock number="03" title="언제까지 열어둘까요?" description="시작한 학생은 마감 뒤에도 교사가 종료하기 전까지 이어갈 수 있습니다."><div className="teacher-date-grid"><label className="mom-input-group">시작<input className="mom-input" type="date" value={opensDate} onChange={(event) => setOpensDate(event.target.value)} /></label><label className="mom-input-group">마감<input className="mom-input" type="date" min={opensDate} value={closesDate} onChange={(event) => setClosesDate(event.target.value)} /></label></div></DecisionBlock>}
-        {step === 4 && selected && selectedClass && <DecisionBlock number="04" title="배정 내용을 확인해 주세요" description="배정 뒤에는 콘텐츠 버전을 바꾸지 않습니다."><dl className="teacher-review-list"><div><dt>클래스</dt><dd>{selectedClass.name}</dd></div><div><dt>진단</dt><dd>{selected.content.manifest.title} v{selected.version}</dd></div><div><dt>콘텐츠 체크섬</dt><dd className="mom-mono">{selected.checksum.slice(0, 16)}…</dd></div><div><dt>기간</dt><dd>{opensDate}—{closesDate}</dd></div></dl>{hasTermMismatch && <p className="teacher-term-warning" role="status">클래스는 {selectedClass.grade}학년 {selectedClass.semester}학기이고 진단은 {selected.content.manifest.grade}학년 {selected.content.manifest.semester}학기입니다. 학년·학기를 다시 확인해 주세요.</p>}</DecisionBlock>}
+        {step === 4 && selected && selectedClass && <DecisionBlock number="04" title="배정 내용을 확인해 주세요" description="학생이 시작한 뒤에는 같은 진단 내용이 유지됩니다."><dl className="teacher-review-list"><div><dt>학급</dt><dd>{selectedClass.name}</dd></div><div><dt>진단</dt><dd>{selected.content.manifest.title} v{selected.version}</dd></div><div><dt>문항 수</dt><dd>{selected.content.judgments.length}개</dd></div><div><dt>기간</dt><dd>{opensDate}—{closesDate}</dd></div></dl>{hasTermMismatch && <p className="teacher-term-warning" role="status">학급은 {selectedClass.grade}학년 {selectedClass.semester}학기이고 진단은 {selected.content.manifest.grade}학년 {selected.content.manifest.semester}학기입니다. 학년·학기를 다시 확인해 주세요.</p>}</DecisionBlock>}
         {error && <p className="mom-form-error" role="alert">{error}</p>}
-        <div className="mom-row-between"><button type="button" className="mom-button mom-button-quiet" disabled={step === 1 || saving} onClick={() => setStep((value) => value - 1)}>이전 결정</button><button type="button" className="mom-button mom-button-primary" disabled={!selected || !selectedClass || saving || closesDate < opensDate} onClick={() => { if (step < 4) setStep((value) => value + 1); else void submitAssignment(); }}>{saving ? "저장 중…" : step < 4 ? "다음 결정" : "이 내용으로 배정"}</button></div>
+        <div className="mom-row-between"><button type="button" className="mom-button mom-button-quiet" disabled={step === 1 || saving} onClick={() => setStep((value) => value - 1)}>이전</button><button type="button" className="mom-button mom-button-primary" disabled={!selected || !selectedClass || saving || closesDate < opensDate} onClick={() => { if (step < 4) setStep((value) => value + 1); else void submitAssignment(); }}>{saving ? "저장 중…" : step < 4 ? "다음" : "이 내용으로 배정"}</button></div>
       </div></section>
     </div>
   );
@@ -1056,13 +1183,13 @@ function RosterPage({ students, classes, selectedClass, onAdd, onCreateClass, on
   }
   return (
     <div className="teacher-page mom-stack-lg">
-      <PageHeader eyebrow="클래스·학생" title="번호는 필수, 별칭은 선택" description="실명은 받지 않습니다. 학생별 개인 코드는 생성·재발급 때 한 번만 보여 주고 해시로 보관합니다." action={classes.length ? <button className="mom-button mom-button-secondary" onClick={() => void onRotate().catch((cause) => setError(cause instanceof Error ? cause.message : "입장 코드를 바꾸지 못했습니다."))}>입장 코드 바꾸기</button> : undefined} />
-      {classes.length === 0 ? <section className="mom-panel"><div className="mom-panel-body mom-stack-lg"><div><p className="mom-eyebrow">First class</p><h2>첫 클래스를 만들어 주세요</h2><p className="mom-muted">학년·학기를 선택해 파일럿 클래스를 시작합니다.</p></div><label className="mom-input-group">클래스 이름<input className="mom-input" value={className} onChange={(event) => setClassName(event.target.value.slice(0, 60))} /></label><ClassTermSelect value={classTerm} onChange={setClassTerm} /><button className="mom-button mom-button-primary" disabled={!className.trim()} onClick={() => void onCreateClass(classCreationInput(className.trim(), classTerm)).catch((cause) => setError(cause instanceof Error ? cause.message : "클래스를 만들지 못했습니다."))}>클래스 만들기</button></div></section> : <section className="teacher-code-strip"><div><span>{selectedClass?.name ?? "클래스 선택"}</span><strong>{selectedClass?.joinCode ?? "코드 비공개"}</strong></div><p>원문 코드는 생성·재발급 직후에만 표시합니다.<br />분실했다면 새 코드를 발급해 주세요.</p></section>}
-      {classes.length > 0 && <section className="teacher-class-create"><div><p className="mom-eyebrow">New pilot class</p><strong>다른 클래스 추가</strong></div><label className="mom-input-group">클래스 이름<input className="mom-input" value={className} onChange={(event) => setClassName(event.target.value.slice(0, 60))} /></label><ClassTermSelect value={classTerm} onChange={setClassTerm} /><button className="mom-button mom-button-secondary" disabled={!className.trim()} onClick={() => void onCreateClass(classCreationInput(className.trim(), classTerm)).catch((cause) => setError(cause instanceof Error ? cause.message : "클래스를 만들지 못했습니다."))}>클래스 만들기</button></section>}
+      <PageHeader eyebrow="학급·학생" title="번호는 필수, 별칭은 선택" description="학생의 실명은 받지 않습니다. 개인 코드는 만들거나 다시 발급한 직후에만 표시되므로 학생에게 바로 전달해 주세요." action={classes.length ? <button className="mom-button mom-button-secondary" onClick={() => void onRotate().catch((cause) => setError(cause instanceof Error ? cause.message : "입장 코드를 바꾸지 못했습니다."))}>입장 코드 바꾸기</button> : undefined} />
+      {classes.length === 0 ? <section className="mom-panel"><div className="mom-panel-body mom-stack-lg"><div><p className="mom-eyebrow">첫 학급 만들기</p><h2>첫 학급을 만들어 주세요</h2><p className="mom-muted">학년·학기를 선택해 학급을 시작합니다.</p></div><label className="mom-input-group">학급 이름<input className="mom-input" value={className} onChange={(event) => setClassName(event.target.value.slice(0, 60))} /></label><ClassTermSelect value={classTerm} onChange={setClassTerm} /><button className="mom-button mom-button-primary" disabled={!className.trim()} onClick={() => void onCreateClass(classCreationInput(className.trim(), classTerm)).catch((cause) => setError(cause instanceof Error ? cause.message : "학급을 만들지 못했습니다."))}>학급 만들기</button></div></section> : <section className="teacher-code-strip"><div><span>{selectedClass?.name ?? "학급 선택"}</span><strong>{selectedClass?.joinCode ?? "코드 비공개"}</strong></div><p>입장 코드는 만들거나 다시 발급한 직후에만 표시됩니다.<br />분실했다면 새 코드를 발급해 주세요.</p></section>}
+      {classes.length > 0 && <section className="teacher-class-create"><div><p className="mom-eyebrow">새 학급</p><strong>다른 학급 추가</strong></div><label className="mom-input-group">학급 이름<input className="mom-input" value={className} onChange={(event) => setClassName(event.target.value.slice(0, 60))} /></label><ClassTermSelect value={classTerm} onChange={setClassTerm} /><button className="mom-button mom-button-secondary" disabled={!className.trim()} onClick={() => void onCreateClass(classCreationInput(className.trim(), classTerm)).catch((cause) => setError(cause instanceof Error ? cause.message : "학급을 만들지 못했습니다."))}>학급 만들기</button></section>}
       {error && <p className="mom-form-error" role="alert">{error}</p>}
       <div className="teacher-roster-grid">
-        <section className="mom-panel"><div className="mom-panel-header"><div><p className="mom-eyebrow">Roster</p><h2>학생 {students.length}명</h2></div></div><table className="teacher-table"><thead><tr><th>번호</th><th>별칭</th><th>진행</th><th>개인 코드</th></tr></thead><tbody>{students.map((student) => <tr key={student.id}><td><strong>{student.rosterKey}</strong></td><td>{student.alias ?? <span className="mom-muted">사용 안 함</span>}</td><td>{student.status === "completed" ? "완료" : student.status === "in_progress" ? "진행 중" : student.status === "interpretation_pending" ? "해석 대기" : "시작 전"}</td><td><button type="button" className="mom-button mom-button-quiet" onClick={() => void onRotateStudent(student.id).catch((cause) => setError(cause instanceof Error ? cause.message : "개인 코드를 바꾸지 못했습니다."))}>재발급</button></td></tr>)}</tbody></table></section>
-        <form className="mom-panel" onSubmit={submit}><div className="mom-panel-body mom-stack-lg"><div><p className="mom-eyebrow">Add student</p><h2>학생 한 명 추가</h2></div><label className="mom-input-group">번호 <span>필수</span><input className="mom-input" inputMode="numeric" pattern="[0-9]+" value={key} onChange={(event) => setKey(event.target.value.replace(/\D/g, "").slice(0, 3))} placeholder="예: 8" required /></label><label className="mom-input-group">별칭 <span>선택</span><input className="mom-input" value={alias} onChange={(event) => setAlias(event.target.value.slice(0, 12))} placeholder="예: 민들레" /><small>실명 대신 학생과 합의한 별칭을 사용하세요.</small></label><button className="mom-button mom-button-primary mom-button-block" disabled={saving || classes.length === 0}>{saving ? "저장 중…" : "학생 추가"}</button></div></form>
+        <section className="mom-panel"><div className="mom-panel-header"><div><p className="mom-eyebrow">학생 명단</p><h2>학생 {students.length}명</h2></div></div><table className="teacher-table"><thead><tr><th>번호</th><th>별칭</th><th>진행</th><th>개인 코드</th></tr></thead><tbody>{students.map((student) => <tr key={student.id}><td><strong>{student.rosterKey}</strong></td><td>{student.alias ?? <span className="mom-muted">사용 안 함</span>}</td><td>{student.status === "completed" ? "완료" : student.status === "in_progress" ? "진행 중" : student.status === "interpretation_pending" ? "결과 준비 중" : "시작 전"}</td><td><button type="button" className="mom-button mom-button-quiet" onClick={() => void onRotateStudent(student.id).catch((cause) => setError(cause instanceof Error ? cause.message : "개인 코드를 바꾸지 못했습니다."))}>재발급</button></td></tr>)}</tbody></table></section>
+        <form className="mom-panel" onSubmit={submit}><div className="mom-panel-body mom-stack-lg"><div><p className="mom-eyebrow">학생 추가</p><h2>학생 한 명 추가</h2></div><label className="mom-input-group">번호 <span>필수</span><input className="mom-input" inputMode="numeric" pattern="[0-9]+" value={key} onChange={(event) => setKey(event.target.value.replace(/\D/g, "").slice(0, 3))} placeholder="예: 8" required /></label><label className="mom-input-group">별칭 <span>선택</span><input className="mom-input" value={alias} onChange={(event) => setAlias(event.target.value.slice(0, 12))} placeholder="예: 민들레" /><small>실명 대신 학생과 합의한 별칭을 사용하세요.</small></label><button className="mom-button mom-button-primary mom-button-block" disabled={saving || classes.length === 0}>{saving ? "저장 중…" : "학생 추가"}</button></div></form>
       </div>
     </div>
   );
@@ -1109,7 +1236,7 @@ function classCreationInput(
 }
 
 function SettingsPage({ profile, selectedClass }: { profile: TeacherProfileRecord | null; selectedClass?: TeacherClassRecord }) {
-  return <div className="teacher-page mom-stack-lg"><PageHeader eyebrow="설정" title="교사 계정과 데이터 원칙" description="AI 요약 설정은 Phase 3 전까지 노출하지 않습니다." /><section className="mom-panel"><div className="mom-panel-body teacher-settings"><div><span>표시 이름</span><strong>{profile?.displayName ?? "불러오는 중"}</strong></div><div><span>이메일</span><strong>{profile?.email ?? "인증 계정"}</strong></div><div><span>학생 개인정보</span><strong>번호 필수 · 별칭 선택 · 실명 미수집 · 개인 코드 해시 보관</strong></div><div><span>학부모 공유</span><strong>교사 검토 후 인쇄/PDF 저장</strong></div>{selectedClass && <><div><span>파일럿 종료</span><strong>{formatDate(selectedClass.pilotEndsAt)}</strong></div><div><span>자동 삭제 예정</span><strong>{formatDate(selectedClass.purgeAfter)}</strong></div></>}</div></section></div>;
+  return <div className="teacher-page mom-stack-lg"><PageHeader eyebrow="설정" title="교사 계정과 데이터 원칙" description="계정 정보와 학생 자료의 보관 원칙을 확인할 수 있습니다." /><section className="mom-panel"><div className="mom-panel-body teacher-settings"><div><span>표시 이름</span><strong>{profile?.displayName ?? "불러오는 중"}</strong></div><div><span>이메일</span><strong>{profile?.email ?? "인증 계정"}</strong></div><div><span>학생 개인정보</span><strong>번호 필수 · 별칭 선택 · 실명 미수집 · 개인 코드는 안전하게 보호</strong></div><div><span>가정 공유</span><strong>교사가 확인한 뒤 인쇄하거나 PDF로 저장</strong></div>{selectedClass && <><div><span>시범 운영 종료</span><strong>{formatDate(selectedClass.pilotEndsAt)}</strong></div><div><span>자료 삭제 예정일</span><strong>{formatDate(selectedClass.purgeAfter)}</strong></div></>}</div></section></div>;
 }
 
 function PageHeader({ eyebrow, title, description, action }: { eyebrow: string; title: string; description: string; action?: ReactNode }) {

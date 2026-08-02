@@ -213,7 +213,7 @@ describe("diagnosis rules v3", () => {
     expect(resolution()).toEqual({
       confidence: "confirmed",
       tentativeReasons: [],
-      confirmationRule: "서로 다른 두 문항에서 같은 신호가 나타났습니다."
+      confirmationRule: "서로 다른 두 문항에서 비슷한 생각이 반복되었습니다."
     });
   });
 

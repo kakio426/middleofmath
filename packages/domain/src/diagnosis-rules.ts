@@ -141,19 +141,19 @@ export function confirmationRuleCopy(
   const primary = tentativeReasons[0];
   switch (primary) {
     case "insufficient_opportunity":
-      return "이 활동에는 같은 신호를 확인할 문항이 한 개뿐이었습니다.";
+      return "이 활동에는 같은 생각이 나타나는지 확인할 문항이 한 개뿐이었습니다.";
     case "single_observation":
       return "이 활동에서 한 번만 나타났습니다. 확정하지 않고 다시 살펴봅니다.";
     case "position_style":
-      return "보기 위치를 반복해서 고른 흔적이 있어 판단 근거로 확정하지 않습니다.";
+      return "보기의 같은 위치를 반복해서 고른 흔적이 있어 이 결과만으로 어려움을 단정하지 않습니다.";
     case "too_fast":
-      return "선택까지 걸린 시간이 매우 짧아 판단 근거로 확정하지 않습니다.";
+      return "선택까지 걸린 시간이 매우 짧아 이 결과만으로 어려움을 단정하지 않습니다.";
     case "uncertainty_only":
       return "‘잘 모르겠어요’를 사용해 시작 발판이 필요한 상태로 봅니다.";
     case "data_quality":
-      return "기록과 콘텐츠 버전을 확인해야 합니다.";
+      return "활동 기록을 다시 확인해야 합니다.";
     default:
-      return "서로 다른 두 문항에서 같은 신호가 나타났습니다.";
+      return "서로 다른 두 문항에서 비슷한 생각이 반복되었습니다.";
   }
 }
 
@@ -180,7 +180,7 @@ function normalizeLegacyFinding(value: unknown): DiagnosisFinding {
     : [];
   return {
     signalId: String(finding.signalId ?? "needs-review"),
-    title: String(finding.title ?? "추가 관찰 필요"),
+    title: String(finding.title ?? "한 번 더 확인 필요"),
     severity: finding.severity === "high" || finding.severity === "medium"
       ? finding.severity
       : "low",
@@ -197,7 +197,7 @@ function normalizeLegacyFinding(value: unknown): DiagnosisFinding {
     ),
     counterJudgmentIds: [],
     confirmationRule:
-      "이전 엔진(rules-2.0.0) 해석입니다. 새 기준으로 다시 해석해야 합니다.",
+      "이전 기준으로 만든 결과입니다. 현재 기준으로 다시 분석해야 합니다.",
     learnerStageIds: Array.isArray(finding.learnerStageIds)
       ? uniqueStrings(finding.learnerStageIds)
       : [],

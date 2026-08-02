@@ -3720,14 +3720,14 @@ export function EvidenceRail({
     <ol className="mom-evidence-rail">
       <li><span>교육과정</span><strong>{anchor}</strong></li>
       <li><span>작은 학습 단계</span><strong>{stage}</strong></li>
-      <li><span>관찰 근거</span><strong><ReadableText text={evidence.selectedChoiceLabel} /></strong><small>{formatEvidence(evidence)}</small></li>
-      {choiceNote && <li><span>오답 해석</span><strong>{choiceNote.title}</strong><small>{choiceNote.text}</small></li>}
+      <li><span>학생 응답 기록</span><strong><ReadableText text={evidence.selectedChoiceLabel} /></strong><small>{formatEvidence(evidence)}</small></li>
+      {choiceNote && <li><span>이 선택에서 확인할 생각</span><strong>{choiceNote.title}</strong><small>{choiceNote.text}</small></li>}
     </ol>
   );
 }
 
 export function SeverityMark({ severity }: { severity: Severity }) {
-  const label = severity === "high" ? "우선 확인" : severity === "medium" ? "관찰됨" : "근거 더 필요";
+  const label = severity === "high" ? "먼저 확인" : severity === "medium" ? "계속 살펴보기" : "응답 더 필요";
   return <StatusPill tone={severity === "high" ? "risk" : severity === "medium" ? "warning" : "neutral"}>{label}</StatusPill>;
 }
 
@@ -3738,7 +3738,7 @@ export function ConfidenceMark({
 }) {
   return (
     <StatusPill tone={confidence === "confirmed" ? "warning" : "neutral"}>
-      {confidence === "confirmed" ? "반복 확인" : "한 번 관찰"}
+      {confidence === "confirmed" ? "같은 생각이 반복됨" : "한 번 더 확인 필요"}
     </StatusPill>
   );
 }

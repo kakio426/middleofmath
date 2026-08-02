@@ -177,7 +177,7 @@ describe("EvidenceRail", () => {
       choiceNote: { title: "눈금 수를 값으로 읽음", text: "한 칸의 값을 다시 확인합니다." }
     }));
     expect(markup.match(/<li>/g)).toHaveLength(4);
-    expect(markup).toContain("오답 해석");
+    expect(markup).toContain("이 선택에서 확인할 생각");
   });
 
   it("keeps the legacy three-step rail when no choice interpretation exists", () => {
@@ -187,7 +187,7 @@ describe("EvidenceRail", () => {
       evidence
     }));
     expect(markup.match(/<li>/g)).toHaveLength(3);
-    expect(markup).not.toContain("오답 해석");
+    expect(markup).not.toContain("이 선택에서 확인할 생각");
   });
 });
 
@@ -1329,8 +1329,8 @@ describe("ConfidenceMark", () => {
       createElement(ConfidenceMark, { confidence: "confirmed" })
     );
 
-    expect(markup).toContain("반복 확인");
-    expect(markup).not.toMatch(/우선 확인|관찰됨|근거 더 필요|rules-/);
+    expect(markup).toContain("같은 생각이 반복됨");
+    expect(markup).not.toMatch(/먼저 확인|계속 살펴보기|응답 더 필요|rules-/);
   });
 
   it("labels thin evidence as one observation without an engine identifier", () => {
@@ -1338,7 +1338,7 @@ describe("ConfidenceMark", () => {
       createElement(ConfidenceMark, { confidence: "tentative" })
     );
 
-    expect(markup).toContain("한 번 관찰");
-    expect(markup).not.toMatch(/우선 확인|관찰됨|근거 더 필요|rules-/);
+    expect(markup).toContain("한 번 더 확인 필요");
+    expect(markup).not.toMatch(/먼저 확인|계속 살펴보기|응답 더 필요|rules-/);
   });
 });
