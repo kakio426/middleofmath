@@ -30,12 +30,12 @@ insert into public.students (id, class_id, roster_key, join_secret_hash)
 values ('13000000-0000-0000-0000-000000000001', '12000000-0000-0000-0000-000000000001', '1', extensions.crypt('SAFE27', extensions.gen_salt('bf')));
 
 insert into public.assignments (
-  id, class_id, diagnosis_set_id, diagnosis_set_version, status, opens_at, created_by
+  id, class_id, diagnosis_set_id, diagnosis_set_version, unit_id, status, opens_at, created_by
 )
 select
   '14000000-0000-0000-0000-000000000001',
   '12000000-0000-0000-0000-000000000001',
-  id, version, 'active', now() - interval '1 minute',
+  id, version, 'multiplication', 'active', now() - interval '1 minute',
   '11000000-0000-0000-0000-000000000001'
 from public.diagnosis_sets
 where set_key = 'grade3-semester2' and version = '1.0.0';

@@ -86,7 +86,7 @@ describe("teacher insight row mapping", () => {
       confidence: "tentative",
       tentativeReasons: ["data_quality"],
       confirmationRule:
-        "이전 엔진(rules-2.0.0) 해석입니다. 새 기준으로 다시 해석해야 합니다."
+        "이전 기준으로 만든 결과입니다. 현재 기준으로 다시 분석해야 합니다."
     });
     expect(mapped.report.confirmedFindingCount).toBe(0);
   });

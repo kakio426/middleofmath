@@ -71,6 +71,13 @@ CI는 세 검사를 모두 통과해야 staging release를 시작한다. release
 특정 값으로 고정하지 않고 교사 화면에 표시된 발행 콘텐츠의 판단 수와
 학생이 실제로 푼 수를 비교한다.
 
+실교실 배정은 학기 발행본과 단원 하나를 함께 선택한다. `assignments.unit_id`가
+학생 목록의 단원 카드, 서버가 허용하는 문항, 세션 완료에 필요한 문항 수,
+교사용 분석 범위의 단일 기준이다. 이전 배정의 `unit_id is null`은 호환을 위해
+학기 전체 범위로 해석하지만 새 파일럿 배정에는 사용하지 않는다. 서버는 배정
+단원 밖의 문항 이벤트를 거부하고 배정 단원의 모든 문항이 저장된 뒤에만 완료로
+바꾼다.
+
 ## 배포 순서
 
 1. `main`의 CI가 타입 검사, Vitest와 기존 하네스, 전체 빌드, 로컬 migration·pgTAP, Playwright를 통과한다.
@@ -116,5 +123,9 @@ SQL에서 다시 계산하지는 않는다. 운영 발행 전에는 `npm test`,
 신규 환경의 `seed.sql`도 `grade3-semester2@1.0.0`에 같은 범위의
 레거시 gate를 함께 넣는다. migration 장애를 조사할 때 운영 DB를
 reset하지 말고, `template0`에서 만든 임시 DB에 전체 migration과
-seed를 재생한 뒤 임시 DB를 삭제한다. 현재 전체 체인은 27개 migration,
-16개 pgTAP 파일·260개 assertion이다.
+seed를 재생한 뒤 임시 DB를 삭제한다. 현재 전체 체인은 36개 migration,
+30개 pgTAP 파일·497개 assertion이다.
+
+교실 준비 문서는 [태블릿 25대 실교실 리허설](./pilot-25-tablet-rehearsal.md),
+[파일럿 관찰 기록지](./pilot-observation-sheet.md),
+[보호자 안내문 초안](./pilot-guardian-notice-template.md)을 사용한다.

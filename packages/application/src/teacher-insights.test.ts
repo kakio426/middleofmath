@@ -219,6 +219,37 @@ describe("teacher assignment insights", () => {
     expect(reports.exports).toHaveLength(0);
   });
 
+  it("interprets a real assignment only within its selected unit", async () => {
+    const source = bundle();
+    source.assignment.unitId = "multiplication";
+    source.students[0].sessions.at(-1)!.events.push({
+      ...event("session-latest"),
+      id: "event-outside-unit",
+      clientEventId: "client-outside-unit",
+      clientSeq: 3,
+      judgmentId: "g3s2-div-01",
+      payload: {
+        ...event("session-latest").payload,
+        choiceId: "outside-unit-choice"
+      }
+    });
+
+    const result = await new GenerateAssignmentInsights(
+      new Insights(source),
+      new Reports(),
+      clock
+    ).execute("assignment-1");
+
+    expect(result.students[0].report).toMatchObject({
+      observedJudgmentCount: 1,
+      diagnosisSetId: "grade3-semester2"
+    });
+    expect(result.classSummary.items[0]).toMatchObject({
+      unitId: "multiplication",
+      unitTitle: "곱셈"
+    });
+  });
+
   it("returns exact teacher notes and degrades safely when note retrieval fails", async () => {
     const source = bundle();
     const note: TeacherDistractorNote = {
@@ -307,6 +338,7 @@ describe("teacher assignment insights", () => {
 
   it("persists a parent snapshot only through explicit export", async () => {
     const source = bundle();
+    source.assignment.unitId = "multiplication";
     const reports = new Reports();
     await new GenerateAssignmentInsights(new Insights(source), reports, clock).execute("assignment-1");
     expect(reports.exports).toHaveLength(0);
@@ -317,6 +349,7 @@ describe("teacher assignment insights", () => {
       clock
     ).execute({ sessionId: "session-latest", reviewedBy: "teacher-1" });
     expect(exported.report.studentLabel).toBe("별빛");
+    expect(exported.report.diagnosisTitle).toContain("1단원 곱셈");
     expect(reports.saveRunCalls).toBe(1);
     expect(reports.exports).toHaveLength(1);
     expect(JSON.stringify(exported.report)).not.toContain("event-session-latest");

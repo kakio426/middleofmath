@@ -19,16 +19,17 @@ test("초대 교사부터 학부모 PDF 요청까지 실제 staging 파일럿 �
   await expect(teacher.getByRole("heading", { name: "반에서 함께 다시 볼 생각" })).toBeVisible();
 
   const pilotName = `파일럿 ${Date.now()}`;
-  await teacher.getByRole("button", { name: "클래스·학생" }).click();
-  const hasExistingClass = Boolean(await teacher.getByLabel("현재 클래스").inputValue());
+  await teacher.getByRole("button", { name: "학급·학생" }).click();
+  const hasExistingClass = Boolean(await teacher.getByLabel("현재 학급").inputValue());
   if (!hasExistingClass) {
-    await teacher.getByLabel("클래스 이름").fill(pilotName);
-    await teacher.getByRole("button", { name: "클래스 만들기" }).click();
+    await teacher.getByLabel("학급 이름").fill(pilotName);
+    await teacher.getByRole("button", { name: "학급 만들기" }).click();
   } else {
-    await teacher.locator(".teacher-class-create").getByLabel("클래스 이름").fill(pilotName);
-    await teacher.getByRole("button", { name: "3학년 2학기 클래스 만들기" }).click();
+    const newClass = teacher.locator(".teacher-class-create");
+    await newClass.getByLabel("학급 이름").fill(pilotName);
+    await newClass.getByRole("button", { name: "학급 만들기" }).click();
   }
-  await expect(teacher.getByLabel("현재 클래스")).toContainText(pilotName);
+  await expect(teacher.getByLabel("현재 학급")).toContainText(pilotName);
   const joinCode = (await teacher.locator(".teacher-code-strip strong").textContent())?.trim();
   expect(joinCode).toMatch(/^[A-Z0-9]{6}$/);
 
@@ -41,17 +42,22 @@ test("초대 교사부터 학부모 PDF 요청까지 실제 staging 파일럿 �
 
   await teacher.getByRole("button", { name: "진단 배정" }).click();
   await teacher.getByRole("button", { name: new RegExp(pilotName) }).click();
-  await teacher.getByRole("button", { name: "다음 결정" }).click();
-  const diagnosisDecision = teacher.locator(".teacher-decision").first();
-  const diagnosisSummary = await diagnosisDecision.textContent();
+  await teacher.getByRole("button", { name: "다음" }).click();
+  const diagnosisDecision = teacher.locator(".teacher-decision").filter({
+    hasText: "3학년 2학기"
+  }).first();
+  await diagnosisDecision.click();
+  await teacher.getByRole("button", { name: "다음" }).click();
+  const unitDecision = teacher.locator(".teacher-decision").first();
+  const diagnosisSummary = await unitDecision.textContent();
   const expectedJudgmentCount = Number(
-    diagnosisSummary?.match(/(\d+)개 판단/)?.[1] ?? 0
+    diagnosisSummary?.match(/(\d+)개 문항/)?.[1] ?? 0
   );
   expect(expectedJudgmentCount).toBeGreaterThan(0);
-  expect(expectedJudgmentCount).toBeLessThanOrEqual(80);
-  await diagnosisDecision.click();
-  await teacher.getByRole("button", { name: "다음 결정" }).click();
-  await teacher.getByRole("button", { name: "다음 결정" }).click();
+  expect(expectedJudgmentCount).toBeLessThanOrEqual(14);
+  await unitDecision.click();
+  await teacher.getByRole("button", { name: "다음" }).click();
+  await teacher.getByRole("button", { name: "다음" }).click();
   await teacher.getByRole("button", { name: "이 내용으로 배정" }).click();
 
   const studentContext = await browser.newContext({ ...devicesTablet() });
@@ -79,10 +85,10 @@ test("초대 교사부터 학부모 PDF 요청까지 실제 staging 파일럿 �
   expect(observedJudgmentCount).toBe(expectedJudgmentCount);
 
   await teacher.getByRole("button", { name: "반 요약" }).click();
-  await teacher.getByLabel("현재 클래스").selectOption({ label: pilotName });
+  await teacher.getByLabel("현재 학급").selectOption({ label: pilotName });
   await expect.poll(async () => teacher.locator(".teacher-metrics article").first().textContent(), { timeout: 30_000 }).toContain("1명");
   await teacher.getByRole("button", { name: /1번 · 민들레/ }).first().click();
-  await teacher.getByRole("tab", { name: "학부모 공유 리포트" }).click();
+  await teacher.getByRole("tab", { name: "가정 공유용 결과표" }).click();
   await teacher.getByRole("button", { name: "검토 완료 · 인쇄/PDF" }).click();
   await expect(teacher.locator("body")).toHaveAttribute("data-print-requested", "true");
 

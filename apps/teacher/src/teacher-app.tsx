@@ -659,11 +659,16 @@ export function TeacherApp() {
   async function assignDiagnosis(input: {
     diagnosis: PublishedDiagnosisSet;
     classId: string;
+    unitId: string;
     opensAt: string;
     closesAt?: string;
   }): Promise<void> {
+    const unit = input.diagnosis.content.manifest.units.find(
+      (candidate) => candidate.id === input.unitId
+    );
+    if (!unit) throw new Error("배정할 단원을 다시 선택해 주세요.");
     if (!client) {
-      setNotice(`${input.diagnosis.content.manifest.title} v${input.diagnosis.version}을 데모 학급에 배정했습니다.`);
+      setNotice(`${unit.order}단원 ‘${unit.title}’ 활동을 데모 학급에 배정했습니다.`);
       return;
     }
     const mutationAuthGeneration = authGeneration.current;
@@ -675,6 +680,7 @@ export function TeacherApp() {
       classId: input.classId,
       diagnosisSetId: input.diagnosis.setKey,
       diagnosisSetVersion: input.diagnosis.version,
+      unitId: input.unitId,
       opensAt: input.opensAt,
       closesAt: input.closesAt
     });
@@ -682,7 +688,7 @@ export function TeacherApp() {
     const targetClass = teacherClasses.find((item) => item.id === input.classId);
     if (selectedClassIdRef.current === input.classId) await loadClassContext(input.classId, selectedAssignmentIdRef.current);
     if (mutationAuthGeneration !== authGeneration.current) return;
-    setNotice(`${input.diagnosis.content.manifest.title} v${input.diagnosis.version}을 ${targetClass?.name ?? "학급"}에 배정했습니다.`);
+    setNotice(`${unit.order}단원 ‘${unit.title}’ 활동을 ${targetClass?.name ?? "학급"}에 배정했습니다.`);
   }
 
   async function exportParentReport(): Promise<void> {
@@ -793,6 +799,28 @@ function TeacherLogin({ onSubmit, error }: { onSubmit: (email: string, password:
   );
 }
 
+function assignmentUnit(bundle: TeacherAssignmentEvidenceBundle) {
+  return bundle.diagnosisSet.content.manifest.units.find(
+    (candidate) => candidate.id === bundle.assignment.unitId
+  );
+}
+
+function assignmentLabel(bundle: TeacherAssignmentEvidenceBundle): string {
+  const unit = assignmentUnit(bundle);
+  return unit
+    ? `${unit.order}단원 ${unit.title}`
+    : bundle.diagnosisSet.content.manifest.shortTitle;
+}
+
+function assignmentJudgmentCount(bundle: TeacherAssignmentEvidenceBundle): number {
+  const unit = assignmentUnit(bundle);
+  return unit
+    ? bundle.diagnosisSet.content.judgments.filter(
+      (judgment) => judgment.unitId === unit.id
+    ).length
+    : bundle.diagnosisSet.content.judgments.length;
+}
+
 function TeacherContextBar({ classes, assignments, selectedClassId, selectedAssignmentId, state, onClassChange, onAssignmentChange }: {
   classes: TeacherClassRecord[];
   assignments: TeacherAssignmentEvidenceBundle[];
@@ -808,8 +836,8 @@ function TeacherContextBar({ classes, assignments, selectedClassId, selectedAssi
       <div className="teacher-context-index">01</div>
       <label><span>학급</span><select aria-label="현재 학급" value={selectedClassId} disabled={!classes.length || state === "syncing"} onChange={(event) => void onClassChange(event.target.value)}>{classes.length ? classes.map((item) => <option value={item.id} key={item.id}>{item.name}</option>) : <option value="">학급 없음</option>}</select></label>
       <div className="teacher-context-arrow" aria-hidden="true">→</div>
-      <label><span>진단 활동</span><select aria-label="현재 진단 활동" value={selectedAssignmentId} disabled={!assignments.length || state === "syncing"} onChange={(event) => void onAssignmentChange(event.target.value)}>{assignments.length ? assignments.map((bundle) => <option value={bundle.assignment.id} key={bundle.assignment.id}>{bundle.diagnosisSet.content.manifest.shortTitle} · v{bundle.diagnosisSet.version} · {formatDate(bundle.assignment.opensAt)}</option>) : <option value="">진단 활동 없음</option>}</select></label>
-      <div className="teacher-context-proof"><span>{state === "syncing" ? "불러오는 중" : state === "error" ? "불러오기 실패" : active ? "진단 선택됨" : "진단 선택 필요"}</span><strong>{active ? `${active.diagnosisSet.content.judgments.length}문항` : "—"}</strong></div>
+      <label><span>진단 활동</span><select aria-label="현재 진단 활동" value={selectedAssignmentId} disabled={!assignments.length || state === "syncing"} onChange={(event) => void onAssignmentChange(event.target.value)}>{assignments.length ? assignments.map((bundle) => <option value={bundle.assignment.id} key={bundle.assignment.id}>{assignmentLabel(bundle)} · v{bundle.diagnosisSet.version} · {formatDate(bundle.assignment.opensAt)}</option>) : <option value="">진단 활동 없음</option>}</select></label>
+      <div className="teacher-context-proof"><span>{state === "syncing" ? "불러오는 중" : state === "error" ? "불러오기 실패" : active ? "진단 선택됨" : "진단 선택 필요"}</span><strong>{active ? `${assignmentJudgmentCount(active)}문항` : "—"}</strong></div>
     </section>
   );
 }
@@ -819,12 +847,12 @@ function ClassSummaryPage({ students, summary, selectedClass, selectedBundle, st
   const unitGroups = groupSummaryByUnit(summary);
   return (
     <div className="teacher-page mom-stack-lg">
-      <PageHeader eyebrow={`${selectedClass?.name ?? "학급 선택 필요"} · ${selectedBundle?.diagnosisSet.content.manifest.title ?? "진단 선택 필요"}`} title="반에서 함께 다시 볼 생각" description="학생별로 가장 최근에 마친 활동을 모았습니다. 진행 중이거나 결과를 준비하는 기록은 반 요약에 포함하지 않습니다." />
+      <PageHeader eyebrow={`${selectedClass?.name ?? "학급 선택 필요"} · ${selectedBundle ? assignmentLabel(selectedBundle) : "진단 선택 필요"}`} title="반에서 함께 다시 볼 생각" description="학생별로 가장 최근에 마친 활동을 모았습니다. 진행 중이거나 결과를 준비하는 기록은 반 요약에 포함하지 않습니다." />
       <section className="teacher-metrics" aria-label="진단 현황">
         <Metric value={`${summary.completedStudents}명`} label="결과 준비 완료" />
         <Metric value={`${summary.inProgressStudents}명`} label="진행 중" />
         <Metric value={`${students.filter((student) => student.status === "not_started").length}명`} label="시작 전" />
-        <Metric value={pending ? `${pending}명` : `${selectedBundle?.diagnosisSet.content.judgments.length ?? 0}개`} label={pending ? "결과 준비 중" : "진단 문항"} />
+        <Metric value={pending ? `${pending}명` : `${selectedBundle ? assignmentJudgmentCount(selectedBundle) : 0}개`} label={pending ? "결과 준비 중" : "진단 문항"} />
       </section>
       {!selectedClass && <EmptyState title="첫 학급을 만들어 주세요" description="학급·학생 화면에서 학년·학기를 선택해 학급을 만들 수 있습니다." />}
       {selectedClass && !selectedBundle && state !== "syncing" && <EmptyState title="아직 배정된 진단이 없습니다" description="진단 배정 화면에서 검토가 끝난 진단을 이 학급에 배정해 주세요." />}
@@ -1080,11 +1108,14 @@ function ParentShareDocument({ report, action }: { report: ParentReport; action?
 function AssignmentPage({ diagnosisSets, classes, onAssigned, onCreateClass }: {
   diagnosisSets: PublishedDiagnosisSet[];
   classes: TeacherClassRecord[];
-  onAssigned: (input: { diagnosis: PublishedDiagnosisSet; classId: string; opensAt: string; closesAt?: string }) => Promise<void>;
+  onAssigned: (input: { diagnosis: PublishedDiagnosisSet; classId: string; unitId: string; opensAt: string; closesAt?: string }) => Promise<void>;
   onCreateClass: (input: ClassCreationInput) => Promise<void>;
 }) {
   const [step, setStep] = useState(1);
   const [selectedId, setSelectedId] = useState(diagnosisSets[0]?.id ?? "");
+  const [selectedUnitId, setSelectedUnitId] = useState(
+    diagnosisSets[0]?.content.manifest.units[0]?.id ?? ""
+  );
   const [selectedClassId, setSelectedClassId] = useState(classes[0]?.id ?? "");
   const [opensDate, setOpensDate] = useState(() => assignmentDateValue(0));
   const [closesDate, setClosesDate] = useState(() => assignmentDateValue(7));
@@ -1099,6 +1130,20 @@ function AssignmentPage({ diagnosisSets, classes, onAssigned, onCreateClass }: {
     if (!selectedClassId && classes[0]) setSelectedClassId(classes[0].id);
   }, [classes, selectedClassId]);
   const selected = diagnosisSets.find((diagnosis) => diagnosis.id === selectedId) ?? diagnosisSets[0];
+  const selectedUnit = selected?.content.manifest.units.find(
+    (unit) => unit.id === selectedUnitId
+  ) ?? selected?.content.manifest.units[0];
+  const selectedJudgmentCount = selected && selectedUnit
+    ? selected.content.judgments.filter(
+      (judgment) => judgment.unitId === selectedUnit.id
+    ).length
+    : 0;
+  useEffect(() => {
+    if (!selected) return;
+    if (!selected.content.manifest.units.some((unit) => unit.id === selectedUnitId)) {
+      setSelectedUnitId(selected.content.manifest.units[0]?.id ?? "");
+    }
+  }, [selected, selectedUnitId]);
   const selectedClass = classes.find((item) => item.id === selectedClassId) ?? classes[0];
   const hasTermMismatch = Boolean(
     selected
@@ -1109,13 +1154,18 @@ function AssignmentPage({ diagnosisSets, classes, onAssigned, onCreateClass }: {
     )
   );
   async function submitAssignment() {
-    if (!selected || !selectedClass) return;
+    if (!selected || !selectedClass || !selectedUnit) return;
+    if (hasTermMismatch) {
+      setError("학급과 진단의 학년·학기가 같아야 배정할 수 있습니다.");
+      return;
+    }
     setSaving(true);
     setError(null);
     try {
       await onAssigned({
         diagnosis: selected,
         classId: selectedClass.id,
+        unitId: selectedUnit.id,
         opensAt: new Date(`${opensDate}T00:00:00+09:00`).toISOString(),
         closesAt: new Date(`${closesDate}T23:59:59+09:00`).toISOString()
       });
@@ -1128,15 +1178,16 @@ function AssignmentPage({ diagnosisSets, classes, onAssigned, onCreateClass }: {
   }
   return (
     <div className="teacher-page mom-stack-lg">
-      <PageHeader eyebrow="진단 배정" title="진단 활동을 배정합니다" description="학급과 진단, 운영 기간을 차례로 선택해 주세요." />
-      <ol className="teacher-stepper"><li className={step >= 1 ? "is-active" : ""}>1 학급</li><li className={step >= 2 ? "is-active" : ""}>2 진단</li><li className={step >= 3 ? "is-active" : ""}>3 일정</li><li className={step >= 4 ? "is-active" : ""}>4 확인</li></ol>
+      <PageHeader eyebrow="진단 배정" title="단원 진단 활동을 배정합니다" description="학급과 학기, 단원, 운영 기간을 차례로 선택해 주세요." />
+      <ol className="teacher-stepper"><li className={step >= 1 ? "is-active" : ""}>1 학급</li><li className={step >= 2 ? "is-active" : ""}>2 학기</li><li className={step >= 3 ? "is-active" : ""}>3 단원</li><li className={step >= 4 ? "is-active" : ""}>4 일정</li><li className={step >= 5 ? "is-active" : ""}>5 확인</li></ol>
       <section className="mom-panel teacher-assignment-panel"><div className="mom-panel-body mom-stack-lg">
         {step === 1 && <DecisionBlock number="01" title="어느 반에 배정할까요?" description="내가 만든 학급만 표시합니다.">{classes.length === 0 ? <div className="mom-stack"><p className="mom-muted">첫 학급을 만들면 입장 코드가 한 번 표시됩니다.</p><label className="mom-input-group">학급 이름<input className="mom-input" value={newClassName} onChange={(event) => setNewClassName(event.target.value.slice(0, 60))} /></label><ClassTermSelect value={newClassTerm} onChange={setNewClassTerm} /><button type="button" className="mom-button mom-button-secondary" disabled={!newClassName.trim()} onClick={() => void onCreateClass(classCreationInput(newClassName.trim(), newClassTerm)).catch((cause) => setError(cause instanceof Error ? cause.message : "학급을 만들지 못했습니다."))}>학급 만들기</button></div> : classes.map((item) => <button type="button" key={item.id} className={`teacher-decision ${selectedClass?.id === item.id ? "is-selected" : ""}`} onClick={() => setSelectedClassId(item.id)}><strong>{item.name}</strong><span>{item.grade}학년 {item.semester}학기</span></button>)}</DecisionBlock>}
-        {step === 2 && <DecisionBlock number="02" title="어떤 진단을 사용할까요?" description="검토가 끝난 진단만 선택할 수 있습니다.">{diagnosisSets.length === 0 ? <p className="mom-form-error">지금 배정할 수 있는 진단이 없습니다.</p> : diagnosisSets.map((diagnosis) => <button key={diagnosis.id} className={`teacher-decision ${selected?.id === diagnosis.id ? "is-selected" : ""}`} onClick={() => setSelectedId(diagnosis.id)}><strong>{diagnosis.content.manifest.title}</strong><span>v{diagnosis.version} · {diagnosis.content.manifest.units.length}개 단원 · {diagnosis.content.judgments.length}개 문항 · 약 {diagnosis.content.manifest.estimatedMinutes}분</span></button>)}</DecisionBlock>}
-        {step === 3 && <DecisionBlock number="03" title="언제까지 열어둘까요?" description="시작한 학생은 마감 뒤에도 교사가 종료하기 전까지 이어갈 수 있습니다."><div className="teacher-date-grid"><label className="mom-input-group">시작<input className="mom-input" type="date" value={opensDate} onChange={(event) => setOpensDate(event.target.value)} /></label><label className="mom-input-group">마감<input className="mom-input" type="date" min={opensDate} value={closesDate} onChange={(event) => setClosesDate(event.target.value)} /></label></div></DecisionBlock>}
-        {step === 4 && selected && selectedClass && <DecisionBlock number="04" title="배정 내용을 확인해 주세요" description="학생이 시작한 뒤에는 같은 진단 내용이 유지됩니다."><dl className="teacher-review-list"><div><dt>학급</dt><dd>{selectedClass.name}</dd></div><div><dt>진단</dt><dd>{selected.content.manifest.title} v{selected.version}</dd></div><div><dt>문항 수</dt><dd>{selected.content.judgments.length}개</dd></div><div><dt>기간</dt><dd>{opensDate}—{closesDate}</dd></div></dl>{hasTermMismatch && <p className="teacher-term-warning" role="status">학급은 {selectedClass.grade}학년 {selectedClass.semester}학기이고 진단은 {selected.content.manifest.grade}학년 {selected.content.manifest.semester}학기입니다. 학년·학기를 다시 확인해 주세요.</p>}</DecisionBlock>}
+        {step === 2 && <DecisionBlock number="02" title="어느 학기 진단을 사용할까요?" description="검토와 발행이 끝난 진단만 선택할 수 있습니다.">{diagnosisSets.length === 0 ? <p className="mom-form-error">지금 배정할 수 있는 진단이 없습니다.</p> : diagnosisSets.map((diagnosis) => <button key={diagnosis.id} className={`teacher-decision ${selected?.id === diagnosis.id ? "is-selected" : ""}`} onClick={() => setSelectedId(diagnosis.id)}><strong>{diagnosis.content.manifest.title}</strong><span>v{diagnosis.version} · {diagnosis.content.manifest.units.length}개 단원</span></button>)}</DecisionBlock>}
+        {step === 3 && selected && <DecisionBlock number="03" title="어느 단원을 배정할까요?" description="한 번에 한 단원만 배정해 15분 안에 끝낼 수 있게 합니다.">{selected.content.manifest.units.map((unit) => { const judgmentCount = selected.content.judgments.filter((judgment) => judgment.unitId === unit.id).length; return <button type="button" key={unit.id} className={`teacher-decision ${selectedUnit?.id === unit.id ? "is-selected" : ""}`} onClick={() => setSelectedUnitId(unit.id)}><strong>{unit.order}단원 · {unit.title}</strong><span>{judgmentCount}개 문항 · 약 {Math.max(3, Math.ceil(judgmentCount / 2))}분</span></button>; })}</DecisionBlock>}
+        {step === 4 && <DecisionBlock number="04" title="언제까지 열어둘까요?" description="시작한 학생은 마감 뒤에도 교사가 종료하기 전까지 이어갈 수 있습니다."><div className="teacher-date-grid"><label className="mom-input-group">시작<input className="mom-input" type="date" value={opensDate} onChange={(event) => setOpensDate(event.target.value)} /></label><label className="mom-input-group">마감<input className="mom-input" type="date" min={opensDate} value={closesDate} onChange={(event) => setClosesDate(event.target.value)} /></label></div></DecisionBlock>}
+        {step === 5 && selected && selectedClass && selectedUnit && <DecisionBlock number="05" title="배정 내용을 확인해 주세요" description="학생이 시작한 뒤에는 학기와 단원이 유지됩니다."><dl className="teacher-review-list"><div><dt>학급</dt><dd>{selectedClass.name}</dd></div><div><dt>진단</dt><dd>{selected.content.manifest.title} v{selected.version}</dd></div><div><dt>단원</dt><dd>{selectedUnit.order}단원 · {selectedUnit.title}</dd></div><div><dt>문항 수</dt><dd>{selectedJudgmentCount}개</dd></div><div><dt>기간</dt><dd>{opensDate}—{closesDate}</dd></div></dl>{hasTermMismatch && <p className="teacher-term-warning" role="status">학급은 {selectedClass.grade}학년 {selectedClass.semester}학기이고 진단은 {selected.content.manifest.grade}학년 {selected.content.manifest.semester}학기입니다. 학년·학기를 다시 확인해 주세요.</p>}</DecisionBlock>}
         {error && <p className="mom-form-error" role="alert">{error}</p>}
-        <div className="mom-row-between"><button type="button" className="mom-button mom-button-quiet" disabled={step === 1 || saving} onClick={() => setStep((value) => value - 1)}>이전</button><button type="button" className="mom-button mom-button-primary" disabled={!selected || !selectedClass || saving || closesDate < opensDate} onClick={() => { if (step < 4) setStep((value) => value + 1); else void submitAssignment(); }}>{saving ? "저장 중…" : step < 4 ? "다음" : "이 내용으로 배정"}</button></div>
+        <div className="mom-row-between"><button type="button" className="mom-button mom-button-quiet" disabled={step === 1 || saving} onClick={() => setStep((value) => value - 1)}>이전</button><button type="button" className="mom-button mom-button-primary" disabled={!selected || !selectedClass || !selectedUnit || saving || hasTermMismatch || closesDate < opensDate} onClick={() => { if (step < 5) setStep((value) => value + 1); else void submitAssignment(); }}>{saving ? "저장 중…" : step < 5 ? "다음" : "이 내용으로 배정"}</button></div>
       </div></section>
     </div>
   );

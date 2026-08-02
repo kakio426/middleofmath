@@ -65,6 +65,7 @@ interface StudentContext {
 
 interface CachedAssignmentMetadata {
   id: string;
+  unitId?: string;
   opensAt: string;
   closesAt?: string;
   status: string;
@@ -104,13 +105,25 @@ const demoContent = requestedDemoSet === "grade3-semester1"
       ? grade6Semester2Diagnosis
     : grade3Semester2CompleteDiagnosis;
 
-function mapAssignmentRecord(row: StudentAssignmentRecord, content = row.diagnosisSet.content): AssignmentCard | null {
+export function mapAssignmentRecord(row: StudentAssignmentRecord, content = row.diagnosisSet.content): AssignmentCard | null {
   try {
     const parsed = parseDiagnosisSet(content);
+    const unit = row.unitId
+      ? parsed.manifest.units.find((candidate) => candidate.id === row.unitId)
+      : undefined;
+    if (row.unitId && !unit) return null;
+    const judgments = unit
+      ? parsed.judgments.filter((judgment) => judgment.unitId === unit.id)
+      : parsed.judgments;
+    if (judgments.length === 0) return null;
     return {
       id: row.id,
-      title: parsed.manifest.title,
-      description: `${parsed.manifest.units.length}개 단원 · ${parsed.judgments.length}개의 짧은 생각`,
+      title: unit
+        ? `${unit.order}단원 · ${unit.title}`
+        : parsed.manifest.title,
+      description: unit
+        ? `${unit.title} 문제를 차근차근 풀어요.`
+        : `${parsed.manifest.units.length}개 단원 · ${parsed.judgments.length}개의 짧은 생각`,
       status: "new",
       diagnosisSetId: row.diagnosisSet.setKey,
       diagnosisSetVersion: row.diagnosisSet.version,
@@ -119,8 +132,11 @@ function mapAssignmentRecord(row: StudentAssignmentRecord, content = row.diagnos
       areaId: "assigned",
       areaTitle: "선생님이 보낸 활동",
       symbol: "✦",
-      estimatedMinutes: parsed.manifest.estimatedMinutes,
-      judgmentCount: parsed.judgments.length
+      estimatedMinutes: unit
+        ? Math.max(3, Math.ceil(judgments.length / 2))
+        : parsed.manifest.estimatedMinutes,
+      judgmentCount: judgments.length,
+      unitId: unit?.id
     };
   } catch {
     return null;
@@ -142,6 +158,7 @@ async function cacheAssignmentRecords(rows: StudentAssignmentRecord[], store: In
     cards.push(card);
     metadata.push({
       id: row.id,
+      unitId: row.unitId,
       opensAt: row.opensAt,
       closesAt: row.closesAt,
       status: row.status,

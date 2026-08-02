@@ -53,6 +53,7 @@ export interface AssignmentRepository {
     classId: string;
     diagnosisSetId: string;
     diagnosisSetVersion: string;
+    unitId: string;
     opensAt: string;
     closesAt?: string;
   }): Promise<void>;

@@ -237,7 +237,14 @@ export class GenerateAssignmentInsights {
     const studentReports: Array<{ studentId: string; report: TeacherStudentReport }> = [];
     const students = [];
     let inProgressStudents = 0;
-    const contentPendingReason = getInterpretationPendingReason(bundle.diagnosisSet);
+    const assignmentContent = contentForAssignment(
+      bundle.diagnosisSet.content,
+      bundle.assignment.unitId
+    );
+    const contentPendingReason = getInterpretationPendingReason({
+      ...bundle.diagnosisSet,
+      content: assignmentContent
+    });
 
     for (const student of bundle.students) {
       const latest = selectLatestCompletedAttempt(student.sessions);
@@ -271,7 +278,7 @@ export class GenerateAssignmentInsights {
         diagnosisSetVersion: bundle.diagnosisSet.version
       });
       const report = persisted?.report ?? interpretSession(
-        bundle.diagnosisSet.content,
+        assignmentContent,
         latest.events,
         undefined,
         this.clock.now().toISOString()
@@ -291,7 +298,7 @@ export class GenerateAssignmentInsights {
       classSummary: generateClassSummary(
         studentReports,
         inProgressStudents,
-        bundle.diagnosisSet.content
+        assignmentContent
       ),
       students,
       distractorNotes
@@ -310,6 +317,32 @@ function getInterpretationPendingReason(
   return undefined;
 }
 
+function contentForAssignment(
+  content: DiagnosisSet,
+  unitId?: string
+): DiagnosisSet {
+  if (!unitId) return content;
+  const unit = content.manifest.units.find((candidate) => candidate.id === unitId);
+  if (!unit) throw new Error("배정된 단원을 진단 콘텐츠에서 찾을 수 없습니다.");
+  const judgments = content.judgments.filter(
+    (judgment) => judgment.unitId === unitId
+  );
+  if (judgments.length === 0) {
+    throw new Error("배정된 단원에 문항이 없습니다.");
+  }
+  return {
+    ...content,
+    manifest: {
+      ...content.manifest,
+      title: `${content.manifest.title} · ${unit.order}단원 ${unit.title}`,
+      shortTitle: `${unit.order}단원 ${unit.title}`,
+      units: [unit],
+      estimatedMinutes: Math.max(3, Math.ceil(judgments.length / 2))
+    },
+    judgments
+  };
+}
+
 export class ExportParentReport {
   constructor(
     private readonly insights: TeacherInsightsRepository,
@@ -323,7 +356,14 @@ export class ExportParentReport {
     if (!context || context.evidence.session.status !== "completed") {
       throw new Error("완료된 세션 근거를 찾을 수 없습니다.");
     }
-    if (getInterpretationPendingReason(context.diagnosisSet)) {
+    const assignmentContent = contentForAssignment(
+      context.diagnosisSet.content,
+      context.assignment.unitId
+    );
+    if (getInterpretationPendingReason({
+      ...context.diagnosisSet,
+      content: assignmentContent
+    })) {
       throw new Error("콘텐츠 검증이 끝날 때까지 학부모 리포트를 내보낼 수 없습니다.");
     }
     const current = context.evidence.interpretationRuns.find((run) =>
@@ -335,14 +375,18 @@ export class ExportParentReport {
       diagnosisSetVersion: context.diagnosisSet.version
     });
     const report = current?.report ?? interpretSession(
-      context.diagnosisSet.content,
+      assignmentContent,
       context.evidence.events,
       undefined,
       this.clock.now().toISOString()
     );
     const run = current ?? await this.reports.saveInterpretationRun(report);
     const studentLabel = context.student.displayAlias ?? "학생";
-    const parent = createParentReport(context.diagnosisSet.content, report, studentLabel);
+    const parent = createParentReport(
+      assignmentContent,
+      report,
+      studentLabel
+    );
     return this.reports.saveParentReportExport({
       id: this.ids.next(),
       sessionId: context.evidence.session.id,
@@ -374,6 +418,7 @@ export class AssignDiagnosis {
     classId: string;
     diagnosisSetId: string;
     diagnosisSetVersion: string;
+    unitId: string;
     opensAt?: string;
     closesAt?: string;
   }): Promise<string> {
@@ -383,6 +428,7 @@ export class AssignDiagnosis {
       classId: input.classId,
       diagnosisSetId: input.diagnosisSetId,
       diagnosisSetVersion: input.diagnosisSetVersion,
+      unitId: input.unitId,
       opensAt: input.opensAt ?? this.clock.now().toISOString(),
       closesAt: input.closesAt
     });

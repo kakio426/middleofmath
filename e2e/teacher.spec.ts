@@ -15,6 +15,30 @@ test("교사가 반 요약에서 실제 범위와 학생 근거로 내려간다"
   await expect(page.getByText("현재 분석에 사용")).toBeVisible();
 });
 
+test("교사는 학기 전체가 아니라 한 단원을 골라 배정한다", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "진단 배정" }).click();
+
+  await expect(page.getByRole("heading", {
+    name: "단원 진단 활동을 배정합니다"
+  })).toBeVisible();
+  await page.getByRole("button", { name: /3학년 햇살반/ }).click();
+  await page.getByRole("button", { name: "다음" }).click();
+  await page.locator(".teacher-decision").first().click();
+  await page.getByRole("button", { name: "다음" }).click();
+  await page.getByRole("button", { name: /4단원 · 분수/ }).click();
+  await page.getByRole("button", { name: "다음" }).click();
+  await page.getByRole("button", { name: "다음" }).click();
+
+  const review = page.locator(".teacher-review-list");
+  await expect(review).toContainText("4단원 · 분수");
+  await expect(review).toContainText("2개");
+  await page.getByRole("button", { name: "이 내용으로 배정" }).click();
+  await expect(page.locator(".teacher-notice")).toContainText(
+    "4단원 ‘분수’ 활동을 데모 학급에 배정했습니다"
+  );
+});
+
 test("학생 분석지는 반복 근거 전체와 관찰 범위를 태블릿에서도 한 장 흐름으로 보여준다", async ({ page }) => {
   await page.setViewportSize({ width: 768, height: 1024 });
   await page.goto("/?set=grade6-semester2");

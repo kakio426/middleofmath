@@ -66,6 +66,10 @@ insert into public.students (id, class_id, roster_key, display_alias, join_secre
   ('23000000-0000-0000-0000-000000000001', '22000000-0000-0000-0000-000000000001', '12', '별빛', extensions.crypt('STAR27', extensions.gen_salt('bf'))),
   ('23000000-0000-0000-0000-000000000002', '22000000-0000-0000-0000-000000000002', '8', '새싹', extensions.crypt('LEAF27', extensions.gen_salt('bf')));
 
+-- These two rows model assignments created before unit-scoped assignment was
+-- introduced. New rows cannot omit unit_id, but existing null rows must keep
+-- the historical whole-semester behavior.
+alter table public.assignments disable trigger assignments_content_version_guard;
 insert into public.assignments (
   id, class_id, diagnosis_set_id, diagnosis_set_version, status, opens_at, created_by
 )
@@ -74,13 +78,14 @@ from public.diagnosis_sets where set_key = 'grade3-semester2' and version = '1.0
 union all
 select '24000000-0000-0000-0000-000000000002'::uuid, '22000000-0000-0000-0000-000000000002'::uuid, id, version, 'active'::public.assignment_status, now() - interval '2 days', '21000000-0000-0000-0000-000000000002'::uuid
 from public.diagnosis_sets where set_key = 'grade3-semester2' and version = '1.0.0';
+alter table public.assignments enable trigger assignments_content_version_guard;
 
 select throws_ok(
   $$insert into public.assignments (
-      id, class_id, diagnosis_set_id, diagnosis_set_version, status, opens_at, created_by
+      id, class_id, diagnosis_set_id, diagnosis_set_version, unit_id, status, opens_at, created_by
     ) select
       '24000000-0000-0000-0000-000000000099',
-      '22000000-0000-0000-0000-000000000001', id, '9.9.9', 'active', now(),
+      '22000000-0000-0000-0000-000000000001', id, '9.9.9', 'multiplication', 'active', now(),
       '21000000-0000-0000-0000-000000000001'
     from public.diagnosis_sets where set_key = 'grade3-semester2' and version = '1.0.0'$$,
   'P0001',

@@ -17,6 +17,7 @@ export type PilotOperation =
 
 export interface StudentAssignmentRecord {
   id: string;
+  unitId?: string;
   opensAt: string;
   closesAt?: string;
   status: string;
@@ -111,7 +112,7 @@ export class SupabaseStudentGateway {
   async listAssignments(classId: string): Promise<StudentAssignmentRecord[]> {
     const { data, error } = await this.client
       .from("assignments")
-      .select("id, opens_at, closes_at, status, diagnosis_sets(id, set_key, version, checksum, status, content)")
+      .select("id, unit_id, opens_at, closes_at, status, diagnosis_sets(id, set_key, version, checksum, status, content)")
       .eq("class_id", classId)
       .eq("status", "active")
       .order("opens_at", { ascending: false });
@@ -121,6 +122,7 @@ export class SupabaseStudentGateway {
       if (!diagnosis?.content) return [];
       return [{
         id: String(row.id),
+        unitId: row.unit_id ? String(row.unit_id) : undefined,
         opensAt: String(row.opens_at),
         closesAt: row.closes_at ? String(row.closes_at) : undefined,
         status: String(row.status),
@@ -362,6 +364,7 @@ export class SupabaseAssignmentRepository implements AssignmentRepository {
     classId: string;
     diagnosisSetId: string;
     diagnosisSetVersion: string;
+    unitId: string;
     opensAt: string;
     closesAt?: string;
   }): Promise<void> {
@@ -379,6 +382,7 @@ export class SupabaseAssignmentRepository implements AssignmentRepository {
       class_id: input.classId,
       diagnosis_set_id: diagnosisSet.id,
       diagnosis_set_version: input.diagnosisSetVersion,
+      unit_id: input.unitId,
       opens_at: input.opensAt,
       closes_at: input.closesAt ?? null,
       status: "active",

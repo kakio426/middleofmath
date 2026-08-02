@@ -31,7 +31,7 @@ export class SupabaseTeacherInsightsRepository implements TeacherInsightsReposit
     const { data: assignmentRow, error: assignmentError } = await this.client
       .from("assignments")
       .select(`
-        id, class_id, status, opens_at, closes_at,
+        id, class_id, unit_id, status, opens_at, closes_at,
         classes(id, name, grade, semester, pilot_ends_at, purge_after),
         diagnosis_sets(id, set_key, version, checksum, status, content, published_at)
       `)
@@ -255,6 +255,7 @@ function mapAssignment(row: JsonRow): TeacherAssignmentSnapshot {
   return {
     id: String(row.id),
     classId: String(row.class_id),
+    unitId: row.unit_id ? String(row.unit_id) : undefined,
     status: row.status,
     opensAt: String(row.opens_at),
     closesAt: row.closes_at ? String(row.closes_at) : undefined

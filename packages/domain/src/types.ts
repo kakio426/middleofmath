@@ -794,6 +794,7 @@ export interface TeacherClassSnapshot {
 export interface TeacherAssignmentSnapshot {
   id: string;
   classId: string;
+  unitId?: string;
   status: "draft" | "active" | "closed" | "archived";
   opensAt: string;
   closesAt?: string;
