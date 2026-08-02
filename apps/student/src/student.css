@@ -25,6 +25,7 @@
 .student-question h1 { width: 100%; font-size: clamp(24px, 3vw, 32px); line-height: 1.28; letter-spacing: -.015em; }
 .student-context { margin-bottom: var(--space-2); color: var(--text-secondary); font-size: 18px; }
 .student-response { padding: var(--space-6); border-top: 3px solid var(--accent-primary); background: var(--surface-secondary); }
+.student-response > .mom-button-primary { min-height: 52px; }
 .student-unknown { min-height: 44px; opacity: 0; transition: opacity 220ms ease-in-out; }
 .student-unknown.is-visible { opacity: 1; }
 .student-complete { min-height: calc(100dvh - 108px); display: grid; place-items: center; }
