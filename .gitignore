@@ -13,3 +13,5 @@ playwright-report/
 apps/*/.env.local
 supabase/.temp/
 supabase/.branches/
+tmp/
+.codex-work/
