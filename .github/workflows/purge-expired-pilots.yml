@@ -19,7 +19,10 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        environment: [staging-retention, production-retention]
+        # 운영 Supabase 프로젝트를 만들면 production-retention 을 다시 넣는다.
+        # 지금은 그 Environment 에 URL·service-role key 가 없어 매일 밤 실패만
+        # 하고, 삭제 대상 데이터도 없다.
+        environment: [staging-retention]
     steps:
       - name: Run the service-role-only retention boundary
         env:
