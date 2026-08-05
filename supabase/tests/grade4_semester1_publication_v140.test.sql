@@ -33,7 +33,10 @@ select results_eq(
     from public.diagnosis_sets
     where set_key = 'grade4-semester1' and version = '1.4.0'$$,
   $$values (
-      '8d1b5ecdcf8755a46b295d459425f863e050be3305105eaaf5ba9ce71f3a4623'::text,
+      -- 2026-08-01 품질 루프에서 g4s1-muldiv-04·10 의 context 두 문장을
+      -- 다듬으면서 v1.4.0 발행 마이그레이션이 재생성되어 바뀐 값이다.
+      -- 이전 값: 8d1b5ecdcf8755a46b295d459425f863e050be3305105eaaf5ba9ce71f3a4623
+      '2e5e4b00ee9052f14294f8a25d0f0338393b5d15c8ed7b7075b1e5bcd9457c00'::text,
       true
     )$$,
   'the v1.4.0 database checksum is pinned and synchronized into the manifest'
