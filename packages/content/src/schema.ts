@@ -355,7 +355,22 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
         z.literal(0),
         z.literal(1),
         z.literal(2)
-      ]).optional()
+      ]).optional(),
+      rightAngleIndexes: z.array(
+        z.union([z.literal(0), z.literal(1), z.literal(2)])
+      ).min(1).max(3).optional()
+    }),
+    z.strictObject({
+      kind: z.literal("line-segment-ray"),
+      figures: z.array(z.strictObject({
+        label: copyString,
+        type: z.enum(["line", "ray", "segment"])
+      })).min(1).max(3)
+    }),
+    z.strictObject({
+      kind: z.literal("clock-face"),
+      hour: z.number().int().min(1).max(12),
+      minute: z.number().int().min(0).max(59)
     }),
     z.strictObject({
       kind: z.literal("quadrilateral-figure"),
@@ -1415,6 +1430,19 @@ function createDiagnosisSetSchema(copyString: z.ZodType<string>) {
             addTriangleIssue(
               "각으로 분류하는 삼각형에는 합이 180도인 세 각을 모두 보여야 합니다.",
               ["angles"]
+            );
+          }
+        }
+        if (visual.rightAngleIndexes) {
+          if (visual.mode !== "angle-classify") {
+            addTriangleIssue(
+              "직각 표시는 각으로 분류하는 삼각형에서만 사용할 수 있습니다."
+            );
+          }
+          if (visual.rightAngleIndexes.some((index) => angles?.[index] !== 90)) {
+            addTriangleIssue(
+              "직각으로 표시한 꼭짓점의 각은 90도여야 합니다.",
+              ["rightAngleIndexes"]
             );
           }
         }

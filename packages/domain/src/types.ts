@@ -403,6 +403,19 @@ export type JudgmentVisual =
         0 | 1 | 2
       ];
       askIndex?: 0 | 1 | 2;
+      rightAngleIndexes?: [0 | 1 | 2, ...(0 | 1 | 2)[]];
+    }
+  | {
+      kind: "line-segment-ray";
+      figures: Array<{
+        label: string;
+        type: "line" | "ray" | "segment";
+      }>;
+    }
+  | {
+      kind: "clock-face";
+      hour: number;
+      minute: number;
     }
   | QuadrilateralFigure
   | PolygonFigure
