@@ -24,7 +24,7 @@ describe("3학년 1학기 선수 진단 콘텐츠", () => {
     expect(grade3Semester1Diagnosis.learnerStages).toHaveLength(8);
     expect(grade3Semester1Diagnosis.judgments).toHaveLength(16);
     expect(grade3Semester1Diagnosis.manifest.checksum).toBe(
-      "36075f86f51e8b7c19f5df87b681a1b98fc9db84d2d0415d6fcd48d11aa1d56d"
+      "0656d583e8bf2987f456e47887a0d7243f6b611a4b586f45c11eeba7dca88112"
     );
     expect(grade3Semester1Diagnosis.manifest.checksum).toBe(
       diagnosisContentChecksum(grade3Semester1Diagnosis)
@@ -100,9 +100,9 @@ describe("3학년 1학기 선수 진단 콘텐츠", () => {
     );
     expect(prerequisite?.prompt).toContain("나누어 계산한 식");
     expect(prerequisite?.choices.map((choice) => choice.label)).toEqual([
-      "(20×3)+(3×3)",
-      "(2×3)+(3×3)",
-      "23+3"
+      "20×3=60 → 3×3=9 → 60+9=69",
+      "2×3=6 → 3×3=9 → 6+9=15",
+      "23+3=26"
     ]);
     expect(prerequisite?.prompt).not.toBe(semester2?.prompt);
     expect(prerequisite?.choices.map((choice) => choice.label)).not.toEqual(

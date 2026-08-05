@@ -127,9 +127,9 @@ const judgments: Judgment[] = [
     curriculumAnchorIds: ["[4수01-04]"], prompt: "23×3을 자릿값에 맞게 나누어 계산한 식은 어느 것일까요?", visual: { kind: "none" },
     signalId: "multiplication.place-value",
     answers: [
-      { id: "decompose-correct", label: "(20×3)+(3×3)" },
-      { id: "decompose-place-dropped", label: "(2×3)+(3×3)" },
-      { id: "decompose-addition", label: "23+3" }
+      { id: "decompose-correct", label: "20×3=60 → 3×3=9 → 60+9=69" },
+      { id: "decompose-place-dropped", label: "2×3=6 → 3×3=9 → 6+9=15" },
+      { id: "decompose-addition", label: "23+3=26" }
     ]
   }),
   judgment({
@@ -246,7 +246,7 @@ const unsigned: DiagnosisSet = {
   manifest: {
     id: "grade3-semester1",
     version: "1.0.0",
-    checksum: "36075f86f51e8b7c19f5df87b681a1b98fc9db84d2d0415d6fcd48d11aa1d56d",
+    checksum: "0656d583e8bf2987f456e47887a0d7243f6b611a4b586f45c11eeba7dca88112",
     title: "3학년 1학기 수학 생각 지도",
     shortTitle: "3-1 수학 생각 지도",
     grade: 3,

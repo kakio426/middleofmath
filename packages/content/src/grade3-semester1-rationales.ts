@@ -43,8 +43,8 @@ const authoring = [
       "multiplication-replaced-by-addition": "곱셈을 두 수의 덧셈으로 바꿈"
     },
     [
-      ["g3s1-mul-03", "decompose-place-dropped", "place-value-dropped", "23의 20을 2로 줄여 십의 자리 값을 빠뜨린 식을 골랐습니다.", "(20×3)+(3×3)에서 20을 2로 바꾸어 (2×3)+(3×3)으로 나타냈습니다."],
-      ["g3s1-mul-03", "decompose-addition", "multiplication-replaced-by-addition", "23이 세 번 반복되는 관계를 한 번 더하는 식으로 바꾸었습니다.", "23×3을 나누어 곱하지 않고 23+3으로 나타냈습니다."],
+      ["g3s1-mul-03", "decompose-place-dropped", "place-value-dropped", "23의 20을 2로 줄여 십의 자리 값을 빠뜨린 식을 골랐습니다.", "20×3=60을 2×3=6으로 줄여서 십의 자리 값을 빠뜨렸습니다."],
+      ["g3s1-mul-03", "decompose-addition", "multiplication-replaced-by-addition", "23이 세 번 반복되는 관계를 한 번 더하는 식으로 바꾸었습니다.", "23×3을 나누어 곱하지 않고 23+3=26으로 나타냈습니다."],
       ["g3s1-mul-04", "8", "place-value-dropped", "42를 십의 자리 숫자 4로만 줄여 실제 값 40과 일의 자리 2를 반영하지 않았습니다.", "42×2를 4×2=8로 줄여 계산했습니다."],
       ["g3s1-mul-04", "44", "multiplication-replaced-by-addition", "42가 두 묶음이라는 관계를 두 수의 합으로 바꾸었습니다.", "42×2 대신 42+2=44로 계산했습니다."]
     ]
