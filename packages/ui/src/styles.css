@@ -470,6 +470,8 @@ p { line-height: 1.6; }
 .mom-array span { aspect-ratio: 1; max-width: 20px; width: 100%; justify-self: center; border-radius: 50%; background: var(--accent-primary); opacity: .76; }
 .mom-item-collection { display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: var(--space-3); padding: var(--space-5); }
 .mom-item-collection span { display: grid; width: 32px; height: 32px; place-items: center; color: var(--accent-primary); font-size: 24px; line-height: 1; }
+.mom-item-collection:has(span:only-child) { padding: var(--space-6); }
+.mom-item-collection:has(span:only-child) span { width: 96px; height: 96px; font-size: 72px; }
 .mom-data-table { width: 100%; overflow: hidden; border-collapse: separate; border-spacing: 0; }
 .mom-data-table caption { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border-default); color: var(--text-secondary); font-size: 16px; font-weight: 700; text-align: left; }
 .mom-data-table th, .mom-data-table td { padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--border-default); text-align: left; }
