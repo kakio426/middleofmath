@@ -67,9 +67,9 @@ rationale/derivation 정규화 텍스트가 동일하면 error.
 
 ## 완료 기준
 
-- [ ] `npx vitest run packages/content/src` 전체 통과 (438/438)
-- [ ] `npm run typecheck --workspace @middle-of-math/content` 클린
-- [ ] 이번에 수정한 9건 외에 새로 깨진 테스트 없음 (diff가
+- [x] `npx vitest run packages/content/src` 전체 통과 (438/438)
+- [x] `npm run typecheck --workspace @middle-of-math/content` 클린
+- [x] 이번에 수정한 9건 외에 새로 깨진 테스트 없음 (diff가
       rationale/derivation 텍스트 범위에만 한정됨을 Claude가 diff로
       확인)
 

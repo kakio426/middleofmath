@@ -86,12 +86,12 @@ git HEAD(마지막 커밋) 상태의 `grade3-semester1.ts` checksum이 이미
 
 ## 완료 기준
 
-- [ ] `1.0.0`이 `docs/grade3-semester1-content-coverage.md`,
+- [x] `1.0.0`이 `docs/grade3-semester1-content-coverage.md`,
       `docs/implementation-decisions.md` D4와 정확히 일치
-- [ ] U8b 초안(4단원 콘텐츠 + 이번 세션 품질 수정분)이 별도 파일에
+- [x] U8b 초안(4단원 콘텐츠 + 이번 세션 품질 수정분)이 별도 파일에
       보존되고 어디서도 import되지 않음
-- [ ] 전체 vitest·typecheck 통과
-- [ ] `docs/` 파일은 수정하지 않음 (이미 맞는 내용이므로 되돌릴 대상이
+- [x] 전체 vitest·typecheck 통과
+- [x] `docs/` 파일은 수정하지 않음 (이미 맞는 내용이므로 되돌릴 대상이
       아니라 기준점)
 
 ## 다음 라운드에서 다룰 것 (이번 범위 아님)
