@@ -621,6 +621,72 @@ p { line-height: 1.6; }
   font-weight: 600;
 }
 
+.mom-line-segment-ray {
+  display: block;
+  width: min(100%, 520px);
+  height: auto;
+  min-height: 0;
+  margin-inline: auto;
+  color: var(--text-primary);
+}
+.mom-line-figure-stroke {
+  stroke: var(--text-primary);
+  stroke-linecap: butt;
+  stroke-width: 3;
+}
+.mom-line-figure-endpoint,
+.mom-line-figure-arrow {
+  fill: var(--text-primary);
+}
+.mom-line-figure-label {
+  fill: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.mom-clock-face {
+  display: block;
+  width: min(100%, 360px);
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+  color: var(--text-primary);
+}
+.mom-clock-dial {
+  fill: var(--surface-secondary);
+  stroke: var(--text-primary);
+  stroke-width: 3;
+}
+.mom-clock-tick {
+  stroke: var(--text-tertiary);
+  stroke-linecap: round;
+  stroke-width: 1.5;
+}
+.mom-clock-tick.is-hour {
+  stroke: var(--text-primary);
+  stroke-width: 3;
+}
+.mom-clock-hour-number {
+  fill: var(--text-primary);
+  font-size: 19px;
+  font-weight: 800;
+}
+.mom-clock-hand {
+  stroke: var(--text-primary);
+  stroke-linecap: round;
+}
+.mom-clock-hand.is-hour {
+  stroke-width: 7;
+}
+.mom-clock-hand.is-minute {
+  stroke: var(--accent-primary);
+  stroke-width: 4.5;
+}
+.mom-clock-pin {
+  fill: var(--text-primary);
+}
+
 .mom-triangle-figure {
   display: block;
   width: min(100%, 560px);

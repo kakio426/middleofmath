@@ -195,6 +195,8 @@ export function summarizeVisual(judgment: Judgment): string {
       ? `${judgment.visual.totalParts}칸 띠그래프`
       : `${judgment.visual.totalParts}부분 원그래프`;
     case "pictograph": return `그림 1개 = ${judgment.visual.value}개`;
+    case "line-segment-ray": return `곧은 선 ${judgment.visual.figures.length}개 그림`;
+    case "clock-face": return `${judgment.visual.hour}시 ${judgment.visual.minute}분 시계`;
   }
 }
 

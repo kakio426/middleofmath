@@ -862,6 +862,93 @@ describe("VisualAid angle diagrams", () => {
   });
 });
 
+describe("VisualAid line, segment, and ray figures", () => {
+  it("draws each end as a point or an arrow without naming the figure kind", () => {
+    const visual: JudgmentVisual = {
+      kind: "line-segment-ray",
+      figures: [
+        { label: "가", type: "line" },
+        { label: "나", type: "ray" },
+        { label: "다", type: "segment" }
+      ]
+    };
+    const first = renderToStaticMarkup(createElement(VisualAid, { visual }));
+    const second = renderToStaticMarkup(createElement(VisualAid, { visual }));
+    const description = describeVisual(visual) ?? "";
+
+    expect(first).toBe(second);
+    expect(first).toContain('class="mom-visual mom-line-segment-ray"');
+    // 직선 2개 + 반직선 1개 = 화살촉 3개, 반직선 1개 + 선분 2개 = 끝점 3개
+    expect(first.match(/class="mom-line-figure-arrow"/g)).toHaveLength(3);
+    expect(first.match(/class="mom-line-figure-endpoint"/g)).toHaveLength(3);
+    expect(description).toContain("가: 곧은 선의 왼쪽 끝은 화살표로 계속 이어지고");
+    expect(description).toContain("다: 곧은 선의 왼쪽 끝은 점으로 막혀 있고");
+    expect(description).not.toMatch(/선분|반직선|직선|정답/);
+    expect(first).not.toMatch(/<animate|Math\.random|Date\(/i);
+  });
+
+  it("keeps a single figure readable and leaves its ends unlabelled", () => {
+    const visual: JudgmentVisual = {
+      kind: "line-segment-ray",
+      figures: [{ label: "반직선", type: "ray" }]
+    };
+    const markup = renderToStaticMarkup(createElement(VisualAid, { visual }));
+
+    expect(markup.match(/class="mom-line-figure-stroke"/g)).toHaveLength(1);
+    expect(markup.match(/class="mom-line-figure-arrow"/g)).toHaveLength(1);
+    expect(markup.match(/class="mom-line-figure-endpoint"/g)).toHaveLength(1);
+    // 끝점 개수를 묻는 문항이므로 개수를 글자로 알려주면 안 된다.
+    expect(describeVisual(visual) ?? "").not.toMatch(/1개|한 개|2개|정답/);
+  });
+});
+
+describe("VisualAid clock faces", () => {
+  it("places both hands from the hour and minute without printing the time", () => {
+    const visual: JudgmentVisual = { kind: "clock-face", hour: 4, minute: 25 };
+    const first = renderToStaticMarkup(createElement(VisualAid, { visual }));
+    const second = renderToStaticMarkup(createElement(VisualAid, { visual }));
+    const description = describeVisual(visual) ?? "";
+
+    expect(first).toBe(second);
+    expect(first).toContain('class="mom-visual mom-clock-face"');
+    expect(first.match(/class="mom-clock-tick/g)).toHaveLength(60);
+    expect(first.match(/class="mom-clock-hour-number"/g)).toHaveLength(12);
+    expect(first).toContain('class="mom-clock-hand is-hour"');
+    expect(first).toContain('class="mom-clock-hand is-minute"');
+    expect(description).toContain("짧은바늘은 4와 5 사이에 있고");
+    expect(description).toContain("긴바늘은 5를 정확히 가리킵니다");
+    expect(description).not.toMatch(/25분|4시|정답/);
+  });
+
+  it("moves the hour hand with the minutes so 4:25 and 4:05 are not the same picture", () => {
+    const quarterPast = renderToStaticMarkup(
+      createElement(VisualAid, { visual: { kind: "clock-face", hour: 4, minute: 25 } })
+    );
+    const justAfter = renderToStaticMarkup(
+      createElement(VisualAid, { visual: { kind: "clock-face", hour: 4, minute: 5 } })
+    );
+
+    expect(quarterPast).not.toBe(justAfter);
+  });
+
+  it("picks the Korean particle that matches each clock mark", () => {
+    expect(describeVisual({ kind: "clock-face", hour: 3, minute: 45 }) ?? "")
+      .toContain("짧은바늘은 3과 4 사이에 있고");
+    expect(describeVisual({ kind: "clock-face", hour: 3, minute: 45 }) ?? "")
+      .toContain("긴바늘은 9를 정확히 가리킵니다");
+    expect(describeVisual({ kind: "clock-face", hour: 12, minute: 0 }) ?? "")
+      .toContain("짧은바늘은 12를 정확히 가리키고");
+    expect(describeVisual({ kind: "clock-face", hour: 1, minute: 0 }) ?? "")
+      .toContain("짧은바늘은 1을 정확히 가리키고");
+    // 정각이면 긴바늘은 12 눈금 위에 있다
+    expect(describeVisual({ kind: "clock-face", hour: 1, minute: 0 }) ?? "")
+      .toContain("긴바늘은 12를 정확히 가리킵니다");
+    // 5의 배수가 아닌 분은 두 눈금 사이로 말한다
+    expect(describeVisual({ kind: "clock-face", hour: 8, minute: 3 }) ?? "")
+      .toContain("긴바늘은 12와 1 사이에 있습니다");
+  });
+});
+
 describe("VisualAid grid transformation diagrams", () => {
   it("renders exact source and target cells with a marker but no answer wording", () => {
     const visual: JudgmentVisual = {

@@ -607,6 +607,206 @@ function AngleFigureVisual({ visual }: { visual: AngleFigure }) {
   );
 }
 
+type LineSegmentRayFigure = Extract<
+  JudgmentVisual,
+  { kind: "line-segment-ray" }
+>;
+type ClockFace = Extract<JudgmentVisual, { kind: "clock-face" }>;
+
+// 끝점 생김새만 말하고 "선분/반직선/직선" 이름은 붙이지 않는다.
+// 이름 자체가 문항의 정답이기 때문이다.
+const LINE_END_SHAPES: Record<
+  LineSegmentRayFigure["figures"][number]["type"],
+  { start: "point" | "arrow"; end: "point" | "arrow" }
+> = {
+  segment: { start: "point", end: "point" },
+  ray: { start: "point", end: "arrow" },
+  line: { start: "arrow", end: "arrow" }
+};
+
+function lineSegmentRayDescription(visual: LineSegmentRayFigure): string {
+  const spokenEnd = (shape: "point" | "arrow") =>
+    shape === "point" ? "점으로 막혀 있고" : "화살표로 계속 이어지고";
+  const figures = visual.figures.map((figure) => {
+    const ends = LINE_END_SHAPES[figure.type];
+    return `${figure.label}: 곧은 선의 왼쪽 끝은 ${spokenEnd(ends.start)} 오른쪽 끝은 ${spokenEnd(ends.end)} 있습니다`;
+  }).join(". ");
+  return `${figures}. 각 선의 이름은 표시하지 않습니다.`;
+}
+
+function LineSegmentRayVisual({ visual }: { visual: LineSegmentRayFigure }) {
+  const rowHeight = 46;
+  const lineStart = 62;
+  const lineEnd = 216;
+  const height = visual.figures.length * rowHeight + 16;
+
+  return (
+    <svg
+      aria-label={lineSegmentRayDescription(visual)}
+      className="mom-visual mom-line-segment-ray"
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      viewBox={`0 0 240 ${height}`}
+    >
+      <g aria-hidden="true">
+        {visual.figures.map((figure, index) => {
+          const y = index * rowHeight + rowHeight / 2 + 8;
+          const ends = LINE_END_SHAPES[figure.type];
+          // 화살표 끝은 촉이 들어갈 자리를 남기고, 점 끝은 선을 끝까지 그린다.
+          const x1 = ends.start === "arrow" ? lineStart + 9 : lineStart;
+          const x2 = ends.end === "arrow" ? lineEnd - 9 : lineEnd;
+          return (
+            <g key={figure.label}>
+              <text className="mom-line-figure-label" x="14" y={y + 5}>
+                {figure.label}
+              </text>
+              <line
+                className="mom-line-figure-stroke"
+                x1={x1}
+                x2={x2}
+                y1={y}
+                y2={y}
+              />
+              {ends.start === "point" ? (
+                <circle className="mom-line-figure-endpoint" cx={lineStart} cy={y} r="4.5" />
+              ) : (
+                <polygon
+                  className="mom-line-figure-arrow"
+                  points={`${lineStart},${y} ${lineStart + 11},${y - 6} ${lineStart + 11},${y + 6}`}
+                />
+              )}
+              {ends.end === "point" ? (
+                <circle className="mom-line-figure-endpoint" cx={lineEnd} cy={y} r="4.5" />
+              ) : (
+                <polygon
+                  className="mom-line-figure-arrow"
+                  points={`${lineEnd},${y} ${lineEnd - 11},${y - 6} ${lineEnd - 11},${y + 6}`}
+                />
+              )}
+            </g>
+          );
+        })}
+      </g>
+    </svg>
+  );
+}
+
+// 시계 눈금 1~12 를 한자어로 읽었을 때 받침이 있는 수. 조사를 고르는 데 쓴다.
+const CLOCK_MARK_WITH_FINAL_CONSONANT = new Set([1, 3, 6, 7, 8, 10, 11]);
+
+function clockMarkObjectParticle(mark: number): string {
+  return CLOCK_MARK_WITH_FINAL_CONSONANT.has(mark) ? "을" : "를";
+}
+
+function clockMarkAndParticle(mark: number): string {
+  return CLOCK_MARK_WITH_FINAL_CONSONANT.has(mark) ? "과" : "와";
+}
+
+// 시계 바늘이 가리키는 위치만 말하고 읽은 시각은 말하지 않는다.
+function clockFaceDescription(visual: ClockFace): string {
+  const nextHour = visual.hour === 12 ? 1 : visual.hour + 1;
+  const hourPosition = visual.minute === 0
+    ? `${visual.hour}${clockMarkObjectParticle(visual.hour)} 정확히 가리키고`
+    : `${visual.hour}${clockMarkAndParticle(visual.hour)} ${nextHour} 사이에 있고`;
+  const exactMark = visual.minute === 0 ? 12 : visual.minute / 5;
+  const beforeMark = Math.floor(visual.minute / 5) === 0
+    ? 12
+    : Math.floor(visual.minute / 5);
+  const minutePosition = visual.minute % 5 === 0
+    ? `${exactMark}${clockMarkObjectParticle(exactMark)} 정확히 가리킵니다`
+    : `${beforeMark}${clockMarkAndParticle(beforeMark)} ${Math.floor(visual.minute / 5) + 1} 사이에 있습니다`;
+  return `1부터 12까지 눈금이 있는 시계입니다. 짧은바늘은 ${hourPosition}, 긴바늘은 ${minutePosition}. 읽은 시각은 숫자로 표시하지 않습니다.`;
+}
+
+function ClockFaceVisual({ visual }: { visual: ClockFace }) {
+  const center = { x: 120, y: 120 };
+  const radius = 100;
+  // polarPoint 는 0도가 3시 방향이고 반시계가 양수다. 시계 각도(12시부터
+  // 시계방향)를 넘기기 전에 `90 - 각도`로 바꿔 준다.
+  const fromClockAngle = (clockDegrees: number, distance: number) =>
+    polarPoint(center.x, center.y, distance, 90 - clockDegrees);
+  // 눈금 숫자는 바깥(78), 바늘 끝은 그 안쪽에 둔다. 바늘이 자기가 가리키는
+  // 숫자를 덮으면 시각을 읽는 문항에서 정답 숫자가 가려지기 때문이다.
+  const hourNumberRadius = radius - 22;
+  const hourHand = fromClockAngle(
+    (visual.hour % 12) * 30 + visual.minute * 0.5,
+    radius * 0.44
+  );
+  const minuteHand = fromClockAngle(visual.minute * 6, radius * 0.66);
+
+  return (
+    <svg
+      aria-label={clockFaceDescription(visual)}
+      className="mom-visual mom-clock-face"
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      viewBox="0 0 240 240"
+    >
+      <g aria-hidden="true">
+        <circle
+          className="mom-clock-dial"
+          cx={center.x}
+          cy={center.y}
+          r={radius}
+        />
+        {Array.from({ length: 60 }, (_, tick) => {
+          const isHourTick = tick % 5 === 0;
+          const outer = fromClockAngle(tick * 6, radius);
+          const inner = fromClockAngle(tick * 6, radius - (isHourTick ? 12 : 6));
+          return (
+            <line
+              className={`mom-clock-tick${isHourTick ? " is-hour" : ""}`}
+              key={tick}
+              x1={outer.x}
+              x2={inner.x}
+              y1={outer.y}
+              y2={inner.y}
+            />
+          );
+        })}
+        {Array.from({ length: 12 }, (_, index) => {
+          const hour = index + 1;
+          const position = fromClockAngle(hour * 30, hourNumberRadius);
+          return (
+            <text
+              className="mom-clock-hour-number"
+              dominantBaseline="central"
+              key={hour}
+              textAnchor="middle"
+              x={position.x}
+              y={position.y}
+            >
+              {hour}
+            </text>
+          );
+        })}
+        <line
+          className="mom-clock-hand is-hour"
+          x1={center.x}
+          x2={hourHand.x}
+          y1={center.y}
+          y2={hourHand.y}
+        />
+        <line
+          className="mom-clock-hand is-minute"
+          x1={center.x}
+          x2={minuteHand.x}
+          y1={center.y}
+          y2={minuteHand.y}
+        />
+        <circle
+          className="mom-clock-pin"
+          cx={center.x}
+          cy={center.y}
+          r="5"
+        />
+      </g>
+    </svg>
+  );
+}
+
 function polygonAngleDescription(visual: PolygonAngleDiagram): string {
   const shape = visual.polygon === "triangle" ? "삼각형" : "사각형";
   const angleCopy = visual.angles.map((angle) =>
@@ -3108,6 +3308,12 @@ export function describeVisual(visual: JudgmentVisual): string | null {
   if (visual.kind === "polygon-angle-diagram") {
     return polygonAngleDescription(visual);
   }
+  if (visual.kind === "line-segment-ray") {
+    return lineSegmentRayDescription(visual);
+  }
+  if (visual.kind === "clock-face") {
+    return clockFaceDescription(visual);
+  }
   if (visual.kind === "triangle-figure") {
     return triangleFigureDescription(visual);
   }
@@ -3654,6 +3860,12 @@ export function VisualAid({ visual }: { visual: JudgmentVisual }) {
   }
   if (visual.kind === "polygon-angle-diagram") {
     return <PolygonAngleDiagramVisual visual={visual} />;
+  }
+  if (visual.kind === "line-segment-ray") {
+    return <LineSegmentRayVisual visual={visual} />;
+  }
+  if (visual.kind === "clock-face") {
+    return <ClockFaceVisual visual={visual} />;
   }
   if (visual.kind === "triangle-figure") {
     return <TriangleFigureVisual visual={visual} />;

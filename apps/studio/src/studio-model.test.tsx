@@ -46,7 +46,16 @@ const measurementVisualSummaries: Array<[JudgmentVisual, string]> = [
   [{
     kind: "partition-diagrams",
     diagrams: [{ label: "가", parts: [1, 1, 1, 1], highlightedPart: 0 }]
-  }, "1개 등분 그림"]
+  }, "1개 등분 그림"],
+  [{
+    kind: "line-segment-ray",
+    figures: [
+      { label: "가", type: "line" },
+      { label: "나", type: "ray" },
+      { label: "다", type: "segment" }
+    ]
+  }, "곧은 선 3개 그림"],
+  [{ kind: "clock-face", hour: 4, minute: 25 }, "4시 25분 시계"]
 ];
 
 describe("studio model", () => {
