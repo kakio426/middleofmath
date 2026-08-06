@@ -111,12 +111,18 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets[matrix.project_secret] }}
         run: |
           npx vercel@56.5.0 build --token="$VERCEL_TOKEN"
-          if [ ! -d .vercel/output/static ]; then
-            echo "::error::apps/${{ matrix.app }} has no .vercel/output/static to inspect, so the local-URL guard cannot run."
-            exit 1
-          fi
-          if grep -rqE 'http://(127\.0\.0\.1|localhost):[0-9]+' .vercel/output/static; then
-            echo "::error::apps/${{ matrix.app }} was built against a local Supabase URL. Fix the Vercel Preview environment variables before deploying."
+          supabase_url=$(sed -n 's/^VITE_SUPABASE_URL="\{0,1\}\([^"]*\)"\{0,1\}$/\1/p' .vercel/.env.preview.local)
+          echo "pulled VITE_SUPABASE_URL: ${supabase_url:-(not set)}"
+          case "$supabase_url" in
+            "")
+              echo "::error::apps/${{ matrix.app }} pulled no VITE_SUPABASE_URL from the Vercel Preview environment."
+              exit 1 ;;
+            *127.0.0.1*|*localhost*)
+              echo "::error::apps/${{ matrix.app }} pulled a local VITE_SUPABASE_URL ($supabase_url). Point the Vercel Preview environment at the staging project."
+              exit 1 ;;
+          esac
+          if ! grep -rqF "$supabase_url" .vercel/output/static; then
+            echo "::error::apps/${{ matrix.app }} built without $supabase_url in its bundle, so the pulled environment never reached the build."
             exit 1
           fi
           deployment_url=$(npx vercel@56.5.0 deploy --prebuilt --token="$VERCEL_TOKEN")
