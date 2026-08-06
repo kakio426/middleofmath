@@ -16,7 +16,7 @@ const v140MigrationPath = fileURLToPath(new URL(
   import.meta.url
 ));
 const g3s2V210MigrationPath = fileURLToPath(new URL(
-  "../supabase/migrations/202608060004_grade3_semester2_publication_v210.sql",
+  "../supabase/migrations/202608060005_grade3_semester2_publication_v210.sql",
   import.meta.url
 ));
 
