@@ -93,7 +93,7 @@ select lives_ok(
 -- 건드리지 않는다는 것이 이 마이그레이션의 안전 조건이다.
 select results_eq(
   $$select
-      status,
+      status::text,
       jsonb_array_length(content -> 'manifest' -> 'units'),
       jsonb_array_length(content -> 'judgments')
     from public.diagnosis_sets
