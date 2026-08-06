@@ -71,18 +71,28 @@ test("초대 교사부터 학부모 PDF 요청까지 실제 staging 파일럿 �
   await student.getByLabel("내 개인 코드").fill(joinSecret!);
   await student.getByRole("button", { name: "활동 확인하기" }).click();
   await student.getByRole("button", { name: "시작하기" }).click();
-  let observedJudgmentCount = 0;
   const finished = student.getByRole("heading", { name: "끝까지 참여했어요" });
-  const firstChoice = student.locator(".mom-choice").first();
-  while (observedJudgmentCount < 80) {
-    // The completion screen replaces the choices, so wait for whichever of the
-    // two arrives instead of reading the heading before the answer renders.
-    await expect(finished.or(firstChoice)).toBeVisible();
+  const judgmentCard = student.locator("[data-judgment-id]");
+  const answered = new Set<string>();
+  while (answered.size < 80) {
+    // The previous judgment stays on screen while the next one or the
+    // completion screen loads, so count the judgment ids actually shown rather
+    // than the clicks made.
+    await expect(finished.or(judgmentCard)).toBeVisible();
     if (await finished.count() > 0) break;
-    await firstChoice.click();
-    await student.getByRole("button", { name: "다음", exact: true }).click();
-    observedJudgmentCount += 1;
+    const judgmentId = await judgmentCard.getAttribute("data-judgment-id");
+    if (judgmentId && answered.has(judgmentId)) {
+      await student.waitForTimeout(200);
+      continue;
+    }
+    await student.locator(".mom-choice").first().click();
+    if (judgmentId) answered.add(judgmentId);
+    const next = student.getByRole("button", { name: "다음", exact: true });
+    await expect(finished.or(next)).toBeVisible();
+    if (await finished.count() > 0) break;
+    await next.click();
   }
+  const observedJudgmentCount = answered.size;
   await expect(finished).toBeVisible();
   expect(observedJudgmentCount).toBe(expectedJudgmentCount);
 

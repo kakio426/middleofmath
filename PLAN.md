@@ -121,11 +121,12 @@
 5. [완료] 교사가 학기와 단원을 따로 선택해 배정하는 migration — CI pgTAP(런 30981938079)과 staging DB 실제 적용(런 30986769763)을 모두 통과했다.
 6. [완료, 2026-08-05] 무효화됐던 `VERCEL_TOKEN`을 재발급했다. teacher·studio·student 세 배포가 모두 성공했다(런 30986769763 rerun). 재배포 뒤 세 프로젝트의 Vercel Deployment Protection(SSO, `all_except_custom_domains`)이 커스텀 도메인이 없는 staging별칭 전체를 로그인 화면으로 막고 있는 것을 추가로 발견해 사용자 확인 후 껐다. 세 URL 모두 curl로 200 확인, studio 로그인 화면 smoke 테스트 통과.
 7. [완료, 2026-08-06] 교사 계정 생성 경로를 복구했다. `create_teacher_profile()`이 INSERT 시점에 `invited_at`을 요구해 GoTrue의 2단계 초대(INSERT 후 `invited_at` UPDATE)를 막고 있었다 — Dashboard의 `Create new user`와 `Invite user`가 모두 같은 예외로 실패했고, 손수 INSERT한 우회 행은 GoTrue 밖에 있어 로그인·수정·삭제가 되지 않았다. `202608060001_teacher_invite_two_phase.sql`로 프로필 생성 시점을 초대 기록 시점으로 옮기고, pgTAP에 "초대 전 프로필 없음 → 초대 후 프로필 생성" 두 단계를 검증으로 추가했다. staging에서 계정을 정상 경로로 재생성해 `auth.users` 1행·`public.teachers` 1행을 확인했다.
-8. [진행 중, 2026-08-06] staging 전체 흐름 검증. 교사 로그인 → 학급 생성 → 학생 추가 → 단원 배정 → 학생이 진단 끝까지 완료까지 실제로 통과했다. 남은 구간은 반 요약 → 학부모 결과표이며 현재 테스트가 시간 초과로 끝난다. 이 구간을 통과시키는 것이 다음 작업이다. 여기까지 오면서 아래 결함을 찾아 고쳤다.
+8. [완료, 2026-08-06] staging 전체 흐름 검증. 교사 로그인 → 학급 생성 → 학생 추가 → 단원 배정 → 학생 완료 → 반 요약 → 학부모 결과표 인쇄까지 실제 staging에서 통과했고, `parent_report_exports`에 실제 행이 남는 것도 확인했다. 이 흐름은 아래 결함들 때문에 그동안 한 번도 끝까지 성공한 적이 없었다.
    - Vercel Preview 환경변수가 teacher만 갱신돼 있고 student·studio는 로컬 Supabase 주소였다. 세 앱을 staging 값으로 통일하고, 배포 전에 pull한 `VITE_SUPABASE_URL`이 비어 있거나 로컬이면 중단하는 가드를 두었다.
    - `create_student`가 출력 컬럼 `active`와 `classes.active`의 이름 충돌로 호출될 때마다 42702를 일으켜 학생 추가가 항상 실패했다(`202608060002`). pgTAP이 이 함수를 한 번도 호출하지 않아 드러나지 않았고, 이번에 성공·타반 거부 두 검증을 추가했다.
    - 배정 마법사의 `다음` 버튼이 모든 단계에서 진단·단원까지 요구해, 학급 학년과 다른 진단이 기본 선택되면 2단계로 넘어갈 수 없는 교착이 생겼다. 단계별로 필요한 조건만 검사하도록 바꿨다.
    - staging Supabase의 익명 로그인이 꺼져 있어 학생 입장이 전부 거부됐다. `external_anonymous_users_enabled`를 켰다. 이 값은 학생 입장의 전제이므로 production 신설 시에도 확인해야 한다.
+   - 학부모 결과표 저장이 42501로 거부됐다. `guard_parent_report_export_consistency`가 교사 권한으로 실행되는데 2026-08-02 콘텐츠 마이그레이션들이 `jsonb_object_has_only_keys`의 실행 권한을 `authenticated`에서 회수했기 때문이다. 그날 이후 어떤 교사도 결과표를 내보낼 수 없었다. 가드를 `security definer`로 바꿔(`202608060003`) 헬퍼는 클라이언트에서 계속 막힌 채로 두었다.
 
 ### P1 — 첫 수업 전에 필요한 항목
 
@@ -177,8 +178,8 @@
 - `VERCEL_TOKEN`을 재발급해 teacher·studio·student 세 앱 배포가 모두 성공했다(런 30986769763). 이어서 세 프로젝트의 Vercel Deployment Protection(SSO)이 `all_except_custom_domains`로 켜져 있어 커스텀 도메인이 없는 staging 별칭이 전부 Vercel 로그인 화면으로 리다이렉트되던 것을 발견했다 — 이 상태로는 학생·교사도 태블릿에서 접속할 수 없었다. 사용자 확인 뒤 세 프로젝트의 SSO 보호를 껐고, 세 URL 모두 200 응답과 studio 로그인 화면 smoke 통과를 확인했다.
 - 교사 계정을 어떤 경로로도 만들 수 없던 원인을 찾아 고쳤다(2026-08-06). `create_teacher_profile()`이 `auth.users` INSERT 시점에 `invited_at`이 비어 있으면 예외를 던졌는데, GoTrue의 관리자 초대는 행을 먼저 INSERT하고 `invited_at`을 나중에 UPDATE하는 2단계다. 그래서 Dashboard의 `Create new user`뿐 아니라 문서가 유일한 경로로 지정한 `Invite user`까지 같은 예외로 막혔고, 우회로 손수 INSERT한 행은 GoTrue가 관리하지 않아 로그인·수정·삭제가 모두 실패했다. `202608060001_teacher_invite_two_phase.sql`이 프로필 생성 시점을 초대가 기록되는 순간으로 옮겨 두 경로를 모두 살렸다. "초대 없는 계정은 교사 프로필을 얻지 못한다"는 원래 불변식은 그대로다.
 - staging에 위 수정을 적용하고 계정을 정상 경로로 재생성해 `auth.users` 1행·`public.teachers` 1행을 확인했다.
-- 계정 문제가 풀린 뒤 전체 흐름을 실제 staging에서 돌려 결함 4개를 더 찾아 고쳤다: Vercel Preview 환경변수가 세 앱 중 하나만 갱신돼 있던 것, `create_student`의 `active` 이름 충돌, 배정 마법사의 단계 교착, staging의 익명 로그인 비활성화. 지금은 학생이 진단을 끝까지 완료하는 데까지 통과하고, 반 요약 → 학부모 결과표 구간이 남았다.
-- 이 결함들은 모두 실사용 경로에서만 드러났다. 파일럿 전 실제 기기로 한 번 끝까지 밟아보는 리허설을 생략하지 않는다.
+- 계정 문제가 풀린 뒤 전체 흐름을 실제 staging에서 돌려 결함 5개를 더 찾아 고쳤다: Vercel Preview 환경변수가 세 앱 중 하나만 갱신돼 있던 것, `create_student`의 `active` 이름 충돌, 배정 마법사의 단계 교착, staging의 익명 로그인 비활성화, 학부모 결과표 가드의 실행 권한. 이제 교사 로그인부터 학부모 결과표 인쇄까지 전 구간이 통과한다.
+- 이 결함들은 모두 실사용 경로에서만 드러났고, 단위·pgTAP·데모 모드 검사는 전부 통과하고 있었다. 파일럿 전 실제 기기로 한 번 끝까지 밟아보는 리허설을 생략하지 않는다.
 - `staging-retention` 환경에는 여전히 `SUPABASE_URL`만 등록돼 있고 `SUPABASE_SERVICE_ROLE_KEY`가 없다. 야간 `Purge expired pilots`는 2026-08-02~08-04 연속 실패했고, 키 등록 뒤 재검증이 아직 남아 있다.
 - `production-retention`은 오늘 커밋(`0c84c13`)에서 삭제 매트릭스 대상에서 제외됐다. production Supabase 프로젝트가 아직 없기 때문이며, 프로젝트 신설 자체가 여전히 미착수 상태다.
 - 배정 가능한 3학년 2학기 운영본은 여전히 12문항인 `1.0.0`이다. 6개 단원·64문항인 `grade3-semester2@2.1.0`(`packages/content/src/grade3-semester2-complete.ts:877`)은 아직 `review` 상태다.
