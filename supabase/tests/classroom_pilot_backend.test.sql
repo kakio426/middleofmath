@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(56);
+select plan(57);
 
 insert into auth.users (
   id, aud, role, email, encrypted_password, email_confirmed_at, is_anonymous,
@@ -13,17 +13,27 @@ insert into auth.users (
   ('21000000-0000-0000-0000-000000000005', 'authenticated', 'authenticated', null, 'x', now(), true, null, '{}', '{}', now(), now()),
   ('21000000-0000-0000-0000-000000000006', 'authenticated', 'authenticated', null, 'x', now(), true, null, '{}', '{}', now(), now());
 
-select throws_ok(
-  $$insert into auth.users (
-      id, aud, role, email, encrypted_password, email_confirmed_at, is_anonymous,
-      raw_app_meta_data, raw_user_meta_data, created_at, updated_at
-    ) values (
-      '21000000-0000-0000-0000-000000000004', 'authenticated', 'authenticated',
-      'public-signup@example.test', 'x', now(), false, '{}', '{}', now(), now()
-    )$$,
-  'P0001',
-  'teacher account requires an administrator invitation',
-  'public email signup cannot create a teacher account'
+insert into auth.users (
+  id, aud, role, email, encrypted_password, email_confirmed_at, is_anonymous,
+  raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+) values (
+  '21000000-0000-0000-0000-000000000004', 'authenticated', 'authenticated',
+  'public-signup@example.test', 'x', now(), false, '{}', '{}', now(), now()
+);
+
+select is(
+  (select count(*)::int from public.teachers where id = '21000000-0000-0000-0000-000000000004'),
+  0,
+  'an uninvited account never gains a teacher profile'
+);
+
+update auth.users set invited_at = now()
+where id = '21000000-0000-0000-0000-000000000004';
+
+select is(
+  (select count(*)::int from public.teachers where id = '21000000-0000-0000-0000-000000000004'),
+  1,
+  'an administrator invitation creates the teacher profile'
 );
 
 set local role authenticated;

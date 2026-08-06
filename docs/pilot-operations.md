@@ -33,7 +33,21 @@
 
 배포 승인과 매일 삭제 승인을 분리하기 위해 retention Environment에는 Required reviewer를 걸지 않는다. workflow와 DB advisory lock이 purge 중복 실행을 직렬화한다. service-role key는 Vercel에 설정하지 않는다.
 
-production Environment에는 Required reviewers를 설정한다. 공개 회원가입 UI는 제공하지 않으며, 파일럿 교사는 Supabase Dashboard의 관리자 초대로만 만든다. migration 전에 아래 조회 결과가 0인지 확인한다. 결과가 있으면 자동 삭제하지 말고 계정 소유자와 클래스 연결을 수동 검토한다.
+production Environment에는 Required reviewers를 설정한다. 공개 회원가입 UI는 제공하지 않으며, 파일럿 교사는 Supabase Dashboard의 관리자 초대로만 만든다.
+
+교사 계정은 아래 두 단계로 만든다. `auth.users`에 직접 INSERT하지 않는다. 손으로 넣은 행은 GoTrue가 관리하지 않으므로 로그인도, Dashboard의 수정·삭제도 되지 않는다.
+
+1. Authentication → Users에서 계정을 만든다. 초대 메일을 쓰면 `Invite user`, 비밀번호를 직접 정하려면 `Create new user`(Auto Confirm User 체크)를 쓴다.
+2. 초대 사실을 기록한다. `Invite user`는 GoTrue가 `invited_at`을 채우지만, `Create new user`는 채우지 않으므로 SQL Editor에서 아래를 실행한다.
+
+```sql
+update auth.users set invited_at = now()
+where email = '교사 이메일' and invited_at is null;
+```
+
+`invited_at`이 채워지는 시점에 트리거가 `public.teachers` 프로필을 만든다. 초대 기록이 없는 계정은 프로필을 얻지 못해 교사 화면에서 아무것도 할 수 없다.
+
+migration 전에 아래 조회 결과가 0인지 확인한다. 결과가 있으면 자동 삭제하지 말고 계정 소유자와 클래스 연결을 수동 검토한다.
 
 ```sql
 select count(*)
@@ -123,8 +137,8 @@ SQL에서 다시 계산하지는 않는다. 운영 발행 전에는 `npm test`,
 신규 환경의 `seed.sql`도 `grade3-semester2@1.0.0`에 같은 범위의
 레거시 gate를 함께 넣는다. migration 장애를 조사할 때 운영 DB를
 reset하지 말고, `template0`에서 만든 임시 DB에 전체 migration과
-seed를 재생한 뒤 임시 DB를 삭제한다. 현재 전체 체인은 36개 migration,
-30개 pgTAP 파일·497개 assertion이다.
+seed를 재생한 뒤 임시 DB를 삭제한다. 현재 전체 체인은 37개 migration,
+30개 pgTAP 파일·498개 assertion이다.
 
 교실 준비 문서는 [태블릿 25대 실교실 리허설](./pilot-25-tablet-rehearsal.md),
 [파일럿 관찰 기록지](./pilot-observation-sheet.md),

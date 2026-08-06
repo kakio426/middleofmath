@@ -35,6 +35,7 @@
   - 교사용 분석지가 2명 이상 생성되지 않는다.
 - 학생에게는 진단명이나 오개념 이름을 직접 보여주지 않는다.
 - 한 문항의 오답만으로 학습 결손이나 오개념을 확정하지 않는다.
+- `grade3-semester2@2.1.0` 발행 검토는 파일럿 운영자 본인이 수행한다. 다른 7개 학기와 같은 콘텐츠 검수 체크리스트와 독립 검증 에이전트 승인을 발행 조건으로 유지하되, 별도 두 번째 교사 검토는 요구하지 않는다(2026-08-05 확정, addresses: 두 번째 검수 교사를 구할 수 없음).
 
 ## Education Brief
 
@@ -114,11 +115,13 @@
 ### P0 — 파일럿을 막는 항목
 
 1. [완료] smoke 선택자 계약과 legacy adapter 기대 문구를 현재 용어에 맞춰 CI를 복구한다.
-2. staging의 Supabase access token·DB password·smoke 교사 계정을 등록한다.
-3. staging-retention과 production-retention의 service-role key를 등록하고 삭제 작업을 검증한다.
-4. 3학년 2학기 2.1.0의 64문항을 교사가 최종 검토하고 발행 가능 상태로 만든다.
-5. [코드 완료·DB 실행 대기] 교사가 학기와 단원을 따로 선택해 배정하고, 학생·서버·분석지가 같은 단원 범위만 사용하게 한다.
-6. staging에서 교사 로그인 → 학급 생성 → 학생 25명 등록 → 단원 배정 → 학생 완료 → 반 요약 → 분석지 흐름을 검증한다.
+2. [완료, 2026-08-05] staging의 Supabase access token·DB password·smoke 교사 계정을 등록한다. `Release staging`의 `migrate` 잡이 실제 staging DB에 마이그레이션 체인을 적용하는 데까지 성공했다(런 30986769763).
+3. [staging 대기·production 대상 제외] staging-retention의 service-role key를 등록하고 삭제 작업을 검증한다. production-retention은 production Supabase 프로젝트가 없어 삭제 매트릭스에서 제외했다(`0c84c13`, 결함이 아니라 의도된 축소).
+4. 3학년 2학기 2.1.0의 64문항을 파일럿 운영자 본인이 콘텐츠 검수 체크리스트와 독립 검증 에이전트 승인으로 최종 검토하고 발행 가능 상태로 만든다. 별도 두 번째 교사 검토는 요구하지 않는다.
+5. [완료] 교사가 학기와 단원을 따로 선택해 배정하는 migration — CI pgTAP(런 30981938079)과 staging DB 실제 적용(런 30986769763)을 모두 통과했다.
+6. [완료, 2026-08-05] 무효화됐던 `VERCEL_TOKEN`을 재발급했다. teacher·studio·student 세 배포가 모두 성공했다(런 30986769763 rerun). 재배포 뒤 세 프로젝트의 Vercel Deployment Protection(SSO, `all_except_custom_domains`)이 커스텀 도메인이 없는 staging별칭 전체를 로그인 화면으로 막고 있는 것을 추가로 발견해 사용자 확인 후 껐다. 세 URL 모두 curl로 200 확인, studio 로그인 화면 smoke 테스트 통과.
+7. [완료, 2026-08-06] 교사 계정 생성 경로를 복구했다. `create_teacher_profile()`이 INSERT 시점에 `invited_at`을 요구해 GoTrue의 2단계 초대(INSERT 후 `invited_at` UPDATE)를 막고 있었다 — Dashboard의 `Create new user`와 `Invite user`가 모두 같은 예외로 실패했고, 손수 INSERT한 우회 행은 GoTrue 밖에 있어 로그인·수정·삭제가 되지 않았다. `202608060001_teacher_invite_two_phase.sql`로 프로필 생성 시점을 초대 기록 시점으로 옮기고, pgTAP에 "초대 전 프로필 없음 → 초대 후 프로필 생성" 두 단계를 검증으로 추가했다. staging에서 계정을 정상 경로로 재생성해 `auth.users` 1행·`public.teachers` 1행을 확인했다.
+8. staging에서 교사 로그인 → 학급 생성 → 학생 25명 등록 → 단원 배정 → 학생 완료 → 반 요약 → 분석지 흐름을 smoke로 검증한다. 계정 문제가 풀렸으므로 재실행이 다음 차례다.
 
 ### P1 — 첫 수업 전에 필요한 항목
 
@@ -161,18 +164,20 @@
 - 서비스 내부 연구 기록 구현 -> Google Form/Sheet로 먼저 검증 (addresses: 파일럿 전 과도한 구현)
 - 기존 Neon 재사용 검토 -> 파일럿은 현재 구조의 Supabase 사용 (addresses: 인프라 재개발과 일정 지연)
 - 정상 운영을 전제로 시작 -> 명시적 주간 중단 기준 적용 (addresses: 학생 피로·데이터 손실·기술 장애)
+- 2.1.0 발행에 다른 교사 검토 요구 -> 파일럿 운영자 본인의 콘텐츠 검수 체크리스트·독립 검증 에이전트 승인으로 검토 (addresses: 두 번째 검수 교사를 구할 수 없음; 이미 발행된 다른 7개 학기도 같은 절차로 검토됐다)
 
-## Current Readiness Findings
+## Current Readiness Findings (2026-08-05 갱신)
 
-- 최신 `main`에서 실패했던 smoke 선택자 계약과 adapter 기대 문구는 로컬에서 수정됐고 전체 Vitest가 통과했다. 원격 CI 확인은 커밋·푸시 뒤 남아 있다.
-- 이전 staging 사전 검사에서 `SUPABASE_ACCESS_TOKEN`, `SUPABASE_DB_PASSWORD`, `STAGING_TEACHER_EMAIL`, `STAGING_TEACHER_PASSWORD`가 등록되지 않은 것으로 확인됐다.
-- 보존 기간 만료 자료 삭제 작업은 `staging-retention`의 `SUPABASE_SERVICE_ROLE_KEY`가 없어 실패하고 있다.
-- staging Supabase 프로젝트는 연결돼 있지만 현재 비활성 상태이며 API 키 조회도 빈 결과를 반환한다. 프로젝트 재활성화 전에는 비밀값 등록·migration·retention 검증을 진행할 수 없다.
-- 배정 가능한 3학년 2학기 운영본은 현재 12문항인 `1.0.0`이다.
-- 6개 단원·64문항인 `grade3-semester2@2.1.0`은 아직 `review` 상태여서 파일럿 학급에 배정할 수 없다.
-- 실제 배정에 단원 범위를 저장하고 학생 문항·서버 완료 조건·교사 분석을 같은 단원으로 제한하는 코드와 DB migration을 추가했다. TypeScript와 관련 Vitest는 통과했으나 로컬 Docker가 없어 pgTAP 실행은 남아 있다.
-- 독립 검증에서 발견한 신규 `unit_id=null` 우회와 pgTAP 계획 수 불일치를 수정했다. 재검토는 결함 없음으로 통과했으며, 이전 `unit_id=null` 배정의 학기 전체 호환도 기존 백엔드 테스트에 고정했다.
-- 따라서 파일럿 전 필수 순서는 `Supabase 재활성화·비밀값 등록 → 단원 배정 DB 검증 → 2.1.0 다른 교사 내용 검토·발행 → staging 전체 흐름 연습 → production 승격`이다.
+- staging Supabase 프로젝트가 오늘 재활성화됐다. `SUPABASE_ACCESS_TOKEN`, `SUPABASE_DB_PASSWORD`, `SUPABASE_PROJECT_REF`, `STAGING_TEACHER_EMAIL`, `STAGING_TEACHER_PASSWORD`가 staging 환경에 등록됐고, `Release staging`의 `migrate` 잡이 실제 staging DB에 마이그레이션 체인을 적용하는 데 성공했다(런 30986769763). 이전에 기록했던 "비활성 상태·비밀값 미등록" 문제는 해소됐다.
+- 단원 배정 migration의 pgTAP 검증이 CI(런 30981938079, "Verify migrations and pgTAP policies")에서 통과했다. "코드 완료·DB 실행 대기" 상태는 해소됐다.
+- `VERCEL_TOKEN`을 재발급해 teacher·studio·student 세 앱 배포가 모두 성공했다(런 30986769763). 이어서 세 프로젝트의 Vercel Deployment Protection(SSO)이 `all_except_custom_domains`로 켜져 있어 커스텀 도메인이 없는 staging 별칭이 전부 Vercel 로그인 화면으로 리다이렉트되던 것을 발견했다 — 이 상태로는 학생·교사도 태블릿에서 접속할 수 없었다. 사용자 확인 뒤 세 프로젝트의 SSO 보호를 껐고, 세 URL 모두 200 응답과 studio 로그인 화면 smoke 통과를 확인했다.
+- 교사 계정을 어떤 경로로도 만들 수 없던 원인을 찾아 고쳤다(2026-08-06). `create_teacher_profile()`이 `auth.users` INSERT 시점에 `invited_at`이 비어 있으면 예외를 던졌는데, GoTrue의 관리자 초대는 행을 먼저 INSERT하고 `invited_at`을 나중에 UPDATE하는 2단계다. 그래서 Dashboard의 `Create new user`뿐 아니라 문서가 유일한 경로로 지정한 `Invite user`까지 같은 예외로 막혔고, 우회로 손수 INSERT한 행은 GoTrue가 관리하지 않아 로그인·수정·삭제가 모두 실패했다. `202608060001_teacher_invite_two_phase.sql`이 프로필 생성 시점을 초대가 기록되는 순간으로 옮겨 두 경로를 모두 살렸다. "초대 없는 계정은 교사 프로필을 얻지 못한다"는 원래 불변식은 그대로다.
+- staging에 위 수정을 적용하고 계정을 정상 경로로 재생성해 `auth.users` 1행·`public.teachers` 1행을 확인했다. 전체 파일럿 흐름 smoke 재실행은 아직 남아 있다.
+- `staging-retention` 환경에는 여전히 `SUPABASE_URL`만 등록돼 있고 `SUPABASE_SERVICE_ROLE_KEY`가 없다. 야간 `Purge expired pilots`는 2026-08-02~08-04 연속 실패했고, 키 등록 뒤 재검증이 아직 남아 있다.
+- `production-retention`은 오늘 커밋(`0c84c13`)에서 삭제 매트릭스 대상에서 제외됐다. production Supabase 프로젝트가 아직 없기 때문이며, 프로젝트 신설 자체가 여전히 미착수 상태다.
+- 배정 가능한 3학년 2학기 운영본은 여전히 12문항인 `1.0.0`이다. 6개 단원·64문항인 `grade3-semester2@2.1.0`(`packages/content/src/grade3-semester2-complete.ts:877`)은 아직 `review` 상태다.
+- 2.1.0 발행 검토 주체를 변경했다: 다른 7개 학기와 동일하게 파일럿 운영자 본인이 콘텐츠 검수 체크리스트와 독립 검증 에이전트 승인만으로 검토·발행한다. 별도 두 번째 교사를 구하지 않는다.
+- 따라서 파일럿 전 남은 순서는 `staging 전체 흐름 smoke 통과 → staging-retention service-role key 등록·삭제 작업 검증 → 2.1.0 본인 검토·발행 → staging 실제 흐름 리허설 → production Supabase 신설·승격`이다. `VERCEL_TOKEN` 재발급과 SSO 보호 해제는 오늘 완료됐다.
 
 ## Non-Goals
 
@@ -189,11 +194,11 @@
 - 규칙 기반 분석이 교사의 실제 관찰과 다를 수 있다.
 - 한 학급 결과만으로 문항이나 진단 규칙을 성급하게 일반화할 수 있다.
 - 기기·네트워크 문제를 학생의 응답 행동으로 오해할 수 있다.
-- 현재 CI와 staging 배포가 막혀 있어 교실 파일럿을 바로 시작할 수 없다.
+- staging Vercel 배포가 무효화된 토큰으로 막혀 있어 교실 파일럿을 바로 시작할 수 없다(CI 자체는 통과, 배포만 막힘).
 - 6개 단원 전체 진단본이 아직 발행되지 않아 현재 운영본만으로는 합의한 파일럿 범위를 충족하지 못한다.
 - 보존 자료 자동 삭제가 작동하지 않은 상태에서 실제 학생 데이터를 수집하면 개인정보 보존 원칙을 지킬 수 없다.
-- 다른 교사의 2.1.0 내용 검토 없이 발행 migration을 추가하면 자동 검사를 사람의 발행 승인으로 오해하게 된다.
+- 본인 검토만으로 2.1.0을 발행하면 자동 검사를 사람의 최종 승인으로 오해하거나 콘텐츠 결함을 혼자 놓칠 수 있다. 다른 7개 학기에 이미 적용한 것과 같은 콘텐츠 검수 체크리스트·독립 검증 에이전트 승인 절차를 그대로 요구해 완화한다.
 
 ## Implementation Prompt
 
-Middle of Math의 3학년 2학기 실교실 파일럿을 준비한다. 기존 Supabase 기반 구조와 repository 경계를 유지하고 Neon으로 마이그레이션하지 않는다. 교사는 발행된 학기에서 단원 하나를 선택해 배정하고 학생 문항, 서버 완료 조건, 교사 분석지는 같은 단원 범위만 사용한다. staging 배포와 retention 비밀값을 등록하고, 다른 교사가 6개 단원·64문항인 grade3-semester2@2.1.0을 내용 검토한 뒤에만 발행한다. staging에서 교사 로그인부터 학생 완료·반 요약·교사용 분석지까지 실제 설정으로 검증한다. 학생 25명이 태블릿으로 주 1단원씩 6주간 참여하며 단원당 15분을 사용한다. 교사는 별도 Google Form/Sheet에 매주 5명의 사전 관찰, 분석지 일치 여부, 후속 행동과 다음 주 효과를 기록한다. 학생 실명과 학교 식별 정보는 수집하지 않는다. 정의된 중단 기준을 코드·운영 체크리스트·리허설 시나리오에 반영하고, staging을 통과한 정확한 커밋만 production에 승격한다. AI 요약, 자동 처방, 보호자 계정, 다른 학년 확대는 이번 범위에서 제외한다.
+Middle of Math의 3학년 2학기 실교실 파일럿을 준비한다. 기존 Supabase 기반 구조와 repository 경계를 유지하고 Neon으로 마이그레이션하지 않는다. 교사는 발행된 학기에서 단원 하나를 선택해 배정하고 학생 문항, 서버 완료 조건, 교사 분석지는 같은 단원 범위만 사용한다. staging 배포용 무효화된 VERCEL_TOKEN을 재발급하고 retention 비밀값을 등록하며, 파일럿 운영자 본인이 콘텐츠 검수 체크리스트와 독립 검증 에이전트 승인으로 6개 단원·64문항인 grade3-semester2@2.1.0을 검토한 뒤에만 발행한다. staging에서 교사 로그인부터 학생 완료·반 요약·교사용 분석지까지 실제 설정으로 검증한다. 학생 25명이 태블릿으로 주 1단원씩 6주간 참여하며 단원당 15분을 사용한다. 교사는 별도 Google Form/Sheet에 매주 5명의 사전 관찰, 분석지 일치 여부, 후속 행동과 다음 주 효과를 기록한다. 학생 실명과 학교 식별 정보는 수집하지 않는다. 정의된 중단 기준을 코드·운영 체크리스트·리허설 시나리오에 반영하고, staging을 통과한 정확한 커밋만 production에 승격한다. AI 요약, 자동 처방, 보호자 계정, 다른 학년 확대는 이번 범위에서 제외한다.
