@@ -133,6 +133,14 @@ jobs:
         run: |
           npx vercel@56.5.0 pull --yes --environment=production --token="$VERCEL_TOKEN"
           npx vercel@56.5.0 build --prod --token="$VERCEL_TOKEN"
+          if [ ! -d .vercel/output/static ]; then
+            echo "::error::apps/${{ matrix.app }} has no .vercel/output/static to inspect, so the local-URL guard cannot run."
+            exit 1
+          fi
+          if grep -rqE 'http://(127\.0\.0\.1|localhost):[0-9]+' .vercel/output/static; then
+            echo "::error::apps/${{ matrix.app }} was built against a local Supabase URL. Fix the Vercel production environment variables before deploying."
+            exit 1
+          fi
           npx vercel@56.5.0 deploy --prebuilt --prod --token="$VERCEL_TOKEN"
 
   smoke:

@@ -62,6 +62,8 @@ where coalesce(user_row.is_anonymous, false) = true or user_row.invited_at is nu
 - https://middle-of-math-teacher-staging.vercel.app
 - https://middle-of-math-studio-staging.vercel.app
 
+세 앱의 `VITE_*` 값은 Vercel 프로젝트의 Preview(staging)·Production 환경변수에서 오며, `vercel build` 시점에 번들에 그대로 박힌다. 그래서 환경변수를 고친 뒤 Vercel Dashboard의 Redeploy를 눌러도 반영되지 않는다. Vercel도 prebuilt 배포의 재배포를 막는다. 반드시 release workflow로 새로 빌드한다. 배포 직전 가드가 빌드 결과물에서 `127.0.0.1`·`localhost` 주소를 찾으면 배포를 중단한다. 로컬 개발용 값이 Preview에 등록돼 세 staging 앱이 전부 로컬 Supabase를 바라보던 사고(2026-08-06)를 막기 위한 것이다.
+
 production Environment에는 필요할 때 `PRODUCTION_STUDENT_URL`, `PRODUCTION_TEACHER_URL`, `PRODUCTION_STUDIO_URL` 변수를 등록한다. 변수가 없으면 workflow는 저장소에 적힌 production 기본 URL을 사용한다. 이 값들은 공개 URL이므로 secret이 아니라 GitHub Environment variable로 관리한다.
 
 GitHub의 staging·production·staging-retention·production-retention Environment와 production Required reviewer도 생성했다. Vercel token·조직·프로젝트 ID 및 staging Supabase URL·project ref, staging-retention URL은 등록했다. staging의 Supabase access token·DB password와 smoke 계정, 두 retention Environment의 service-role key, 별도 production Supabase 값은 운영자가 발급한 뒤 추가해야 한다.

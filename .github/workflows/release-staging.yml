@@ -111,6 +111,14 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets[matrix.project_secret] }}
         run: |
           npx vercel@56.5.0 build --token="$VERCEL_TOKEN"
+          if [ ! -d .vercel/output/static ]; then
+            echo "::error::apps/${{ matrix.app }} has no .vercel/output/static to inspect, so the local-URL guard cannot run."
+            exit 1
+          fi
+          if grep -rqE 'http://(127\.0\.0\.1|localhost):[0-9]+' .vercel/output/static; then
+            echo "::error::apps/${{ matrix.app }} was built against a local Supabase URL. Fix the Vercel Preview environment variables before deploying."
+            exit 1
+          fi
           deployment_url=$(npx vercel@56.5.0 deploy --prebuilt --token="$VERCEL_TOKEN")
           npx vercel@56.5.0 alias set "$deployment_url" "${{ matrix.staging_alias }}" --token="$VERCEL_TOKEN"
 
