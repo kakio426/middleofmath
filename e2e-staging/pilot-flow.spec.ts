@@ -37,6 +37,9 @@ test("초대 교사부터 학부모 PDF 요청까지 실제 staging 파일럿 �
   await teacher.getByLabel(/별칭/).fill("민들레");
   await teacher.getByRole("button", { name: "학생 추가" }).click();
   await expect(teacher.getByRole("cell", { name: "민들레" })).toBeVisible();
+  // The roster row renders before the class reload that precedes the notice, so
+  // the personal code is not on screen yet when the row appears.
+  await expect(teacher.locator(".teacher-notice")).toContainText(/개인 코드 [A-Z0-9]{6}/);
   const joinSecret = (await teacher.locator(".teacher-notice").textContent())?.match(/개인 코드 ([A-Z0-9]{6})/)?.[1];
   expect(joinSecret).toMatch(/^[A-Z0-9]{6}$/);
 
@@ -69,19 +72,18 @@ test("초대 교사부터 학부모 PDF 요청까지 실제 staging 파일럿 �
   await student.getByRole("button", { name: "활동 확인하기" }).click();
   await student.getByRole("button", { name: "시작하기" }).click();
   let observedJudgmentCount = 0;
-  while (
-    observedJudgmentCount < 80
-    && await student.getByRole(
-      "heading",
-      { name: "끝까지 참여했어요" }
-    ).count() === 0
-  ) {
-    await expect(student.locator(".mom-choice").first()).toBeVisible();
-    await student.locator(".mom-choice").first().click();
+  const finished = student.getByRole("heading", { name: "끝까지 참여했어요" });
+  const firstChoice = student.locator(".mom-choice").first();
+  while (observedJudgmentCount < 80) {
+    // The completion screen replaces the choices, so wait for whichever of the
+    // two arrives instead of reading the heading before the answer renders.
+    await expect(finished.or(firstChoice)).toBeVisible();
+    if (await finished.count() > 0) break;
+    await firstChoice.click();
     await student.getByRole("button", { name: "다음", exact: true }).click();
     observedJudgmentCount += 1;
   }
-  await expect(student.getByRole("heading", { name: "끝까지 참여했어요" })).toBeVisible();
+  await expect(finished).toBeVisible();
   expect(observedJudgmentCount).toBe(expectedJudgmentCount);
 
   await teacher.getByRole("button", { name: "반 요약" }).click();

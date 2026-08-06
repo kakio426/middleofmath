@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(57);
+select plan(59);
 
 insert into auth.users (
   id, aud, role, email, encrypted_password, email_confirmed_at, is_anonymous,
@@ -71,6 +71,20 @@ select is(
   interval '90 days',
   'purge defaults to 90 days after pilot end'
 );
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '21000000-0000-0000-0000-000000000001', true);
+select lives_ok(
+  $$select public.create_student('22000000-0000-0000-0000-000000000001', '3', '민들레')$$,
+  'a teacher adds a student to their own class'
+);
+select throws_ok(
+  $$select public.create_student('22000000-0000-0000-0000-000000000002', '4', '남의 반')$$,
+  'P0001',
+  'class not found',
+  'a teacher cannot add a student to another teacher class'
+);
+set local role postgres;
 
 insert into public.students (id, class_id, roster_key, display_alias, join_secret_hash) values
   ('23000000-0000-0000-0000-000000000001', '22000000-0000-0000-0000-000000000001', '12', '별빛', extensions.crypt('STAR27', extensions.gen_salt('bf'))),

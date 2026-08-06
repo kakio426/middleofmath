@@ -1153,6 +1153,16 @@ function AssignmentPage({ diagnosisSets, classes, onAssigned, onCreateClass }: {
       || selected.content.manifest.semester !== selectedClass.semester
     )
   );
+  // The class is chosen on step 1 but the matching diagnosis only on step 2, so
+  // gating every step on the whole form trapped a teacher whose newest published
+  // set belonged to another grade.
+  const blockedReason = saving ? "saving"
+    : step === 1 ? (selectedClass ? null : "class")
+    : step === 2 ? (!selected ? "diagnosis" : hasTermMismatch ? "term" : null)
+    : step === 3 ? (selectedUnit ? null : "unit")
+    : step === 4 ? (closesDate < opensDate ? "schedule" : null)
+    : (!selected || !selectedClass || !selectedUnit || hasTermMismatch || closesDate < opensDate) ? "incomplete"
+    : null;
   async function submitAssignment() {
     if (!selected || !selectedClass || !selectedUnit) return;
     if (hasTermMismatch) {
@@ -1187,7 +1197,7 @@ function AssignmentPage({ diagnosisSets, classes, onAssigned, onCreateClass }: {
         {step === 4 && <DecisionBlock number="04" title="언제까지 열어둘까요?" description="시작한 학생은 마감 뒤에도 교사가 종료하기 전까지 이어갈 수 있습니다."><div className="teacher-date-grid"><label className="mom-input-group">시작<input className="mom-input" type="date" value={opensDate} onChange={(event) => setOpensDate(event.target.value)} /></label><label className="mom-input-group">마감<input className="mom-input" type="date" min={opensDate} value={closesDate} onChange={(event) => setClosesDate(event.target.value)} /></label></div></DecisionBlock>}
         {step === 5 && selected && selectedClass && selectedUnit && <DecisionBlock number="05" title="배정 내용을 확인해 주세요" description="학생이 시작한 뒤에는 학기와 단원이 유지됩니다."><dl className="teacher-review-list"><div><dt>학급</dt><dd>{selectedClass.name}</dd></div><div><dt>진단</dt><dd>{selected.content.manifest.title} v{selected.version}</dd></div><div><dt>단원</dt><dd>{selectedUnit.order}단원 · {selectedUnit.title}</dd></div><div><dt>문항 수</dt><dd>{selectedJudgmentCount}개</dd></div><div><dt>기간</dt><dd>{opensDate}—{closesDate}</dd></div></dl>{hasTermMismatch && <p className="teacher-term-warning" role="status">학급은 {selectedClass.grade}학년 {selectedClass.semester}학기이고 진단은 {selected.content.manifest.grade}학년 {selected.content.manifest.semester}학기입니다. 학년·학기를 다시 확인해 주세요.</p>}</DecisionBlock>}
         {error && <p className="mom-form-error" role="alert">{error}</p>}
-        <div className="mom-row-between"><button type="button" className="mom-button mom-button-quiet" disabled={step === 1 || saving} onClick={() => setStep((value) => value - 1)}>이전</button><button type="button" className="mom-button mom-button-primary" disabled={!selected || !selectedClass || !selectedUnit || saving || hasTermMismatch || closesDate < opensDate} onClick={() => { if (step < 5) setStep((value) => value + 1); else void submitAssignment(); }}>{saving ? "저장 중…" : step < 5 ? "다음" : "이 내용으로 배정"}</button></div>
+        <div className="mom-row-between"><button type="button" className="mom-button mom-button-quiet" disabled={step === 1 || saving} onClick={() => setStep((value) => value - 1)}>이전</button><button type="button" className="mom-button mom-button-primary" disabled={blockedReason !== null} onClick={() => { if (step < 5) setStep((value) => value + 1); else void submitAssignment(); }}>{saving ? "저장 중…" : step < 5 ? "다음" : "이 내용으로 배정"}</button></div>
       </div></section>
     </div>
   );
