@@ -117,7 +117,7 @@
 1. [완료] smoke 선택자 계약과 legacy adapter 기대 문구를 현재 용어에 맞춰 CI를 복구한다.
 2. [완료, 2026-08-05] staging의 Supabase access token·DB password·smoke 교사 계정을 등록한다. `Release staging`의 `migrate` 잡이 실제 staging DB에 마이그레이션 체인을 적용하는 데까지 성공했다(런 30986769763).
 3. [완료, 2026-08-06] staging-retention에 service-role key를 등록하고 삭제 작업을 검증했다. production-retention은 production Supabase 프로젝트가 없어 삭제 매트릭스에서 제외했다(`0c84c13`, 결함이 아니라 의도된 축소).
-4. 3학년 2학기 2.1.0의 64문항을 파일럿 운영자 본인이 콘텐츠 검수 체크리스트와 독립 검증 에이전트 승인으로 최종 검토하고 발행 가능 상태로 만든다. 별도 두 번째 교사 검토는 요구하지 않는다.
+4. [발행 완료, 2026-08-06 / 본인 검토 대기] 3학년 2학기 2.1.0의 64문항을 발행 경로에 올렸다(`202608060005`). 발행 SQL 생성기가 grade4-semester1 전용이라 나머지 7개 학기가 전부 발행되지 못하고 있었고, 이를 `generatePublicationSql`로 일반화해 해소했다. 파일럿 운영자 본인의 콘텐츠 검수 체크리스트 검토는 아직 남아 있다. 별도 두 번째 교사 검토는 요구하지 않는다.
 5. [완료] 교사가 학기와 단원을 따로 선택해 배정하는 migration — CI pgTAP(런 30981938079)과 staging DB 실제 적용(런 30986769763)을 모두 통과했다.
 6. [완료, 2026-08-05] 무효화됐던 `VERCEL_TOKEN`을 재발급했다. teacher·studio·student 세 배포가 모두 성공했다(런 30986769763 rerun). 재배포 뒤 세 프로젝트의 Vercel Deployment Protection(SSO, `all_except_custom_domains`)이 커스텀 도메인이 없는 staging별칭 전체를 로그인 화면으로 막고 있는 것을 추가로 발견해 사용자 확인 후 껐다. 세 URL 모두 curl로 200 확인, studio 로그인 화면 smoke 테스트 통과.
 7. [완료, 2026-08-06] 교사 계정 생성 경로를 복구했다. `create_teacher_profile()`이 INSERT 시점에 `invited_at`을 요구해 GoTrue의 2단계 초대(INSERT 후 `invited_at` UPDATE)를 막고 있었다 — Dashboard의 `Create new user`와 `Invite user`가 모두 같은 예외로 실패했고, 손수 INSERT한 우회 행은 GoTrue 밖에 있어 로그인·수정·삭제가 되지 않았다. `202608060001_teacher_invite_two_phase.sql`로 프로필 생성 시점을 초대 기록 시점으로 옮기고, pgTAP에 "초대 전 프로필 없음 → 초대 후 프로필 생성" 두 단계를 검증으로 추가했다. staging에서 계정을 정상 경로로 재생성해 `auth.users` 1행·`public.teachers` 1행을 확인했다.
@@ -182,9 +182,14 @@
 - 이 결함들은 모두 실사용 경로에서만 드러났고, 단위·pgTAP·데모 모드 검사는 전부 통과하고 있었다. 파일럿 전 실제 기기로 한 번 끝까지 밟아보는 리허설을 생략하지 않는다.
 - `staging-retention`에 `SUPABASE_SERVICE_ROLE_KEY`를 등록하고 `Purge expired pilots`를 수동 실행해 검증했다(런 31097926580). 첫 실행은 `curl: (7) Failed to connect to 127.0.0.1 port 54321`로 다시 실패했는데, 이 환경의 `SUPABASE_URL`이 2026-07-22 등록 이후 갱신된 적 없이 로컬 Supabase 주소를 가리키고 있었기 때문이다 — `staging` 환경과 별개로 등록된 시크릿이라 앞서 고친 "로컬 URL로 빌드된 배포" 결함(`d29500d`, `5a4d650`)과 같은 종류가 이 환경에도 남아 있었다. 실제 staging 프로젝트 URL(`https://wuptdjktawxzdvuenefd.supabase.co`)로 교체한 뒤 재실행해 정상 응답을 확인했다(`{"events": 0, ...}` 전부 0 — 현재 삭제 대상 없음, 연결과 RPC 실행 자체가 정상임을 확인). 야간 스케줄(18:17 UTC)로 계속 검증된다.
 - `production-retention`은 오늘 커밋(`0c84c13`)에서 삭제 매트릭스 대상에서 제외됐다. production Supabase 프로젝트가 아직 없기 때문이며, 프로젝트 신설 자체가 여전히 미착수 상태다.
-- 배정 가능한 3학년 2학기 운영본은 여전히 12문항인 `1.0.0`이다. 6개 단원·64문항인 `grade3-semester2@2.1.0`(`packages/content/src/grade3-semester2-complete.ts:877`)은 아직 `review` 상태다.
+- 6개 단원·64문항인 `grade3-semester2@2.1.0`을 staging에 발행했다(2026-08-06). 그동안 배정 가능한 운영본이 12문항 `1.0.0`뿐이었던 것은 콘텐츠가 없어서가 아니라 발행 경로가 없었기 때문이다. `tools/emit-published-set-sql.ts`가 grade4-semester1 전용으로 하드코딩돼 있어 나머지 7개 학기(3-1, 3-2, 4-2, 5-1, 5-2, 6-1, 6-2)는 작성만 되고 `diagnosis_sets`에 닿을 방법이 없었다. 재사용 가능한 절반을 `generatePublicationSql`로 분리했고, 개수만 맞고 짝이 어긋나는 오답 근거를 DB 트리거 이전에 잡도록 검증을 추가했다.
+- 콘텐츠 자체는 TS 소스의 `status: "review"`가 아니라 마이그레이션이 발행 여부를 정한다. grade4-semester1도 소스에서는 `review`인 채로 DB에는 `published`로 들어가 있다. "2.1.0이 review 상태라 못 쓴다"는 이전 기록은 원인을 잘못 짚은 것이었다.
+- 발행하면서 기준 발행본이 배포 경로에 닿은 적이 없다는 것을 발견했다. `grade3-semester2@1.0.0`이 `supabase/seed.sql`에만 있었는데, seed는 `supabase start`에서만 실행되고 `Release staging`이 쓰는 `supabase db push`에서는 실행되지 않는다. **P1-5로 예정된 production Supabase를 새로 만들었다면 교사가 배정할 콘텐츠가 하나도 없는 상태로 올라왔을 것이다.** 또 seed가 모든 마이그레이션 뒤에 돌기 때문에 2.1.0 발행 직후 seed의 1.0.0 삽입이 안정 ID 보존 트리거에 걸려 CI가 깨졌다(런 31102929564). seed 문장을 그대로 마이그레이션 체인(`202608060004`)으로 옮겨 두 문제를 함께 없앴다.
+- 2.1.0 발행은 DB 트리거가 검사하는 조건을 사전에 TS로 전부 확인한 뒤 올렸다: 1.0.0의 단원·성취기준·학습단계·신호·문항 안정 ID 소실 0건, 학생 노출 금지 문구 위반 0건, 미정의 signalId 참조 0건, prerequisite 순환 없음, 오답 근거 128/128. DB checksum도 TS의 `canonicalJson`+SHA-256으로 재현되는 것을 grade4-semester1의 기존 핀 값으로 대조 확인한 뒤 pgTAP에 핀으로 박았다(`566762c8…f623ae`).
+- 상위 학습지도 스냅샷(`DECK6/korean-elementary-learning-map` @ `3ef0563`) 기준으로 성취기준 커버리지를 실측했다. 5–6학년군은 45개 중 45개, 3–4학년군은 47개 중 41개를 사용한다. 미사용 6개는 `[4수01-03]` 세 자리 수의 덧셈과 뺄셈, `[4수03-01]` 도형의 기초, `[4수03-13]`·`[4수03-14]` 시각과 시간, `[4수03-15]` 길이, `[4수01-12]` 소수다. 앞의 다섯은 전부 3학년 1학기에 몰려 있다.
+- `grade3-semester1`만 4단원 16문항으로 규격 미달이다(나머지 7개 학기는 6단원 56~70문항). `grade3-semester1-u8b-draft.ts`에 20문항 초안이 남아 있다. 파일럿 범위 밖이라 2.1.0 발행 뒤 순서로 둔다.
 - 2.1.0 발행 검토 주체를 변경했다: 다른 7개 학기와 동일하게 파일럿 운영자 본인이 콘텐츠 검수 체크리스트와 독립 검증 에이전트 승인만으로 검토·발행한다. 별도 두 번째 교사를 구하지 않는다.
-- 따라서 파일럿 전 남은 순서는 `2.1.0 본인 검토·발행 → staging 실제 흐름 리허설 → production Supabase 신설·승격`이다. `VERCEL_TOKEN` 재발급, SSO 보호 해제, staging-retention 삭제 작업 검증은 오늘 완료됐다.
+- 따라서 파일럿 전 남은 순서는 `2.1.0 본인 콘텐츠 검수 → staging 6단원 배정 리허설 → production Supabase 신설·승격`이다. `VERCEL_TOKEN` 재발급, SSO 보호 해제, staging-retention 삭제 작업 검증, 2.1.0 발행 경로 복구는 오늘 완료됐다.
 
 ## Non-Goals
 
@@ -202,7 +207,7 @@
 - 한 학급 결과만으로 문항이나 진단 규칙을 성급하게 일반화할 수 있다.
 - 기기·네트워크 문제를 학생의 응답 행동으로 오해할 수 있다.
 - staging Vercel 배포가 무효화된 토큰으로 막혀 있어 교실 파일럿을 바로 시작할 수 없다(CI 자체는 통과, 배포만 막힘).
-- 6개 단원 전체 진단본이 아직 발행되지 않아 현재 운영본만으로는 합의한 파일럿 범위를 충족하지 못한다.
+- 기준 발행본이 로컬 seed 에만 있어 신규 Supabase 프로젝트가 콘텐츠 없이 올라올 수 있었다. 발행본을 마이그레이션 체인으로 옮겨 해소했고, production 신설 시 `diagnosis_sets`에 1.0.0·2.1.0 두 행이 실제로 들어왔는지 확인한다.
 - 보존 자료 자동 삭제가 작동하지 않은 상태에서 실제 학생 데이터를 수집하면 개인정보 보존 원칙을 지킬 수 없다.
 - 본인 검토만으로 2.1.0을 발행하면 자동 검사를 사람의 최종 승인으로 오해하거나 콘텐츠 결함을 혼자 놓칠 수 있다. 다른 7개 학기에 이미 적용한 것과 같은 콘텐츠 검수 체크리스트·독립 검증 에이전트 승인 절차를 그대로 요구해 완화한다.
 
