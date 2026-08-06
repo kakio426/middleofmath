@@ -116,7 +116,7 @@
 
 1. [완료] smoke 선택자 계약과 legacy adapter 기대 문구를 현재 용어에 맞춰 CI를 복구한다.
 2. [완료, 2026-08-05] staging의 Supabase access token·DB password·smoke 교사 계정을 등록한다. `Release staging`의 `migrate` 잡이 실제 staging DB에 마이그레이션 체인을 적용하는 데까지 성공했다(런 30986769763).
-3. [staging 대기·production 대상 제외] staging-retention의 service-role key를 등록하고 삭제 작업을 검증한다. production-retention은 production Supabase 프로젝트가 없어 삭제 매트릭스에서 제외했다(`0c84c13`, 결함이 아니라 의도된 축소).
+3. [완료, 2026-08-06] staging-retention에 service-role key를 등록하고 삭제 작업을 검증했다. production-retention은 production Supabase 프로젝트가 없어 삭제 매트릭스에서 제외했다(`0c84c13`, 결함이 아니라 의도된 축소).
 4. 3학년 2학기 2.1.0의 64문항을 파일럿 운영자 본인이 콘텐츠 검수 체크리스트와 독립 검증 에이전트 승인으로 최종 검토하고 발행 가능 상태로 만든다. 별도 두 번째 교사 검토는 요구하지 않는다.
 5. [완료] 교사가 학기와 단원을 따로 선택해 배정하는 migration — CI pgTAP(런 30981938079)과 staging DB 실제 적용(런 30986769763)을 모두 통과했다.
 6. [완료, 2026-08-05] 무효화됐던 `VERCEL_TOKEN`을 재발급했다. teacher·studio·student 세 배포가 모두 성공했다(런 30986769763 rerun). 재배포 뒤 세 프로젝트의 Vercel Deployment Protection(SSO, `all_except_custom_domains`)이 커스텀 도메인이 없는 staging별칭 전체를 로그인 화면으로 막고 있는 것을 추가로 발견해 사용자 확인 후 껐다. 세 URL 모두 curl로 200 확인, studio 로그인 화면 smoke 테스트 통과.
@@ -180,11 +180,11 @@
 - staging에 위 수정을 적용하고 계정을 정상 경로로 재생성해 `auth.users` 1행·`public.teachers` 1행을 확인했다.
 - 계정 문제가 풀린 뒤 전체 흐름을 실제 staging에서 돌려 결함 5개를 더 찾아 고쳤다: Vercel Preview 환경변수가 세 앱 중 하나만 갱신돼 있던 것, `create_student`의 `active` 이름 충돌, 배정 마법사의 단계 교착, staging의 익명 로그인 비활성화, 학부모 결과표 가드의 실행 권한. 이제 교사 로그인부터 학부모 결과표 인쇄까지 전 구간이 통과한다.
 - 이 결함들은 모두 실사용 경로에서만 드러났고, 단위·pgTAP·데모 모드 검사는 전부 통과하고 있었다. 파일럿 전 실제 기기로 한 번 끝까지 밟아보는 리허설을 생략하지 않는다.
-- `staging-retention` 환경에는 여전히 `SUPABASE_URL`만 등록돼 있고 `SUPABASE_SERVICE_ROLE_KEY`가 없다. 야간 `Purge expired pilots`는 2026-08-02~08-04 연속 실패했고, 키 등록 뒤 재검증이 아직 남아 있다.
+- `staging-retention`에 `SUPABASE_SERVICE_ROLE_KEY`를 등록하고 `Purge expired pilots`를 수동 실행해 검증했다(런 31097926580). 첫 실행은 `curl: (7) Failed to connect to 127.0.0.1 port 54321`로 다시 실패했는데, 이 환경의 `SUPABASE_URL`이 2026-07-22 등록 이후 갱신된 적 없이 로컬 Supabase 주소를 가리키고 있었기 때문이다 — `staging` 환경과 별개로 등록된 시크릿이라 앞서 고친 "로컬 URL로 빌드된 배포" 결함(`d29500d`, `5a4d650`)과 같은 종류가 이 환경에도 남아 있었다. 실제 staging 프로젝트 URL(`https://wuptdjktawxzdvuenefd.supabase.co`)로 교체한 뒤 재실행해 정상 응답을 확인했다(`{"events": 0, ...}` 전부 0 — 현재 삭제 대상 없음, 연결과 RPC 실행 자체가 정상임을 확인). 야간 스케줄(18:17 UTC)로 계속 검증된다.
 - `production-retention`은 오늘 커밋(`0c84c13`)에서 삭제 매트릭스 대상에서 제외됐다. production Supabase 프로젝트가 아직 없기 때문이며, 프로젝트 신설 자체가 여전히 미착수 상태다.
 - 배정 가능한 3학년 2학기 운영본은 여전히 12문항인 `1.0.0`이다. 6개 단원·64문항인 `grade3-semester2@2.1.0`(`packages/content/src/grade3-semester2-complete.ts:877`)은 아직 `review` 상태다.
 - 2.1.0 발행 검토 주체를 변경했다: 다른 7개 학기와 동일하게 파일럿 운영자 본인이 콘텐츠 검수 체크리스트와 독립 검증 에이전트 승인만으로 검토·발행한다. 별도 두 번째 교사를 구하지 않는다.
-- 따라서 파일럿 전 남은 순서는 `staging 전체 흐름 smoke 통과 → staging-retention service-role key 등록·삭제 작업 검증 → 2.1.0 본인 검토·발행 → staging 실제 흐름 리허설 → production Supabase 신설·승격`이다. `VERCEL_TOKEN` 재발급과 SSO 보호 해제는 오늘 완료됐다.
+- 따라서 파일럿 전 남은 순서는 `2.1.0 본인 검토·발행 → staging 실제 흐름 리허설 → production Supabase 신설·승격`이다. `VERCEL_TOKEN` 재발급, SSO 보호 해제, staging-retention 삭제 작업 검증은 오늘 완료됐다.
 
 ## Non-Goals
 
