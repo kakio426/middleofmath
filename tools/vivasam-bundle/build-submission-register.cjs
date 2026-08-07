@@ -30,6 +30,7 @@ function buildSubmissionRegister(tracker) {
   const defaultSubmission = tracker.bundleDefaults?.submission || {};
   const records = [...tracker.bundles]
     .sort((a, b) => a.sequence - b.sequence)
+    .filter((bundle) => bundle.eduitit?.anonymousAccessStatus === "production-passed")
     .map((bundle) => {
       const schemaPath = repoPath(bundle.content.schemaPath);
       const intentPath = repoPath(bundle.support.intentPath);
@@ -47,23 +48,18 @@ function buildSubmissionRegister(tracker) {
         grade: bundle.grade,
         unit: bundle.unit,
         title: bundle.title,
-        slideCountGuide: bundle.declaredSlideCount,
+        slideCount: bundle.ppt.slideCount,
         teachingIntent: extractCoreIntent(intentMarkdown),
-        observableGoal: schema.targetBehavior,
         publicUrl: bundle.eduitit.publicUrl,
         representativeImagePath: bundle.support.representativeImagePath,
-        worksheetPngPath: bundle.worksheet.pngPath,
-        worksheetPdfPath: bundle.worksheet.pdfPath,
-        teachingIntentPath: bundle.support.intentPath,
-        answerKeyPath: bundle.support.answerKeyPath,
-        claudeContentPath: bundle.content.handoffMarkdownPath,
         pptStatus: bundle.ppt.status,
         communityPostStatus: submission.communityPostStatus,
         raceRecordStatus: submission.raceRecordStatus,
       };
     });
-  ensure(new Set(records.map((record) => record.lessonId)).size === 30, "lessonId가 중복되었습니다.");
-  ensure(new Set(records.map((record) => record.publicUrl)).size === 30, "공개 URL이 중복되었습니다.");
+  ensure(records.length > 0 && records.length <= 30, "현재 공개 완료된 제출 기록 수가 잘못되었습니다.");
+  ensure(new Set(records.map((record) => record.lessonId)).size === records.length, "lessonId가 중복되었습니다.");
+  ensure(new Set(records.map((record) => record.publicUrl)).size === records.length, "공개 URL이 중복되었습니다.");
   return {
     schemaVersion: 1,
     seriesId: tracker.seriesId,
@@ -71,18 +67,18 @@ function buildSubmissionRegister(tracker) {
     subject: "수학",
     targetDeckCount: 30,
     targetWorksheetCount: 30,
+    completedRecordCount: records.length,
     records,
   };
 }
 
 function renderSubmissionRegisterMarkdown(register) {
   const lines = [
-    "# 2026 비바샘 수업 꾸러미 30개 제출 레지스터",
+    "# 수업 자료 등록용 입력 내용",
     "",
     `- 기준 시각: ${register.updatedAt}`,
     "- 범위: 초등 수학 3학년 1·2학기, PPT 30개, PPT당 통합 활동지 1개",
-    "- 공개 위치: Eduitit 수업 꾸러미 카테고리(비로그인 열람 검증 완료)",
-    "- 현재 남은 항목: Claude PPTX 30개 수령·검수, 이후 교사 커뮤니티 게시와 ‘나의 레이스’ 등록",
+    `- 현재 작성 완료: ${register.completedRecordCount}/${register.targetDeckCount}`,
     "",
   ];
   for (const record of register.records) {
@@ -91,15 +87,10 @@ function renderSubmissionRegisterMarkdown(register) {
       "",
       `- 교과목: ${record.subject}`,
       `- 대상·단원: ${record.grade} · ${record.unit}`,
-      `- PPT 내용 원고: ${record.claudeContentPath}`,
       `- 수업 설계 의도: ${record.teachingIntent}`,
-      `- 관찰 가능한 목표: ${record.observableGoal}`,
       `- 공개 URL: ${record.publicUrl}`,
       `- 대표 이미지: ${record.representativeImagePath}`,
-      `- 활동지 PNG: ${record.worksheetPngPath}`,
-      `- 활동지 PDF: ${record.worksheetPdfPath}`,
-      `- 교사용 정답: ${record.answerKeyPath}`,
-      `- 상태: PPT ${record.pptStatus} · 커뮤니티 ${record.communityPostStatus} · 나의 레이스 ${record.raceRecordStatus}`,
+      `- PPT 장수: ${record.slideCount}장`,
       "",
     );
   }

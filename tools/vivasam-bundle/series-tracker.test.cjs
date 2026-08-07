@@ -35,23 +35,26 @@ test("원장은 30개 PPT와 PPT당 통합 활동지 1개 계약을 고정한다
   assert.equal(tracker.contract.pptAuthor, "Claude");
 });
 
-test("1번도 새 통합 활동지와 비로그인 운영 공개를 완료하고 Claude PPT만 대기한다", () => {
+test("1·2번은 PPT 수령 뒤 활동지와 비로그인 운영 공개를 완료한다", () => {
   const validated = validateTracker(tracker, { trackerPath });
   const summary = summarizeTracker(validated);
   const first = validated.bundles[0];
   assert.equal(first.content.status, "validated");
   assert.equal(first.worksheet.status, "validated");
-  assert.equal(first.ppt.status, "awaiting-claude");
+  assert.equal(first.ppt.status, "received");
+  assert.equal(first.ppt.slideCount, 12);
   assert.equal(first.eduitit.packageStatus, "validated");
   assert.equal(first.eduitit.localRecordStatus, "published");
   assert.equal(first.eduitit.anonymousAccessStatus, "production-passed");
   assert.equal(first.eduitit.productionStatus, "deployed");
   assert.match(first.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
   assert.equal(deriveStage(first), "production-published");
-  assert.equal(summary.worksheetsValidated, 30);
-  assert.equal(summary.supportValidated, 30);
-  assert.equal(summary.packagesValidated, 30);
-  assert.equal(summary.localRecordsPublished, 30);
+  assert.equal(summary.worksheetsValidated, 2);
+  assert.equal(summary.supportValidated, 2);
+  assert.equal(summary.packagesValidated, 2);
+  assert.equal(summary.localRecordsPublished, 2);
+  assert.equal(summary.claudePptsReceived, 2);
+  assert.equal(summary.claudePptsAwaiting, 28);
   assert.equal(summary.claudePptsValidated, 0);
   assert.equal(summary.fullyCompleted, 0);
 });
@@ -122,8 +125,9 @@ test("사람용 진행표에는 30개 슬롯과 1개 통합 활동지 계약이 
   assert.equal((markdown.match(/^\| \d{2} \|/gm) || []).length, 30);
   assert.match(markdown, /PPT당 통합 활동지 1개/);
   assert.match(markdown, /Claude는 PPTX만 제작/);
-  assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 30 \| 30/);
-  assert.match(markdown, /Claude PPTX 수령·검수/);
+  assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 2 \| 30/);
+  assert.match(markdown, /Claude PPTX 수령/);
+  assert.match(markdown, /Claude PPTX 수령 대기/);
 });
 
 test("상태 갱신은 원장 이력과 사람용 진행표를 함께 남긴다", () => {

@@ -12,20 +12,21 @@ const {
   validateProductionVerification,
   validatePublication,
 } = require("./record-series-production-status.cjs");
+const { applyVerificationToTracker } = require("./record-series-non-ppt-status.cjs");
 const { summarizeTracker, validateTracker } = require("./track-series.cjs");
 
 const trackerPath = path.join(__dirname, "series-tracker.json");
 
 function publicationFixture() {
   return {
-    validated: 30,
-    published: 30,
-    created: 30,
+    validated: seriesManifest.records.length,
+    published: seriesManifest.records.length,
+    created: seriesManifest.records.length,
     updated: 0,
     teacher: "eduitit_curriculum_lab",
     category: "lesson_bundle",
     anonymousAccess: "requires-http-tests",
-    pptStatus: "awaiting-claude",
+    pptStatus: "available",
     records: seriesManifest.records.map((record) => {
       const id = `00000000-0000-4000-8000-${String(record.sequence).padStart(12, "0")}`;
       const detailPath = `/edu-materials/${id}/`;
@@ -54,8 +55,8 @@ function verificationFixture() {
     catalogUrl: "https://eduitit.site/edu-materials/?category=lesson_bundle",
     catalogStatus: 200,
     anonymousAccess: "production-passed",
-    verified: 30,
-    publication: { created: 30, updated: 0, published: 30, teacher: publication.teacher, category: publication.category, pptStatus: publication.pptStatus },
+    verified: seriesManifest.records.length,
+    publication: { created: seriesManifest.records.length, updated: 0, published: seriesManifest.records.length, teacher: publication.teacher, category: publication.category, pptStatus: publication.pptStatus },
     records: publication.records.map((record) => ({
       sequence: record.sequence,
       lessonId: record.lessonId,
@@ -72,11 +73,30 @@ function verificationFixture() {
   };
 }
 
-test("운영 게시 결과는 30개 고유 HTTPS URL과 현재 패키지 지문을 가져야 한다", () => {
+function receivedTrackerFixture() {
+  return applyVerificationToTracker(tracker, {
+    schemaVersion: 1,
+    seriesId: tracker.seriesId,
+    verified: seriesManifest.records.length,
+    anonymousAccess: "local-passed",
+    catalogPath: "/edu-materials/?category=lesson_bundle",
+    catalogStatus: 200,
+    records: seriesManifest.records.map((record) => ({
+      sequence: record.sequence,
+      lessonId: record.lessonId,
+      digest: record.digest,
+      localRecordId: `00000000-0000-4000-8000-${String(record.sequence).padStart(12, "0")}`,
+      etag304: true,
+      statuses: { detail: 200, run: 200, render: 200, thumbnail: 200, worksheet: 200, ppt: 200 },
+    })),
+  }, "2026-08-07T11:30:00.000Z");
+}
+
+test("운영 게시 결과는 PPT 수령분의 고유 HTTPS URL과 현재 패키지 지문을 가져야 한다", () => {
   const publication = publicationFixture();
   assert.equal(validatePublication(publication), publication);
   for (const mutate of [
-    (payload) => { payload.published = 29; },
+    (payload) => { payload.published -= 1; },
     (payload) => { payload.records[0].digest = "000000000000"; },
     (payload) => { payload.records[1].detailUrl = payload.records[0].detailUrl; },
     (payload) => { payload.records[0].detailUrl = payload.records[0].detailUrl.replace("https://", "http://"); },
@@ -87,22 +107,28 @@ test("운영 게시 결과는 30개 고유 HTTPS URL과 현재 패키지 지문�
   }
 });
 
-test("운영 비로그인 검증 30개를 원장에 일괄 기록하고 PPT 대기는 유지한다", () => {
+test("운영 비로그인 검증은 PPT 수령분만 원장에 기록한다", () => {
   const verification = verificationFixture();
   assert.equal(validateProductionVerification(verification), verification);
-  const updated = applyProductionVerificationToTracker(tracker, verification);
+  const updated = applyProductionVerificationToTracker(receivedTrackerFixture(), verification);
   const validated = validateTracker(updated, { trackerPath });
   const summary = summarizeTracker(validated);
-  assert.equal(summary.productionPublished, 30);
-  assert.equal(summary.localAnonymousAccessPassed, 30);
-  assert.equal(summary.claudePptsAwaiting, 30);
+  assert.equal(summary.productionPublished, 2);
+  assert.equal(summary.localAnonymousAccessPassed, 2);
+  assert.equal(summary.claudePptsAwaiting, 28);
   assert.equal(summary.claudePptsValidated, 0);
   assert.equal(summary.communityPosts, 0);
   assert.equal(summary.raceRecords, 0);
-  for (const bundle of validated.bundles) {
+  for (const bundle of validated.bundles.slice(0, 2)) {
     assert.equal(bundle.eduitit.productionStatus, "deployed");
     assert.equal(bundle.eduitit.anonymousAccessStatus, "production-passed");
     assert.match(bundle.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
+    assert.equal(bundle.ppt.status, "received");
+  }
+  for (const bundle of validated.bundles.slice(2)) {
+    assert.equal(bundle.eduitit.productionStatus, "not-deployed");
+    assert.equal(bundle.eduitit.anonymousAccessStatus, "not-tested");
+    assert.equal(bundle.eduitit.publicUrl, "");
     assert.equal(bundle.ppt.status, "awaiting-claude");
   }
 });
@@ -112,7 +138,7 @@ test("운영 상태·ETag·대표 이미지 중 하나라도 실패하면 기록
     (payload) => { payload.catalogStatus = 302; },
     (payload) => { payload.records[0].etag304 = false; },
     (payload) => { payload.records[0].statuses.representativeAsset = 404; },
-    (payload) => { payload.records.pop(); payload.verified = 29; },
+    (payload) => { payload.records.pop(); payload.verified -= 1; },
   ]) {
     const broken = verificationFixture();
     mutate(broken);

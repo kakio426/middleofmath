@@ -16,21 +16,23 @@ test("extractCoreIntent keeps the complete Korean paragraph", () => {
   assert.equal(value, "첫 문장입니다. 둘째 문장입니다.");
 });
 
-test("submission register contains 30 unique public lesson records", () => {
+test("submission register contains only the received and publicly verified lessons", () => {
   const register = buildSubmissionRegister(tracker);
-  assert.equal(register.records.length, 30);
-  assert.equal(new Set(register.records.map((record) => record.publicUrl)).size, 30);
+  assert.equal(register.records.length, 2);
+  assert.equal(register.completedRecordCount, 2);
+  assert.equal(new Set(register.records.map((record) => record.publicUrl)).size, 2);
   for (const record of register.records) {
     assert.equal(record.subject, "수학");
     assert.match(record.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
-    assert.equal(record.pptStatus, "awaiting-claude");
+    assert.equal(record.pptStatus, "received");
+    assert.equal(record.slideCount, 12);
     assert.equal(record.communityPostStatus, "not-posted");
     assert.equal(record.raceRecordStatus, "not-registered");
     assert.ok(fs.existsSync(record.representativeImagePath.replace("middleofmath:", "")));
-    assert.ok(record.teachingIntent.endsWith("결정합니다."));
-    assert.doesNotMatch(record.observableGoal, /다\s+또한/);
+    assert.ok(record.teachingIntent.length > 40);
   }
   const markdown = renderSubmissionRegisterMarkdown(register);
-  assert.equal((markdown.match(/^## \d{2}\./gm) || []).length, 30);
-  assert.match(markdown, /현재 남은 항목: Claude PPTX 30개/);
+  assert.equal((markdown.match(/^## \d{2}\./gm) || []).length, 2);
+  assert.match(markdown, /현재 작성 완료: 2\/30/);
+  assert.doesNotMatch(markdown, /교사용 정답|PPT 내용 원고/);
 });

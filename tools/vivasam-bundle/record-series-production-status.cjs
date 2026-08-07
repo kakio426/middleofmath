@@ -25,6 +25,7 @@ const REQUIRED_STATUSES = Object.freeze([
   "render",
   "thumbnail",
   "worksheet",
+  "ppt",
   "representativeAsset",
 ]);
 
@@ -48,12 +49,13 @@ function isUuid(value) {
 
 function validatePublication(publication, baseUrl = DEFAULT_BASE_URL) {
   const origin = normalizeBaseUrl(baseUrl);
+  const expectedCount = seriesManifest.records.length;
   ensure(publication && typeof publication === "object", "운영 게시 결과가 객체가 아닙니다.");
-  ensure(publication.validated === 30 && publication.published === 30, "운영 게시·검증 수가 30이 아닙니다.");
-  ensure(publication.created + publication.updated === 30, "운영 생성·갱신 합계가 30이 아닙니다.");
+  ensure(publication.validated === expectedCount && publication.published === expectedCount, "운영 게시·검증 수가 현재 PPT 수령분과 다릅니다.");
+  ensure(publication.created + publication.updated === expectedCount, "운영 생성·갱신 합계가 현재 PPT 수령분과 다릅니다.");
   ensure(publication.category === "lesson_bundle", "운영 카테고리가 수업 꾸러미가 아닙니다.");
-  ensure(publication.pptStatus === "awaiting-claude", "운영 게시물이 Claude PPT 대기 상태가 아닙니다.");
-  ensure(Array.isArray(publication.records) && publication.records.length === 30, "운영 게시 레코드는 정확히 30개여야 합니다.");
+  ensure(publication.pptStatus === "available", "운영 게시물에 수령 PPT가 포함되지 않았습니다.");
+  ensure(Array.isArray(publication.records) && publication.records.length === expectedCount, "운영 게시 레코드 수가 현재 PPT 수령분과 다릅니다.");
 
   const expectedByLessonId = new Map(seriesManifest.records.map((record) => [record.lessonId, record]));
   const lessonIds = new Set();
@@ -74,7 +76,7 @@ function validatePublication(publication, baseUrl = DEFAULT_BASE_URL) {
     recordIds.add(record.localRecordId);
     urls.add(record.detailUrl);
   }
-  ensure(lessonIds.size === 30, "운영 게시의 고유 lessonId가 30개가 아닙니다.");
+  ensure(lessonIds.size === expectedCount, "운영 게시의 고유 lessonId 수가 현재 PPT 수령분과 다릅니다.");
   return publication;
 }
 
@@ -119,6 +121,7 @@ async function verifyProductionHttp(publication, {
   for (const record of [...publication.records].sort((a, b) => a.sequence - b.sequence)) {
     const manifest = packageManifest(record.lessonId);
     const worksheetUrl = `${origin}/edu-materials/lesson-bundles/${record.lessonId}/download/${record.lessonId}-worksheet.pdf/`;
+    const pptUrl = `${origin}/edu-materials/lesson-bundles/${record.lessonId}/download/${record.lessonId}.pptx/`;
     const representativeAssetUrl = `${origin}/static/edu_materials/lesson_bundles/${record.lessonId}/${record.digest}/representative-image.png`;
     const urls = {
       detail: record.detailUrl,
@@ -126,6 +129,7 @@ async function verifyProductionHttp(publication, {
       render: `${origin}${record.detailPath}render/`,
       thumbnail: `${origin}${record.detailPath}thumbnail/`,
       worksheet: worksheetUrl,
+      ppt: pptUrl,
       representativeAsset: representativeAssetUrl,
     };
 
@@ -134,8 +138,9 @@ async function verifyProductionHttp(publication, {
     const render = await getResponse(urls.render, { headers: { "Accept-Encoding": "gzip" } });
     const thumbnail = await getResponse(urls.thumbnail);
     const worksheet = await getResponse(urls.worksheet);
+    const ppt = await getResponse(urls.ppt);
     const representative = await getResponse(urls.representativeAsset);
-    const results = { detail, run, render, thumbnail, worksheet, representativeAsset: representative };
+    const results = { detail, run, render, thumbnail, worksheet, ppt, representativeAsset: representative };
     for (const name of REQUIRED_STATUSES) ensureStatus(results[name], 200, `${record.lessonId} ${name}`);
 
     ensure((detail.response.headers.get("content-type") || "").includes("text/html"), `${record.lessonId} 상세 응답이 HTML이 아닙니다.`);
@@ -151,6 +156,7 @@ async function verifyProductionHttp(publication, {
     ensure(cacheControl.includes("public"), `${record.lessonId} 렌더 공개 캐시 헤더가 없습니다.`);
     ensure((thumbnail.response.headers.get("content-type") || "").startsWith("image/"), `${record.lessonId} 썸네일이 이미지가 아닙니다.`);
     ensure((worksheet.response.headers.get("content-type") || "").includes("application/pdf"), `${record.lessonId} 활동지가 PDF가 아닙니다.`);
+    ensure((ppt.response.headers.get("content-type") || "").includes("presentationml.presentation"), `${record.lessonId} PPT가 PPTX가 아닙니다.`);
     ensure((representative.response.headers.get("content-type") || "").startsWith("image/"), `${record.lessonId} 대표 자산이 이미지가 아닙니다.`);
     ensure(worksheet.body.subarray(0, 4).toString("ascii") === "%PDF", `${record.lessonId} 활동지 PDF 시그니처가 잘못되었습니다.`);
 
@@ -176,6 +182,7 @@ async function verifyProductionHttp(publication, {
       publicUrl: record.detailUrl,
       runUrl: record.runUrl,
       worksheetUrl,
+      pptUrl,
       representativeAssetUrl,
       statuses: Object.fromEntries(REQUIRED_STATUSES.map((name) => [name, results[name].response.status])),
       etag304: true,
@@ -209,11 +216,12 @@ async function verifyProductionHttp(publication, {
 
 function validateProductionVerification(verification) {
   ensure(verification?.schemaVersion === 1, "지원하지 않는 운영 검증 스키마입니다.");
+  const expectedCount = seriesManifest.records.length;
   ensure(verification.seriesId === seriesManifest.seriesId, "운영 검증 시리즈 ID가 다릅니다.");
   ensure(verification.anonymousAccess === "production-passed", "운영 비로그인 접근이 통과하지 않았습니다.");
   ensure(verification.catalogStatus === 200, "운영 목록 상태가 200이 아닙니다.");
-  ensure(verification.verified === 30, "운영 검증 완료 수가 30이 아닙니다.");
-  ensure(Array.isArray(verification.records) && verification.records.length === 30, "운영 검증 레코드는 정확히 30개여야 합니다.");
+  ensure(verification.verified === expectedCount, "운영 검증 완료 수가 현재 PPT 수령분과 다릅니다.");
+  ensure(Array.isArray(verification.records) && verification.records.length === expectedCount, "운영 검증 레코드 수가 현재 PPT 수령분과 다릅니다.");
   const expected = new Map(seriesManifest.records.map((record) => [record.lessonId, record]));
   const ids = new Set();
   const urls = new Set();
@@ -240,10 +248,20 @@ function applyProductionVerificationToTracker(sourceTracker, verification, now =
   const byLessonId = new Map(verification.records.map((record) => [record.lessonId, record]));
   for (const bundle of tracker.bundles) {
     const record = byLessonId.get(bundle.lessonId);
-    ensure(record, `${bundle.lessonId} 운영 검증 레코드가 없습니다.`);
+    if (!record) {
+      bundle.eduitit = {
+        ...bundle.eduitit,
+        anonymousAccessStatus: "not-tested",
+        productionStatus: "not-deployed",
+        publicUrl: "",
+      };
+      continue;
+    }
     bundle.eduitit = {
       ...bundle.eduitit,
       digest: record.digest,
+      localRecordStatus: "published",
+      localRecordId: record.productionRecordId,
       anonymousAccessStatus: "production-passed",
       productionStatus: "deployed",
       publicUrl: record.publicUrl,
@@ -254,8 +272,8 @@ function applyProductionVerificationToTracker(sourceTracker, verification, now =
   tracker.history.push({
     at: now,
     sequence: null,
-    event: "Eduitit 운영 공개·비로그인 검증 30개 완료",
-    detail: "운영 수업 꾸러미 30개를 게시하고 목록·상세·실행·렌더·썸네일·대표 이미지·활동지 다운로드와 ETag 304를 비로그인 외부 HTTP로 검증했다. Claude PPTX와 커뮤니티·나의 레이스 등록은 별도 상태로 유지했다.",
+    event: "Eduitit 운영 공개·비로그인 검증 완료",
+    detail: `PPT 수령분 ${verification.records.length}개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다.`,
   });
   return tracker;
 }

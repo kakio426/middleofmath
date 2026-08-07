@@ -19,7 +19,7 @@ function verificationFixture() {
   return {
     schemaVersion: 1,
     seriesId: tracker.seriesId,
-    verified: 30,
+    verified: seriesManifest.records.length,
     anonymousAccess: "local-passed",
     catalogPath: "/edu-materials/?category=lesson_bundle",
     catalogStatus: 200,
@@ -35,27 +35,28 @@ function verificationFixture() {
         render: 200,
         thumbnail: 200,
         worksheet: 200,
+        ppt: 200,
       },
     })),
   };
 }
 
-test("30개 비PPT 산출물과 Eduitit 익명 공개 결과를 원장에 일괄 기록한다", () => {
+test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다", () => {
   const verification = verificationFixture();
   assert.equal(validateVerification(verification), verification);
   const updated = applyVerificationToTracker(tracker, verification, "2026-08-07T11:30:00.000Z");
   const validated = validateTracker(updated, { trackerPath });
   const summary = summarizeTracker(validated);
 
-  assert.equal(summary.worksheetsValidated, 30);
-  assert.equal(summary.supportValidated, 30);
-  assert.equal(summary.packagesValidated, 30);
-  assert.equal(summary.localRecordsPublished, 30);
-  assert.equal(summary.claudePptsAwaiting, 30);
+  assert.equal(summary.worksheetsValidated, 2);
+  assert.equal(summary.supportValidated, 2);
+  assert.equal(summary.packagesValidated, 2);
+  assert.equal(summary.localRecordsPublished, 2);
+  assert.equal(summary.claudePptsAwaiting, 28);
   assert.equal(summary.claudePptsValidated, 0);
   assert.equal(summary.productionPublished, 0);
 
-  for (const bundle of validated.bundles) {
+  for (const bundle of validated.bundles.slice(0, 2)) {
     assert.equal(bundle.worksheet.status, "validated");
     assert.ok(fs.existsSync(bundle.worksheet.pngPath.replace("middleofmath:", path.resolve(__dirname, "../..") + path.sep)));
     assert.equal(bundle.support.intentStatus, "validated");
@@ -66,6 +67,15 @@ test("30개 비PPT 산출물과 Eduitit 익명 공개 결과를 원장에 일괄
     assert.equal(bundle.eduitit.anonymousAccessStatus, "local-passed");
     assert.equal(bundle.eduitit.productionStatus, "not-deployed");
     assert.equal(bundle.eduitit.publicUrl, "");
+    assert.equal(bundle.ppt.status, "received");
+    assert.equal(bundle.ppt.slideCount, 12);
+  }
+  for (const bundle of validated.bundles.slice(2)) {
+    assert.equal(bundle.worksheet.status, "not-started");
+    assert.equal(bundle.support.intentStatus, "not-started");
+    assert.equal(bundle.eduitit.packageStatus, "not-started");
+    assert.equal(bundle.eduitit.localRecordStatus, "unpublished");
+    assert.equal(bundle.eduitit.productionStatus, "not-deployed");
     assert.equal(bundle.ppt.status, "awaiting-claude");
   }
 });
@@ -75,7 +85,7 @@ test("익명 접근 상태·ETag·30개 고유 레코드가 하나라도 틀리�
     (payload) => { payload.catalogStatus = 302; },
     (payload) => { payload.records[0].etag304 = false; },
     (payload) => { payload.records[1].lessonId = payload.records[0].lessonId; },
-    (payload) => { payload.records.pop(); payload.verified = 29; },
+    (payload) => { payload.records.pop(); payload.verified -= 1; },
   ]) {
     const payload = verificationFixture();
     mutate(payload);

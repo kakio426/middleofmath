@@ -18,7 +18,7 @@ const DEFAULT_TRACKER_PATH = path.join(__dirname, "series-tracker.json");
 const DEFAULT_EVIDENCE_PATH = path.join(REPO_ROOT, "artifacts", "vivasam", "eduitit-local-publication.json");
 const DEFAULT_DASHBOARD_PATH = path.join(REPO_ROOT, "docs", "vivasam-30-series-progress.md");
 const DEFAULT_EDUITIT_ROOT = path.resolve(REPO_ROOT, "../eduitit");
-const REQUIRED_STATUSES = Object.freeze(["detail", "run", "render", "thumbnail", "worksheet"]);
+const REQUIRED_STATUSES = Object.freeze(["detail", "run", "render", "thumbnail", "worksheet", "ppt"]);
 
 function ensure(condition, message) {
   if (!condition) throw new Error(`Eduitit 공개 검증 오류: ${message}`);
@@ -32,10 +32,12 @@ function validateVerification(verification) {
   ensure(verification && typeof verification === "object", "검증 결과가 객체가 아닙니다.");
   ensure(verification.schemaVersion === 1, "지원하지 않는 검증 스키마입니다.");
   ensure(verification.seriesId === seriesManifest.seriesId, "시리즈 ID가 다릅니다.");
-  ensure(verification.verified === 30, `검증 완료 수가 30이 아닙니다: ${verification.verified}`);
+  const expectedCount = seriesManifest.records.length;
+  ensure(seriesManifest.count === expectedCount, "시리즈 manifest 개수가 레코드 수와 다릅니다.");
+  ensure(verification.verified === expectedCount, `검증 완료 수가 현재 PPT 수령분과 다릅니다: ${verification.verified}`);
   ensure(verification.anonymousAccess === "local-passed", "비로그인 로컬 접근이 통과하지 않았습니다.");
   ensure(verification.catalogStatus === 200, `비로그인 카테고리 목록 상태가 200이 아닙니다: ${verification.catalogStatus}`);
-  ensure(Array.isArray(verification.records) && verification.records.length === 30, "검증 레코드는 정확히 30개여야 합니다.");
+  ensure(Array.isArray(verification.records) && verification.records.length === expectedCount, "검증 레코드 수가 현재 PPT 수령분과 다릅니다.");
 
   const expectedByLessonId = new Map(seriesManifest.records.map((record) => [record.lessonId, record]));
   const lessonIds = new Set();
@@ -59,8 +61,13 @@ function validateVerification(verification) {
     localRecordIds.add(record.localRecordId);
     digests.add(record.digest);
   }
-  ensure(lessonIds.size === 30, "검증된 고유 lessonId가 30개가 아닙니다.");
+  ensure(lessonIds.size === expectedCount, "검증된 고유 lessonId 수가 현재 PPT 수령분과 다릅니다.");
   return verification;
+}
+
+function countPptSlides(pptxPath) {
+  const listing = childProcess.execFileSync("unzip", ["-Z1", pptxPath], { encoding: "utf8" });
+  return listing.split(/\r?\n/).filter((name) => /^ppt\/slides\/slide\d+\.xml$/.test(name)).length;
 }
 
 function applyVerificationToTracker(sourceTracker, verification, now = new Date().toISOString()) {
@@ -72,8 +79,51 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
   for (const bundle of tracker.bundles) {
     const lessonId = bundle.lessonId;
     const record = byLessonId.get(lessonId);
-    ensure(record, `${lessonId} 검증 레코드가 없습니다.`);
     const artifactRoot = `middleofmath:artifacts/vivasam/${lessonId}`;
+    if (!record) {
+      bundle.worksheet = {
+        ...bundle.worksheet,
+        status: "not-started",
+        sourcePath: "",
+        pngPath: "",
+        pdfPath: "",
+        validatedAt: "",
+      };
+      bundle.ppt = {
+        ...bundle.ppt,
+        status: "awaiting-claude",
+        pptxPath: "",
+        slideCount: null,
+        intakeReportPath: "",
+        renderedPdfPath: "",
+        slidesDirectory: "",
+        validatedAt: "",
+      };
+      bundle.support = {
+        ...bundle.support,
+        intentStatus: "not-started",
+        intentPath: "",
+        answerKeyStatus: "not-started",
+        answerKeyPath: "",
+        representativeImageStatus: "not-started",
+        representativeImagePath: "",
+      };
+      bundle.eduitit = {
+        ...bundle.eduitit,
+        packageStatus: "not-started",
+        packagePath: "",
+        digest: "",
+        localRecordStatus: "unpublished",
+        localRecordId: "",
+        anonymousAccessStatus: "not-tested",
+        productionStatus: "not-deployed",
+        publicUrl: "",
+        validatedAt: "",
+      };
+      continue;
+    }
+    const pptxAbsolutePath = path.join(REPO_ROOT, "artifacts", "vivasam", lessonId, "claude", `${lessonId}.pptx`);
+    ensure(fs.existsSync(pptxAbsolutePath), `${lessonId} 수령 PPTX가 없습니다.`);
     bundle.worksheet = {
       ...bundle.worksheet,
       status: "validated",
@@ -91,6 +141,16 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
       answerKeyPath: `${artifactRoot}/support/teacher-answer-key.md`,
       representativeImageStatus: "validated",
       representativeImagePath: `${artifactRoot}/support/representative-image.png`,
+    };
+    bundle.ppt = {
+      ...bundle.ppt,
+      status: "received",
+      pptxPath: `${artifactRoot}/claude/${lessonId}.pptx`,
+      slideCount: countPptSlides(pptxAbsolutePath),
+      intakeReportPath: "",
+      renderedPdfPath: "",
+      slidesDirectory: "",
+      validatedAt: "",
     };
     bundle.eduitit = {
       ...bundle.eduitit,
@@ -111,8 +171,8 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
   tracker.history.push({
     at: now,
     sequence: null,
-    event: "PPT 외 30개 산출물·Eduitit 로컬 공개 검증 완료",
-    detail: "통합 활동지 30개, 설계 의도·정답·대표 이미지 30세트, Eduitit 패키지·로컬 공개 레코드 30개와 비로그인 목록·상세·실행·렌더·썸네일·다운로드·ETag를 검증했다. 운영 배포와 Claude PPTX는 별도 상태로 유지했다.",
+    event: "PPT 수령분 산출물·Eduitit 로컬 공개 검증 완료",
+    detail: `수령된 PPTX ${verification.records.length}개를 기준으로 통합 활동지·수업 진행 안내·대표 이미지와 Eduitit 공개 패키지를 만들고 비로그인 접근을 검증했다. 나머지 슬롯은 PPTX 수령 대기로 되돌렸다.`,
   });
   return tracker;
 }
@@ -180,7 +240,10 @@ function main() {
   const now = new Date().toISOString();
   const loaded = loadTracker(options.trackerPath);
   const tracker = applyVerificationToTracker(loaded.tracker, verification, now);
-  const validated = validateTracker(tracker, { trackerPath: loaded.trackerPath });
+  const validated = validateTracker(tracker, {
+    trackerPath: loaded.trackerPath,
+    roots: { eduitit: options.eduititRoot },
+  });
   const evidence = {
     ...verification,
     recordedAt: now,

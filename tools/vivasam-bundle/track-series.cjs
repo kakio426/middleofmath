@@ -15,7 +15,7 @@ const STATUS_VALUES = Object.freeze({
   "support.answerKeyStatus": ["not-started", "drafting", "validated"],
   "support.representativeImageStatus": ["not-started", "drafting", "validated"],
   "eduitit.packageStatus": ["not-started", "built", "needs-rebuild", "validated"],
-  "eduitit.localRecordStatus": ["not-started", "published", "stale"],
+  "eduitit.localRecordStatus": ["not-started", "unpublished", "published", "stale"],
   "eduitit.anonymousAccessStatus": ["not-tested", "code-tests-passed", "local-passed", "production-passed"],
   "eduitit.productionStatus": ["not-deployed", "deployed"],
   "submission.communityPostStatus": ["not-posted", "posted"],
@@ -30,7 +30,7 @@ const STATUS_RANK = Object.freeze({
   "support.answerKeyStatus": { "not-started": 0, drafting: 1, validated: 2 },
   "support.representativeImageStatus": { "not-started": 0, drafting: 1, validated: 2 },
   "eduitit.packageStatus": { "not-started": 0, built: 1, "needs-rebuild": 1, validated: 2 },
-  "eduitit.localRecordStatus": { "not-started": 0, published: 1, stale: 1 },
+  "eduitit.localRecordStatus": { "not-started": 0, unpublished: 0, published: 1, stale: 1 },
   "eduitit.anonymousAccessStatus": { "not-tested": 0, "code-tests-passed": 1, "local-passed": 2, "production-passed": 3 },
   "eduitit.productionStatus": { "not-deployed": 0, deployed: 1 },
   "submission.communityPostStatus": { "not-posted": 0, posted: 1 },
@@ -132,8 +132,8 @@ function repositoryRoots(tracker, trackerPath = DEFAULT_TRACKER_PATH, overrides 
     overrides.middleofmath ? "" : tracker.repositories?.middleofmath || ".",
   );
   const eduitit = path.resolve(
-    overrides.eduitit || middleofmath,
-    overrides.eduitit ? "" : tracker.repositories?.eduitit || "../eduitit",
+    overrides.eduitit || process.env.EDUITIT_ROOT || middleofmath,
+    overrides.eduitit || process.env.EDUITIT_ROOT ? "" : tracker.repositories?.eduitit || "../eduitit",
   );
   return { middleofmath, eduitit };
 }
@@ -256,7 +256,7 @@ function validateBundle(tracker, rawBundle, context) {
 
   if (bundle.ppt.status !== "not-started") ensure(bundle.content.status === "validated", `${bundle.sequence}번 Claude PPT 상태는 내용 검증 뒤 올릴 수 있습니다.`);
   if (["received", "validated"].includes(bundle.ppt.status)) {
-    ensure(Number.isInteger(bundle.ppt.slideCount) && bundle.ppt.slideCount === bundle.declaredSlideCount, `${bundle.sequence}번 Claude PPT 슬라이드 수가 선언값과 다릅니다.`);
+    ensure(Number.isInteger(bundle.ppt.slideCount) && bundle.ppt.slideCount > 0, `${bundle.sequence}번 수령 PPT 슬라이드 수가 없습니다.`);
     if (checkArtifacts) requireTrackedArtifact(bundle.ppt.pptxPath, roots, `${bundle.sequence}번 Claude PPTX`);
   }
   if (bundle.ppt.status === "validated") {
@@ -293,7 +293,7 @@ function validateBundle(tracker, rawBundle, context) {
       ensure(isTimestamp(bundle.eduitit.validatedAt), `${bundle.sequence}번 Eduitit 패키지 검증 시각이 없습니다.`);
     }
   }
-  if (["published", "stale"].includes(bundle.eduitit.localRecordStatus)) {
+  if (["unpublished", "published", "stale"].includes(bundle.eduitit.localRecordStatus) && bundle.eduitit.localRecordId) {
     ensure(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(bundle.eduitit.localRecordId), `${bundle.sequence}번 Eduitit 로컬 레코드 ID가 잘못되었습니다.`);
   }
   if (bundle.eduitit.localRecordStatus === "published") ensure(bundle.eduitit.packageStatus === "validated", `${bundle.sequence}번 로컬 공개는 검증된 패키지가 필요합니다.`);
@@ -388,10 +388,10 @@ function deriveStage(bundle) {
 function nextAction(bundle) {
   if (!bundle.lessonId) return "차시 주제·lessonId 확정";
   if (bundle.content.status !== "validated") return "내용 스키마·Claude 원고 검증";
+  if (!["received", "validated"].includes(bundle.ppt.status)) return "Claude PPTX 수령";
   const pending = [];
   if (bundle.worksheet.status !== "validated") pending.push("통합 활동지 1개 제작");
-  if (!supportComplete(bundle)) pending.push("설계 의도·정답·대표 이미지 완성");
-  if (bundle.ppt.status !== "validated") pending.push(bundle.ppt.status === "awaiting-claude" ? "Claude PPTX 수령·검수" : "Claude PPTX 검수");
+  if (!supportComplete(bundle)) pending.push("수업 진행 안내·대표 이미지 완성");
   if (pending.length) return pending.join(" + ");
   if (bundle.eduitit.packageStatus !== "validated") return "Eduitit 최종 패키지 재빌드·검증";
   if (bundle.eduitit.localRecordStatus !== "published") return bundle.eduitit.localRecordStatus === "stale" ? "Eduitit 로컬 레코드 재발행" : "Eduitit 로컬 공개";
@@ -410,6 +410,7 @@ function summarizeTracker(validated) {
     contentValidated: count((bundle) => bundle.content.status === "validated"),
     worksheetsValidated: count((bundle) => bundle.worksheet.status === "validated"),
     claudePptsAwaiting: count((bundle) => bundle.ppt.status === "awaiting-claude"),
+    claudePptsReceived: count((bundle) => ["received", "validated"].includes(bundle.ppt.status)),
     claudePptsValidated: count((bundle) => bundle.ppt.status === "validated"),
     supportValidated: count(supportComplete),
     packagesValidated: count((bundle) => bundle.eduitit.packageStatus === "validated"),
@@ -456,7 +457,7 @@ function renderDashboard(validated) {
 | 주제 등록 | ${summary.registeredLessons} | 30 |
 | 내용 원고 검증 | ${summary.contentValidated} | 30 |
 | 통합 활동지 검증 | ${summary.worksheetsValidated} | 30 |
-| Claude PPTX 검증 | ${summary.claudePptsValidated} | 30 |
+| Claude PPTX 수령 | ${summary.claudePptsReceived} | 30 |
 | 설계 의도·정답·대표 이미지 검증 | ${summary.supportValidated} | 30 |
 | Eduitit 패키지 검증 | ${summary.packagesValidated} | 30 |
 | Eduitit 로컬 공개·비로그인 접근 검증 | ${summary.localAnonymousAccessPassed} | 30 |
@@ -672,7 +673,7 @@ function printStatus(validated, asJson = false) {
     `- 주제 등록: ${summary.registeredLessons}/30`,
     `- 내용 원고 검증: ${summary.contentValidated}/30`,
     `- 통합 활동지 검증: ${summary.worksheetsValidated}/30`,
-    `- Claude PPTX 검증: ${summary.claudePptsValidated}/30 (수령 대기 ${summary.claudePptsAwaiting})`,
+    `- Claude PPTX 수령: ${summary.claudePptsReceived}/30 (수령 대기 ${summary.claudePptsAwaiting})`,
     `- Eduitit 패키지 검증: ${summary.packagesValidated}/30`,
     `- Eduitit 로컬 공개·비로그인 검증: ${summary.localAnonymousAccessPassed}/30`,
     `- 운영 공개: ${summary.productionPublished}/30`,
