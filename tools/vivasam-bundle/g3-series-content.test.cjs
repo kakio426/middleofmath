@@ -75,6 +75,8 @@ test("새로 생성한 29개 내부 스키마는 한 활동지와 수학 근거�
     assert.ok(schema.mathOracle.extensionAnswer);
     assert.ok(schema.answerKey.extension);
     assert.equal(schema.answerKey.errorAnalysis.length, 4);
+    assert.doesNotMatch(schema.targetBehavior, /다\s+또한/, `${entry.lessonId}의 목표 문장이 어색하게 이어집니다.`);
+    assert.match(schema.targetBehavior, /다\. 식·자료·한 문장으로 근거를 설명한다\.$/);
   }
   assert.equal(worksheetFiles.size, 29);
 });

@@ -15,9 +15,9 @@
   "pptAuthor": "Claude",
   "pptStatus": "awaiting-claude",
   "sourceHtml": "source.html",
-  "digest": "b2a6eaad391e",
-  "thumbnailAsset": "b2a6eaad391e/representative-image.png",
-  "worksheetAsset": "b2a6eaad391e/g3s2-multiplication-combine-worksheet.png",
+  "digest": "cf5902432ffa",
+  "thumbnailAsset": "cf5902432ffa/representative-image.png",
+  "worksheetAsset": "cf5902432ffa/g3s2-multiplication-combine-worksheet.png",
   "downloadAssets": [
     "g3s2-multiplication-combine-worksheet.pdf",
     "g3s2-multiplication-combine-worksheet.png",
@@ -29,58 +29,58 @@
   ],
   "assets": [
     {
-      "path": "b2a6eaad391e/claude-ppt-content.json",
+      "path": "cf5902432ffa/claude-ppt-content.json",
       "bytes": 5406,
       "sha256": "52a17b323868a72d4a84ab186f6afabcb9894ea61116fe266803b8e2d42072ee",
       "contentType": "application/json",
       "role": "content-handoff"
     },
     {
-      "path": "b2a6eaad391e/claude-ppt-content.md",
+      "path": "cf5902432ffa/claude-ppt-content.md",
       "bytes": 4133,
       "sha256": "efe82e2dbd5b1a030de6fe7928cdaec6eb629e9ddf013c5cd71d3a4891ccdead",
       "contentType": "text/markdown; charset=utf-8",
       "role": "content-handoff"
     },
     {
-      "path": "b2a6eaad391e/g3s2-multiplication-combine-worksheet.pdf",
+      "path": "cf5902432ffa/g3s2-multiplication-combine-worksheet.pdf",
       "bytes": 149931,
       "sha256": "541beaa346d6c1efbbc3713becb0f7ba82e7eb17d0453101bf449ed083442d22",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "b2a6eaad391e/g3s2-multiplication-combine-worksheet.png",
+      "path": "cf5902432ffa/g3s2-multiplication-combine-worksheet.png",
       "bytes": 147573,
       "sha256": "934cbe49ed4610e9683f3a5225ba721d89cb45a828d853119e16fd2710b86745",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "b2a6eaad391e/g3s2-multiplication-combine-worksheet.svg",
+      "path": "cf5902432ffa/g3s2-multiplication-combine-worksheet.svg",
       "bytes": 14150,
       "sha256": "a255adc1b0674d7675ea03d4a1d61d5fbea37fc49d5123a6a6dc9ed7f03666b1",
       "contentType": "image/svg+xml",
       "role": "worksheet"
     },
     {
-      "path": "b2a6eaad391e/representative-image.png",
+      "path": "cf5902432ffa/representative-image.png",
       "bytes": 51449,
       "sha256": "e9119b38bc6b968a9c63fc8c296b0bbeb40126c539c0c857fc74e57cd829f11c",
       "contentType": "image/png",
       "role": "thumbnail"
     },
     {
-      "path": "b2a6eaad391e/teacher-answer-key.md",
+      "path": "cf5902432ffa/teacher-answer-key.md",
       "bytes": 1950,
       "sha256": "4498fd0a597515bd76e6a0f904a1da000ce42c7c9cf37292ce94e6707bfa2aa5",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     },
     {
-      "path": "b2a6eaad391e/teaching-intent.md",
-      "bytes": 6477,
-      "sha256": "fa0d3d7f8c1beb7ff7cd4058e9f858b478e8c3dae1a42b22def40c79cfcd99e6",
+      "path": "cf5902432ffa/teaching-intent.md",
+      "bytes": 6471,
+      "sha256": "f8f0b210b68ca52511c416c4693688ec96cf3bc719919e0a20d71c62d255f8d6",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     }

@@ -15,9 +15,9 @@
   "pptAuthor": "Claude",
   "pptStatus": "awaiting-claude",
   "sourceHtml": "source.html",
-  "digest": "e19e8c436717",
-  "thumbnailAsset": "e19e8c436717/representative-image.png",
-  "worksheetAsset": "e19e8c436717/g3s2-multiplication-two-digit-worksheet.png",
+  "digest": "92fb6c1b1ea8",
+  "thumbnailAsset": "92fb6c1b1ea8/representative-image.png",
+  "worksheetAsset": "92fb6c1b1ea8/g3s2-multiplication-two-digit-worksheet.png",
   "downloadAssets": [
     "g3s2-multiplication-two-digit-worksheet.pdf",
     "g3s2-multiplication-two-digit-worksheet.png",
@@ -29,58 +29,58 @@
   ],
   "assets": [
     {
-      "path": "e19e8c436717/claude-ppt-content.json",
+      "path": "92fb6c1b1ea8/claude-ppt-content.json",
       "bytes": 5395,
       "sha256": "c7698f1a9cb14854a76bce842acd4e1a83ba308a3188d33751bfccf991562d58",
       "contentType": "application/json",
       "role": "content-handoff"
     },
     {
-      "path": "e19e8c436717/claude-ppt-content.md",
+      "path": "92fb6c1b1ea8/claude-ppt-content.md",
       "bytes": 4129,
       "sha256": "a29b9b9f8905613b20983301df7ec03776490c9c94dbcd9a35d9b5810bb9e63c",
       "contentType": "text/markdown; charset=utf-8",
       "role": "content-handoff"
     },
     {
-      "path": "e19e8c436717/g3s2-multiplication-two-digit-worksheet.pdf",
+      "path": "92fb6c1b1ea8/g3s2-multiplication-two-digit-worksheet.pdf",
       "bytes": 142432,
       "sha256": "3429c37ad5389d81f7a3e388348f02fb59ae14f4d839ecb1490f2404f0534760",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "e19e8c436717/g3s2-multiplication-two-digit-worksheet.png",
+      "path": "92fb6c1b1ea8/g3s2-multiplication-two-digit-worksheet.png",
       "bytes": 140066,
       "sha256": "c8c1cb3921b7146e9742b5913098933da833637a8f7428e0ba2e072c1b0919cf",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "e19e8c436717/g3s2-multiplication-two-digit-worksheet.svg",
+      "path": "92fb6c1b1ea8/g3s2-multiplication-two-digit-worksheet.svg",
       "bytes": 14048,
       "sha256": "e7a24e3af577882eddb80a4fc189f6b232ce905f69e10336ee40d9ed92d5871c",
       "contentType": "image/svg+xml",
       "role": "worksheet"
     },
     {
-      "path": "e19e8c436717/representative-image.png",
+      "path": "92fb6c1b1ea8/representative-image.png",
       "bytes": 50653,
       "sha256": "98ef3440fb3d740f3199c5054ac651f2b3cf890f4ad3e72fbeb2e6992d80cea9",
       "contentType": "image/png",
       "role": "thumbnail"
     },
     {
-      "path": "e19e8c436717/teacher-answer-key.md",
+      "path": "92fb6c1b1ea8/teacher-answer-key.md",
       "bytes": 1942,
       "sha256": "1b8858cd8f4a6612fb7dcee9bd06d30ccd52886898ba60aa51dd51ca677cef58",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     },
     {
-      "path": "e19e8c436717/teaching-intent.md",
-      "bytes": 6488,
-      "sha256": "9bf151f27addc83c63358dbff6af7b149d31f4505d9d00063fa64862be64c149",
+      "path": "92fb6c1b1ea8/teaching-intent.md",
+      "bytes": 6482,
+      "sha256": "07126488148ee191827a7460b4e22a2cd176a08937ba650de5053e485c6d6196",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     }

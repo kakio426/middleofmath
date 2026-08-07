@@ -322,7 +322,7 @@ function buildLesson(entry, source) {
     unit: `${unit.order}. ${unit.title}`,
     durationMinutes: 40,
     curriculumAnchorIds: pair.stage.curriculumAnchorIds,
-    targetBehavior: `${toGoalSentence(pair.stage.shortTitle)} 또한 식·자료·한 문장으로 근거를 설명한다.`,
+    targetBehavior: `${toGoalSentence(pair.stage.shortTitle)}. 식·자료·한 문장으로 근거를 설명한다.`,
     privacyRule: "실제 학생 이름·얼굴·학급·댓글을 넣지 않고 모든 풀이 비교는 풀이 A/B로 표시한다.",
     worksheet: {
       file: `${entry.lessonId}-worksheet.png`,

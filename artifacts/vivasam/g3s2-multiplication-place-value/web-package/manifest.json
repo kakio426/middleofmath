@@ -15,9 +15,9 @@
   "pptAuthor": "Claude",
   "pptStatus": "awaiting-claude",
   "sourceHtml": "source.html",
-  "digest": "cccba4e53b13",
-  "thumbnailAsset": "cccba4e53b13/representative-image.png",
-  "worksheetAsset": "cccba4e53b13/g3s2-multiplication-place-value-worksheet.png",
+  "digest": "9134abb84646",
+  "thumbnailAsset": "9134abb84646/representative-image.png",
+  "worksheetAsset": "9134abb84646/g3s2-multiplication-place-value-worksheet.png",
   "downloadAssets": [
     "g3s2-multiplication-place-value-worksheet.pdf",
     "g3s2-multiplication-place-value-worksheet.png",
@@ -29,58 +29,58 @@
   ],
   "assets": [
     {
-      "path": "cccba4e53b13/claude-ppt-content.json",
+      "path": "9134abb84646/claude-ppt-content.json",
       "bytes": 5177,
       "sha256": "d8d4722a3fa1943a1b082279c352366a431c2e836cdd0ad34a42d49268b0c1a3",
       "contentType": "application/json",
       "role": "content-handoff"
     },
     {
-      "path": "cccba4e53b13/claude-ppt-content.md",
+      "path": "9134abb84646/claude-ppt-content.md",
       "bytes": 3900,
       "sha256": "e0ba2918b6bb6a3f99612be9911d857c870721c087229c119015b1ef08f22d62",
       "contentType": "text/markdown; charset=utf-8",
       "role": "content-handoff"
     },
     {
-      "path": "cccba4e53b13/g3s2-multiplication-place-value-worksheet.pdf",
+      "path": "9134abb84646/g3s2-multiplication-place-value-worksheet.pdf",
       "bytes": 144620,
       "sha256": "9e713fcb255e23eda6b62e43af13dbe650a023e8a15b65ef5c49b82652ed5258",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "cccba4e53b13/g3s2-multiplication-place-value-worksheet.png",
+      "path": "9134abb84646/g3s2-multiplication-place-value-worksheet.png",
       "bytes": 143000,
       "sha256": "3739e98c08872c557e61f36287fc496aef94d80ce547d0b53b3b8c3db8bef565",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "cccba4e53b13/g3s2-multiplication-place-value-worksheet.svg",
+      "path": "9134abb84646/g3s2-multiplication-place-value-worksheet.svg",
       "bytes": 13974,
       "sha256": "3bac7ee33941a980bdbdc693644cf3d6bbd8a71d8b8d80938073eec7152286ee",
       "contentType": "image/svg+xml",
       "role": "worksheet"
     },
     {
-      "path": "cccba4e53b13/representative-image.png",
+      "path": "9134abb84646/representative-image.png",
       "bytes": 52017,
       "sha256": "cc2cfbc8dc43198bc3734e8abb3a396341cd06a8da0c9bedd97aa5ef34aded70",
       "contentType": "image/png",
       "role": "thumbnail"
     },
     {
-      "path": "cccba4e53b13/teacher-answer-key.md",
+      "path": "9134abb84646/teacher-answer-key.md",
       "bytes": 1765,
       "sha256": "3de3356bc843e98f539c1fc73959a66c0475bbf75fe8fe729e8b14b3fa85487f",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     },
     {
-      "path": "cccba4e53b13/teaching-intent.md",
-      "bytes": 6480,
-      "sha256": "6facfda43ac471d27c378f46cddfb656fe6bd73a51d9af4fc73de73c50567d73",
+      "path": "9134abb84646/teaching-intent.md",
+      "bytes": 6474,
+      "sha256": "22c2e618d8385bbb4761902c9a7f99bf04fda56fd97c2b52f69f206b966be23e",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     }

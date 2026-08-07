@@ -15,9 +15,9 @@
   "pptAuthor": "Claude",
   "pptStatus": "awaiting-claude",
   "sourceHtml": "source.html",
-  "digest": "528eb2574e72",
-  "thumbnailAsset": "528eb2574e72/representative-image.png",
-  "worksheetAsset": "528eb2574e72/g3s1-multiplication-array-transfer-worksheet.png",
+  "digest": "f3d77e921552",
+  "thumbnailAsset": "f3d77e921552/representative-image.png",
+  "worksheetAsset": "f3d77e921552/g3s1-multiplication-array-transfer-worksheet.png",
   "downloadAssets": [
     "g3s1-multiplication-array-transfer-worksheet.pdf",
     "g3s1-multiplication-array-transfer-worksheet.png",
@@ -29,58 +29,58 @@
   ],
   "assets": [
     {
-      "path": "528eb2574e72/claude-ppt-content.json",
+      "path": "f3d77e921552/claude-ppt-content.json",
       "bytes": 5519,
       "sha256": "9fc33f764b3a92eb8fdd62decb90f93ba7bc50e3ca67395efbcf649d97c5719a",
       "contentType": "application/json",
       "role": "content-handoff"
     },
     {
-      "path": "528eb2574e72/claude-ppt-content.md",
+      "path": "f3d77e921552/claude-ppt-content.md",
       "bytes": 4203,
       "sha256": "c74a770cfc1c7bfda5528441ced4a1b8335aca066165cf557dd8c91405b3eae9",
       "contentType": "text/markdown; charset=utf-8",
       "role": "content-handoff"
     },
     {
-      "path": "528eb2574e72/g3s1-multiplication-array-transfer-worksheet.pdf",
+      "path": "f3d77e921552/g3s1-multiplication-array-transfer-worksheet.pdf",
       "bytes": 139272,
       "sha256": "8251634b1ca7e1fea39384dbde38d4e0764e1e9a2634403887f62b9dafd73a2d",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "528eb2574e72/g3s1-multiplication-array-transfer-worksheet.png",
+      "path": "f3d77e921552/g3s1-multiplication-array-transfer-worksheet.png",
       "bytes": 137109,
       "sha256": "92883e63e106a3d32f1359b802c13515ae48cdcf22ed7c196db57fb21e202052",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "528eb2574e72/g3s1-multiplication-array-transfer-worksheet.svg",
+      "path": "f3d77e921552/g3s1-multiplication-array-transfer-worksheet.svg",
       "bytes": 13959,
       "sha256": "93ea34fecca6c7a38a5cf3a987d77b09aecc79721479e7e12fd0b01a3f06e212",
       "contentType": "image/svg+xml",
       "role": "worksheet"
     },
     {
-      "path": "528eb2574e72/representative-image.png",
+      "path": "f3d77e921552/representative-image.png",
       "bytes": 52462,
       "sha256": "e6bba96d801c03ea3dc6c7d291c8d31b6c7064aa4564839ca7da181952672155",
       "contentType": "image/png",
       "role": "thumbnail"
     },
     {
-      "path": "528eb2574e72/teacher-answer-key.md",
+      "path": "f3d77e921552/teacher-answer-key.md",
       "bytes": 1766,
       "sha256": "982064ff58b91887ceb52770f91bfa950ac86da3ffd1f1e3ff5ebf11b056f59f",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     },
     {
-      "path": "528eb2574e72/teaching-intent.md",
-      "bytes": 6485,
-      "sha256": "c2e46da3fce59b593c5e3b09a1a2a27285d0e79133e37782289f9aca79b869e8",
+      "path": "f3d77e921552/teaching-intent.md",
+      "bytes": 6479,
+      "sha256": "475d99bd6640ca8f655be6b138296be7ade6cf9ae72f6f4e89a5ff6ea9b0ebac",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     }

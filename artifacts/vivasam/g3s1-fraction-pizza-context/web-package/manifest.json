@@ -15,9 +15,9 @@
   "pptAuthor": "Claude",
   "pptStatus": "awaiting-claude",
   "sourceHtml": "source.html",
-  "digest": "8b4259a8b9d9",
-  "thumbnailAsset": "8b4259a8b9d9/representative-image.png",
-  "worksheetAsset": "8b4259a8b9d9/g3s1-fraction-pizza-context-worksheet.png",
+  "digest": "f139fa5b07cc",
+  "thumbnailAsset": "f139fa5b07cc/representative-image.png",
+  "worksheetAsset": "f139fa5b07cc/g3s1-fraction-pizza-context-worksheet.png",
   "downloadAssets": [
     "g3s1-fraction-pizza-context-worksheet.pdf",
     "g3s1-fraction-pizza-context-worksheet.png",
@@ -29,58 +29,58 @@
   ],
   "assets": [
     {
-      "path": "8b4259a8b9d9/claude-ppt-content.json",
+      "path": "f139fa5b07cc/claude-ppt-content.json",
       "bytes": 5809,
       "sha256": "84c5934b5e1d9cbec799ebab7f9cad4b93a39faed6c71b2b89bce4e02b12cda7",
       "contentType": "application/json",
       "role": "content-handoff"
     },
     {
-      "path": "8b4259a8b9d9/claude-ppt-content.md",
+      "path": "f139fa5b07cc/claude-ppt-content.md",
       "bytes": 4509,
       "sha256": "d42041327b177899b6d253093a15651e401d86083d2f9ad234c2bc48758635e7",
       "contentType": "text/markdown; charset=utf-8",
       "role": "content-handoff"
     },
     {
-      "path": "8b4259a8b9d9/g3s1-fraction-pizza-context-worksheet.pdf",
+      "path": "f139fa5b07cc/g3s1-fraction-pizza-context-worksheet.pdf",
       "bytes": 149589,
       "sha256": "1e3ed54fe897ffbfbb59f25d297a970da9004452e2beae852d34067ea0466910",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "8b4259a8b9d9/g3s1-fraction-pizza-context-worksheet.png",
+      "path": "f139fa5b07cc/g3s1-fraction-pizza-context-worksheet.png",
       "bytes": 146980,
       "sha256": "72c91bee84269d749cf5a64e622afa2935d874b54043c6d6c2c2a383d357c599",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "8b4259a8b9d9/g3s1-fraction-pizza-context-worksheet.svg",
+      "path": "f139fa5b07cc/g3s1-fraction-pizza-context-worksheet.svg",
       "bytes": 14368,
       "sha256": "773c84cde38ba5d12831eaff8588eb5a96e1f0f1e9063f491d411c9aea13ac1f",
       "contentType": "image/svg+xml",
       "role": "worksheet"
     },
     {
-      "path": "8b4259a8b9d9/representative-image.png",
+      "path": "f139fa5b07cc/representative-image.png",
       "bytes": 52271,
       "sha256": "cf56892eb66bcf6dc9ab4621b7ab93ed00404d5e809bdf7cd14bb9291adec0a0",
       "contentType": "image/png",
       "role": "thumbnail"
     },
     {
-      "path": "8b4259a8b9d9/teacher-answer-key.md",
+      "path": "f139fa5b07cc/teacher-answer-key.md",
       "bytes": 1959,
       "sha256": "a9ba7f38af3cec07157167534ffb57eea84deeff6c43f92420eee4673e8b0ac7",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     },
     {
-      "path": "8b4259a8b9d9/teaching-intent.md",
-      "bytes": 6472,
-      "sha256": "ef27bce6205317993ba11679e9c1cc96bdac271508e2c1f22dfa934e85dd7457",
+      "path": "f139fa5b07cc/teaching-intent.md",
+      "bytes": 6466,
+      "sha256": "4cc3999b357f81a8438252e4373c1e992b310160d5924ee28d2f944e49a7057e",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     }

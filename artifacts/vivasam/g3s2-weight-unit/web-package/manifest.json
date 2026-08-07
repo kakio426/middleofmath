@@ -15,9 +15,9 @@
   "pptAuthor": "Claude",
   "pptStatus": "awaiting-claude",
   "sourceHtml": "source.html",
-  "digest": "32502317db02",
-  "thumbnailAsset": "32502317db02/representative-image.png",
-  "worksheetAsset": "32502317db02/g3s2-weight-unit-worksheet.png",
+  "digest": "0efd9f7596e7",
+  "thumbnailAsset": "0efd9f7596e7/representative-image.png",
+  "worksheetAsset": "0efd9f7596e7/g3s2-weight-unit-worksheet.png",
   "downloadAssets": [
     "g3s2-weight-unit-worksheet.pdf",
     "g3s2-weight-unit-worksheet.png",
@@ -29,58 +29,58 @@
   ],
   "assets": [
     {
-      "path": "32502317db02/claude-ppt-content.json",
+      "path": "0efd9f7596e7/claude-ppt-content.json",
       "bytes": 5146,
       "sha256": "261916200e13d233a11aa34b424d32f6cd4bcf2ad7ccd9ef7a278edbe701b2bc",
       "contentType": "application/json",
       "role": "content-handoff"
     },
     {
-      "path": "32502317db02/claude-ppt-content.md",
+      "path": "0efd9f7596e7/claude-ppt-content.md",
       "bytes": 3875,
       "sha256": "ddc3fb184b6ea3633331be64cc6307774d3fa1cfc0f55f3b6ecf8376ba28564c",
       "contentType": "text/markdown; charset=utf-8",
       "role": "content-handoff"
     },
     {
-      "path": "32502317db02/g3s2-weight-unit-worksheet.pdf",
+      "path": "0efd9f7596e7/g3s2-weight-unit-worksheet.pdf",
       "bytes": 145560,
       "sha256": "1cf75512e44c6d19a78f84ef965fadc7e4479cb5127b28cdadaa9d3a46dc7489",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "32502317db02/g3s2-weight-unit-worksheet.png",
+      "path": "0efd9f7596e7/g3s2-weight-unit-worksheet.png",
       "bytes": 142798,
       "sha256": "414d825f7aa7b7da46793a0b4f46437caef3944d48387caea42d8b33fec34089",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "32502317db02/g3s2-weight-unit-worksheet.svg",
+      "path": "0efd9f7596e7/g3s2-weight-unit-worksheet.svg",
       "bytes": 13549,
       "sha256": "31fe68c3910bfdbbde3ae29ba6aa29b90519ac43524bf52a9833b2835644e10f",
       "contentType": "image/svg+xml",
       "role": "worksheet"
     },
     {
-      "path": "32502317db02/representative-image.png",
+      "path": "0efd9f7596e7/representative-image.png",
       "bytes": 53895,
       "sha256": "a94afaecbf039f79c51fefc257de1df0d77deed550a2491241fa3cafd1017a9e",
       "contentType": "image/png",
       "role": "thumbnail"
     },
     {
-      "path": "32502317db02/teacher-answer-key.md",
+      "path": "0efd9f7596e7/teacher-answer-key.md",
       "bytes": 1902,
       "sha256": "3f7be6be1d8091f7c76a7c2188d2a630deb90a64a535e725f4a81199ad49090b",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     },
     {
-      "path": "32502317db02/teaching-intent.md",
-      "bytes": 6484,
-      "sha256": "f6269a98d3466ba3eee54a1feb2e3f9ccd1a994ecf8904bb4fda9ccd7600b5d8",
+      "path": "0efd9f7596e7/teaching-intent.md",
+      "bytes": 6478,
+      "sha256": "f138cf48e9da8b230ae7dc98d1fa438276e92951f4d984b2b66c40eb1913835a",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     }

@@ -12,6 +12,7 @@ const {
   validateTracker,
   writeDashboard,
 } = require("./track-series.cjs");
+const { writeSubmissionRegister } = require("./build-submission-register.cjs");
 
 const REPO_ROOT = path.resolve(__dirname, "../..");
 const DEFAULT_TRACKER_PATH = path.join(__dirname, "series-tracker.json");
@@ -242,6 +243,7 @@ function applyProductionVerificationToTracker(sourceTracker, verification, now =
     ensure(record, `${bundle.lessonId} 운영 검증 레코드가 없습니다.`);
     bundle.eduitit = {
       ...bundle.eduitit,
+      digest: record.digest,
       anonymousAccessStatus: "production-passed",
       productionStatus: "deployed",
       publicUrl: record.publicUrl,
@@ -314,10 +316,13 @@ async function main() {
   writeAtomic(options.evidencePath, `${JSON.stringify(verification, null, 2)}\n`);
   writeAtomic(loaded.trackerPath, `${JSON.stringify(tracker, null, 2)}\n`);
   writeDashboard(validated, options.dashboardPath);
+  const submissionRegister = writeSubmissionRegister(tracker);
   process.stdout.write(`${JSON.stringify({
     verifiedAt: verification.verifiedAt,
     evidencePath: options.evidencePath,
     dashboardPath: options.dashboardPath,
+    submissionRegisterJsonPath: submissionRegister.jsonPath,
+    submissionRegisterMarkdownPath: submissionRegister.markdownPath,
     catalogUrl: verification.catalogUrl,
     ...summarizeTracker(validated),
   }, null, 2)}\n`);

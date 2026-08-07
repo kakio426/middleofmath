@@ -14,7 +14,7 @@
     "representativeImage": "support/representative-image.png"
   },
   "package": {
-    "digest": "e1447e39f12c",
+    "digest": "9af7fd76cfe7",
     "manifest": "web-package/manifest.json",
     "html": "web-package/source.html"
   }

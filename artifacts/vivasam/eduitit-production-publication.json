@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "verifiedAt": "2026-08-07T12:12:44.008Z",
-  "commitHash": "ee3a2200a45c6cd93a81467e322ecea37a7aa8e2",
+  "verifiedAt": "2026-08-07T12:33:13.118Z",
+  "commitHash": "159b8bc1f57ac395ccfb44f6c23c67592c87cc82",
   "baseUrl": "https://eduitit.site",
   "catalogUrl": "https://eduitit.site/edu-materials/?category=lesson_bundle",
   "catalogStatus": 200,
@@ -50,12 +50,12 @@
     {
       "sequence": 2,
       "lessonId": "g3s1-multiplication-groups-model",
-      "digest": "130c2858db2c",
+      "digest": "16fcb4b1b9f6",
       "productionRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
       "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
       "runUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-groups-model/download/g3s1-multiplication-groups-model-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model/130c2858db2c/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model/16fcb4b1b9f6/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -72,12 +72,12 @@
     {
       "sequence": 3,
       "lessonId": "g3s1-multiplication-array-transfer",
-      "digest": "528eb2574e72",
+      "digest": "f3d77e921552",
       "productionRecordId": "bf456499-f56d-4bf5-86e2-2179f4ce354a",
       "publicUrl": "https://eduitit.site/edu-materials/bf456499-f56d-4bf5-86e2-2179f4ce354a/",
       "runUrl": "https://eduitit.site/edu-materials/bf456499-f56d-4bf5-86e2-2179f4ce354a/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-array-transfer/download/g3s1-multiplication-array-transfer-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-array-transfer/528eb2574e72/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-array-transfer/f3d77e921552/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -94,12 +94,12 @@
     {
       "sequence": 4,
       "lessonId": "g3s1-multiplication-place-value-model",
-      "digest": "888ef1957ab7",
+      "digest": "5f1d72b3c9f5",
       "productionRecordId": "9d3ac7a8-6596-429d-bac5-a3a75ad4540c",
       "publicUrl": "https://eduitit.site/edu-materials/9d3ac7a8-6596-429d-bac5-a3a75ad4540c/",
       "runUrl": "https://eduitit.site/edu-materials/9d3ac7a8-6596-429d-bac5-a3a75ad4540c/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-place-value-model/download/g3s1-multiplication-place-value-model-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-model/888ef1957ab7/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-model/5f1d72b3c9f5/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -116,12 +116,12 @@
     {
       "sequence": 5,
       "lessonId": "g3s1-multiplication-place-value-context",
-      "digest": "8771910e3db3",
+      "digest": "88bdf53cb01f",
       "productionRecordId": "b8d42be0-1a5d-4de9-88c5-a655c6066d68",
       "publicUrl": "https://eduitit.site/edu-materials/b8d42be0-1a5d-4de9-88c5-a655c6066d68/",
       "runUrl": "https://eduitit.site/edu-materials/b8d42be0-1a5d-4de9-88c5-a655c6066d68/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-place-value-context/download/g3s1-multiplication-place-value-context-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-context/8771910e3db3/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-context/88bdf53cb01f/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -138,12 +138,12 @@
     {
       "sequence": 6,
       "lessonId": "g3s1-division-equal-sharing",
-      "digest": "559992af760a",
+      "digest": "3f61b1aa8ed0",
       "productionRecordId": "5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54",
       "publicUrl": "https://eduitit.site/edu-materials/5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54/",
       "runUrl": "https://eduitit.site/edu-materials/5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-division-equal-sharing/download/g3s1-division-equal-sharing-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-division-equal-sharing/559992af760a/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-division-equal-sharing/3f61b1aa8ed0/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -160,12 +160,12 @@
     {
       "sequence": 7,
       "lessonId": "g3s1-division-missing-factor",
-      "digest": "0317f8b360f7",
+      "digest": "afa8a2eb0a3f",
       "productionRecordId": "2394fb2a-487a-4f92-ad63-bc18c69d9cdd",
       "publicUrl": "https://eduitit.site/edu-materials/2394fb2a-487a-4f92-ad63-bc18c69d9cdd/",
       "runUrl": "https://eduitit.site/edu-materials/2394fb2a-487a-4f92-ad63-bc18c69d9cdd/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-division-missing-factor/download/g3s1-division-missing-factor-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-division-missing-factor/0317f8b360f7/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-division-missing-factor/afa8a2eb0a3f/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -182,12 +182,12 @@
     {
       "sequence": 8,
       "lessonId": "g3s1-division-fact-family",
-      "digest": "4677cfb47242",
+      "digest": "bcf20bd8f06e",
       "productionRecordId": "3c532785-a5f9-4c15-a4d2-896d7ab79e6d",
       "publicUrl": "https://eduitit.site/edu-materials/3c532785-a5f9-4c15-a4d2-896d7ab79e6d/",
       "runUrl": "https://eduitit.site/edu-materials/3c532785-a5f9-4c15-a4d2-896d7ab79e6d/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-division-fact-family/download/g3s1-division-fact-family-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-division-fact-family/4677cfb47242/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-division-fact-family/bcf20bd8f06e/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -204,12 +204,12 @@
     {
       "sequence": 9,
       "lessonId": "g3s1-division-group-count",
-      "digest": "6731a5e056ee",
+      "digest": "903cffc90f63",
       "productionRecordId": "6c1fef76-72ec-4036-a9ba-a0db4f929ae4",
       "publicUrl": "https://eduitit.site/edu-materials/6c1fef76-72ec-4036-a9ba-a0db4f929ae4/",
       "runUrl": "https://eduitit.site/edu-materials/6c1fef76-72ec-4036-a9ba-a0db4f929ae4/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-division-group-count/download/g3s1-division-group-count-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-division-group-count/6731a5e056ee/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-division-group-count/903cffc90f63/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -226,12 +226,12 @@
     {
       "sequence": 10,
       "lessonId": "g3s1-fraction-equal-parts",
-      "digest": "cd28af9184b7",
+      "digest": "20a527954c35",
       "productionRecordId": "76592b0e-23ff-42e5-980a-768078775c9f",
       "publicUrl": "https://eduitit.site/edu-materials/76592b0e-23ff-42e5-980a-768078775c9f/",
       "runUrl": "https://eduitit.site/edu-materials/76592b0e-23ff-42e5-980a-768078775c9f/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-fraction-equal-parts/download/g3s1-fraction-equal-parts-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-fraction-equal-parts/cd28af9184b7/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-fraction-equal-parts/20a527954c35/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -248,12 +248,12 @@
     {
       "sequence": 11,
       "lessonId": "g3s1-fraction-fix-partition",
-      "digest": "c9154c1d74a2",
+      "digest": "302a97397378",
       "productionRecordId": "e81b3b1a-c2e2-4a05-b0cb-a14d71ed25f8",
       "publicUrl": "https://eduitit.site/edu-materials/e81b3b1a-c2e2-4a05-b0cb-a14d71ed25f8/",
       "runUrl": "https://eduitit.site/edu-materials/e81b3b1a-c2e2-4a05-b0cb-a14d71ed25f8/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-fraction-fix-partition/download/g3s1-fraction-fix-partition-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-fraction-fix-partition/c9154c1d74a2/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-fraction-fix-partition/302a97397378/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -270,12 +270,12 @@
     {
       "sequence": 12,
       "lessonId": "g3s1-fraction-part-whole",
-      "digest": "0b42d9c2b0b9",
+      "digest": "af7afcbac986",
       "productionRecordId": "c47118fa-55ba-4a7a-bae8-15ce4a60501e",
       "publicUrl": "https://eduitit.site/edu-materials/c47118fa-55ba-4a7a-bae8-15ce4a60501e/",
       "runUrl": "https://eduitit.site/edu-materials/c47118fa-55ba-4a7a-bae8-15ce4a60501e/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-fraction-part-whole/download/g3s1-fraction-part-whole-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-fraction-part-whole/0b42d9c2b0b9/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-fraction-part-whole/af7afcbac986/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -292,12 +292,12 @@
     {
       "sequence": 13,
       "lessonId": "g3s1-fraction-pizza-context",
-      "digest": "8b4259a8b9d9",
+      "digest": "f139fa5b07cc",
       "productionRecordId": "7a7f121f-04ad-4ba4-a547-1e30ee9fb3b5",
       "publicUrl": "https://eduitit.site/edu-materials/7a7f121f-04ad-4ba4-a547-1e30ee9fb3b5/",
       "runUrl": "https://eduitit.site/edu-materials/7a7f121f-04ad-4ba4-a547-1e30ee9fb3b5/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-fraction-pizza-context/download/g3s1-fraction-pizza-context-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-fraction-pizza-context/8b4259a8b9d9/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-fraction-pizza-context/f139fa5b07cc/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -314,12 +314,12 @@
     {
       "sequence": 14,
       "lessonId": "g3s1-length-centimeter-meter",
-      "digest": "e1447e39f12c",
+      "digest": "9af7fd76cfe7",
       "productionRecordId": "77d10703-2f12-4373-944e-78ef81526086",
       "publicUrl": "https://eduitit.site/edu-materials/77d10703-2f12-4373-944e-78ef81526086/",
       "runUrl": "https://eduitit.site/edu-materials/77d10703-2f12-4373-944e-78ef81526086/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-length-centimeter-meter/download/g3s1-length-centimeter-meter-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-length-centimeter-meter/e1447e39f12c/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-length-centimeter-meter/9af7fd76cfe7/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -336,12 +336,12 @@
     {
       "sequence": 15,
       "lessonId": "g3s1-length-real-world-units",
-      "digest": "048be499db56",
+      "digest": "471aa3e45b18",
       "productionRecordId": "fcd6ce94-a7e5-4dca-af6d-4f996f49a5f1",
       "publicUrl": "https://eduitit.site/edu-materials/fcd6ce94-a7e5-4dca-af6d-4f996f49a5f1/",
       "runUrl": "https://eduitit.site/edu-materials/fcd6ce94-a7e5-4dca-af6d-4f996f49a5f1/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-length-real-world-units/download/g3s1-length-real-world-units-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-length-real-world-units/048be499db56/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-length-real-world-units/471aa3e45b18/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -358,12 +358,12 @@
     {
       "sequence": 16,
       "lessonId": "g3s1-length-unit-conversion",
-      "digest": "067c8038bfc7",
+      "digest": "b0a3a98d0d24",
       "productionRecordId": "45fd9710-81d7-4792-b079-e9911605e2a8",
       "publicUrl": "https://eduitit.site/edu-materials/45fd9710-81d7-4792-b079-e9911605e2a8/",
       "runUrl": "https://eduitit.site/edu-materials/45fd9710-81d7-4792-b079-e9911605e2a8/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-length-unit-conversion/download/g3s1-length-unit-conversion-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-length-unit-conversion/067c8038bfc7/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-length-unit-conversion/b0a3a98d0d24/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -380,12 +380,12 @@
     {
       "sequence": 17,
       "lessonId": "g3s2-multiplication-place-value",
-      "digest": "cccba4e53b13",
+      "digest": "9134abb84646",
       "productionRecordId": "65d1a3aa-bbe5-403d-be56-73c7e6d60c29",
       "publicUrl": "https://eduitit.site/edu-materials/65d1a3aa-bbe5-403d-be56-73c7e6d60c29/",
       "runUrl": "https://eduitit.site/edu-materials/65d1a3aa-bbe5-403d-be56-73c7e6d60c29/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-multiplication-place-value/download/g3s2-multiplication-place-value-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-multiplication-place-value/cccba4e53b13/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-multiplication-place-value/9134abb84646/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -402,12 +402,12 @@
     {
       "sequence": 18,
       "lessonId": "g3s2-multiplication-combine",
-      "digest": "b2a6eaad391e",
+      "digest": "cf5902432ffa",
       "productionRecordId": "73ebf7b2-b4e5-4ee7-8992-4cc364c2bfd9",
       "publicUrl": "https://eduitit.site/edu-materials/73ebf7b2-b4e5-4ee7-8992-4cc364c2bfd9/",
       "runUrl": "https://eduitit.site/edu-materials/73ebf7b2-b4e5-4ee7-8992-4cc364c2bfd9/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-multiplication-combine/download/g3s2-multiplication-combine-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-multiplication-combine/b2a6eaad391e/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-multiplication-combine/cf5902432ffa/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -424,12 +424,12 @@
     {
       "sequence": 19,
       "lessonId": "g3s2-multiplication-two-digit",
-      "digest": "e19e8c436717",
+      "digest": "92fb6c1b1ea8",
       "productionRecordId": "6f2c7f32-b96d-4e68-9d1f-4fb21e15cb84",
       "publicUrl": "https://eduitit.site/edu-materials/6f2c7f32-b96d-4e68-9d1f-4fb21e15cb84/",
       "runUrl": "https://eduitit.site/edu-materials/6f2c7f32-b96d-4e68-9d1f-4fb21e15cb84/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-multiplication-two-digit/download/g3s2-multiplication-two-digit-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-multiplication-two-digit/e19e8c436717/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-multiplication-two-digit/92fb6c1b1ea8/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -446,12 +446,12 @@
     {
       "sequence": 20,
       "lessonId": "g3s2-division-meaning",
-      "digest": "fc17f73bc9e3",
+      "digest": "ede8b80c7d20",
       "productionRecordId": "82bbb53f-d5aa-4f46-b3fe-3e805fecb530",
       "publicUrl": "https://eduitit.site/edu-materials/82bbb53f-d5aa-4f46-b3fe-3e805fecb530/",
       "runUrl": "https://eduitit.site/edu-materials/82bbb53f-d5aa-4f46-b3fe-3e805fecb530/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-division-meaning/download/g3s2-division-meaning-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-division-meaning/fc17f73bc9e3/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-division-meaning/ede8b80c7d20/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -468,12 +468,12 @@
     {
       "sequence": 21,
       "lessonId": "g3s2-division-remainder",
-      "digest": "def5efc980b2",
+      "digest": "25b20b24b28c",
       "productionRecordId": "61037655-2af2-47f5-b111-76ee165bbcc0",
       "publicUrl": "https://eduitit.site/edu-materials/61037655-2af2-47f5-b111-76ee165bbcc0/",
       "runUrl": "https://eduitit.site/edu-materials/61037655-2af2-47f5-b111-76ee165bbcc0/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-division-remainder/download/g3s2-division-remainder-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-division-remainder/def5efc980b2/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-division-remainder/25b20b24b28c/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -490,12 +490,12 @@
     {
       "sequence": 22,
       "lessonId": "g3s2-division-remainder-check",
-      "digest": "4237b3c4c5d1",
+      "digest": "a780842142d2",
       "productionRecordId": "6732ca19-4aed-4ba9-a0bb-677aa8a27ae8",
       "publicUrl": "https://eduitit.site/edu-materials/6732ca19-4aed-4ba9-a0bb-677aa8a27ae8/",
       "runUrl": "https://eduitit.site/edu-materials/6732ca19-4aed-4ba9-a0bb-677aa8a27ae8/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-division-remainder-check/download/g3s2-division-remainder-check-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-division-remainder-check/4237b3c4c5d1/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-division-remainder-check/a780842142d2/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -512,12 +512,12 @@
     {
       "sequence": 23,
       "lessonId": "g3s2-circle-parts",
-      "digest": "9bb6f3ea8762",
+      "digest": "55090f6ff986",
       "productionRecordId": "8cab9775-d12e-4ec1-a261-a0afb323ca94",
       "publicUrl": "https://eduitit.site/edu-materials/8cab9775-d12e-4ec1-a261-a0afb323ca94/",
       "runUrl": "https://eduitit.site/edu-materials/8cab9775-d12e-4ec1-a261-a0afb323ca94/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-circle-parts/download/g3s2-circle-parts-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-circle-parts/9bb6f3ea8762/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-circle-parts/55090f6ff986/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -534,12 +534,12 @@
     {
       "sequence": 24,
       "lessonId": "g3s2-circle-diameter",
-      "digest": "3db9206a4997",
+      "digest": "7e5a89bbdd19",
       "productionRecordId": "2d306307-a92a-4570-9284-8f7fdf074d32",
       "publicUrl": "https://eduitit.site/edu-materials/2d306307-a92a-4570-9284-8f7fdf074d32/",
       "runUrl": "https://eduitit.site/edu-materials/2d306307-a92a-4570-9284-8f7fdf074d32/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-circle-diameter/download/g3s2-circle-diameter-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-circle-diameter/3db9206a4997/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-circle-diameter/7e5a89bbdd19/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -556,12 +556,12 @@
     {
       "sequence": 25,
       "lessonId": "g3s2-fraction-part-whole",
-      "digest": "8d8253fbbbee",
+      "digest": "899028b546ff",
       "productionRecordId": "112fd707-abf1-4d7c-bedd-06bd507d0bf3",
       "publicUrl": "https://eduitit.site/edu-materials/112fd707-abf1-4d7c-bedd-06bd507d0bf3/",
       "runUrl": "https://eduitit.site/edu-materials/112fd707-abf1-4d7c-bedd-06bd507d0bf3/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-fraction-part-whole/download/g3s2-fraction-part-whole-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-fraction-part-whole/8d8253fbbbee/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-fraction-part-whole/899028b546ff/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -578,12 +578,12 @@
     {
       "sequence": 26,
       "lessonId": "g3s2-fraction-convert",
-      "digest": "67f28f7aa95b",
+      "digest": "b2643a36a119",
       "productionRecordId": "fc053fed-9118-486f-a719-4b60b757dbd8",
       "publicUrl": "https://eduitit.site/edu-materials/fc053fed-9118-486f-a719-4b60b757dbd8/",
       "runUrl": "https://eduitit.site/edu-materials/fc053fed-9118-486f-a719-4b60b757dbd8/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-fraction-convert/download/g3s2-fraction-convert-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-fraction-convert/67f28f7aa95b/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-fraction-convert/b2643a36a119/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -600,12 +600,12 @@
     {
       "sequence": 27,
       "lessonId": "g3s2-fraction-compare",
-      "digest": "817fa15282bf",
+      "digest": "c8f249aee76d",
       "productionRecordId": "e9fc9a07-fd63-4a7e-95b4-966bb57f91f3",
       "publicUrl": "https://eduitit.site/edu-materials/e9fc9a07-fd63-4a7e-95b4-966bb57f91f3/",
       "runUrl": "https://eduitit.site/edu-materials/e9fc9a07-fd63-4a7e-95b4-966bb57f91f3/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-fraction-compare/download/g3s2-fraction-compare-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-fraction-compare/817fa15282bf/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-fraction-compare/c8f249aee76d/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -622,12 +622,12 @@
     {
       "sequence": 28,
       "lessonId": "g3s2-capacity-unit",
-      "digest": "2797ce8ff359",
+      "digest": "8ffbc2571a5f",
       "productionRecordId": "822d7f5d-b22d-48f3-88af-e4c431b61301",
       "publicUrl": "https://eduitit.site/edu-materials/822d7f5d-b22d-48f3-88af-e4c431b61301/",
       "runUrl": "https://eduitit.site/edu-materials/822d7f5d-b22d-48f3-88af-e4c431b61301/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-capacity-unit/download/g3s2-capacity-unit-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-capacity-unit/2797ce8ff359/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-capacity-unit/8ffbc2571a5f/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -644,12 +644,12 @@
     {
       "sequence": 29,
       "lessonId": "g3s2-weight-unit",
-      "digest": "32502317db02",
+      "digest": "0efd9f7596e7",
       "productionRecordId": "8d553b1c-92dc-4506-b4a6-4dd360c74b27",
       "publicUrl": "https://eduitit.site/edu-materials/8d553b1c-92dc-4506-b4a6-4dd360c74b27/",
       "runUrl": "https://eduitit.site/edu-materials/8d553b1c-92dc-4506-b4a6-4dd360c74b27/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-weight-unit/download/g3s2-weight-unit-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-weight-unit/32502317db02/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-weight-unit/0efd9f7596e7/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -666,12 +666,12 @@
     {
       "sequence": 30,
       "lessonId": "g3s2-pictograph-compare",
-      "digest": "82f19b101c35",
+      "digest": "e842c9d9715c",
       "productionRecordId": "9ec7cf1d-26f1-418c-8e13-b2db1640e524",
       "publicUrl": "https://eduitit.site/edu-materials/9ec7cf1d-26f1-418c-8e13-b2db1640e524/",
       "runUrl": "https://eduitit.site/edu-materials/9ec7cf1d-26f1-418c-8e13-b2db1640e524/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-pictograph-compare/download/g3s2-pictograph-compare-worksheet.pdf/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-pictograph-compare/82f19b101c35/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-pictograph-compare/e842c9d9715c/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,

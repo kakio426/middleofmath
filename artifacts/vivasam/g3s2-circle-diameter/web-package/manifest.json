@@ -15,9 +15,9 @@
   "pptAuthor": "Claude",
   "pptStatus": "awaiting-claude",
   "sourceHtml": "source.html",
-  "digest": "3db9206a4997",
-  "thumbnailAsset": "3db9206a4997/representative-image.png",
-  "worksheetAsset": "3db9206a4997/g3s2-circle-diameter-worksheet.png",
+  "digest": "7e5a89bbdd19",
+  "thumbnailAsset": "7e5a89bbdd19/representative-image.png",
+  "worksheetAsset": "7e5a89bbdd19/g3s2-circle-diameter-worksheet.png",
   "downloadAssets": [
     "g3s2-circle-diameter-worksheet.pdf",
     "g3s2-circle-diameter-worksheet.png",
@@ -29,58 +29,58 @@
   ],
   "assets": [
     {
-      "path": "3db9206a4997/claude-ppt-content.json",
+      "path": "7e5a89bbdd19/claude-ppt-content.json",
       "bytes": 5536,
       "sha256": "cc718c1232cd9a5b99169b0287d6151dbcfe5087a1f1982fdc11da11a398dc78",
       "contentType": "application/json",
       "role": "content-handoff"
     },
     {
-      "path": "3db9206a4997/claude-ppt-content.md",
+      "path": "7e5a89bbdd19/claude-ppt-content.md",
       "bytes": 4225,
       "sha256": "525f977678521ff37ecf9dd1d69178f56a5d97841593c1178322c5460cbdceb5",
       "contentType": "text/markdown; charset=utf-8",
       "role": "content-handoff"
     },
     {
-      "path": "3db9206a4997/g3s2-circle-diameter-worksheet.pdf",
+      "path": "7e5a89bbdd19/g3s2-circle-diameter-worksheet.pdf",
       "bytes": 145977,
       "sha256": "c65abb6dcd3d7369e6b99e18234be8122e9520c09e7ae4eab78b31e1a5abd9e2",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "3db9206a4997/g3s2-circle-diameter-worksheet.png",
+      "path": "7e5a89bbdd19/g3s2-circle-diameter-worksheet.png",
       "bytes": 144139,
       "sha256": "5cc0f1a79481f081bc11b4608f8d53a4f99439f9b9ef29c44d30e403512f0ef6",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "3db9206a4997/g3s2-circle-diameter-worksheet.svg",
+      "path": "7e5a89bbdd19/g3s2-circle-diameter-worksheet.svg",
       "bytes": 13764,
       "sha256": "1c60c64a2ea22a09ece3dce2d6590916519dfda576b854eeeed8fed89d88b76a",
       "contentType": "image/svg+xml",
       "role": "worksheet"
     },
     {
-      "path": "3db9206a4997/representative-image.png",
+      "path": "7e5a89bbdd19/representative-image.png",
       "bytes": 51639,
       "sha256": "d063ccfb35814773756e109823a378c13332433b905decbb6262f7bb7f11813d",
       "contentType": "image/png",
       "role": "thumbnail"
     },
     {
-      "path": "3db9206a4997/teacher-answer-key.md",
+      "path": "7e5a89bbdd19/teacher-answer-key.md",
       "bytes": 1798,
       "sha256": "da63273cef105d5d9163abc00ca831666b57be381d6f3bbafb6cacfb8665c118",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     },
     {
-      "path": "3db9206a4997/teaching-intent.md",
-      "bytes": 6481,
-      "sha256": "b68dd694cc72ddc847cec6ae56517039f402fcee05c93d969c06bbb773655b72",
+      "path": "7e5a89bbdd19/teaching-intent.md",
+      "bytes": 6475,
+      "sha256": "78e20cad5559aac261396bd6463df5af1cf7ef26d65b7a1e07269e3c9f46d629",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     }

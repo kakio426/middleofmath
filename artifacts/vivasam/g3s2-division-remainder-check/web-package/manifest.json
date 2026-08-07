@@ -15,9 +15,9 @@
   "pptAuthor": "Claude",
   "pptStatus": "awaiting-claude",
   "sourceHtml": "source.html",
-  "digest": "4237b3c4c5d1",
-  "thumbnailAsset": "4237b3c4c5d1/representative-image.png",
-  "worksheetAsset": "4237b3c4c5d1/g3s2-division-remainder-check-worksheet.png",
+  "digest": "a780842142d2",
+  "thumbnailAsset": "a780842142d2/representative-image.png",
+  "worksheetAsset": "a780842142d2/g3s2-division-remainder-check-worksheet.png",
   "downloadAssets": [
     "g3s2-division-remainder-check-worksheet.pdf",
     "g3s2-division-remainder-check-worksheet.png",
@@ -29,58 +29,58 @@
   ],
   "assets": [
     {
-      "path": "4237b3c4c5d1/claude-ppt-content.json",
+      "path": "a780842142d2/claude-ppt-content.json",
       "bytes": 5271,
       "sha256": "7239b10f702ce6b1b72d7477ff4e785656fbbd451d249c86ced498f01d66f1d2",
       "contentType": "application/json",
       "role": "content-handoff"
     },
     {
-      "path": "4237b3c4c5d1/claude-ppt-content.md",
+      "path": "a780842142d2/claude-ppt-content.md",
       "bytes": 3996,
       "sha256": "1612e328584e99fedf3c79e30904c0fe5b7c6aef618c059fbed3473a28edebe2",
       "contentType": "text/markdown; charset=utf-8",
       "role": "content-handoff"
     },
     {
-      "path": "4237b3c4c5d1/g3s2-division-remainder-check-worksheet.pdf",
+      "path": "a780842142d2/g3s2-division-remainder-check-worksheet.pdf",
       "bytes": 148985,
       "sha256": "de0f60db3f078f9389d66929a62cb80cabdc23c25915ca71f3e5936f19389593",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "4237b3c4c5d1/g3s2-division-remainder-check-worksheet.png",
+      "path": "a780842142d2/g3s2-division-remainder-check-worksheet.png",
       "bytes": 146531,
       "sha256": "1900d13e7fd6a2f8df1feee66bf73c76f0403b7638b88ec2e3f9c563304a6c1d",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "4237b3c4c5d1/g3s2-division-remainder-check-worksheet.svg",
+      "path": "a780842142d2/g3s2-division-remainder-check-worksheet.svg",
       "bytes": 14473,
       "sha256": "df70be03f0fe213c5639463665dcd89167675c98fc65f537e48c2adf75194ec6",
       "contentType": "image/svg+xml",
       "role": "worksheet"
     },
     {
-      "path": "4237b3c4c5d1/representative-image.png",
+      "path": "a780842142d2/representative-image.png",
       "bytes": 55339,
       "sha256": "33dde0a840be2cc6cffb97b2e9685bad23181350a98b16fe3a4f903b3d9c6473",
       "contentType": "image/png",
       "role": "thumbnail"
     },
     {
-      "path": "4237b3c4c5d1/teacher-answer-key.md",
+      "path": "a780842142d2/teacher-answer-key.md",
       "bytes": 1812,
       "sha256": "a3d40f78f921e57ace141893f50f56502ebc5dc6c44aab3d38ad452fd48e81bc",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     },
     {
-      "path": "4237b3c4c5d1/teaching-intent.md",
-      "bytes": 6496,
-      "sha256": "2797a59fcabcc05076207e156a9a16cbc020df740fd0373855cdc2694f443d84",
+      "path": "a780842142d2/teaching-intent.md",
+      "bytes": 6490,
+      "sha256": "40181c5868dcb845a7bdbc0863a175dbed6a05f4969ce64e51ae97055fad243f",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     }

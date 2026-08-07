@@ -15,9 +15,9 @@
   "pptAuthor": "Claude",
   "pptStatus": "awaiting-claude",
   "sourceHtml": "source.html",
-  "digest": "8771910e3db3",
-  "thumbnailAsset": "8771910e3db3/representative-image.png",
-  "worksheetAsset": "8771910e3db3/g3s1-multiplication-place-value-context-worksheet.png",
+  "digest": "88bdf53cb01f",
+  "thumbnailAsset": "88bdf53cb01f/representative-image.png",
+  "worksheetAsset": "88bdf53cb01f/g3s1-multiplication-place-value-context-worksheet.png",
   "downloadAssets": [
     "g3s1-multiplication-place-value-context-worksheet.pdf",
     "g3s1-multiplication-place-value-context-worksheet.png",
@@ -29,58 +29,58 @@
   ],
   "assets": [
     {
-      "path": "8771910e3db3/claude-ppt-content.json",
+      "path": "88bdf53cb01f/claude-ppt-content.json",
       "bytes": 5541,
       "sha256": "d9c3a93413fa1c790b62603f0028f6453cb079efc96744f795cde4eaafa91d41",
       "contentType": "application/json",
       "role": "content-handoff"
     },
     {
-      "path": "8771910e3db3/claude-ppt-content.md",
+      "path": "88bdf53cb01f/claude-ppt-content.md",
       "bytes": 4256,
       "sha256": "52b2dcf3149a2372f3fe2c942f299785991301e1b1f7b06ce2c4b18fa66719d5",
       "contentType": "text/markdown; charset=utf-8",
       "role": "content-handoff"
     },
     {
-      "path": "8771910e3db3/g3s1-multiplication-place-value-context-worksheet.pdf",
+      "path": "88bdf53cb01f/g3s1-multiplication-place-value-context-worksheet.pdf",
       "bytes": 151728,
       "sha256": "4d86160a5a745b71b2b69740589b8b1e10319c9349d7ee3848fd6141e08989a4",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "8771910e3db3/g3s1-multiplication-place-value-context-worksheet.png",
+      "path": "88bdf53cb01f/g3s1-multiplication-place-value-context-worksheet.png",
       "bytes": 148973,
       "sha256": "76676f8d2db4253b26e895586c4c143559c22b8a422973ca9955480e48438ea7",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "8771910e3db3/g3s1-multiplication-place-value-context-worksheet.svg",
+      "path": "88bdf53cb01f/g3s1-multiplication-place-value-context-worksheet.svg",
       "bytes": 14025,
       "sha256": "e4c998ab27aa2aef7e2336ce2c24b7edad1084238291541ef36f58ac2ef00306",
       "contentType": "image/svg+xml",
       "role": "worksheet"
     },
     {
-      "path": "8771910e3db3/representative-image.png",
+      "path": "88bdf53cb01f/representative-image.png",
       "bytes": 53352,
       "sha256": "995042770ae404ef480887dc0a16a514e828d1f554085bd797d9006a3f197d96",
       "contentType": "image/png",
       "role": "thumbnail"
     },
     {
-      "path": "8771910e3db3/teacher-answer-key.md",
+      "path": "88bdf53cb01f/teacher-answer-key.md",
       "bytes": 2033,
       "sha256": "716c4328ccc6e7e49f9c686022d21b6809c0256e4b593cbfbaad902c4f088a47",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     },
     {
-      "path": "8771910e3db3/teaching-intent.md",
-      "bytes": 6482,
-      "sha256": "d17f3e5d72de2e6fecd8efdd389de66899a1fef432c50d70b62a6a60e764a4fb",
+      "path": "88bdf53cb01f/teaching-intent.md",
+      "bytes": 6476,
+      "sha256": "2e28ca7f0469bc1e680138a27b1fdfd375cedb04e03e29c9eac1b1fc2d617866",
       "contentType": "text/markdown; charset=utf-8",
       "role": "teacher-support"
     }
