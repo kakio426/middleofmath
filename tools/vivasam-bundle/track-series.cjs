@@ -57,7 +57,9 @@ const UPDATABLE_PATHS = new Set([
   "worksheet.pdfPath",
   "worksheet.validatedAt",
   "ppt.status",
+  "ppt.format",
   "ppt.pptxPath",
+  "ppt.htmlPath",
   "ppt.slideCount",
   "ppt.intakeReportPath",
   "ppt.renderedPdfPath",
@@ -210,6 +212,7 @@ function validateBundle(tracker, rawBundle, context) {
   ensure(Number.isInteger(bundle.sequence) && bundle.sequence >= 1 && bundle.sequence <= 30, `잘못된 순번입니다: ${bundle.sequence}`);
   for (const fieldPath of Object.keys(STATUS_VALUES)) validateStatus(bundle, fieldPath);
   ensure(bundle.ppt.source === "Claude", `${bundle.sequence}번 PPT 제작 주체는 Claude여야 합니다.`);
+  ensure(["pptx", "html"].includes(bundle.ppt.format), `${bundle.sequence}번 발표 자료 형식이 잘못되었습니다.`);
   ensure(Array.isArray(bundle.notes), `${bundle.sequence}번 notes는 배열이어야 합니다.`);
 
   const hasLesson = Boolean(bundle.lessonId);
@@ -258,7 +261,13 @@ function validateBundle(tracker, rawBundle, context) {
   if (bundle.ppt.status !== "not-started") ensure(bundle.content.status === "validated", `${bundle.sequence}번 Claude PPT 상태는 내용 검증 뒤 올릴 수 있습니다.`);
   if (["received", "validated"].includes(bundle.ppt.status)) {
     ensure(Number.isInteger(bundle.ppt.slideCount) && bundle.ppt.slideCount > 0, `${bundle.sequence}번 수령 PPT 슬라이드 수가 없습니다.`);
-    if (checkArtifacts) requireTrackedArtifact(bundle.ppt.pptxPath, roots, `${bundle.sequence}번 Claude PPTX`);
+    if (bundle.ppt.format === "html") {
+      ensure(!bundle.ppt.pptxPath, `${bundle.sequence}번 HTML 발표 자료에 공개 PPTX 경로가 남아 있습니다.`);
+      if (checkArtifacts) requireTrackedArtifact(bundle.ppt.htmlPath, roots, `${bundle.sequence}번 Claude HTML 슬라이드`);
+    } else {
+      ensure(!bundle.ppt.htmlPath, `${bundle.sequence}번 PPTX 발표 자료에 HTML 경로가 남아 있습니다.`);
+      if (checkArtifacts) requireTrackedArtifact(bundle.ppt.pptxPath, roots, `${bundle.sequence}번 Claude PPTX`);
+    }
   }
   if (bundle.ppt.status === "validated") {
     ensure(isTimestamp(bundle.ppt.validatedAt), `${bundle.sequence}번 Claude PPT 검증 시각이 없습니다.`);
@@ -389,7 +398,7 @@ function deriveStage(bundle) {
 function nextAction(bundle) {
   if (!bundle.lessonId) return "차시 주제·lessonId 확정";
   if (bundle.content.status !== "validated") return "내용 스키마·Claude 원고 검증";
-  if (!["received", "validated"].includes(bundle.ppt.status)) return "Claude PPTX 수령";
+  if (!["received", "validated"].includes(bundle.ppt.status)) return "Claude HTML/PPTX 수령";
   const pending = [];
   if (bundle.worksheet.status !== "validated") pending.push("통합 활동지 1개 제작");
   if (!supportComplete(bundle)) pending.push("수업 진행 안내·대표 이미지 완성");
@@ -449,7 +458,7 @@ function renderDashboard(validated) {
 
 - 원장 최종 갱신: ${validated.tracker.updatedAt}
 - 생산 계약: PPT 30개 · PPT당 약 11장(차시별 가변) · PPT당 통합 활동지 1개 · 활동지 총 30개
-- 역할: Claude는 PPTX만 제작, Codex는 PPT 내용 원고와 PPT 외 모든 산출물·플랫폼·검증·추적 담당
+- 역할: Claude는 발표 화면(HTML 우선, 기존 PPTX 호환)만 제작, Codex는 내용 원고와 발표 화면 외 모든 산출물·플랫폼·검증·추적 담당
 
 ## 전체 현황
 
@@ -458,7 +467,7 @@ function renderDashboard(validated) {
 | 주제 등록 | ${summary.registeredLessons} | 30 |
 | 내용 원고 검증 | ${summary.contentValidated} | 30 |
 | 통합 활동지 검증 | ${summary.worksheetsValidated} | 30 |
-| Claude PPTX 수령 | ${summary.claudePptsReceived} | 30 |
+| Claude 발표 화면 수령 | ${summary.claudePptsReceived} | 30 |
 | 설계 의도·정답·대표 이미지 검증 | ${summary.supportValidated} | 30 |
 | Eduitit 패키지 검증 | ${summary.packagesValidated} | 30 |
 | Eduitit 로컬 공개·비로그인 접근 검증 | ${summary.localAnonymousAccessPassed} | 30 |
@@ -467,7 +476,7 @@ function renderDashboard(validated) {
 | 나의 레이스 등록 | ${summary.raceRecords} | 30 |
 | 전 과정 완료 | ${summary.fullyCompleted} | 30 |
 
-현재 Claude PPTX 수령 대기: ${summary.claudePptsAwaiting}개. 남은 전체 완료 슬롯: ${30 - summary.fullyCompleted}개.
+현재 Claude HTML/PPTX 수령 대기: ${summary.claudePptsAwaiting}개. 남은 전체 완료 슬롯: ${30 - summary.fullyCompleted}개.
 
 ## 30개 슬롯
 
@@ -477,7 +486,7 @@ ${rows}
 
 ## 판정 원칙
 
-- 이전 Codex 제작 PPTX나 슬라이드별 11개 활동지는 새 계약의 Claude PPTX 또는 통합 활동지 1개 완료로 계산하지 않습니다.
+- 이전 Codex 제작 발표 화면이나 슬라이드별 활동지는 새 계약의 Claude HTML/PPTX 또는 통합 활동지 1개 완료로 계산하지 않습니다.
 - \`validated\`, \`published\`, \`deployed\`, \`registered\`는 대응 파일·ID·URL·검증 시각이 있을 때만 기록합니다.
 - Eduitit 운영 공개는 HTTPS 공개 URL과 비로그인 운영 접근 검증이 모두 있어야 완료입니다.
 - 나의 레이스 등록은 먼저 교사 커뮤니티·블로그·SNS 게시물 URL이 있어야 완료입니다.
@@ -674,7 +683,7 @@ function printStatus(validated, asJson = false) {
     `- 주제 등록: ${summary.registeredLessons}/30`,
     `- 내용 원고 검증: ${summary.contentValidated}/30`,
     `- 통합 활동지 검증: ${summary.worksheetsValidated}/30`,
-    `- Claude PPTX 수령: ${summary.claudePptsReceived}/30 (수령 대기 ${summary.claudePptsAwaiting})`,
+    `- Claude HTML/PPTX 수령: ${summary.claudePptsReceived}/30 (수령 대기 ${summary.claudePptsAwaiting})`,
     `- Eduitit 패키지 검증: ${summary.packagesValidated}/30`,
     `- Eduitit 로컬 공개·비로그인 검증: ${summary.localAnonymousAccessPassed}/30`,
     `- 운영 공개: ${summary.productionPublished}/30`,

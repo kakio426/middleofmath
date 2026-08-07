@@ -13,6 +13,7 @@
       "unit": "6. 그림그래프",
       "digest": "20c347053492",
       "pptStatus": "available",
+      "presentationMode": "pptx",
       "packageManifest": "g3s2-pictograph-legend/manifest.json"
     },
     {
@@ -23,6 +24,7 @@
       "unit": "1. 곱셈",
       "digest": "3d4cabf98fe2",
       "pptStatus": "available",
+      "presentationMode": "pptx",
       "packageManifest": "g3s1-multiplication-groups-model/manifest.json"
     },
     {
@@ -33,6 +35,7 @@
       "unit": "1. 곱셈",
       "digest": "2de55ea9fac9",
       "pptStatus": "available",
+      "presentationMode": "pptx",
       "packageManifest": "g3s1-multiplication-array-transfer/manifest.json"
     }
   ]

@@ -41,7 +41,9 @@
     "ppt": {
       "status": "not-started",
       "source": "Claude",
+      "format": "html",
       "pptxPath": "",
+      "htmlPath": "",
       "slideCount": null,
       "intakeReportPath": "",
       "renderedPdfPath": "",
@@ -104,6 +106,7 @@
       },
       "ppt": {
         "status": "received",
+        "format": "pptx",
         "legacyPptxPath": "",
         "pptxPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/claude/g3s2-pictograph-legend.pptx",
         "slideCount": 12,
@@ -125,11 +128,11 @@
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-pictograph-legend",
         "digest": "20c347053492",
         "localRecordStatus": "published",
-        "localRecordId": "f1a382eb-762a-4212-bf49-34db1c2af346",
-        "anonymousAccessStatus": "local-passed",
-        "productionStatus": "not-deployed",
-        "publicUrl": "",
-        "validatedAt": "2026-08-07T22:18:22.541Z"
+        "localRecordId": "2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae",
+        "anonymousAccessStatus": "production-passed",
+        "productionStatus": "deployed",
+        "publicUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/",
+        "validatedAt": "2026-08-07T15:30:41.709Z"
       },
       "notes": []
     },
@@ -159,6 +162,7 @@
       },
       "ppt": {
         "status": "received",
+        "format": "pptx",
         "pptxPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/claude/g3s1-multiplication-groups-model.pptx",
         "slideCount": 12,
         "intakeReportPath": "",
@@ -179,11 +183,11 @@
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model",
         "digest": "3d4cabf98fe2",
         "localRecordStatus": "published",
-        "localRecordId": "86a18a01-1903-4dfc-a398-cb3f3ed2ead6",
-        "anonymousAccessStatus": "local-passed",
-        "productionStatus": "not-deployed",
-        "publicUrl": "",
-        "validatedAt": "2026-08-07T22:18:22.541Z"
+        "localRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
+        "anonymousAccessStatus": "production-passed",
+        "productionStatus": "deployed",
+        "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
+        "validatedAt": "2026-08-07T15:30:41.709Z"
       },
       "notes": []
     },
@@ -213,6 +217,7 @@
       },
       "ppt": {
         "status": "received",
+        "format": "pptx",
         "pptxPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/claude/g3s1-multiplication-array-transfer.pptx",
         "slideCount": 12,
         "intakeReportPath": "",

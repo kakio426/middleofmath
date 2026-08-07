@@ -3,6 +3,7 @@
 const assert = require("node:assert/strict");
 const crypto = require("node:crypto");
 const fs = require("node:fs");
+const os = require("node:os");
 const path = require("node:path");
 const test = require("node:test");
 
@@ -12,6 +13,8 @@ const {
   SERIES_ASSET_CONTRACT,
   buildWorksheetModel,
   loadSeriesLessons,
+  receivedPresentationForLesson,
+  validateClaudeHtmlSlides,
   validateSeriesArtifacts,
   wrapRepresentativeTitle,
 } = require("./build-series-non-ppt-assets.cjs");
@@ -34,6 +37,40 @@ function listRelativeFiles(directory) {
   visit(directory);
   return files.sort();
 }
+
+test("Claude HTML은 16:9 정적 슬라이드 계약을 통과하고 PPTX보다 우선한다", () => {
+  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "vivasam-html-slides-"));
+  const lesson = { id: "g3s1-html-test" };
+  const claudeRoot = path.join(temporaryRoot, "artifacts", "vivasam", lesson.id, "claude");
+  fs.mkdirSync(claudeRoot, { recursive: true });
+  const htmlPath = path.join(claudeRoot, `${lesson.id}-slides.html`);
+  const html = `<!doctype html><html lang="ko"><head><meta name="eduitit-slide-size" content="1600x900"></head><body><main data-eduitit-deck><section data-slide>1</section><section data-slide>2</section></main></body></html>`;
+  fs.writeFileSync(htmlPath, html, "utf8");
+  fs.writeFileSync(path.join(claudeRoot, `${lesson.id}.pptx`), "archive only");
+  try {
+    assert.deepEqual(validateClaudeHtmlSlides(htmlPath), {
+      htmlPath,
+      slideCount: 2,
+      width: 1600,
+      height: 900,
+    });
+    const presentation = receivedPresentationForLesson(lesson, { repoRoot: temporaryRoot });
+    assert.equal(presentation.format, "html");
+    assert.equal(presentation.slideCount, 2);
+    assert.equal(presentation.sourcePath, htmlPath);
+
+    fs.writeFileSync(htmlPath, html.replace("</body>", '<iframe src="https://example.com"></iframe></body>'), "utf8");
+    assert.throws(() => validateClaudeHtmlSlides(htmlPath), /외부·능동 콘텐츠/);
+
+    fs.writeFileSync(htmlPath, html.replace("</body>", '<img srcset="https://example.com/slide.png 2x"></body>'), "utf8");
+    assert.throws(() => validateClaudeHtmlSlides(htmlPath), /외부·능동 콘텐츠/);
+
+    fs.writeFileSync(htmlPath, html.replace("<section data-slide>1</section>", "<div><section data-slide>1</section></div>"), "utf8");
+    assert.throws(() => validateClaudeHtmlSlides(htmlPath), /직접 자식/);
+  } finally {
+    fs.rmSync(temporaryRoot, { recursive: true, force: true });
+  }
+});
 
 test("30개 차시는 각각 통합 활동지 한 개와 고유한 학습 증거를 가진다", () => {
   const lessons = loadSeriesLessons();

@@ -13,11 +13,13 @@
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
+  "presentationMode": "pptx",
   "sourceHtml": "source.html",
   "digest": "20c347053492",
   "thumbnailAsset": "20c347053492/representative-image.png",
   "worksheetAsset": "20c347053492/g3s2-pictograph-legend-worksheet.png",
   "pptAsset": "20c347053492/g3s2-pictograph-legend.pptx",
+  "slideHtmlAsset": "",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-pictograph",
   "downloadAssets": [
     "g3s2-pictograph-legend.pptx",

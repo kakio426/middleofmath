@@ -12,6 +12,7 @@ const {
   validateTracker,
   writeDashboard,
 } = require("./track-series.cjs");
+const { validateClaudeHtmlSlides } = require("./build-series-non-ppt-assets.cjs");
 
 const REPO_ROOT = path.resolve(__dirname, "../..");
 const DEFAULT_TRACKER_PATH = path.join(__dirname, "series-tracker.json");
@@ -70,6 +71,18 @@ function countPptSlides(pptxPath) {
   return listing.split(/\r?\n/).filter((name) => /^ppt\/slides\/slide\d+\.xml$/.test(name)).length;
 }
 
+function presentationSource(lessonId) {
+  const claudeRoot = path.join(REPO_ROOT, "artifacts", "vivasam", lessonId, "claude");
+  const htmlPath = path.join(claudeRoot, `${lessonId}-slides.html`);
+  if (fs.existsSync(htmlPath)) {
+    const { slideCount } = validateClaudeHtmlSlides(htmlPath);
+    return { format: "html", absolutePath: htmlPath, trackedPath: `${lessonId}-slides.html`, slideCount };
+  }
+  const pptxPath = path.join(claudeRoot, `${lessonId}.pptx`);
+  ensure(fs.existsSync(pptxPath), `${lessonId} Claude HTML/PPTX가 없습니다.`);
+  return { format: "pptx", absolutePath: pptxPath, trackedPath: `${lessonId}.pptx`, slideCount: countPptSlides(pptxPath) };
+}
+
 function applyVerificationToTracker(sourceTracker, verification, now = new Date().toISOString()) {
   validateVerification(verification);
   ensure(Number.isFinite(Date.parse(now)), "기록 시각이 ISO 시각이 아닙니다.");
@@ -92,7 +105,9 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
       bundle.ppt = {
         ...bundle.ppt,
         status: "awaiting-claude",
+        format: "html",
         pptxPath: "",
+        htmlPath: "",
         slideCount: null,
         intakeReportPath: "",
         renderedPdfPath: "",
@@ -122,8 +137,13 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
       };
       continue;
     }
-    const pptxAbsolutePath = path.join(REPO_ROOT, "artifacts", "vivasam", lessonId, "claude", `${lessonId}.pptx`);
-    ensure(fs.existsSync(pptxAbsolutePath), `${lessonId} 수령 PPTX가 없습니다.`);
+    const presentation = presentationSource(lessonId);
+    const productionStillMatches = (
+      bundle.eduitit.productionStatus === "deployed"
+      && bundle.eduitit.anonymousAccessStatus === "production-passed"
+      && bundle.eduitit.digest === record.digest
+      && /^https:\/\//.test(bundle.eduitit.publicUrl || "")
+    );
     bundle.worksheet = {
       ...bundle.worksheet,
       status: "validated",
@@ -145,8 +165,10 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
     bundle.ppt = {
       ...bundle.ppt,
       status: "received",
-      pptxPath: `${artifactRoot}/claude/${lessonId}.pptx`,
-      slideCount: countPptSlides(pptxAbsolutePath),
+      format: presentation.format,
+      pptxPath: presentation.format === "pptx" ? `${artifactRoot}/claude/${presentation.trackedPath}` : "",
+      htmlPath: presentation.format === "html" ? `${artifactRoot}/claude/${presentation.trackedPath}` : "",
+      slideCount: presentation.slideCount,
       intakeReportPath: "",
       renderedPdfPath: "",
       slidesDirectory: "",
@@ -158,11 +180,11 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
       packagePath: `eduitit:edu_materials/static/edu_materials/lesson_bundles/${lessonId}`,
       digest: record.digest,
       localRecordStatus: "published",
-      localRecordId: record.localRecordId,
-      anonymousAccessStatus: "local-passed",
-      productionStatus: "not-deployed",
-      publicUrl: "",
-      validatedAt: now,
+      localRecordId: productionStillMatches ? bundle.eduitit.localRecordId : record.localRecordId,
+      anonymousAccessStatus: productionStillMatches ? "production-passed" : "local-passed",
+      productionStatus: productionStillMatches ? "deployed" : "not-deployed",
+      publicUrl: productionStillMatches ? bundle.eduitit.publicUrl : "",
+      validatedAt: productionStillMatches ? bundle.eduitit.validatedAt : now,
     };
     bundle.notes = (bundle.notes || []).filter((note) => !/(이전 Codex 제작|stale|다시 빌드|현재 source\.html 지문)/.test(note));
   }
@@ -171,8 +193,8 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
   tracker.history.push({
     at: now,
     sequence: null,
-    event: "PPT 수령분 산출물·Eduitit 로컬 공개 검증 완료",
-    detail: `수령된 PPTX ${verification.records.length}개를 기준으로 통합 활동지·수업 진행 안내·대표 이미지와 Eduitit 공개 패키지를 만들고 비로그인 접근을 검증했다. 나머지 슬롯은 PPTX 수령 대기로 되돌렸다.`,
+    event: "발표 화면 수령분 산출물·Eduitit 로컬 공개 검증 완료",
+    detail: `수령된 Claude HTML/PPTX ${verification.records.length}개를 기준으로 통합 활동지·수업 진행 안내·대표 이미지와 Eduitit 공개 패키지를 만들고 비로그인 접근을 검증했다. 나머지 슬롯은 발표 화면 수령 대기로 되돌렸다.`,
   });
   return tracker;
 }

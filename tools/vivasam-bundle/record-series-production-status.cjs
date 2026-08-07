@@ -120,8 +120,14 @@ async function verifyProductionHttp(publication, {
   const records = [];
   for (const record of [...publication.records].sort((a, b) => a.sequence - b.sequence)) {
     const manifest = packageManifest(record.lessonId);
+    const presentationMode = manifest.presentationMode || "pptx";
     const worksheetUrl = `${origin}/edu-materials/lesson-bundles/${record.lessonId}/download/${record.lessonId}-worksheet.pdf/`;
-    const pptUrl = `${origin}/edu-materials/lesson-bundles/${record.lessonId}/download/${record.lessonId}.pptx/`;
+    const pptUrl = presentationMode === "html"
+      ? `${origin}/edu-materials/lesson-bundles/${record.lessonId}/slides/`
+      : `${origin}/edu-materials/lesson-bundles/${record.lessonId}/download/${record.lessonId}.pptx/`;
+    const slideDeckUrl = presentationMode === "html"
+      ? `${origin}/edu-materials/lesson-bundles/${record.lessonId}/slides/deck/`
+      : "";
     const representativeAssetUrl = `${origin}/static/edu_materials/lesson_bundles/${record.lessonId}/${record.digest}/representative-image.png`;
     const urls = {
       detail: record.detailUrl,
@@ -139,6 +145,7 @@ async function verifyProductionHttp(publication, {
     const thumbnail = await getResponse(urls.thumbnail);
     const worksheet = await getResponse(urls.worksheet);
     const ppt = await getResponse(urls.ppt);
+    const slideDeck = slideDeckUrl ? await getResponse(slideDeckUrl) : null;
     const representative = await getResponse(urls.representativeAsset);
     const results = { detail, run, render, thumbnail, worksheet, ppt, representativeAsset: representative };
     for (const name of REQUIRED_STATUSES) ensureStatus(results[name], 200, `${record.lessonId} ${name}`);
@@ -156,7 +163,16 @@ async function verifyProductionHttp(publication, {
     ensure(cacheControl.includes("public"), `${record.lessonId} 렌더 공개 캐시 헤더가 없습니다.`);
     ensure((thumbnail.response.headers.get("content-type") || "").startsWith("image/"), `${record.lessonId} 썸네일이 이미지가 아닙니다.`);
     ensure((worksheet.response.headers.get("content-type") || "").includes("application/pdf"), `${record.lessonId} 활동지가 PDF가 아닙니다.`);
-    ensure((ppt.response.headers.get("content-type") || "").includes("presentationml.presentation"), `${record.lessonId} PPT가 PPTX가 아닙니다.`);
+    if (presentationMode === "html") {
+      ensure((ppt.response.headers.get("content-type") || "").includes("text/html"), `${record.lessonId} HTML 슬라이드 뷰어가 아닙니다.`);
+      ensure(slideDeck?.response.status === 200, `${record.lessonId} HTML 슬라이드 덱 상태가 200이 아닙니다.`);
+      ensure((slideDeck.response.headers.get("content-type") || "").includes("text/html"), `${record.lessonId} HTML 슬라이드 덱 응답이 아닙니다.`);
+      const deckCsp = slideDeck.response.headers.get("content-security-policy") || "";
+      ensure(deckCsp.includes("sandbox allow-scripts"), `${record.lessonId} HTML 슬라이드 샌드박스가 없습니다.`);
+      ensure(deckCsp.includes("connect-src 'none'"), `${record.lessonId} HTML 슬라이드 외부 연결 차단이 없습니다.`);
+    } else {
+      ensure((ppt.response.headers.get("content-type") || "").includes("presentationml.presentation"), `${record.lessonId} PPT가 PPTX가 아닙니다.`);
+    }
     ensure((representative.response.headers.get("content-type") || "").startsWith("image/"), `${record.lessonId} 대표 자산이 이미지가 아닙니다.`);
     ensure(worksheet.body.subarray(0, 4).toString("ascii") === "%PDF", `${record.lessonId} 활동지 PDF 시그니처가 잘못되었습니다.`);
 
@@ -183,6 +199,9 @@ async function verifyProductionHttp(publication, {
       runUrl: record.runUrl,
       worksheetUrl,
       pptUrl,
+      presentationMode,
+      presentationUrl: pptUrl,
+      slideDeckUrl,
       representativeAssetUrl,
       statuses: Object.fromEntries(REQUIRED_STATUSES.map((name) => [name, results[name].response.status])),
       etag304: true,

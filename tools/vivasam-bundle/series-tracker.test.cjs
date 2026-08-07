@@ -35,7 +35,7 @@ test("원장은 30개 PPT와 PPT당 통합 활동지 1개 계약을 고정한다
   assert.equal(tracker.contract.pptAuthor, "Claude");
 });
 
-test("1·2·3번은 PPT 수령 뒤 활동지와 비로그인 운영 공개를 완료한다", () => {
+test("1·2번은 운영 공개, 3번은 로컬 공개까지 추적한다", () => {
   const validated = validateTracker(tracker, { trackerPath });
   const summary = summarizeTracker(validated);
   const first = validated.bundles[0];
@@ -56,6 +56,7 @@ test("1·2·3번은 PPT 수령 뒤 활동지와 비로그인 운영 공개를 �
   assert.equal(summary.claudePptsReceived, 3);
   assert.equal(summary.claudePptsAwaiting, 27);
   assert.equal(summary.claudePptsValidated, 0);
+  assert.equal(summary.productionPublished, 2);
   assert.equal(summary.fullyCompleted, 0);
 });
 
@@ -104,6 +105,8 @@ test("운영 공개는 HTTPS URL과 비로그인 운영 검증 없이 기록할 
   assert.throws(() => validateTracker(broken, { trackerPath, checkArtifacts: false }), /비로그인 접근 검증/);
 
   const insecure = clone(tracker);
+  insecure.bundles[0].eduitit.productionStatus = "deployed";
+  insecure.bundles[0].eduitit.anonymousAccessStatus = "production-passed";
   insecure.bundles[0].eduitit.publicUrl = "http://eduitit.site/example";
   assert.throws(() => validateTracker(insecure, { trackerPath, checkArtifacts: false }), /HTTPS/);
 });
@@ -126,10 +129,10 @@ test("사람용 진행표에는 30개 슬롯과 1개 통합 활동지 계약이 
   const markdown = renderDashboard(validated);
   assert.equal((markdown.match(/^\| \d{2} \|/gm) || []).length, 30);
   assert.match(markdown, /PPT당 통합 활동지 1개/);
-  assert.match(markdown, /Claude는 PPTX만 제작/);
+  assert.match(markdown, /Claude는 발표 화면\(HTML 우선, 기존 PPTX 호환\)만 제작/);
   assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 3 \| 30/);
-  assert.match(markdown, /Claude PPTX 수령/);
-  assert.match(markdown, /Claude PPTX 수령 대기/);
+  assert.match(markdown, /Claude HTML\/PPTX 수령/);
+  assert.match(markdown, /Claude HTML\/PPTX 수령 대기/);
 });
 
 test("상태 갱신은 원장 이력과 사람용 진행표를 함께 남긴다", () => {

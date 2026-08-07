@@ -13,11 +13,13 @@
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
+  "presentationMode": "pptx",
   "sourceHtml": "source.html",
   "digest": "3d4cabf98fe2",
   "thumbnailAsset": "3d4cabf98fe2/representative-image.png",
   "worksheetAsset": "3d4cabf98fe2/g3s1-multiplication-groups-model-worksheet.png",
   "pptAsset": "3d4cabf98fe2/g3s1-multiplication-groups-model.pptx",
+  "slideHtmlAsset": "",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication",
   "downloadAssets": [
     "g3s1-multiplication-groups-model.pptx",

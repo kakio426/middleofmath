@@ -566,12 +566,18 @@ function buildLessonGuide(lesson) {
   ];
 }
 
-function buildPackageHtml({ lesson, model, digest, filenames, pptAvailable }) {
+function slideViewerUrl(lessonId) {
+  return `/edu-materials/lesson-bundles/${lessonId}/slides/`;
+}
+
+function buildPackageHtml({ lesson, model, digest, filenames, presentation }) {
   const palette = PALETTE_BY_DOMAIN[model.domain];
   const guide = buildLessonGuide(lesson);
   const practiceUrl = practiceUrlFor(lesson);
-  const pptBlock = pptAvailable
-    ? `<p>수업 화면 자료입니다.</p><a class="download" href="${downloadUrl(lesson.id, filenames.pptx)}">PPT 다운로드</a>`
+  const pptBlock = presentation?.format === "html"
+    ? `<p>브라우저에서 원래 디자인 그대로 넘겨 볼 수 있습니다.</p><a class="download" href="${slideViewerUrl(lesson.id)}">슬라이드 보기</a>`
+    : presentation?.format === "pptx"
+      ? `<p>수업 화면 자료입니다.</p><a class="download" href="${downloadUrl(lesson.id, filenames.pptx)}">PPT 다운로드</a>`
     : `<p class="pending">PPT는 준비되는 대로 올립니다.</p>`;
   return `<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(lesson.title)}</title>
@@ -592,6 +598,7 @@ function packageFilenames(lessonId) {
     worksheetPng: `${lessonId}-worksheet.png`,
     worksheetPdf: `${lessonId}-worksheet.pdf`,
     pptx: `${lessonId}.pptx`,
+    slidesHtml: `${lessonId}-slides.html`,
     representative: "representative-image.png",
     intent: "teaching-intent.md",
     answerKey: "teacher-answer-key.md",
@@ -605,6 +612,7 @@ function contentTypeFor(filename) {
   if (filename.endsWith(".svg")) return "image/svg+xml";
   if (filename.endsWith(".pdf")) return "application/pdf";
   if (filename.endsWith(".pptx")) return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+  if (filename.endsWith(".html")) return "text/html; charset=utf-8";
   if (filename.endsWith(".json")) return "application/json";
   return "text/markdown; charset=utf-8";
 }
@@ -614,8 +622,75 @@ function copyFile(source, destination) {
   fs.copyFileSync(source, destination);
 }
 
-function receivedSlideCountForLesson(lesson, { repoRoot = REPO_ROOT, pptAvailable = false } = {}) {
-  if (!pptAvailable) return lesson.slides.length;
+function htmlSlideStructure(html) {
+  const voidElements = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]);
+  const structuralHtml = html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<(script|style)\b([^>]*)>[\s\S]*?<\/\1\s*>/gi, "<$1$2></$1>");
+  const stack = [];
+  let deckCount = 0;
+  let slideMarkerCount = 0;
+  let directSlideCount = 0;
+  for (const match of structuralHtml.matchAll(/<(\/)?([a-z][a-z0-9-]*)\b([^>]*)>/gi)) {
+    const closing = Boolean(match[1]);
+    const tag = match[2].toLowerCase();
+    const source = match[0];
+    if (closing) {
+      const index = stack.findLastIndex((entry) => entry.tag === tag);
+      if (index >= 0) stack.splice(index);
+      continue;
+    }
+    const isDeck = /\sdata-eduitit-deck(?:\s|=|\/?>)/i.test(source);
+    const isSlide = /\sdata-slide(?:\s|=|\/?>)/i.test(source);
+    if (isDeck) deckCount += 1;
+    if (isSlide) {
+      slideMarkerCount += 1;
+      if (stack.at(-1)?.isDeck) directSlideCount += 1;
+    }
+    const selfClosing = /\/\s*>$/.test(source);
+    if (!selfClosing && !voidElements.has(tag)) stack.push({ tag, isDeck });
+  }
+  return { deckCount, slideMarkerCount, directSlideCount };
+}
+
+function validateClaudeHtmlSlides(htmlPath) {
+  ensure(fs.existsSync(htmlPath), `Claude HTML 슬라이드 파일이 없습니다: ${htmlPath}`);
+  const html = fs.readFileSync(htmlPath, "utf8");
+  ensure(Buffer.byteLength(html, "utf8") <= 12 * 1024 * 1024, "Claude HTML 슬라이드는 12MB 이하여야 합니다.");
+  ensure(/^\s*<!doctype html>/i.test(html), "Claude HTML 슬라이드는 완전한 HTML 문서여야 합니다.");
+  ensure(/<\/head\s*>/i.test(html) && /<\/body\s*>/i.test(html), "Claude HTML 슬라이드에는 head와 body 닫는 태그가 필요합니다.");
+  const structure = htmlSlideStructure(html);
+  ensure(structure.deckCount === 1, "Claude HTML에는 data-eduitit-deck 루트가 하나만 있어야 합니다.");
+  const slideCount = structure.directSlideCount;
+  ensure(slideCount > 0 && slideCount <= 60, "Claude HTML의 직접 자식 data-slide 개수가 1~60 범위가 아닙니다.");
+  ensure(structure.slideMarkerCount === slideCount, "Claude HTML의 모든 data-slide는 data-eduitit-deck의 직접 자식이어야 합니다.");
+  const size = html.match(/<meta[^>]+name=["']eduitit-slide-size["'][^>]+content=["'](\d{3,4})x(\d{3,4})["']/i);
+  ensure(size, "Claude HTML에 eduitit-slide-size 메타 정보가 없습니다.");
+  const width = Number(size[1]);
+  const height = Number(size[2]);
+  ensure(width >= 640 && width <= 3840 && height >= 360 && height <= 2160 && Math.abs(width / height - 16 / 9) <= 0.002, "Claude HTML 슬라이드 캔버스는 16:9여야 합니다.");
+  for (const forbidden of [/<iframe/i, /<object/i, /<embed/i, /<applet/i, /<base/i, /<form/i, /<meta[^>]+http-equiv=["']?refresh/i, /(?:src|href|srcset|poster|action|formaction|xlink:href)\s*=\s*["']\s*(?:https?:|\/\/|javascript:)/i, /url\(\s*["']?\s*(?:https?:|\/\/)/i, /@import\s/i, /data:image\/svg\+xml/i, /data:text\/html/i]) {
+    ensure(!forbidden.test(html), `Claude HTML에 허용하지 않는 외부·능동 콘텐츠가 있습니다: ${forbidden}`);
+  }
+  return { htmlPath, slideCount, width, height };
+}
+
+function receivedPresentationForLesson(lesson, { repoRoot = REPO_ROOT } = {}) {
+  const filenames = packageFilenames(lesson.id);
+  const claudeRoot = path.join(repoRoot, "artifacts", "vivasam", lesson.id, "claude");
+  const htmlPath = path.join(claudeRoot, filenames.slidesHtml);
+  if (fs.existsSync(htmlPath)) {
+    const validated = validateClaudeHtmlSlides(htmlPath);
+    return { format: "html", sourcePath: htmlPath, filename: filenames.slidesHtml, slideCount: validated.slideCount };
+  }
+  const pptxPath = path.join(claudeRoot, filenames.pptx);
+  if (fs.existsSync(pptxPath)) return { format: "pptx", sourcePath: pptxPath, filename: filenames.pptx, slideCount: null };
+  return null;
+}
+
+function receivedSlideCountForLesson(lesson, { repoRoot = REPO_ROOT, presentation = null } = {}) {
+  if (!presentation) return lesson.slides.length;
+  if (presentation.format === "html") return presentation.slideCount;
   const trackerPath = path.join(repoRoot, "tools", "vivasam-bundle", "series-tracker.json");
   const tracker = JSON.parse(fs.readFileSync(trackerPath, "utf8"));
   const bundle = tracker.bundles.find((item) => item.sequence === lesson.sequence);
@@ -705,9 +780,9 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
   const handoffRoot = path.join(lessonRoot, "content-handoff");
   const handoffMarkdownPath = path.join(handoffRoot, filenames.handoffMarkdown);
   const handoffJsonPath = path.join(handoffRoot, filenames.handoffJson);
-  const receivedPptxPath = path.join(lessonRoot, "claude", filenames.pptx);
-  const pptAvailable = fs.existsSync(receivedPptxPath);
-  const publishedSlideCount = receivedSlideCountForLesson(lesson, { repoRoot, pptAvailable });
+  const presentation = receivedPresentationForLesson(lesson, { repoRoot });
+  const presentationAvailable = Boolean(presentation);
+  const publishedSlideCount = receivedSlideCountForLesson(lesson, { repoRoot, presentation });
 
   // PDF is only a print wrapper around the untouched whole-page image.
   // Never place generated text, SVG, HTML, or another raster layer over it.
@@ -722,7 +797,7 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
     [filenames.worksheetPdf]: worksheetPdfPath,
     [filenames.representative]: representativeImagePath,
   };
-  if (pptAvailable) sourceFiles[filenames.pptx] = receivedPptxPath;
+  if (presentationAvailable) sourceFiles[presentation.filename] = presentation.sourcePath;
   for (const [name, filePath] of Object.entries(sourceFiles)) ensure(fs.existsSync(filePath), `${lesson.id}의 ${name} 파일이 없습니다.`);
 
   const digestInput = Object.entries(sourceFiles).sort(([a], [b]) => a.localeCompare(b)).map(([name, filePath]) => `${name}:${fileHash(filePath)}`).join("\n");
@@ -740,17 +815,17 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
       contentType: contentTypeFor(filename),
       role: filename === filenames.representative
         ? "thumbnail"
-        : filename === filenames.pptx
+        : [filenames.pptx, filenames.slidesHtml].includes(filename)
           ? "presentation"
           : "worksheet",
     };
   });
   const downloadAssets = [
-    ...(pptAvailable ? [filenames.pptx] : []),
+    ...(presentation?.format === "pptx" ? [filenames.pptx] : []),
     filenames.worksheetPdf,
   ];
   const manifest = {
-    schemaVersion: 3,
+    schemaVersion: presentation?.format === "html" ? 4 : 3,
     seriesId: "vivasam-2026-middleofmath-30",
     generatedAt: FIXED_BUILD_TIME,
     lessonId: lesson.id,
@@ -763,19 +838,21 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
     durationMinutes: lesson.durationMinutes,
     slideCount: publishedSlideCount,
     worksheetCount: 1,
-    pptStatus: pptAvailable ? "available" : "awaiting-claude",
+    pptStatus: presentationAvailable ? "available" : "awaiting-claude",
+    presentationMode: presentation?.format || "pptx",
     sourceHtml: "source.html",
     digest,
     thumbnailAsset: `${digest}/${filenames.representative}`,
     worksheetAsset: `${digest}/${filenames.worksheetPng}`,
-    pptAsset: pptAvailable ? `${digest}/${filenames.pptx}` : "",
+    pptAsset: presentation?.format === "pptx" ? `${digest}/${filenames.pptx}` : "",
+    slideHtmlAsset: presentation?.format === "html" ? `${digest}/${filenames.slidesHtml}` : "",
     practiceUrl: practiceUrlFor(lesson),
     downloadAssets,
     assets,
   };
   const packageHtmlPath = path.join(webPackageRoot, "source.html");
   const packageManifestPath = path.join(webPackageRoot, "manifest.json");
-  writeUtf8(packageHtmlPath, buildPackageHtml({ lesson, model, digest, filenames, pptAvailable }));
+  writeUtf8(packageHtmlPath, buildPackageHtml({ lesson, model, digest, filenames, presentation }));
   writeUtf8(packageManifestPath, stableJson(manifest));
 
   const supportManifest = {
@@ -909,8 +986,8 @@ async function buildReviewContactSheets(items, { repoRoot = REPO_ROOT } = {}) {
   return { reviewRoot, worksheetSheet, representativeSheet, indexPath };
 }
 
-function hasReceivedPptx(repoRoot, lesson) {
-  return fs.existsSync(path.join(repoRoot, "artifacts", "vivasam", lesson.id, "claude", `${lesson.id}.pptx`));
+function hasReceivedPresentation(repoRoot, lesson) {
+  return Boolean(receivedPresentationForLesson(lesson, { repoRoot }));
 }
 
 function removePrematureGeneratedAssets(repoRoot, lessons) {
@@ -926,7 +1003,7 @@ function removePrematureGeneratedAssets(repoRoot, lessons) {
 
 async function buildSeriesAssets({ repoRoot = REPO_ROOT, eduititRoot = DEFAULT_EDUITIT_ROOT, syncEduitit = true, availableOnly = false } = {}) {
   const allLessons = loadSeriesLessons({ repoRoot });
-  const lessons = availableOnly ? allLessons.filter((lesson) => hasReceivedPptx(repoRoot, lesson)) : allLessons;
+  const lessons = availableOnly ? allLessons.filter((lesson) => hasReceivedPresentation(repoRoot, lesson)) : allLessons;
   ensure(lessons.length > 0, "공개할 PPT가 있는 차시가 없습니다.");
   if (availableOnly) {
     const receivedIds = new Set(lessons.map((lesson) => lesson.id));
@@ -951,6 +1028,7 @@ async function buildSeriesAssets({ repoRoot = REPO_ROOT, eduititRoot = DEFAULT_E
       unit: item.lesson.unit,
       digest: item.digest,
       pptStatus: item.manifest.pptStatus,
+      presentationMode: item.manifest.presentationMode || "pptx",
       packageManifest: `${item.lesson.id}/manifest.json`,
     })),
   };
@@ -967,15 +1045,24 @@ async function buildSeriesAssets({ repoRoot = REPO_ROOT, eduititRoot = DEFAULT_E
 
 function validatePackage(item) {
   const manifest = JSON.parse(fs.readFileSync(item.packageManifestPath, "utf8"));
-  ensure(manifest.schemaVersion === 3, `${item.lesson.id} 패키지 스키마가 최신이 아닙니다.`);
+  ensure([3, 4].includes(manifest.schemaVersion), `${item.lesson.id} 패키지 스키마가 최신이 아닙니다.`);
   ensure(manifest.lessonId === item.lesson.id, `${item.lesson.id} 패키지 lessonId가 다릅니다.`);
   ensure(manifest.digest === item.digest, `${item.lesson.id} 패키지 digest가 다릅니다.`);
   ensure(manifest.worksheetCount === 1, `${item.lesson.id} 패키지 활동지 수가 1이 아닙니다.`);
   ensure(["available", "awaiting-claude"].includes(manifest.pptStatus), `${item.lesson.id} PPT 상태가 잘못되었습니다.`);
   const pptAssets = manifest.assets.filter((asset) => asset.path.endsWith(".pptx"));
+  const htmlSlideAssets = manifest.assets.filter((asset) => asset.path.endsWith("-slides.html"));
   const pptAvailable = manifest.pptStatus === "available";
-  ensure(pptAssets.length === (pptAvailable ? 1 : 0), `${item.lesson.id} PPT 파일과 상태가 다릅니다.`);
-  ensure(manifest.downloadAssets.length === (pptAvailable ? 2 : 1), `${item.lesson.id} 공개 다운로드 수가 잘못되었습니다.`);
+  const presentationMode = manifest.presentationMode || "pptx";
+  ensure(["pptx", "html"].includes(presentationMode), `${item.lesson.id} 발표 자료 형식이 잘못되었습니다.`);
+  ensure(pptAssets.length === (pptAvailable && presentationMode === "pptx" ? 1 : 0), `${item.lesson.id} PPT 파일과 상태가 다릅니다.`);
+  ensure(htmlSlideAssets.length === (pptAvailable && presentationMode === "html" ? 1 : 0), `${item.lesson.id} HTML 슬라이드 파일과 상태가 다릅니다.`);
+  ensure(manifest.downloadAssets.length === (pptAvailable && presentationMode === "pptx" ? 2 : 1), `${item.lesson.id} 공개 다운로드 수가 잘못되었습니다.`);
+  if (presentationMode === "html") {
+    ensure(manifest.schemaVersion === 4, `${item.lesson.id} HTML 슬라이드 패키지는 스키마 4여야 합니다.`);
+    ensure(manifest.slideHtmlAsset === `${manifest.digest}/${item.lesson.id}-slides.html`, `${item.lesson.id} HTML 슬라이드 자산 경로가 잘못되었습니다.`);
+    validateClaudeHtmlSlides(path.join(item.packageRoot, manifest.slideHtmlAsset));
+  }
   ensure(/^https:\/\/middle-of-math-student\.vercel\.app\/\?practice=g3s[12]-[a-z-]+$/.test(manifest.practiceUrl), `${item.lesson.id} 관련 문제 링크가 잘못되었습니다.`);
   ensure(manifest.assets.every((asset) => !/\.(?:md|json|svg)$/i.test(asset.path)), `${item.lesson.id} 공개 패키지에 내부 자료가 섞였습니다.`);
   const expectedFiles = ["manifest.json", "source.html", ...manifest.assets.map((asset) => asset.path)].sort();
@@ -994,11 +1081,12 @@ function validatePackage(item) {
   ensure(html.includes(`href="${manifest.practiceUrl}"`), `${item.lesson.id} 공개 페이지에 관련 문제 링크가 없습니다.`);
   for (const forbidden of ["비바샘", "개인정보", "Claude", "교사용 정답", "수업 설계 의도", "슬라이드별 내용"]) ensure(!html.includes(forbidden), `${item.lesson.id} 공개 페이지에 금지 문구가 있습니다: ${forbidden}`);
   for (const filename of manifest.downloadAssets) ensure(html.includes(downloadUrl(item.lesson.id, filename)), `${item.lesson.id} 패키지에 ${filename} 다운로드 링크가 없습니다.`);
+  if (presentationMode === "html") ensure(html.includes(slideViewerUrl(item.lesson.id)), `${item.lesson.id} 패키지에 HTML 슬라이드 보기 링크가 없습니다.`);
 }
 
 async function validateSeriesArtifacts({ repoRoot = REPO_ROOT, availableOnly = false } = {}) {
   const allLessons = loadSeriesLessons({ repoRoot });
-  const lessons = availableOnly ? allLessons.filter((lesson) => hasReceivedPptx(repoRoot, lesson)) : allLessons;
+  const lessons = availableOnly ? allLessons.filter((lesson) => hasReceivedPresentation(repoRoot, lesson)) : allLessons;
   const items = [];
   for (const lesson of lessons) {
     const lessonRoot = path.join(repoRoot, "artifacts", "vivasam", lesson.id);
@@ -1091,6 +1179,8 @@ module.exports = {
   buildWorksheetModel,
   loadSeriesLessons,
   renderRepresentativeSvg,
+  receivedPresentationForLesson,
+  validateClaudeHtmlSlides,
   validateWorksheetImagegenSource,
   validateSeriesArtifacts,
   wrapRepresentativeTitle,
