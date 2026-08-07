@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(14);
+select plan(15);
 
 select is(
   (
@@ -33,7 +33,7 @@ select results_eq(
     from public.diagnosis_sets
     where set_key = 'grade3-semester2' and version = '2.2.0'$$,
   $$values (
-      '0a07f0c677fdfcd396eddf07e612c6037fa2f6d94c8df6b97e3fa6ece30e8422'::text,
+      'f744d7e15bbbf7cddd07a9d574d1cb974f390775dcebf1f09446985dc554288e'::text,
       true
     )$$,
   'the v2.2.0 database checksum is pinned and synchronized into the manifest'
@@ -138,15 +138,18 @@ select is(
 );
 
 -- 내용 검수에서 확정한 수정이 발행본에 실제로 들어갔는지 확인한다.
--- 앞의 두 항목은 지문이 정답을 미리 말하던 것을 없앤 자리다.
+-- 앞의 두 항목은 지문이 정답을 미리 말하던 것을 없앤 자리다. 선택지는 ID 가
+-- 아니라 라벨로 확인한다. ID 는 2.1.0 발행으로 고정되어 옛 값을 이름으로
+-- 유지하므로, ID 만 보면 무엇이 고쳐졌는지 알 수 없다.
 select results_eq(
   $$select
       (judgment -> 'context') is null,
       judgment ->> 'context',
       judgment -> 'visual' ->> 'kind',
       (
-        select array_agg(choice ->> 'id' order by choice ->> 'id')
-        from jsonb_array_elements(judgment -> 'choices') choice
+        select array_agg(choice ->> 'label' order by ord)
+        from jsonb_array_elements(judgment -> 'choices')
+             with ordinality as ordered(choice, ord)
       )
     from public.diagnosis_sets diagnosis
     cross join jsonb_array_elements(diagnosis.content -> 'judgments') judgment
@@ -157,21 +160,44 @@ select results_eq(
       )
     order by judgment ->> 'id'$$,
   $$values
-      (true, null::text, 'circle'::text, array['10cm', '5cm', 'opening-varies']),
-      (true, null::text, 'none'::text, array['21', '3-boxes', '6']),
+      (true, null::text, 'circle'::text, array['5cm', '10cm', '그릴 때마다 달라져요']),
+      (true, null::text, 'none'::text, array['6개', '3개', '21개']),
       (
         false,
         '쿠키 35개를 접시 5개에 똑같이 나누어 놓았어요.'::text,
         'division-groups'::text,
-        array['35-div-5', '35-div-5-wrong', '35-minus-5']
+        array['35÷5=7', '35÷5=5', '35-5=30']
       ),
       (
         false,
         '동물 그림을 종류별로 나누어 세어 보세요.'::text,
         'item-collection'::text,
-        array['2-cats-counted', '4-rabbits', '7-all-animals']
+        array['2마리', '3마리', '7마리']
       )$$,
   'the reviewed content fixes reached the published v2.2.0 payload'
+);
+
+-- 2.1.0 의 선택지 ID 는 하나도 사라지면 안 된다. 트리거가 막아 주지만,
+-- 막혔다는 사실이 아니라 무엇을 지키는지가 이 계약의 내용이다.
+select is(
+  (
+    select count(*)
+    from public.diagnosis_sets old
+    cross join jsonb_array_elements(old.content -> 'judgments') old_judgment
+    cross join jsonb_array_elements(old_judgment -> 'choices') old_choice
+    where old.set_key = 'grade3-semester2' and old.version = '2.1.0'
+      and not exists (
+        select 1
+        from public.diagnosis_sets fresh
+        cross join jsonb_array_elements(fresh.content -> 'judgments') new_judgment
+        cross join jsonb_array_elements(new_judgment -> 'choices') new_choice
+        where fresh.set_key = 'grade3-semester2' and fresh.version = '2.2.0'
+          and new_judgment ->> 'id' = old_judgment ->> 'id'
+          and new_choice ->> 'id' = old_choice ->> 'id'
+      )
+  ),
+  0::bigint,
+  'v2.2.0 carries every stable choice id from v2.1.0'
 );
 
 select throws_ok(

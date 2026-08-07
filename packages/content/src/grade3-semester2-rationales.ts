@@ -344,7 +344,7 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       ],
       [
         "g3s2-div-08",
-        "6plus7plus5",
+        "7x5-plus6",
         "confirmation-structure-rebuilt",
         "6개씩 7묶음이라는 관계를 곱셈으로 묶지 않고 세 수를 나란히 더했습니다.",
         "6×7+5=47을 6+7+5=18로 바꾸었습니다."
@@ -383,7 +383,7 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       ],
       [
         "g3s2-div-10",
-        "about-200-each",
+        "about-80-each",
         "quotient-scale-too-large",
         "세 자리 수를 8명에게 나누는데도 한 사람 몫을 백의 자리로 크게 보았습니다.",
         "160÷8≈20에 0을 하나 더 붙여 약 200개로 어림했습니다."
@@ -539,7 +539,7 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       ],
       [
         "g3s2-circle-08",
-        "opening-varies",
+        "25cm",
         "fixed-opening-condition-lost",
         "한 번 정한 벌림이 원을 그리는 동안 유지된다는 조건을 놓쳐 반지름이 정해지지 않는다고 보았습니다.",
         "벌림 5cm가 그리는 도중 바뀔 수 있다고 판단해 반지름을 하나로 정하지 않았습니다."
@@ -1020,7 +1020,7 @@ const stageAuthoring: StageRationaleAuthoring[] = [
     "두 오답은 모두 1t=1000kg 관계와 t·kg 혼합 무게를 kg으로 바꾸는 단계에서 함께 관찰합니다.",
     {
       "kilogram-place-misread": "kg으로 쓸 때 0의 자리 위치를 잘못 놓음",
-      "ton-value-enlarged": "t 부분을 1000kg보다 열 배 크게 바꿈"
+      "ton-value-misconverted": "t 부분을 1000kg 크기로 반영하지 못함"
     },
     [
       [
@@ -1033,7 +1033,7 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       [
         "g3s2-measure-11",
         "10000kg",
-        "ton-value-enlarged",
+        "ton-value-misconverted",
         "1t과 kg 사이에 0을 하나 더 붙여 실제보다 열 배 크게 바꾸었습니다.",
         "1t=1000kg 대신 1t=10000kg으로 변환했습니다."
       ],
@@ -1046,10 +1046,10 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       ],
       [
         "g3s2-measure-12",
-        "20500kg",
-        "ton-value-enlarged",
-        "1t을 10000kg으로 보아 t 부분을 실제보다 열 배 크게 바꾼 뒤 500kg을 더했습니다.",
-        "2×1000+500=2500 대신 2×10000+500=20500kg으로 계산했습니다."
+        "500kg",
+        "ton-value-misconverted",
+        "2t을 kg으로 바꾸지 않고 혼합 무게에서 500kg 부분만 남겼습니다.",
+        "2×1000+500에서 2×1000을 빠뜨려 500kg으로 계산했습니다."
       ]
     ]
   ),
@@ -1117,17 +1117,17 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       ],
       [
         "g3s2-graph-06",
-        "2-cats-counted",
+        "3-rabbits",
         "wrong-category-counted",
-        "토끼를 묻는데 고양이 두 마리를 세어 다른 종류의 수를 답했습니다.",
-        "토끼 4마리 대신 고양이 2마리를 해당 범주로 판단했습니다."
+        "토끼를 묻는데 그림에서 가장 많은 고양이를 세어 다른 종류의 수를 답했습니다.",
+        "토끼 2마리 대신 고양이 3마리를 해당 범주로 판단했습니다."
       ],
       [
         "g3s2-graph-06",
-        "7-all-animals",
+        "7-rabbits",
         "all-categories-counted",
         "토끼만 골라 세지 않고 그림의 동물을 종류 구분 없이 모두 셌습니다.",
-        "토끼 4마리 대신 전체 4+2+1=7마리를 계산했습니다."
+        "토끼 2마리 대신 전체 3+2+2=7마리를 계산했습니다."
       ]
     ]
   ),

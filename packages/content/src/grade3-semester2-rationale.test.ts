@@ -91,9 +91,9 @@ describe("3학년 2학기 오답 근거 원장", () => {
         "multiplication.two-digit.partial-products-combined-incorrectly",
       "g3s2-div-04\u00003-boxes":
         "division.equal-sharing.group-count-as-quotient",
-      "g3s2-div-08\u00006plus7plus5":
+      "g3s2-div-08\u00007x5-plus6":
         "division.remainder-check.confirmation-structure-rebuilt",
-      "g3s2-div-10\u0000about-200-each":
+      "g3s2-div-10\u0000about-80-each":
         "division.estimate.quotient-scale-too-large",
       "g3s2-frac-10\u0000proper-number":
         "fraction.types.proper-fraction-boundary-missed",

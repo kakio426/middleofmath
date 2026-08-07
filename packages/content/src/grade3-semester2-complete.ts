@@ -367,7 +367,9 @@ const addedJudgments: Judgment[] = [
     id: "g3s2-div-08", unitId: "division", learnerStageId: "division.remainder-check",
     curriculumAnchorIds: ["[4수01-05]", "[4수01-06]"], prompt: "47개를 6개씩 묶으면 7묶음이 되고 5개가 남아요. 알맞은 식은 무엇일까요?",
     visual: { kind: "division-groups", total: 47, groups: 7 }, signalId: "division.remainder-check",
-    answers: [{ id: "6x7-plus5", label: "6×7+5=47" }, { id: "6x5-plus7", label: "6×5+7=37" }, { id: "6plus7plus5", label: "6+7+5=18" }]
+    // 선택지 ID 는 2.1.0 발행으로 고정됐다. 학생 응답이 이 ID 를 참조하므로
+    // 값을 바꿔도 ID 는 옛 값을 이름으로 유지한다. 라벨이 실제 선택지다.
+    answers: [{ id: "6x7-plus5", label: "6×7+5=47" }, { id: "6x5-plus7", label: "6×5+7=37" }, { id: "7x5-plus6", label: "6+7+5=18" }]
   }),
   makeJudgment({
     id: "g3s2-div-09", unitId: "division", learnerStageId: "division.estimate",
@@ -380,7 +382,9 @@ const addedJudgments: Judgment[] = [
     curriculumAnchorIds: ["[4수01-08]"], context: "구슬 158개를 8명에게 비슷하게 나누려고 해요.",
     prompt: "한 사람에게 몇 개쯤 돌아갈까요?", visual: { kind: "none" },
     signalId: "division.estimate",
-    answers: [{ id: "about-20-each", label: "20개쯤" }, { id: "about-2-each", label: "2개쯤" }, { id: "about-200-each", label: "200개쯤" }]
+    // 선택지 ID 는 2.1.0 발행으로 고정됐다. 학생 응답이 이 ID 를 참조하므로
+    // 값을 바꿔도 ID 는 옛 값을 이름으로 유지한다. 라벨이 실제 선택지다.
+    answers: [{ id: "about-20-each", label: "20개쯤" }, { id: "about-2-each", label: "2개쯤" }, { id: "about-80-each", label: "200개쯤" }]
   }),
   makeJudgment({
     id: "g3s2-circle-03", unitId: "circle", learnerStageId: "circle.parts",
@@ -419,7 +423,9 @@ const addedJudgments: Judgment[] = [
     id: "g3s2-circle-08", unitId: "circle", learnerStageId: "circle.compass",
     curriculumAnchorIds: ["[4수03-07]"], prompt: "컴퍼스를 5cm 벌려 그린 원의 반지름은 얼마일까요?",
     visual: { kind: "circle", mode: "compass-radius", radiusValue: 5 }, signalId: "circle.compass",
-    answers: [{ id: "5cm", label: "5cm" }, { id: "10cm", label: "10cm" }, { id: "opening-varies", label: "그릴 때마다 달라져요" }]
+    // 선택지 ID 는 2.1.0 발행으로 고정됐다. 학생 응답이 이 ID 를 참조하므로
+    // 값을 바꿔도 ID 는 옛 값을 이름으로 유지한다. 라벨이 실제 선택지다.
+    answers: [{ id: "5cm", label: "5cm" }, { id: "10cm", label: "10cm" }, { id: "25cm", label: "그릴 때마다 달라져요" }]
   })
 ];
 
@@ -641,7 +647,7 @@ const fractionMeasurementGraphJudgments: Judgment[] = [
       targetUnit: "kg"
     }, interactionType: "measurement",
     signalId: "measurement.ton",
-    answers: [{ id: "2500kg", label: "2500kg" }, { id: "2050kg", label: "2050kg" }, { id: "20500kg", label: "20500kg" }]
+    answers: [{ id: "2500kg", label: "2500kg" }, { id: "2050kg", label: "2050kg" }, { id: "500kg", label: "500kg" }]
   }),
   makeJudgment({
     id: "g3s2-measure-13", unitId: "measurement", learnerStageId: "measurement.weight-arithmetic",
@@ -704,11 +710,11 @@ const fractionMeasurementGraphJudgments: Judgment[] = [
     prompt: "토끼는 몇 마리일까요?",
     visual: {
       kind: "item-collection",
-      ariaLabel: "토끼, 고양이, 토끼, 강아지, 토끼, 고양이, 토끼",
-      items: ["🐰", "🐱", "🐰", "🐶", "🐰", "🐱", "🐰"]
+      ariaLabel: "고양이, 토끼, 강아지, 고양이, 토끼, 강아지, 고양이",
+      items: ["🐱", "🐰", "🐶", "🐱", "🐰", "🐶", "🐱"]
     },
     signalId: "pictograph.classify-table",
-    answers: [{ id: "4-rabbits", label: "4마리" }, { id: "2-cats-counted", label: "2마리" }, { id: "7-all-animals", label: "7마리" }]
+    answers: [{ id: "2-rabbits", label: "2마리" }, { id: "3-rabbits", label: "3마리" }, { id: "7-rabbits", label: "7마리" }]
   }),
   makeJudgment({
     id: "g3s2-graph-07", unitId: "pictograph", learnerStageId: "pictograph.convert",
@@ -883,7 +889,7 @@ const diagnosis: DiagnosisSet = {
   manifest: {
     ...grade3Semester2Diagnosis.manifest,
     version: "2.2.0",
-    checksum: "5b8648f0ec6f7d963d8e47d4cac70299473daf7c077770423040428dec952713",
+    checksum: "afe6e080570e79438ec70ddcfe676ed78bc918ebd1acf5b48ab1fa46012408a2",
     estimatedMinutes: 32,
     status: "review"
   },
