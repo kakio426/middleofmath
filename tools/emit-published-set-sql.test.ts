@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
-  generateGrade3Semester2PublicationV210Sql,
+  generateGrade3Semester2PublicationV220Sql,
   generateGrade4Semester1PublicationV140Sql
 } from "./emit-published-set-sql";
 
@@ -17,6 +17,10 @@ const v140MigrationPath = fileURLToPath(new URL(
 ));
 const g3s2V210MigrationPath = fileURLToPath(new URL(
   "../supabase/migrations/202608060005_grade3_semester2_publication_v210.sql",
+  import.meta.url
+));
+const g3s2V220MigrationPath = fileURLToPath(new URL(
+  "../supabase/migrations/202608070001_grade3_semester2_publication_v220.sql",
   import.meta.url
 ));
 
@@ -39,19 +43,32 @@ describe("grade 4 semester 1 publication SQL generator", () => {
 });
 
 describe("grade 3 semester 2 publication SQL generator", () => {
-  it("keeps the 2.1.0 publication migration in sync", async () => {
-    const generated = generateGrade3Semester2PublicationV210Sql();
-    const committed = await readFile(g3s2V210MigrationPath, "utf8");
+  it("keeps the 2.2.0 publication migration in sync", async () => {
+    const generated = generateGrade3Semester2PublicationV220Sql();
+    const committed = await readFile(g3s2V220MigrationPath, "utf8");
     expect(committed).toBe(generated);
   });
 
-  it("publishes the full six-unit set without touching 1.0.0", () => {
-    const generated = generateGrade3Semester2PublicationV210Sql();
+  // 2.1.0 은 staging 에 발행된 뒤 고칠 수 없다. 검수 수정은 2.2.0 으로만
+  // 나가고, 이 원장은 바이트 그대로 남아야 한다.
+  it("keeps the immutable 2.1.0 publication ledger byte-for-byte", async () => {
+    const committed = await readFile(g3s2V210MigrationPath, "utf8");
+    expect(createHash("sha256").update(committed).digest("hex")).toBe(
+      "cfef33126e278334063c7d3b6057f8db2d573dce185548dfc5457eba9b5683ce"
+    );
+    expect(committed).toContain("'grade3-semester2'");
+    expect(committed).toContain("'2.1.0'");
+  });
+
+  it("publishes the full six-unit set without touching 1.0.0 or 2.1.0", () => {
+    const generated = generateGrade3Semester2PublicationV220Sql();
     expect(generated).toContain("'grade3-semester2'");
-    expect(generated).toContain("'2.1.0'");
+    expect(generated).toContain("'2.2.0'");
     expect(generated).toContain("6개 단원 · 32개 학습 단계 · 64개 진단 판단");
-    // 1.0.0 은 배정 이력이 걸린 불변 발행본이라 이 마이그레이션이 건드리면 안 된다.
+    // 1.0.0 과 2.1.0 은 배정·응답 이력이 걸린 불변 발행본이라
+    // 이 마이그레이션이 건드리면 안 된다.
     expect(generated).not.toContain("'1.0.0'");
+    expect(generated).not.toContain("'2.1.0'");
     expect(generated).not.toContain("update public.diagnosis_sets");
     expect(generated).not.toContain("delete from public.diagnosis_sets");
   });
