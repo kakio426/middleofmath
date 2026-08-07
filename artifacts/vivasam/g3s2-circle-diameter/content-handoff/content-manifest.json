@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-circle-diameter",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5536,
+      "sha256": "cc718c1232cd9a5b99169b0287d6151dbcfe5087a1f1982fdc11da11a398dc78"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4225,
+      "sha256": "525f977678521ff37ecf9dd1d69178f56a5d97841593c1178322c5460cbdceb5"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-division-remainder-check",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5272,
+      "sha256": "befc69fa736f3fb5f2c269c43b682970a4faeda038374ff81a21b218c43582c6"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 3997,
+      "sha256": "0ebecd089f90ea77387213ae3871f7c94e81b67a439ceba1c62278232d814225"
+    }
+  ]
+}

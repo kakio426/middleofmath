@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-multiplication-place-value-context",
+  "sequence": 5,
+  "title": "상자 수를 자릿값으로 곱하기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "1. 곱셈",
+  "durationMinutes": 40,
+  "slideCount": 11,
+  "worksheetCount": 1,
+  "pptAuthor": "Claude",
+  "pptStatus": "awaiting-claude",
+  "sourceHtml": "source.html",
+  "digest": "8771910e3db3",
+  "thumbnailAsset": "8771910e3db3/representative-image.png",
+  "worksheetAsset": "8771910e3db3/g3s1-multiplication-place-value-context-worksheet.png",
+  "downloadAssets": [
+    "g3s1-multiplication-place-value-context-worksheet.pdf",
+    "g3s1-multiplication-place-value-context-worksheet.png",
+    "g3s1-multiplication-place-value-context-worksheet.svg",
+    "teaching-intent.md",
+    "teacher-answer-key.md",
+    "claude-ppt-content.md",
+    "claude-ppt-content.json"
+  ],
+  "assets": [
+    {
+      "path": "8771910e3db3/claude-ppt-content.json",
+      "bytes": 5541,
+      "sha256": "d9c3a93413fa1c790b62603f0028f6453cb079efc96744f795cde4eaafa91d41",
+      "contentType": "application/json",
+      "role": "content-handoff"
+    },
+    {
+      "path": "8771910e3db3/claude-ppt-content.md",
+      "bytes": 4256,
+      "sha256": "52b2dcf3149a2372f3fe2c942f299785991301e1b1f7b06ce2c4b18fa66719d5",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "content-handoff"
+    },
+    {
+      "path": "8771910e3db3/g3s1-multiplication-place-value-context-worksheet.pdf",
+      "bytes": 151728,
+      "sha256": "4d86160a5a745b71b2b69740589b8b1e10319c9349d7ee3848fd6141e08989a4",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "8771910e3db3/g3s1-multiplication-place-value-context-worksheet.png",
+      "bytes": 148973,
+      "sha256": "76676f8d2db4253b26e895586c4c143559c22b8a422973ca9955480e48438ea7",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "8771910e3db3/g3s1-multiplication-place-value-context-worksheet.svg",
+      "bytes": 14025,
+      "sha256": "e4c998ab27aa2aef7e2336ce2c24b7edad1084238291541ef36f58ac2ef00306",
+      "contentType": "image/svg+xml",
+      "role": "worksheet"
+    },
+    {
+      "path": "8771910e3db3/representative-image.png",
+      "bytes": 53352,
+      "sha256": "995042770ae404ef480887dc0a16a514e828d1f554085bd797d9006a3f197d96",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    },
+    {
+      "path": "8771910e3db3/teacher-answer-key.md",
+      "bytes": 2033,
+      "sha256": "716c4328ccc6e7e49f9c686022d21b6809c0256e4b593cbfbaad902c4f088a47",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    },
+    {
+      "path": "8771910e3db3/teaching-intent.md",
+      "bytes": 6482,
+      "sha256": "d17f3e5d72de2e6fecd8efdd389de66899a1fef432c50d70b62a6a60e764a4fb",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    }
+  ]
+}

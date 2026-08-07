@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-fraction-fix-partition",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 6679,
+      "sha256": "7d5045e72c4de2dc821478fc250b2f567cf4d3b61a35aeedda73f4bf61d1dc7e"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 5361,
+      "sha256": "6b11592ed080dceb3bb16ad77a18e3cb81cb1fd831092679ecf93d294772749a"
+    }
+  ]
+}

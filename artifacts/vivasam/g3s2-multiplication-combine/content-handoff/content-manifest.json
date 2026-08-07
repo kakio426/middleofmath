@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-multiplication-combine",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5406,
+      "sha256": "52a17b323868a72d4a84ab186f6afabcb9894ea61116fe266803b8e2d42072ee"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4133,
+      "sha256": "efe82e2dbd5b1a030de6fe7928cdaec6eb629e9ddf013c5cd71d3a4891ccdead"
+    }
+  ]
+}

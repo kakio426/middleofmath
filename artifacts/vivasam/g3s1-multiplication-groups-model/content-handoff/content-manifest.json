@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-multiplication-groups-model",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5510,
+      "sha256": "ef2a52a876b980be9d8039099e1580bc81262c6754aa51122f7a8b68e9d86006"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4196,
+      "sha256": "02756929636ece6215db8c0cc4eedaab4aaa0701a49355f5c31a5dacb90ac760"
+    }
+  ]
+}

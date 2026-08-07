@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-capacity-unit",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5003,
+      "sha256": "2722e7ddcc7b77763408c07a0bce0755bbf0e1378bcc1c4a88e2cad78e6cc7ab"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 3730,
+      "sha256": "94b329a2da66f272b250954911f99341c7b0c0b18a60935195aacd733db419f7"
+    }
+  ]
+}

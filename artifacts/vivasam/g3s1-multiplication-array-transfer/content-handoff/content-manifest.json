@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-multiplication-array-transfer",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5519,
+      "sha256": "9fc33f764b3a92eb8fdd62decb90f93ba7bc50e3ca67395efbcf649d97c5719a"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4203,
+      "sha256": "c74a770cfc1c7bfda5528441ced4a1b8335aca066165cf557dd8c91405b3eae9"
+    }
+  ]
+}

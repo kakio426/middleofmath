@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-length-real-world-units",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5634,
+      "sha256": "293ec1053c7f343bf9acd6f0cda2bc7e4cd139416811516db68322c415b4fe86"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4324,
+      "sha256": "af6f9b4e7a002000bf837c6d52325f37ece1a6fb478357f46e5b552414739f56"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-pictograph-legend",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 4921,
+      "sha256": "afadfb20d065f6dab28d63d0c2a8a1fb24ab5393676deae69b18aa809bc7105d"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 3635,
+      "sha256": "adeb8eb77caeed0f744c11c3471380b59a39ec944163bf937088755fe8efcac4"
+    }
+  ]
+}

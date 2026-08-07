@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-circle-parts",
+  "sequence": 23,
+  "title": "원의 중심과 반지름 찾기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "3. 원",
+  "durationMinutes": 40,
+  "slideCount": 11,
+  "worksheetCount": 1,
+  "pptAuthor": "Claude",
+  "pptStatus": "awaiting-claude",
+  "sourceHtml": "source.html",
+  "digest": "9bb6f3ea8762",
+  "thumbnailAsset": "9bb6f3ea8762/representative-image.png",
+  "worksheetAsset": "9bb6f3ea8762/g3s2-circle-parts-worksheet.png",
+  "downloadAssets": [
+    "g3s2-circle-parts-worksheet.pdf",
+    "g3s2-circle-parts-worksheet.png",
+    "g3s2-circle-parts-worksheet.svg",
+    "teaching-intent.md",
+    "teacher-answer-key.md",
+    "claude-ppt-content.md",
+    "claude-ppt-content.json"
+  ],
+  "assets": [
+    {
+      "path": "9bb6f3ea8762/claude-ppt-content.json",
+      "bytes": 5788,
+      "sha256": "19f1f70a389dc23a8e2294520dda3daac93ec001ccff74f5a300c70c0deeecc1",
+      "contentType": "application/json",
+      "role": "content-handoff"
+    },
+    {
+      "path": "9bb6f3ea8762/claude-ppt-content.md",
+      "bytes": 4498,
+      "sha256": "d57b1ebb30352f35b735d93fc518151f86456d0940351e1183ee168fe2e9ad44",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "content-handoff"
+    },
+    {
+      "path": "9bb6f3ea8762/g3s2-circle-parts-worksheet.pdf",
+      "bytes": 153275,
+      "sha256": "e61cd88c8ae581e21d1b46c136099508601b4d52dc990125edb14f9d257d6837",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "9bb6f3ea8762/g3s2-circle-parts-worksheet.png",
+      "bytes": 150485,
+      "sha256": "362505b3d5783d660eae24a7c514aac73962cb4e057ea3d1d263220e3385b97e",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "9bb6f3ea8762/g3s2-circle-parts-worksheet.svg",
+      "bytes": 13818,
+      "sha256": "280758c1e15386f19dec872ef66106fe567c182b6165cc58e9857fdfd0c3cc2f",
+      "contentType": "image/svg+xml",
+      "role": "worksheet"
+    },
+    {
+      "path": "9bb6f3ea8762/representative-image.png",
+      "bytes": 55390,
+      "sha256": "dd52df1cae245b506c96ee2053b82f3160bee869c1467f2c2a746638b8048ead",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    },
+    {
+      "path": "9bb6f3ea8762/teacher-answer-key.md",
+      "bytes": 2068,
+      "sha256": "5da5846c8ccf1cd3b4d15c20aa87f9d322a58297f00ffb2c79fee8fef7c3c941",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    },
+    {
+      "path": "9bb6f3ea8762/teaching-intent.md",
+      "bytes": 6473,
+      "sha256": "3971e49d1f43d618cae66df25124f6d1306b36f76eb2fda9662eebf22b801825",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    }
+  ]
+}

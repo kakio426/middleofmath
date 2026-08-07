@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-fraction-equal-parts",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 6478,
+      "sha256": "a46bffb14bd2f4cdc54d1c248f7dff4a91e45e5425108ed71dc7150954190463"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 5153,
+      "sha256": "334c427a22f17a508081d5a6f5d68afd559def4b0a183732b99f52cc1c07d4a4"
+    }
+  ]
+}

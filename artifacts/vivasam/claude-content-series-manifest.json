@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "scope": "초등 3학년 1학기 15개 + 2학기 15개",
+  "sourcePolicy": "승인된 grade3-semester1 및 grade3-semester2-complete만 사용",
+  "count": 30,
+  "records": [
+    {
+      "sequence": 1,
+      "semester": 2,
+      "unit": "6. 그림그래프",
+      "title": "그림 하나에 숨은 수",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-pictograph-legend/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-pictograph-legend/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 2,
+      "semester": 1,
+      "unit": "1. 곱셈",
+      "title": "같은 묶음은 곱셈으로",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-multiplication-groups-model/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-multiplication-groups-model/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 3,
+      "semester": 1,
+      "unit": "1. 곱셈",
+      "title": "줄과 칸으로 전체 수 찾기",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-multiplication-array-transfer/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-multiplication-array-transfer/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 4,
+      "semester": 1,
+      "unit": "1. 곱셈",
+      "title": "34×2를 두 부분으로",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-multiplication-place-value-model/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-multiplication-place-value-model/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 5,
+      "semester": 1,
+      "unit": "1. 곱셈",
+      "title": "상자 수를 자릿값으로 곱하기",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-multiplication-place-value-context/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-multiplication-place-value-context/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 6,
+      "semester": 1,
+      "unit": "2. 나눗셈",
+      "title": "18개를 똑같이 나누면",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-division-equal-sharing/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-division-equal-sharing/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 7,
+      "semester": 1,
+      "unit": "2. 나눗셈",
+      "title": "곱셈의 빈칸으로 몫 찾기",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-division-missing-factor/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-division-missing-factor/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 8,
+      "semester": 1,
+      "unit": "2. 나눗셈",
+      "title": "한 곱셈식에서 두 나눗셈식",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-division-fact-family/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-division-fact-family/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 9,
+      "semester": 1,
+      "unit": "2. 나눗셈",
+      "title": "몇 묶음인지 곱셈으로 확인하기",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-division-group-count/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-division-group-count/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 10,
+      "semester": 1,
+      "unit": "3. 분수",
+      "title": "분수의 첫 조건, 똑같이",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-fraction-equal-parts/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-fraction-equal-parts/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 11,
+      "semester": 1,
+      "unit": "3. 분수",
+      "title": "같지 않은 조각을 고쳐 나누기",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-fraction-fix-partition/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-fraction-fix-partition/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 12,
+      "semester": 1,
+      "unit": "3. 분수",
+      "title": "전체와 부분을 분수로 읽기",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-fraction-part-whole/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-fraction-part-whole/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 13,
+      "semester": 1,
+      "unit": "3. 분수",
+      "title": "피자에서 분모와 분자 찾기",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-fraction-pizza-context/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-fraction-pizza-context/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 14,
+      "semester": 1,
+      "unit": "4. 길이",
+      "title": "연필에는 cm, 문에는 m",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-length-centimeter-meter/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-length-centimeter-meter/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 15,
+      "semester": 1,
+      "unit": "4. 길이",
+      "title": "크기에 맞는 길이 단위",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-length-real-world-units/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-length-real-world-units/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 16,
+      "semester": 1,
+      "unit": "4. 길이",
+      "title": "m·cm, km·m 연결하기",
+      "slideCount": 11,
+      "markdownRelative": "g3s1-length-unit-conversion/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s1-length-unit-conversion/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 17,
+      "semester": 2,
+      "unit": "1. 곱셈",
+      "title": "자릿값을 살려 먼저 곱하기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-multiplication-place-value/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-multiplication-place-value/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 18,
+      "semester": 2,
+      "unit": "1. 곱셈",
+      "title": "부분곱을 빠짐없이 더하기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-multiplication-combine/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-multiplication-combine/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 19,
+      "semester": 2,
+      "unit": "1. 곱셈",
+      "title": "두 자리 수를 나누어 곱하기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-multiplication-two-digit/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-multiplication-two-digit/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 20,
+      "semester": 2,
+      "unit": "2. 나눗셈",
+      "title": "나눗셈이 묻는 두 가지",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-division-meaning/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-division-meaning/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 21,
+      "semester": 2,
+      "unit": "2. 나눗셈",
+      "title": "먼저 나누고 남은 수 찾기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-division-remainder/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-division-remainder/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 22,
+      "semester": 2,
+      "unit": "2. 나눗셈",
+      "title": "몫과 나머지로 처음 수 확인하기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-division-remainder-check/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-division-remainder-check/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 23,
+      "semester": 2,
+      "unit": "3. 원",
+      "title": "원의 중심과 반지름 찾기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-circle-parts/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-circle-parts/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 24,
+      "semester": 2,
+      "unit": "3. 원",
+      "title": "반지름 두 개가 만드는 지름",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-circle-diameter/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-circle-diameter/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 25,
+      "semester": 2,
+      "unit": "4. 분수",
+      "title": "색칠한 부분을 분수로",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-fraction-part-whole/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-fraction-part-whole/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 26,
+      "semester": 2,
+      "unit": "4. 분수",
+      "title": "가분수를 대분수로 바꾸기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-fraction-convert/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-fraction-convert/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 27,
+      "semester": 2,
+      "unit": "4. 분수",
+      "title": "분모가 같은 분수 비교하기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-fraction-compare/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-fraction-compare/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 28,
+      "semester": 2,
+      "unit": "5. 들이와 무게",
+      "title": "L를 mL로 정확히 바꾸기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-capacity-unit/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-capacity-unit/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 29,
+      "semester": 2,
+      "unit": "5. 들이와 무게",
+      "title": "kg을 g으로 정확히 바꾸기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-weight-unit/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-weight-unit/content-handoff/claude-ppt-content.json"
+    },
+    {
+      "sequence": 30,
+      "semester": 2,
+      "unit": "6. 그림그래프",
+      "title": "그림그래프의 실제 차이 구하기",
+      "slideCount": 11,
+      "markdownRelative": "g3s2-pictograph-compare/content-handoff/claude-ppt-content.md",
+      "jsonRelative": "g3s2-pictograph-compare/content-handoff/claude-ppt-content.json"
+    }
+  ]
+}

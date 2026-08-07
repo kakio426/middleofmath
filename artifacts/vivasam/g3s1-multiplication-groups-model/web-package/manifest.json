@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-multiplication-groups-model",
+  "sequence": 2,
+  "title": "같은 묶음은 곱셈으로",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "1. 곱셈",
+  "durationMinutes": 40,
+  "slideCount": 11,
+  "worksheetCount": 1,
+  "pptAuthor": "Claude",
+  "pptStatus": "awaiting-claude",
+  "sourceHtml": "source.html",
+  "digest": "130c2858db2c",
+  "thumbnailAsset": "130c2858db2c/representative-image.png",
+  "worksheetAsset": "130c2858db2c/g3s1-multiplication-groups-model-worksheet.png",
+  "downloadAssets": [
+    "g3s1-multiplication-groups-model-worksheet.pdf",
+    "g3s1-multiplication-groups-model-worksheet.png",
+    "g3s1-multiplication-groups-model-worksheet.svg",
+    "teaching-intent.md",
+    "teacher-answer-key.md",
+    "claude-ppt-content.md",
+    "claude-ppt-content.json"
+  ],
+  "assets": [
+    {
+      "path": "130c2858db2c/claude-ppt-content.json",
+      "bytes": 5510,
+      "sha256": "ef2a52a876b980be9d8039099e1580bc81262c6754aa51122f7a8b68e9d86006",
+      "contentType": "application/json",
+      "role": "content-handoff"
+    },
+    {
+      "path": "130c2858db2c/claude-ppt-content.md",
+      "bytes": 4196,
+      "sha256": "02756929636ece6215db8c0cc4eedaab4aaa0701a49355f5c31a5dacb90ac760",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "content-handoff"
+    },
+    {
+      "path": "130c2858db2c/g3s1-multiplication-groups-model-worksheet.pdf",
+      "bytes": 137339,
+      "sha256": "1e4de029222acace80cff1041d764188f0f216f07fa2bb695c1a3ef9d1cbdee6",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "130c2858db2c/g3s1-multiplication-groups-model-worksheet.png",
+      "bytes": 135227,
+      "sha256": "c749f7a4eefd468df0bbb23ceb0e234b2b4c26a39a2bf810ddaf3adac001fb8b",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "130c2858db2c/g3s1-multiplication-groups-model-worksheet.svg",
+      "bytes": 13927,
+      "sha256": "fda837bc102b5fde6af221f606a202269037aeea5bc7da63d51ca6b427a4ddd3",
+      "contentType": "image/svg+xml",
+      "role": "worksheet"
+    },
+    {
+      "path": "130c2858db2c/representative-image.png",
+      "bytes": 50829,
+      "sha256": "6218d97a2a1a2f887eb0be319df6146e48a4c6c61a75ffbb2d5c233bdf637d64",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    },
+    {
+      "path": "130c2858db2c/teacher-answer-key.md",
+      "bytes": 1755,
+      "sha256": "3eb3449515065f1ff1a2269342628a37fc0cf72fa784663d7a30a0ea71f5a05c",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    },
+    {
+      "path": "130c2858db2c/teaching-intent.md",
+      "bytes": 6475,
+      "sha256": "9a29826b4df110733f26b2b1895facc183019f7519ba081eea244040c75b55b6",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    }
+  ]
+}

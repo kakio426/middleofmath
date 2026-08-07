@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-division-fact-family",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5291,
+      "sha256": "c332c30f1d04f5309603fe03884f8b32b65a44d57c82de803758eeb265df8d31"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4011,
+      "sha256": "c83cece9821ddcff04131b23e135dc45b94c0e27eb4835842349e4f3f06bd234"
+    }
+  ]
+}

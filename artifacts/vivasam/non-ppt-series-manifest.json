@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "count": 30,
+  "pptAuthor": "Claude",
+  "pptStatus": "awaiting-claude",
+  "records": [
+    {
+      "sequence": 1,
+      "lessonId": "g3s2-pictograph-legend",
+      "title": "그림 하나에 숨은 수",
+      "grade": "초등 3학년 2학기",
+      "unit": "6. 그림그래프",
+      "digest": "c39a74a8292c",
+      "packageManifest": "g3s2-pictograph-legend/manifest.json"
+    },
+    {
+      "sequence": 2,
+      "lessonId": "g3s1-multiplication-groups-model",
+      "title": "같은 묶음은 곱셈으로",
+      "grade": "초등 3학년 1학기",
+      "unit": "1. 곱셈",
+      "digest": "130c2858db2c",
+      "packageManifest": "g3s1-multiplication-groups-model/manifest.json"
+    },
+    {
+      "sequence": 3,
+      "lessonId": "g3s1-multiplication-array-transfer",
+      "title": "줄과 칸으로 전체 수 찾기",
+      "grade": "초등 3학년 1학기",
+      "unit": "1. 곱셈",
+      "digest": "528eb2574e72",
+      "packageManifest": "g3s1-multiplication-array-transfer/manifest.json"
+    },
+    {
+      "sequence": 4,
+      "lessonId": "g3s1-multiplication-place-value-model",
+      "title": "34×2를 두 부분으로",
+      "grade": "초등 3학년 1학기",
+      "unit": "1. 곱셈",
+      "digest": "888ef1957ab7",
+      "packageManifest": "g3s1-multiplication-place-value-model/manifest.json"
+    },
+    {
+      "sequence": 5,
+      "lessonId": "g3s1-multiplication-place-value-context",
+      "title": "상자 수를 자릿값으로 곱하기",
+      "grade": "초등 3학년 1학기",
+      "unit": "1. 곱셈",
+      "digest": "8771910e3db3",
+      "packageManifest": "g3s1-multiplication-place-value-context/manifest.json"
+    },
+    {
+      "sequence": 6,
+      "lessonId": "g3s1-division-equal-sharing",
+      "title": "18개를 똑같이 나누면",
+      "grade": "초등 3학년 1학기",
+      "unit": "2. 나눗셈",
+      "digest": "559992af760a",
+      "packageManifest": "g3s1-division-equal-sharing/manifest.json"
+    },
+    {
+      "sequence": 7,
+      "lessonId": "g3s1-division-missing-factor",
+      "title": "곱셈의 빈칸으로 몫 찾기",
+      "grade": "초등 3학년 1학기",
+      "unit": "2. 나눗셈",
+      "digest": "0317f8b360f7",
+      "packageManifest": "g3s1-division-missing-factor/manifest.json"
+    },
+    {
+      "sequence": 8,
+      "lessonId": "g3s1-division-fact-family",
+      "title": "한 곱셈식에서 두 나눗셈식",
+      "grade": "초등 3학년 1학기",
+      "unit": "2. 나눗셈",
+      "digest": "4677cfb47242",
+      "packageManifest": "g3s1-division-fact-family/manifest.json"
+    },
+    {
+      "sequence": 9,
+      "lessonId": "g3s1-division-group-count",
+      "title": "몇 묶음인지 곱셈으로 확인하기",
+      "grade": "초등 3학년 1학기",
+      "unit": "2. 나눗셈",
+      "digest": "6731a5e056ee",
+      "packageManifest": "g3s1-division-group-count/manifest.json"
+    },
+    {
+      "sequence": 10,
+      "lessonId": "g3s1-fraction-equal-parts",
+      "title": "분수의 첫 조건, 똑같이",
+      "grade": "초등 3학년 1학기",
+      "unit": "3. 분수",
+      "digest": "cd28af9184b7",
+      "packageManifest": "g3s1-fraction-equal-parts/manifest.json"
+    },
+    {
+      "sequence": 11,
+      "lessonId": "g3s1-fraction-fix-partition",
+      "title": "같지 않은 조각을 고쳐 나누기",
+      "grade": "초등 3학년 1학기",
+      "unit": "3. 분수",
+      "digest": "c9154c1d74a2",
+      "packageManifest": "g3s1-fraction-fix-partition/manifest.json"
+    },
+    {
+      "sequence": 12,
+      "lessonId": "g3s1-fraction-part-whole",
+      "title": "전체와 부분을 분수로 읽기",
+      "grade": "초등 3학년 1학기",
+      "unit": "3. 분수",
+      "digest": "0b42d9c2b0b9",
+      "packageManifest": "g3s1-fraction-part-whole/manifest.json"
+    },
+    {
+      "sequence": 13,
+      "lessonId": "g3s1-fraction-pizza-context",
+      "title": "피자에서 분모와 분자 찾기",
+      "grade": "초등 3학년 1학기",
+      "unit": "3. 분수",
+      "digest": "8b4259a8b9d9",
+      "packageManifest": "g3s1-fraction-pizza-context/manifest.json"
+    },
+    {
+      "sequence": 14,
+      "lessonId": "g3s1-length-centimeter-meter",
+      "title": "연필에는 cm, 문에는 m",
+      "grade": "초등 3학년 1학기",
+      "unit": "4. 길이",
+      "digest": "e1447e39f12c",
+      "packageManifest": "g3s1-length-centimeter-meter/manifest.json"
+    },
+    {
+      "sequence": 15,
+      "lessonId": "g3s1-length-real-world-units",
+      "title": "크기에 맞는 길이 단위",
+      "grade": "초등 3학년 1학기",
+      "unit": "4. 길이",
+      "digest": "048be499db56",
+      "packageManifest": "g3s1-length-real-world-units/manifest.json"
+    },
+    {
+      "sequence": 16,
+      "lessonId": "g3s1-length-unit-conversion",
+      "title": "m·cm, km·m 연결하기",
+      "grade": "초등 3학년 1학기",
+      "unit": "4. 길이",
+      "digest": "067c8038bfc7",
+      "packageManifest": "g3s1-length-unit-conversion/manifest.json"
+    },
+    {
+      "sequence": 17,
+      "lessonId": "g3s2-multiplication-place-value",
+      "title": "자릿값을 살려 먼저 곱하기",
+      "grade": "초등 3학년 2학기",
+      "unit": "1. 곱셈",
+      "digest": "cccba4e53b13",
+      "packageManifest": "g3s2-multiplication-place-value/manifest.json"
+    },
+    {
+      "sequence": 18,
+      "lessonId": "g3s2-multiplication-combine",
+      "title": "부분곱을 빠짐없이 더하기",
+      "grade": "초등 3학년 2학기",
+      "unit": "1. 곱셈",
+      "digest": "bed6ba398496",
+      "packageManifest": "g3s2-multiplication-combine/manifest.json"
+    },
+    {
+      "sequence": 19,
+      "lessonId": "g3s2-multiplication-two-digit",
+      "title": "두 자리 수를 나누어 곱하기",
+      "grade": "초등 3학년 2학기",
+      "unit": "1. 곱셈",
+      "digest": "e19e8c436717",
+      "packageManifest": "g3s2-multiplication-two-digit/manifest.json"
+    },
+    {
+      "sequence": 20,
+      "lessonId": "g3s2-division-meaning",
+      "title": "나눗셈이 묻는 두 가지",
+      "grade": "초등 3학년 2학기",
+      "unit": "2. 나눗셈",
+      "digest": "58e9f215cba2",
+      "packageManifest": "g3s2-division-meaning/manifest.json"
+    },
+    {
+      "sequence": 21,
+      "lessonId": "g3s2-division-remainder",
+      "title": "먼저 나누고 남은 수 찾기",
+      "grade": "초등 3학년 2학기",
+      "unit": "2. 나눗셈",
+      "digest": "def5efc980b2",
+      "packageManifest": "g3s2-division-remainder/manifest.json"
+    },
+    {
+      "sequence": 22,
+      "lessonId": "g3s2-division-remainder-check",
+      "title": "몫과 나머지로 처음 수 확인하기",
+      "grade": "초등 3학년 2학기",
+      "unit": "2. 나눗셈",
+      "digest": "428a5779e604",
+      "packageManifest": "g3s2-division-remainder-check/manifest.json"
+    },
+    {
+      "sequence": 23,
+      "lessonId": "g3s2-circle-parts",
+      "title": "원의 중심과 반지름 찾기",
+      "grade": "초등 3학년 2학기",
+      "unit": "3. 원",
+      "digest": "9bb6f3ea8762",
+      "packageManifest": "g3s2-circle-parts/manifest.json"
+    },
+    {
+      "sequence": 24,
+      "lessonId": "g3s2-circle-diameter",
+      "title": "반지름 두 개가 만드는 지름",
+      "grade": "초등 3학년 2학기",
+      "unit": "3. 원",
+      "digest": "3db9206a4997",
+      "packageManifest": "g3s2-circle-diameter/manifest.json"
+    },
+    {
+      "sequence": 25,
+      "lessonId": "g3s2-fraction-part-whole",
+      "title": "색칠한 부분을 분수로",
+      "grade": "초등 3학년 2학기",
+      "unit": "4. 분수",
+      "digest": "8d8253fbbbee",
+      "packageManifest": "g3s2-fraction-part-whole/manifest.json"
+    },
+    {
+      "sequence": 26,
+      "lessonId": "g3s2-fraction-convert",
+      "title": "가분수를 대분수로 바꾸기",
+      "grade": "초등 3학년 2학기",
+      "unit": "4. 분수",
+      "digest": "67f28f7aa95b",
+      "packageManifest": "g3s2-fraction-convert/manifest.json"
+    },
+    {
+      "sequence": 27,
+      "lessonId": "g3s2-fraction-compare",
+      "title": "분모가 같은 분수 비교하기",
+      "grade": "초등 3학년 2학기",
+      "unit": "4. 분수",
+      "digest": "817fa15282bf",
+      "packageManifest": "g3s2-fraction-compare/manifest.json"
+    },
+    {
+      "sequence": 28,
+      "lessonId": "g3s2-capacity-unit",
+      "title": "L를 mL로 정확히 바꾸기",
+      "grade": "초등 3학년 2학기",
+      "unit": "5. 들이와 무게",
+      "digest": "40cd2ad0d627",
+      "packageManifest": "g3s2-capacity-unit/manifest.json"
+    },
+    {
+      "sequence": 29,
+      "lessonId": "g3s2-weight-unit",
+      "title": "kg을 g으로 정확히 바꾸기",
+      "grade": "초등 3학년 2학기",
+      "unit": "5. 들이와 무게",
+      "digest": "32502317db02",
+      "packageManifest": "g3s2-weight-unit/manifest.json"
+    },
+    {
+      "sequence": 30,
+      "lessonId": "g3s2-pictograph-compare",
+      "title": "그림그래프의 실제 차이 구하기",
+      "grade": "초등 3학년 2학기",
+      "unit": "6. 그림그래프",
+      "digest": "82f19b101c35",
+      "packageManifest": "g3s2-pictograph-compare/manifest.json"
+    }
+  ]
+}

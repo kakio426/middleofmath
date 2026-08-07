@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-length-unit-conversion",
+  "sequence": 16,
+  "title": "m·cm, km·m 연결하기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "4. 길이",
+  "durationMinutes": 40,
+  "slideCount": 11,
+  "worksheetCount": 1,
+  "pptAuthor": "Claude",
+  "pptStatus": "awaiting-claude",
+  "sourceHtml": "source.html",
+  "digest": "067c8038bfc7",
+  "thumbnailAsset": "067c8038bfc7/representative-image.png",
+  "worksheetAsset": "067c8038bfc7/g3s1-length-unit-conversion-worksheet.png",
+  "downloadAssets": [
+    "g3s1-length-unit-conversion-worksheet.pdf",
+    "g3s1-length-unit-conversion-worksheet.png",
+    "g3s1-length-unit-conversion-worksheet.svg",
+    "teaching-intent.md",
+    "teacher-answer-key.md",
+    "claude-ppt-content.md",
+    "claude-ppt-content.json"
+  ],
+  "assets": [
+    {
+      "path": "067c8038bfc7/claude-ppt-content.json",
+      "bytes": 4974,
+      "sha256": "134ccb4973fe635fca0926cd40fe190c6db28b555f2fd5b5155099424662b40d",
+      "contentType": "application/json",
+      "role": "content-handoff"
+    },
+    {
+      "path": "067c8038bfc7/claude-ppt-content.md",
+      "bytes": 3692,
+      "sha256": "6fa38083bf36226743ef298fbf5560ca7d87663ab5599760efe2f7b8dde0f18b",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "content-handoff"
+    },
+    {
+      "path": "067c8038bfc7/g3s1-length-unit-conversion-worksheet.pdf",
+      "bytes": 134316,
+      "sha256": "5682c3632d789981dd5ae7f60e6b4d256ea3e8a64c79f5665679924b40967ca1",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "067c8038bfc7/g3s1-length-unit-conversion-worksheet.png",
+      "bytes": 131969,
+      "sha256": "358e0aa41c11594de627fbc6bff91385783cf46fb849f1a4a0292ebfaee322d0",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "067c8038bfc7/g3s1-length-unit-conversion-worksheet.svg",
+      "bytes": 14171,
+      "sha256": "eae39b90bb5c7685c6a2b6a572f78f3cd74e084a3919ff71c1cc396bd83b13e7",
+      "contentType": "image/svg+xml",
+      "role": "worksheet"
+    },
+    {
+      "path": "067c8038bfc7/representative-image.png",
+      "bytes": 51652,
+      "sha256": "528066179fe4fd0bdaf1350ec68dbc1323becee597ce38e8d6f665f2b8572643",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    },
+    {
+      "path": "067c8038bfc7/teacher-answer-key.md",
+      "bytes": 1767,
+      "sha256": "102bb08b296be497e5199ee86168241fd1ed045faa649c7ae23d1445db04e89b",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    },
+    {
+      "path": "067c8038bfc7/teaching-intent.md",
+      "bytes": 6451,
+      "sha256": "7260d733c77c16cfde757c917f37b655207fc170bd7018d931740c83a9ecae8c",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    }
+  ]
+}

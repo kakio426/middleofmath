@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-pictograph-compare",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 6112,
+      "sha256": "d0f3102c0fbd128424105376720197e9396c2b59d94ea1f577c9ae52ecbdebad"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4735,
+      "sha256": "0f9a46a592136f83ee7147cf4a80a485e5cf090bd015bb399a06c05b53248abc"
+    }
+  ]
+}

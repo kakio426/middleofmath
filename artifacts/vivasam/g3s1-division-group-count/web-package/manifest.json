@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-division-group-count",
+  "sequence": 9,
+  "title": "몇 묶음인지 곱셈으로 확인하기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "2. 나눗셈",
+  "durationMinutes": 40,
+  "slideCount": 11,
+  "worksheetCount": 1,
+  "pptAuthor": "Claude",
+  "pptStatus": "awaiting-claude",
+  "sourceHtml": "source.html",
+  "digest": "6731a5e056ee",
+  "thumbnailAsset": "6731a5e056ee/representative-image.png",
+  "worksheetAsset": "6731a5e056ee/g3s1-division-group-count-worksheet.png",
+  "downloadAssets": [
+    "g3s1-division-group-count-worksheet.pdf",
+    "g3s1-division-group-count-worksheet.png",
+    "g3s1-division-group-count-worksheet.svg",
+    "teaching-intent.md",
+    "teacher-answer-key.md",
+    "claude-ppt-content.md",
+    "claude-ppt-content.json"
+  ],
+  "assets": [
+    {
+      "path": "6731a5e056ee/claude-ppt-content.json",
+      "bytes": 5374,
+      "sha256": "37be02dbadc28073b17e718eaa425ef0334652a2238505f857539e417a066e02",
+      "contentType": "application/json",
+      "role": "content-handoff"
+    },
+    {
+      "path": "6731a5e056ee/claude-ppt-content.md",
+      "bytes": 4094,
+      "sha256": "5919c4cc5263538aa8ab651a9bdbfb071774b9935cdc2e0f6403bbf5335d966b",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "content-handoff"
+    },
+    {
+      "path": "6731a5e056ee/g3s1-division-group-count-worksheet.pdf",
+      "bytes": 139879,
+      "sha256": "1e5f1d3e0c5a52a01dac3de42713b5f2bd89b861efee532981c789e415562492",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "6731a5e056ee/g3s1-division-group-count-worksheet.png",
+      "bytes": 137042,
+      "sha256": "bacdafdc87184fc567f82b3163bae40f21c049d99b426e6a1819ca0f0ff120ec",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "6731a5e056ee/g3s1-division-group-count-worksheet.svg",
+      "bytes": 14102,
+      "sha256": "7ae4110db138f7e18b7126efb67504161201e4502b03c61d572eab170e069ed3",
+      "contentType": "image/svg+xml",
+      "role": "worksheet"
+    },
+    {
+      "path": "6731a5e056ee/representative-image.png",
+      "bytes": 55536,
+      "sha256": "f3c70664c4444842e511820eb0f623c59f6c696c11ba17b0340edc6809f4fc36",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    },
+    {
+      "path": "6731a5e056ee/teacher-answer-key.md",
+      "bytes": 1832,
+      "sha256": "43af0ffc28d2cbd988ed66cc4fb1615904dc5a933e7fb8271ee329e28daed9d4",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    },
+    {
+      "path": "6731a5e056ee/teaching-intent.md",
+      "bytes": 6497,
+      "sha256": "15cfef8735960390b05be69c5198a1997e4cbe0de6d5778b4c456ea403f1b90b",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    }
+  ]
+}

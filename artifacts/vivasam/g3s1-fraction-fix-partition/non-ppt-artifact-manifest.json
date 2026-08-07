@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-fraction-fix-partition",
+  "worksheet": {
+    "source": "worksheet/g3s1-fraction-fix-partition-worksheet.svg",
+    "png": "worksheet/g3s1-fraction-fix-partition-worksheet.png",
+    "pdf": "worksheet/g3s1-fraction-fix-partition-worksheet.pdf",
+    "count": 1
+  },
+  "support": {
+    "teachingIntent": "support/teaching-intent.md",
+    "answerKey": "support/teacher-answer-key.md",
+    "representativeImage": "support/representative-image.png"
+  },
+  "package": {
+    "digest": "c9154c1d74a2",
+    "manifest": "web-package/manifest.json",
+    "html": "web-package/source.html"
+  }
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="34×2를 두 부분으로 대표 이미지">
+  <defs><filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#33245A" flood-opacity=".16"/></filter></defs>
+  <rect width="1200" height="675" fill="#F8F5FF"/>
+  <circle cx="1060" cy="92" r="190" fill="#6941C6" opacity=".08"/>
+  <circle cx="104" cy="654" r="180" fill="#F7C948" opacity=".12"/>
+  <rect x="62" y="58" width="1076" height="559" rx="56" fill="#FFFFFF" stroke="#DDD5F2" stroke-width="3" filter="url(#shadow)"/>
+  <rect x="98" y="96" width="244" height="50" rx="25" fill="#6941C6"/>
+  <text x="220" y="129" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="850" text-anchor="middle" fill="#FFFFFF">수업 꾸러미 04</text>
+  <text x="102" y="246" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="58" font-weight="900" fill="#352064" text-anchor="start" class=""><tspan x="102" dy="0">34×2를 두</tspan><tspan x="102" dy="68">부분으로</tspan></text>
+  <text x="104" y="405" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="650" fill="#5D5668" text-anchor="start" class=""><tspan x="104" dy="0">두 자리 수에 한 자리 수를 곱하기</tspan></text>
+  <rect x="102" y="492" width="430" height="64" rx="28" fill="#F2EDFF"/>
+  <text x="128" y="533" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="800" fill="#6941C6">초등 3학년 1학기 · 1. 곱셈</text>
+  <g transform="translate(718 123)">
+    <circle cx="165" cy="118" r="98" fill="#DCCEFF"/>
+    <circle cx="265" cy="104" r="120" fill="#EEE8FF"/>
+    <circle cx="350" cy="145" r="84" fill="#DCCEFF"/>
+    <rect x="92" y="118" width="335" height="238" rx="46" fill="#FFFFFF" stroke="#6941C6" stroke-width="5" filter="url(#shadow)"/>
+    <g aria-label="같은 묶음 배열"><rect x="140" y="160" width="239" height="162" rx="30" fill="#FFFFFF" opacity=".78"/><circle cx="174" cy="190" r="13" fill="#6941C6"/><circle cx="226" cy="190" r="13" fill="#6941C6"/><circle cx="278" cy="190" r="13" fill="#6941C6"/><circle cx="330" cy="190" r="13" fill="#6941C6"/><circle cx="174" cy="236" r="13" fill="#F7C948"/><circle cx="226" cy="236" r="13" fill="#F7C948"/><circle cx="278" cy="236" r="13" fill="#F7C948"/><circle cx="330" cy="236" r="13" fill="#F7C948"/><circle cx="174" cy="282" r="13" fill="#6941C6"/><circle cx="226" cy="282" r="13" fill="#6941C6"/><circle cx="278" cy="282" r="13" fill="#6941C6"/><circle cx="330" cy="282" r="13" fill="#6941C6"/><path d="M160 296H359" stroke="#6941C6" stroke-width="5" stroke-linecap="round"/></g>
+  </g>
+  <text x="102" y="592" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="750" fill="#746D7C">MIDDLE OF MATH · EDUITIT</text>
+</svg>

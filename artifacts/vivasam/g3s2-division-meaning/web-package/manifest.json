@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-division-meaning",
+  "sequence": 20,
+  "title": "나눗셈이 묻는 두 가지",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "2. 나눗셈",
+  "durationMinutes": 40,
+  "slideCount": 11,
+  "worksheetCount": 1,
+  "pptAuthor": "Claude",
+  "pptStatus": "awaiting-claude",
+  "sourceHtml": "source.html",
+  "digest": "58e9f215cba2",
+  "thumbnailAsset": "58e9f215cba2/representative-image.png",
+  "worksheetAsset": "58e9f215cba2/g3s2-division-meaning-worksheet.png",
+  "downloadAssets": [
+    "g3s2-division-meaning-worksheet.pdf",
+    "g3s2-division-meaning-worksheet.png",
+    "g3s2-division-meaning-worksheet.svg",
+    "teaching-intent.md",
+    "teacher-answer-key.md",
+    "claude-ppt-content.md",
+    "claude-ppt-content.json"
+  ],
+  "assets": [
+    {
+      "path": "58e9f215cba2/claude-ppt-content.json",
+      "bytes": 5731,
+      "sha256": "686233c96cd0fa276a5a714ebf4698c8c54023b9037a732e0ecdea1bf9f7f68a",
+      "contentType": "application/json",
+      "role": "content-handoff"
+    },
+    {
+      "path": "58e9f215cba2/claude-ppt-content.md",
+      "bytes": 4428,
+      "sha256": "4fa536a32a72991d4dd40337d074d42911963454584c609327e87c65d0fc357b",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "content-handoff"
+    },
+    {
+      "path": "58e9f215cba2/g3s2-division-meaning-worksheet.pdf",
+      "bytes": 142423,
+      "sha256": "c62b8d645ef8e80421defbbd910065b0c7eab020699bb967f1e3d2ee22761a69",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "58e9f215cba2/g3s2-division-meaning-worksheet.png",
+      "bytes": 140260,
+      "sha256": "024ee38cf888d0cb8b6ea33cd107c70e6a66269324d5eff42da03ebea6b53fd7",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "58e9f215cba2/g3s2-division-meaning-worksheet.svg",
+      "bytes": 14232,
+      "sha256": "cf7a5ae793fd99db2d7a3208563af2c55978ba4b1da376e5dc46b66841f250c5",
+      "contentType": "image/svg+xml",
+      "role": "worksheet"
+    },
+    {
+      "path": "58e9f215cba2/representative-image.png",
+      "bytes": 53099,
+      "sha256": "9fde73e3bd4588eb3d9734f2250ac6498a330cb5815e3b6328bdcb88321edb64",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    },
+    {
+      "path": "58e9f215cba2/teacher-answer-key.md",
+      "bytes": 1818,
+      "sha256": "2382553c06b2b7e7239579c1530dbf3439ab0cc84a7ec7030ccd710bc747cdb2",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    },
+    {
+      "path": "58e9f215cba2/teaching-intent.md",
+      "bytes": 6470,
+      "sha256": "a18271da087f4d25427f0233a253979042fb8432b064e3ad2a61f22a1e299f53",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-fraction-pizza-context",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5809,
+      "sha256": "84c5934b5e1d9cbec799ebab7f9cad4b93a39faed6c71b2b89bce4e02b12cda7"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4509,
+      "sha256": "d42041327b177899b6d253093a15651e401d86083d2f9ad234c2bc48758635e7"
+    }
+  ]
+}

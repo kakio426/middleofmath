@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-circle-parts",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5788,
+      "sha256": "19f1f70a389dc23a8e2294520dda3daac93ec001ccff74f5a300c70c0deeecc1"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4498,
+      "sha256": "d57b1ebb30352f35b735d93fc518151f86456d0940351e1183ee168fe2e9ad44"
+    }
+  ]
+}

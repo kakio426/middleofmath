@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-fraction-convert",
+  "sequence": 26,
+  "title": "가분수를 대분수로 바꾸기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "4. 분수",
+  "durationMinutes": 40,
+  "slideCount": 11,
+  "worksheetCount": 1,
+  "pptAuthor": "Claude",
+  "pptStatus": "awaiting-claude",
+  "sourceHtml": "source.html",
+  "digest": "67f28f7aa95b",
+  "thumbnailAsset": "67f28f7aa95b/representative-image.png",
+  "worksheetAsset": "67f28f7aa95b/g3s2-fraction-convert-worksheet.png",
+  "downloadAssets": [
+    "g3s2-fraction-convert-worksheet.pdf",
+    "g3s2-fraction-convert-worksheet.png",
+    "g3s2-fraction-convert-worksheet.svg",
+    "teaching-intent.md",
+    "teacher-answer-key.md",
+    "claude-ppt-content.md",
+    "claude-ppt-content.json"
+  ],
+  "assets": [
+    {
+      "path": "67f28f7aa95b/claude-ppt-content.json",
+      "bytes": 5142,
+      "sha256": "5cfbf5263187c111ffa087ab9ce28ea895e08010de0eaf765df60937c97c0bd0",
+      "contentType": "application/json",
+      "role": "content-handoff"
+    },
+    {
+      "path": "67f28f7aa95b/claude-ppt-content.md",
+      "bytes": 3893,
+      "sha256": "bd745d960ecbaafd287dec3fd1522b71fddf653ec296f97b1a39b9cd9196d0ee",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "content-handoff"
+    },
+    {
+      "path": "67f28f7aa95b/g3s2-fraction-convert-worksheet.pdf",
+      "bytes": 134424,
+      "sha256": "418a9224aa017118b3dfddcd97afb5e363c0e27d717ce50245dfbf53394bde54",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "67f28f7aa95b/g3s2-fraction-convert-worksheet.png",
+      "bytes": 132540,
+      "sha256": "5b5a4aa8bf4a1c899bb9758c9925883eefc70e5d795e8d09eda5e0dd5c98eee3",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "67f28f7aa95b/g3s2-fraction-convert-worksheet.svg",
+      "bytes": 14160,
+      "sha256": "733df0f7d49a0fcfd0920bbfddee617df9a32013c56b880a35093d8696ab37a8",
+      "contentType": "image/svg+xml",
+      "role": "worksheet"
+    },
+    {
+      "path": "67f28f7aa95b/representative-image.png",
+      "bytes": 49394,
+      "sha256": "a09d343ec693cfe2e04f7eaec5b777489761e3dd2cbe554bf91d2490d492685d",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    },
+    {
+      "path": "67f28f7aa95b/teacher-answer-key.md",
+      "bytes": 1993,
+      "sha256": "477a806a05893bb4abab7b9c206bff5c3e826a19cf5d0167d9cc9fd4b40e9b04",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    },
+    {
+      "path": "67f28f7aa95b/teaching-intent.md",
+      "bytes": 6483,
+      "sha256": "7737eb685ee15fac83ea19db57356fc5015293c64bfa6002cf9bf7ca05b762c8",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    }
+  ]
+}

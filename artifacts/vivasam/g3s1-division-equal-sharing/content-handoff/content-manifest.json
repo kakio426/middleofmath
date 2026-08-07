@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-division-equal-sharing",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5507,
+      "sha256": "7d8054b59e9983ea975a6fb930343caa2ed9a9f9a1def0e58086667c1a4f6464"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4198,
+      "sha256": "132a490838a15ad1c70face381f98108d39d92025493e8151a3eadb32c6895a6"
+    }
+  ]
+}

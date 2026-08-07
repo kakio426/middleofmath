@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-multiplication-two-digit",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5395,
+      "sha256": "c7698f1a9cb14854a76bce842acd4e1a83ba308a3188d33751bfccf991562d58"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4129,
+      "sha256": "a29b9b9f8905613b20983301df7ec03776490c9c94dbcd9a35d9b5810bb9e63c"
+    }
+  ]
+}

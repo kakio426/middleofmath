@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-division-missing-factor",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5618,
+      "sha256": "dd70464f1d7edc9018bf045ad07712fa8b0961d8e1bb02eef354571219c6d1fb"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4308,
+      "sha256": "44fa1be73c0381d44a45a8639c14ffbb33929b5fab9df0078cb66588aae3ae28"
+    }
+  ]
+}

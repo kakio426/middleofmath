@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-division-meaning",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5731,
+      "sha256": "686233c96cd0fa276a5a714ebf4698c8c54023b9037a732e0ecdea1bf9f7f68a"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4428,
+      "sha256": "4fa536a32a72991d4dd40337d074d42911963454584c609327e87c65d0fc357b"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-fraction-convert",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5142,
+      "sha256": "5cfbf5263187c111ffa087ab9ce28ea895e08010de0eaf765df60937c97c0bd0"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 3893,
+      "sha256": "bd745d960ecbaafd287dec3fd1522b71fddf653ec296f97b1a39b9cd9196d0ee"
+    }
+  ]
+}

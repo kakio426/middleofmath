@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-multiplication-place-value-context",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5541,
+      "sha256": "d9c3a93413fa1c790b62603f0028f6453cb079efc96744f795cde4eaafa91d41"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4256,
+      "sha256": "52b2dcf3149a2372f3fe2c942f299785991301e1b1f7b06ce2c4b18fa66719d5"
+    }
+  ]
+}

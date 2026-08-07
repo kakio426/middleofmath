@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-division-group-count",
+  "worksheet": {
+    "source": "worksheet/g3s1-division-group-count-worksheet.svg",
+    "png": "worksheet/g3s1-division-group-count-worksheet.png",
+    "pdf": "worksheet/g3s1-division-group-count-worksheet.pdf",
+    "count": 1
+  },
+  "support": {
+    "teachingIntent": "support/teaching-intent.md",
+    "answerKey": "support/teacher-answer-key.md",
+    "representativeImage": "support/representative-image.png"
+  },
+  "package": {
+    "digest": "6731a5e056ee",
+    "manifest": "web-package/manifest.json",
+    "html": "web-package/source.html"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-division-remainder",
+  "sequence": 21,
+  "title": "먼저 나누고 남은 수 찾기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "2. 나눗셈",
+  "durationMinutes": 40,
+  "slideCount": 11,
+  "worksheetCount": 1,
+  "pptAuthor": "Claude",
+  "pptStatus": "awaiting-claude",
+  "sourceHtml": "source.html",
+  "digest": "def5efc980b2",
+  "thumbnailAsset": "def5efc980b2/representative-image.png",
+  "worksheetAsset": "def5efc980b2/g3s2-division-remainder-worksheet.png",
+  "downloadAssets": [
+    "g3s2-division-remainder-worksheet.pdf",
+    "g3s2-division-remainder-worksheet.png",
+    "g3s2-division-remainder-worksheet.svg",
+    "teaching-intent.md",
+    "teacher-answer-key.md",
+    "claude-ppt-content.md",
+    "claude-ppt-content.json"
+  ],
+  "assets": [
+    {
+      "path": "def5efc980b2/claude-ppt-content.json",
+      "bytes": 5550,
+      "sha256": "595966981f7f974069937bd90b9d04c680bd0b3b8c404d29aa8448c27b2b101e",
+      "contentType": "application/json",
+      "role": "content-handoff"
+    },
+    {
+      "path": "def5efc980b2/claude-ppt-content.md",
+      "bytes": 4254,
+      "sha256": "e051101ef1e503beeada692c250db712464844ba20c19f23aed549ad7cc0b993",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "content-handoff"
+    },
+    {
+      "path": "def5efc980b2/g3s2-division-remainder-worksheet.pdf",
+      "bytes": 143321,
+      "sha256": "05230efcb419a815b3dcda43d53ebe91933c009c0e1f85e743b2942956c41e14",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "def5efc980b2/g3s2-division-remainder-worksheet.png",
+      "bytes": 141076,
+      "sha256": "36252868ea1b98448c9dfabec1060bcbdc4845c992041567e85010ff40372d0a",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "def5efc980b2/g3s2-division-remainder-worksheet.svg",
+      "bytes": 14229,
+      "sha256": "02b263d50539569a913ebf85b6c98c8cb2014258ff20b481e1e7d3180d7fb686",
+      "contentType": "image/svg+xml",
+      "role": "worksheet"
+    },
+    {
+      "path": "def5efc980b2/representative-image.png",
+      "bytes": 51995,
+      "sha256": "c52b9a865d4355dfcace8e20504d1c96c25993709f4e9b137c58d054cef1c442",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    },
+    {
+      "path": "def5efc980b2/teacher-answer-key.md",
+      "bytes": 1871,
+      "sha256": "341955bee2d07ae6f5cd3f76aa70b64ad4a4601568232e54d2b7fa869e85a1e4",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    },
+    {
+      "path": "def5efc980b2/teaching-intent.md",
+      "bytes": 6482,
+      "sha256": "98aa30b2fa1e8c1e97a33948522d914654024a5d112f09118890c83919bd4e1e",
+      "contentType": "text/markdown; charset=utf-8",
+      "role": "teacher-support"
+    }
+  ]
+}

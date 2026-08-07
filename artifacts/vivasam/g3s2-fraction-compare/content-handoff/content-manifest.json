@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s2-fraction-compare",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5283,
+      "sha256": "b8959166c5a7de3a4ab47cf140befc68a135de55d4ac76345759aa8c917d778e"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4025,
+      "sha256": "9e0dea7e6f6df1b53be933c72db1f55f9d49825853d101d0b5fd777dd1073fc1"
+    }
+  ]
+}

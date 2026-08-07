@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-fraction-part-whole",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 5672,
+      "sha256": "20be3775a78f50a392ac1318ee2508ad132224642234ad2a6c34402b4701accc"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 4384,
+      "sha256": "d7099580c496d5bdcbf2bdafc2887951bf6be07d450c0d5e46b5a41a9a189338"
+    }
+  ]
+}

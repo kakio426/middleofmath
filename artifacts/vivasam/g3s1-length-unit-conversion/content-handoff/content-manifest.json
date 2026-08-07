@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "lessonId": "g3s1-length-unit-conversion",
+  "seriesTargetCount": 30,
+  "slideCount": 11,
+  "files": [
+    {
+      "name": "claude-ppt-content.json",
+      "bytes": 4974,
+      "sha256": "134ccb4973fe635fca0926cd40fe190c6db28b555f2fd5b5155099424662b40d"
+    },
+    {
+      "name": "claude-ppt-content.md",
+      "bytes": 3692,
+      "sha256": "6fa38083bf36226743ef298fbf5560ca7d87663ab5599760efe2f7b8dde0f18b"
+    }
+  ]
+}
