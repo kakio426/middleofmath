@@ -52,6 +52,7 @@ import {
   judgmentsForAssignment,
   type AssignmentCard
 } from "./assignment-model";
+import { createPublicPractice } from "./public-practice";
 
 type Screen = "join" | "assignments" | "judgment" | "complete";
 
@@ -85,7 +86,6 @@ function publicConfig() {
 
 const runtimeConfig = publicConfig();
 const demoMode = import.meta.env.VITE_DEMO_MODE === "true";
-const runtimeClient = runtimeConfig && !demoMode ? createMiddleOfMathClient(runtimeConfig) : null;
 const requestedDemoSet = demoMode && typeof window !== "undefined"
   ? new URLSearchParams(window.location.search).get("set")
   : null;
@@ -104,6 +104,12 @@ const demoContent = requestedDemoSet === "grade3-semester1"
     : requestedDemoSet === "grade6-semester2"
       ? grade6Semester2Diagnosis
     : grade3Semester2CompleteDiagnosis;
+const publicPractice = typeof window !== "undefined"
+  ? createPublicPractice(new URLSearchParams(window.location.search).get("practice"))
+  : null;
+const localOnlyMode = demoMode || Boolean(publicPractice);
+const localContent = publicPractice?.content ?? demoContent;
+const runtimeClient = runtimeConfig && !localOnlyMode ? createMiddleOfMathClient(runtimeConfig) : null;
 
 export function mapAssignmentRecord(row: StudentAssignmentRecord, content = row.diagnosisSet.content): AssignmentCard | null {
   try {
@@ -193,7 +199,7 @@ async function loadCachedAssignments(store: IndexedDbContentStore): Promise<Assi
 }
 
 export function StudentApp() {
-  const config = demoMode ? null : runtimeConfig;
+  const config = localOnlyMode ? null : runtimeConfig;
   const localStore = useMemo(() => new IndexedDbSessionStore(), []);
   const contentStore = useMemo(() => new IndexedDbContentStore(), []);
   const client = runtimeClient;
@@ -201,17 +207,26 @@ export function StudentApp() {
   const remoteSessions = useMemo(() => client ? new SupabaseSessionRepository(client) : null, [client]);
   const remoteEvents = useMemo(() => client ? new SupabaseEventRepository(client) : null, [client]);
   const telemetry = useMemo(() => client ? new SupabaseOperationalTelemetry(client) : null, [client]);
-  const [screen, setScreen] = useState<Screen>(() => localStorage.getItem(LOCAL_CONTEXT_KEY) ? "assignments" : "join");
+  const [screen, setScreen] = useState<Screen>(() => publicPractice || localStorage.getItem(LOCAL_CONTEXT_KEY) ? "assignments" : "join");
   const [student, setStudent] = useState<StudentContext | null>(() => {
+    if (publicPractice) {
+      return {
+        studentId: `practice-${publicPractice.key}`,
+        classId: "public-practice",
+        className: "수업 연계 문제",
+        rosterKey: "연습",
+        displayAlias: null
+      };
+    }
     const saved = localStorage.getItem(LOCAL_CONTEXT_KEY);
     if (!saved) return null;
     const restored = JSON.parse(saved) as StudentContext;
     return demoMode
-      ? { ...restored, className: `${demoContent.manifest.grade}학년 체험반` }
+      ? { ...restored, className: `${localContent.manifest.grade}학년 체험반` }
       : restored;
   });
   const [assignmentCards, setAssignmentCards] = useState<AssignmentCard[]>(() =>
-    demoMode ? createUnitAssignmentCards(demoContent) : []
+    publicPractice?.assignments ?? (demoMode ? createUnitAssignmentCards(localContent) : [])
   );
   const [assignment, setAssignment] = useState<AssignmentCard | null>(null);
   const [session, setSession] = useState<DiagnosisSession | null>(null);
@@ -300,7 +315,7 @@ export function StudentApp() {
 
   const activeContent = assignment?.content
     ?? assignmentCards[0]?.content
-    ?? (demoMode ? demoContent : grade3Semester2Diagnosis);
+    ?? (localOnlyMode ? localContent : grade3Semester2Diagnosis);
   const activeJudgments = assignment
     ? judgmentsForAssignment(assignment)
     : activeContent.judgments;
@@ -340,10 +355,10 @@ export function StudentApp() {
     try {
       const context = gateway
         ? await gateway.joinClass(input.joinCode, input.rosterKey, input.studentSecret)
-        : demoMode ? {
+        : localOnlyMode ? {
             studentId: `demo-${input.rosterKey}`,
             classId: "demo-class",
-            className: `${demoContent.manifest.grade}학년 체험반`,
+            className: `${localContent.manifest.grade}학년 체험반`,
             rosterKey: input.rosterKey,
             displayAlias: null
           } : (() => { throw new Error("학생 앱의 Supabase 환경변수가 필요합니다."); })();
@@ -487,29 +502,29 @@ export function StudentApp() {
     localStorage.removeItem(LOCAL_ASSIGNMENTS_KEY);
     setStudent(null);
     setAssignmentCards(
-      demoMode ? createUnitAssignmentCards(demoContent) : []
+      publicPractice?.assignments ?? (demoMode ? createUnitAssignmentCards(localContent) : [])
     );
     setAssignment(null);
     setSession(null);
     setScreen("join");
   }
 
-  if (!config && !demoMode) {
+  if (!config && !localOnlyMode) {
     return <RuntimeConfigurationError appName="학생 앱" />;
   }
 
   return (
     <AppShell
       role="student"
-      actions={<><StatusPill tone={demoMode ? "neutral" : online ? "accent" : "warning"}>{demoMode ? "체험 중" : online ? "연결됨" : "이 기기에 저장 중"}</StatusPill>{student && <button className="mom-button mom-button-quiet" onClick={() => void leaveClass()}>나가기</button>}</>}
+      actions={<><StatusPill tone={localOnlyMode ? "neutral" : online ? "accent" : "warning"}>{publicPractice ? "연습 중" : demoMode ? "체험 중" : online ? "연결됨" : "이 기기에 저장 중"}</StatusPill>{student && !publicPractice && <button className="mom-button mom-button-quiet" onClick={() => void leaveClass()}>나가기</button>}</>}
     >
       {screen === "join" && (
         <JoinScreen
           onJoin={joinClass}
           message={message}
           configured={Boolean(config)}
-          grade={demoContent.manifest.grade}
-          semester={demoContent.manifest.semester}
+          grade={localContent.manifest.grade}
+          semester={localContent.manifest.semester}
         />
       )}
       {screen === "assignments" && student && (
@@ -530,7 +545,7 @@ export function StudentApp() {
       )}
       {screen === "complete" && (
         <CompletionScreen
-          demo={demoMode}
+          demo={localOnlyMode}
           synced={Boolean(online && session?.status === "completed")}
           onDone={() => setScreen("assignments")}
         />

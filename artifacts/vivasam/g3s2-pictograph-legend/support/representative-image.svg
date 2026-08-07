@@ -6,7 +6,7 @@
   <circle cx="104" cy="654" r="180" fill="#F5C451" opacity=".12"/>
   <rect x="62" y="58" width="1076" height="559" rx="56" fill="#FFFFFF" stroke="#DDD5F2" stroke-width="3" filter="url(#shadow)"/>
   <rect x="98" y="96" width="244" height="50" rx="25" fill="#0E7490"/>
-  <text x="220" y="129" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="850" text-anchor="middle" fill="#FFFFFF">수업 꾸러미 01</text>
+  <text x="220" y="129" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="850" text-anchor="middle" fill="#FFFFFF">수학 수업 01</text>
   <text x="102" y="246" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="58" font-weight="900" fill="#164E63" text-anchor="start" class=""><tspan x="102" dy="0">그림 하나에 숨은 수</tspan></text>
   <text x="104" y="405" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="650" fill="#5D5668" text-anchor="start" class=""><tspan x="104" dy="0">범례를 적용해 그림그래프의 실제 수량과 차이를 읽어요</tspan></text>
   <rect x="102" y="492" width="430" height="64" rx="28" fill="#E8F7FB"/>

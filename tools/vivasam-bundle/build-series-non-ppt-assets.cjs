@@ -16,9 +16,15 @@ const REPO_ROOT = path.resolve(__dirname, "../..");
 const ARTIFACTS_ROOT = path.join(REPO_ROOT, "artifacts", "vivasam");
 const DEFAULT_EDUITIT_ROOT = path.resolve(REPO_ROOT, "../eduitit");
 const FIXED_BUILD_TIME = "2026-08-07T00:00:00.000Z";
+const WORKSHEET_BACKGROUND_RELATIVE_PATH = path.join(
+  "tools",
+  "vivasam-bundle",
+  "assets",
+  "worksheet-paper-purple-cloud.png",
+);
 
 const SERIES_ASSET_CONTRACT = Object.freeze({
-  version: 1,
+  version: 2,
   worksheetWidth: 1240,
   worksheetHeight: 1754,
   representativeWidth: 1200,
@@ -188,6 +194,16 @@ function firstVisible(slide, prefixPattern, fallbackIndex = 0) {
   return stripPrefix(slide.visibleContent.find((item) => prefixPattern.test(item)) || slide.visibleContent[fallbackIndex] || "");
 }
 
+function pictographFacts(slide) {
+  if (!Array.isArray(slide.data?.rows) || !slide.data?.legendValue) return "";
+  const symbol = ({ circle: "●", square: "■", star: "★" })[slide.data.symbol] || "●";
+  const unit = compact(slide.data.legendUnit);
+  return [
+    `범례: ${symbol} 1개 = ${slide.data.legendValue}${unit}`,
+    ...slide.data.rows.map((row) => `${compact(row.label)}: ${symbol} ${row.count}개`),
+  ].join(" · ");
+}
+
 function lessonDomain(lesson) {
   const id = lesson.id;
   if (id.includes("multiplication")) return "multiplication";
@@ -236,7 +252,8 @@ function buildWorksheetModel(lesson) {
 
   const guidedPrompt = firstVisible(guided, /^(문제|질문):/, 1)
     || compact(guided.data?.prompts?.join(" / "));
-  const guidedContext = firstVisible(guided, /^상황:/, 0)
+  const guidedContext = pictographFacts(guided)
+    || firstVisible(guided, /^상황:/, 0)
     || compact(guided.data?.rows?.map((row) => `${row.label} 그림 ${row.count}개`).join(", "));
   const guidedChoices = compact(guided.visibleContent.find((item) => /^선택지:/.test(item)) || "").replace(/^선택지:\s*/, "");
   const transferPrompt = firstVisible(transfer, /^문제:/, 0)
@@ -271,10 +288,12 @@ function buildWorksheetModel(lesson) {
     guided: { context: guidedContext, prompt: guidedPrompt, choices: guidedChoices },
     transfer: {
       prompt: transferPrompt,
-      cues: transfer.visibleContent
-        .filter((item) => !/^(말하는 사람|듣는 사람|문제):/.test(item))
-        .slice(0, 2)
-        .map(stripPrefix),
+      cues: pictographFacts(transfer)
+        ? [pictographFacts(transfer)]
+        : transfer.visibleContent
+          .filter((item) => !/^(말하는 사람|듣는 사람|문제):/.test(item))
+          .slice(0, 2)
+          .map(stripPrefix),
     },
     errorCases: errorCases.map(conciseErrorCase).slice(0, 2),
     exitItems,
@@ -379,72 +398,73 @@ function answerLines(x, y, width, count = 2, gap = 54) {
 
 function renderWorksheetSvg(model) {
   const palette = PALETTE_BY_DOMAIN[model.domain];
-  const titleLines = wrapText(model.title, { maxCharacters: 23, maxLines: 2, minLastLineCharacters: 4, hardMax: 25 });
-  const printableChoices = Array.from(model.guided.choices || "").length <= 34 ? model.guided.choices : "";
-  const routeCards = model.routeSteps.map((step, index) => {
-    const x = 76 + index * 282;
-    const lines = wrapText(step, { maxCharacters: 10, maxLines: 2, minLastLineCharacters: 2, hardMax: 12 });
-    return `<g><rect x="${x}" y="318" width="254" height="108" rx="22" fill="#FFFFFF" stroke="${palette.accent}" stroke-width="2"/><circle cx="${x + 31}" cy="350" r="18" fill="${index === 3 ? palette.warm : palette.accent}"/><text x="${x + 31}" y="357" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="800" text-anchor="middle" fill="${index === 3 ? palette.dark : "#FFFFFF"}">${index + 1}</text>${textElement({ x: x + 59, y: 348, text: lines, fontSize: 20, weight: 700, color: palette.dark, maxCharacters: 18, maxLines: 2, lineHeight: 1.35 })}</g>`;
-  }).join("");
+  const titleLines = wrapText(model.title, { maxCharacters: 22, maxLines: 2, minLastLineCharacters: 4, hardMax: 26 });
+  const routeText = model.routeSteps.map((step, index) => `${index + 1}. ${step}`).join("  →  ");
+  const printableChoices = Array.from(model.guided.choices || "").length <= 38 ? model.guided.choices : "";
+  const sectionHeading = (number, title, y) => `<g>
+    <circle cx="94" cy="${y - 8}" r="23" fill="${palette.accent}"/>
+    <text x="94" y="${y}" font-family="Apple SD Gothic Neo, sans-serif" font-size="20" font-weight="850" text-anchor="middle" fill="#FFFFFF">${number}</text>
+    <text x="132" y="${y}" font-family="Apple SD Gothic Neo, sans-serif" font-size="27" font-weight="850" fill="${palette.dark}">${escapeXml(title)}</text>
+    <line x1="132" y1="${y + 17}" x2="1148" y2="${y + 17}" stroke="${palette.accent}" stroke-width="3" opacity=".38"/>
+  </g>`;
 
-  const guidedBody = [
-    textElement({ x: 108, y: 590, text: model.guided.context, fontSize: 18, weight: 600, color: "#4B4754", maxCharacters: 23, maxLines: 2 }),
-    textElement({ x: 108, y: 656, text: model.guided.prompt, fontSize: 20, weight: 800, color: palette.dark, maxCharacters: 20, maxLines: 4 }),
-    printableChoices ? textElement({ x: 108, y: 766, text: `선택: ${printableChoices}`, fontSize: 17, weight: 700, color: palette.accent, maxCharacters: 22, maxLines: 2 }) : "",
-    textElement({ x: 108, y: 832, text: "식과 답", fontSize: 18, weight: 800, color: "#615B6C", maxCharacters: 10, maxLines: 1 }),
-    answerLines(108, 860, 446, 2, 28),
-  ].join("");
+  const guidedContext = model.guided.context
+    ? textElement({ x: 92, y: 544, text: model.guided.context, fontSize: 18, weight: 650, color: "#665E72", maxCharacters: 48, maxLines: 2, hardMaxCharacters: 54 })
+    : "";
+  const guidedPrompt = textElement({ x: 92, y: 604, text: model.guided.prompt, fontSize: 23, weight: 800, color: "#302441", maxCharacters: 39, maxLines: 3, hardMaxCharacters: 48 });
+  const guidedChoices = printableChoices
+    ? textElement({ x: 92, y: 696, text: `보기  ${printableChoices}`, fontSize: 18, weight: 700, color: palette.accent, maxCharacters: 50, maxLines: 2, hardMaxCharacters: 56 })
+    : "";
 
-  const transferBody = [
-    textElement({ x: 670, y: 590, text: model.transfer.prompt, fontSize: 20, weight: 800, color: palette.dark, maxCharacters: 20, maxLines: 4 }),
-    model.transfer.cues.length ? textElement({ x: 670, y: 704, text: model.transfer.cues.join(" · "), fontSize: 18, weight: 650, color: "#4B4754", maxCharacters: 22, maxLines: 2 }) : "",
-    textElement({ x: 670, y: 784, text: "풀이와 설명 한 문장", fontSize: 18, weight: 800, color: "#615B6C", maxCharacters: 18, maxLines: 1 }),
-    answerLines(670, 824, 446, 2, 48),
-  ].join("");
+  const transferPrompt = textElement({ x: 92, y: 882, text: model.transfer.prompt, fontSize: 23, weight: 800, color: "#302441", maxCharacters: 39, maxLines: 3, hardMaxCharacters: 48 });
+  const transferCues = model.transfer.cues.length
+    ? textElement({ x: 92, y: 962, text: model.transfer.cues.join(" · "), fontSize: 18, weight: 650, color: "#665E72", maxCharacters: 48, maxLines: 2, hardMaxCharacters: 54 })
+    : "";
 
   const errorText = model.errorCases.map((item, index) => {
-    const y = 1044 + index * 112;
-    return `<g><rect x="108" y="${y - 38}" width="500" height="88" rx="18" fill="${index === 0 ? palette.soft : "#FFF8E7"}"/><circle cx="136" cy="${y - 2}" r="18" fill="${index === 0 ? palette.accent : palette.warm}"/><text x="136" y="${y + 5}" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="800" text-anchor="middle" fill="${index === 0 ? "#FFFFFF" : palette.dark}">${String.fromCharCode(65 + index)}</text>${textElement({ x: 170, y: y - 12, text: item, fontSize: 17, weight: 650, color: "#3C3842", maxCharacters: 20, maxLines: 3 })}</g>`;
+    const y = 1190 + index * 82;
+    return `<g><text x="96" y="${y}" font-family="Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="850" fill="${palette.accent}">${String.fromCharCode(65 + index)}.</text>${textElement({ x: 132, y, text: item, fontSize: 18, weight: 650, color: "#3C3447", maxCharacters: 48, maxLines: 2, hardMaxCharacters: 54 })}</g>`;
   }).join("");
 
   const exitText = model.exitItems.map((item, index) => {
-    const y = 1042 + index * 105;
-    return `<g><circle cx="690" cy="${y - 4}" r="20" fill="${index === 2 ? palette.warm : palette.accent}"/><text x="690" y="${y + 4}" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="800" text-anchor="middle" fill="${index === 2 ? palette.dark : "#FFFFFF"}">${index + 1}</text>${textElement({ x: 730, y: y - 12, text: item, fontSize: 17, weight: 650, color: "#3C3842", maxCharacters: 24, maxLines: 3 })}<line x1="730" y1="${y + 49}" x2="1115" y2="${y + 49}" stroke="#BFB8CE" stroke-width="2" stroke-dasharray="8 8"/></g>`;
+    const y = 1474 + index * 82;
+    const textX = index === 2 ? 190 : 138;
+    return `<g><circle cx="102" cy="${y - 7}" r="18" fill="${index === 2 ? palette.warm : palette.accent}"/><text x="102" y="${y}" font-family="Apple SD Gothic Neo, sans-serif" font-size="16" font-weight="850" text-anchor="middle" fill="${index === 2 ? palette.dark : "#FFFFFF"}">${index + 1}</text>${textElement({ x: textX, y, text: item, fontSize: 18, weight: 650, color: "#3C3447", maxCharacters: index === 2 ? 43 : 46, maxLines: 2, hardMaxCharacters: index === 2 ? 49 : 52 })}<line x1="${textX}" y1="${y + 35}" x2="1140" y2="${y + 35}" stroke="#BEB1D1" stroke-width="2" stroke-dasharray="7 9"/></g>`;
   }).join("");
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${SERIES_ASSET_CONTRACT.worksheetWidth}" height="${SERIES_ASSET_CONTRACT.worksheetHeight}" viewBox="0 0 ${SERIES_ASSET_CONTRACT.worksheetWidth} ${SERIES_ASSET_CONTRACT.worksheetHeight}" role="img" aria-label="${escapeXml(model.title)} 통합 활동지">
-  <rect width="1240" height="1754" fill="#FBFAFD"/>
-  <rect x="0" y="0" width="1240" height="250" fill="${palette.soft}"/>
-  <path d="M910 0H1240V250H1000C1060 210 1080 140 1042 88C1010 44 958 24 910 0Z" fill="${palette.accent}" opacity=".10"/>
-  <rect x="64" y="42" width="190" height="46" rx="23" fill="${palette.accent}"/>
-  <text x="159" y="73" font-family="Apple SD Gothic Neo, sans-serif" font-size="20" font-weight="800" text-anchor="middle" fill="#FFFFFF">활동지 ${String(model.sequence).padStart(2, "0")} / 30</text>
-  ${textElement({ x: 68, y: 138, text: titleLines, fontSize: 40, weight: 850, color: palette.dark, maxCharacters: 25, maxLines: 2, lineHeight: 1.18 })}
-  ${textElement({ x: 68, y: 225, text: `${model.grade} · ${model.unit}`, fontSize: 20, weight: 700, color: "#5F586A", maxCharacters: 35, maxLines: 1 })}
-  ${conceptVisual(model, { x: 914, y: 42, width: 265, height: 170, accent: palette.accent, warm: palette.warm })}
-  <text x="1174" y="226" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="700" text-anchor="end" fill="#5F586A">이름 ____________</text>
+  <text x="124" y="91" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-size="25" font-weight="900" text-anchor="middle" fill="#FFFFFF">eduitit</text>
+  <text x="1140" y="82" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="750" text-anchor="end" fill="#6D5A87">${String(model.sequence).padStart(2, "0")} / 30</text>
+  ${textElement({ x: 78, y: 196, text: titleLines, fontSize: 42, weight: 900, color: "#352064", maxCharacters: 26, maxLines: 2, lineHeight: 1.18 })}
+  ${textElement({ x: 80, y: 286, text: `${model.grade} · ${model.unit}`, fontSize: 19, weight: 700, color: "#6A6073", maxCharacters: 42, maxLines: 1, hardMaxCharacters: 48 })}
+  <text x="1142" y="286" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="700" text-anchor="end" fill="#6A6073">이름 __________________</text>
+  ${conceptVisual(model, { x: 914, y: 116, width: 250, height: 145, accent: palette.accent, warm: palette.warm })}
+  <path d="M78 332 C300 312 488 350 700 329 S1000 320 1158 335" fill="none" stroke="#D5C5EB" stroke-width="4" stroke-linecap="round"/>
+  <text x="82" y="378" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="850" fill="#6B4AA0">생각 순서</text>
+  ${textElement({ x: 196, y: 378, text: routeText, fontSize: 18, weight: 700, color: "#44384F", maxCharacters: 62, maxLines: 2, hardMaxCharacters: 70 })}
 
-  <rect x="64" y="278" width="1112" height="172" rx="28" fill="${palette.soft}" stroke="${palette.accent}" stroke-width="2"/>
-  <text x="88" y="312" font-family="Apple SD Gothic Neo, sans-serif" font-size="20" font-weight="850" fill="${palette.dark}">생각 순서</text>
-  ${routeCards}
+  ${sectionHeading(1, "먼저 같이 풀어 봐요", 486)}
+  ${guidedContext}
+  ${guidedPrompt}
+${guidedChoices}
+  <text x="92" y="744" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="800" fill="#6A6073">식과 답</text>
+  ${answerLines(196, 742, 940, 2, 48)}
 
-  ${sectionBox({ x: 64, y: 476, width: 548, height: 422, number: 1, title: "따라 풀기", palette, body: guidedBody })}
-  ${sectionBox({ x: 628, y: 476, width: 548, height: 422, number: 2, title: "새 문제 설명하기", palette, body: transferBody })}
-  ${sectionBox({ x: 64, y: 924, width: 548, height: 390, number: 3, title: "오류 탐정", palette, body: `${errorText}${textElement({ x: 108, y: 1264, text: "먼저 고칠 단계와 까닭", fontSize: 18, weight: 800, color: "#615B6C", maxCharacters: 20, maxLines: 1 })}${answerLines(108, 1296, 446, 1, 50)}` })}
-  ${sectionBox({ x: 628, y: 924, width: 548, height: 390, number: 4, title: "나가기 표", palette, body: exitText })}
+  ${sectionHeading(2, "이번에는 혼자 풀어 봐요", 826)}
+  ${transferPrompt}
+  ${transferCues}
+  <text x="92" y="1020" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="800" fill="#6A6073">풀이와 설명</text>
+  ${answerLines(220, 1018, 916, 2, 48)}
 
-  <rect x="64" y="1340" width="1112" height="292" rx="28" fill="#FFFFFF" stroke="#DDD8EA" stroke-width="3"/>
-  <rect x="88" y="1368" width="310" height="44" rx="22" fill="${palette.accent}"/>
-  <text x="243" y="1398" font-family="Apple SD Gothic Neo, sans-serif" font-size="20" font-weight="850" text-anchor="middle" fill="#FFFFFF">오늘의 핵심 관계</text>
-  ${textElement({ x: 90, y: 1462, text: model.coreRule, fontSize: 28, weight: 850, color: palette.dark, maxCharacters: 35, maxLines: 2 })}
-  <line x1="90" y1="1540" x2="1150" y2="1540" stroke="#D5D0DF" stroke-width="2"/>
-  <text x="92" y="1588" font-family="Apple SD Gothic Neo, sans-serif" font-size="20" font-weight="750" fill="#4B4754">스스로 확인</text>
-  <rect x="250" y="1566" width="25" height="25" rx="5" fill="#FFFFFF" stroke="${palette.accent}" stroke-width="3"/><text x="290" y="1587" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="650" fill="#4B4754">정보를 찾았다</text>
-  <rect x="495" y="1566" width="25" height="25" rx="5" fill="#FFFFFF" stroke="${palette.accent}" stroke-width="3"/><text x="535" y="1587" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="650" fill="#4B4754">식·그림으로 풀었다</text>
-  <rect x="790" y="1566" width="25" height="25" rx="5" fill="#FFFFFF" stroke="${palette.accent}" stroke-width="3"/><text x="830" y="1587" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="650" fill="#4B4754">까닭을 설명했다</text>
+  ${sectionHeading(3, "어디에서 생각이 달라졌을까요?", 1134)}
+  ${errorText}
+  <text x="92" y="1348" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="800" fill="#6A6073">먼저 고칠 부분과 그 까닭</text>
+  ${answerLines(298, 1346, 838, 1, 48)}
 
-  <text x="68" y="1708" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="750" fill="#746D7C">MIDDLE OF MATH · 비바샘 수업 꾸러미</text>
-  <text x="1172" y="1708" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="650" text-anchor="end" fill="#746D7C">개인정보 없는 수업용 예시</text>
+  ${sectionHeading(4, "수업을 마치며 확인해요", 1418)}
+  ${exitText}
+  <text x="82" y="1705" font-family="Apple SD Gothic Neo, sans-serif" font-size="16" font-weight="750" fill="#766A80">MIDDLE OF MATH</text>
 </svg>`;
   return svg;
 }
@@ -460,7 +480,7 @@ function renderRepresentativeSvg(model) {
   <circle cx="104" cy="654" r="180" fill="${palette.warm}" opacity=".12"/>
   <rect x="62" y="58" width="1076" height="559" rx="56" fill="#FFFFFF" stroke="#DDD5F2" stroke-width="3" filter="url(#shadow)"/>
   <rect x="98" y="96" width="244" height="50" rx="25" fill="${palette.accent}"/>
-  <text x="220" y="129" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="850" text-anchor="middle" fill="#FFFFFF">수업 꾸러미 ${String(model.sequence).padStart(2, "0")}</text>
+  <text x="220" y="129" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="850" text-anchor="middle" fill="#FFFFFF">수학 수업 ${String(model.sequence).padStart(2, "0")}</text>
   ${textElement({ x: 102, y: 246, text: titleLines, fontSize: 58, weight: 900, color: palette.dark, maxCharacters: SERIES_ASSET_CONTRACT.titleMaxCharactersPerLine, maxLines: 2, lineHeight: 1.18 })}
   ${textElement({ x: 104, y: 405, text: model.subtitle || model.coreRule, fontSize: 25, weight: 650, color: "#5D5668", maxCharacters: 33, maxLines: 2 })}
   <rect x="102" y="492" width="430" height="64" rx="28" fill="${palette.soft}"/>
@@ -543,7 +563,7 @@ async function writePdfFromPng(pngPath, pdfPath) {
   const fixedDate = new Date(FIXED_BUILD_TIME);
   pdf.setTitle(path.basename(pdfPath));
   pdf.setAuthor("Middle of Math");
-  pdf.setCreator("Middle of Math Vivasam non-PPT harness");
+  pdf.setCreator("Middle of Math worksheet builder");
   pdf.setProducer("pdf-lib");
   pdf.setCreationDate(fixedDate);
   pdf.setModificationDate(fixedDate);
@@ -561,31 +581,41 @@ function downloadUrl(lessonId, filename) {
   return `/edu-materials/lesson-bundles/${lessonId}/download/${filename}/`;
 }
 
-function buildPackageHtml({ lesson, model, digest, filenames }) {
-  const palette = PALETTE_BY_DOMAIN[model.domain];
-  const slides = lesson.slides.map((slide) => `<article class="slide-card">
-    <div class="slide-number">${String(slide.number).padStart(2, "0")}</div>
-    <div><div class="eyebrow">${escapeHtml(slide.phase)} · ${slide.minutes}분</div><h3>${escapeHtml(slide.title)}</h3><ul>${slide.visibleContent.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul><p><strong>수업 의도</strong> ${escapeHtml(slide.intent)}</p></div>
-  </article>`).join("");
-  const downloads = [
-    ["인쇄용 활동지 PDF", filenames.worksheetPdf],
-    ["활동지 PNG", filenames.worksheetPng],
-    ["편집 가능한 활동지 SVG", filenames.worksheetSvg],
-    ["수업 설계 의도", filenames.intent],
-    ["교사용 정답", filenames.answerKey],
-    ["Claude용 PPT 내용 원고", filenames.handoffMarkdown],
-    ["Claude용 내용 데이터", filenames.handoffJson],
+function practiceUrlFor(lesson) {
+  const semester = lesson.id.startsWith("g3s1-") ? "g3s1" : "g3s2";
+  return `https://middle-of-math-student.vercel.app/?practice=${semester}-${lessonDomain(lesson)}`;
+}
+
+function buildLessonGuide(lesson) {
+  const opening = findSlide(lesson, "dilemma", 2);
+  const modelSlide = findSlide(lesson, "model", 5);
+  const guided = findSlide(lesson, "guided", 6);
+  const pair = findSlide(lesson, "pair", 7);
+  const exit = findSlide(lesson, "exit", 10);
+  return [
+    `처음에는 ‘${opening.title}’ 질문만 보여 주세요. 바로 답을 알려 주기보다 30초쯤 혼자 생각하게 한 뒤, 옆 친구와 까닭을 짧게 나누면 수업을 시작하기 좋습니다.`,
+    `이어서 ‘${modelSlide.title}’ 문제를 함께 풀어 봅니다. 교사는 계산을 대신 해 주지 말고, 학생이 자료에서 어떤 수를 찾았는지와 그 수를 왜 사용했는지만 차근차근 물어보세요.`,
+    `‘${guided.title}’에서는 활동지에 혼자 적어 보게 하고, 다음 ‘${pair.title}’에서 서로의 풀이를 설명하게 합니다. 답이 같아도 설명이 다르면 어떤 부분이 다른지 다시 말해 보게 해 주세요.`,
+    `마지막에는 ‘${exit.title}’를 혼자 해결하게 합니다. 정답 개수만 세기보다 식이나 그림, 짧은 설명 가운데 무엇이 빠졌는지를 살펴보면 다음 수업을 준비하기가 한결 수월합니다.`,
   ];
+}
+
+function buildPackageHtml({ lesson, model, digest, filenames, pptAvailable }) {
+  const palette = PALETTE_BY_DOMAIN[model.domain];
+  const guide = buildLessonGuide(lesson);
+  const practiceUrl = practiceUrlFor(lesson);
+  const pptBlock = pptAvailable
+    ? `<p>수업 화면 자료입니다.</p><a class="download" href="${downloadUrl(lesson.id, filenames.pptx)}">PPT 다운로드</a>`
+    : `<p class="pending">PPT는 준비되는 대로 올립니다.</p>`;
   return `<!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(lesson.title)} 수업 꾸러미</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(lesson.title)}</title>
 <style>
-:root{--accent:${palette.accent};--dark:${palette.dark};--soft:${palette.soft};--warm:${palette.warm};--ink:#26212c;--muted:#665f70;--line:#ded8e8}*{box-sizing:border-box}body{margin:0;background:#f8f6fb;color:var(--ink);font-family:"Apple SD Gothic Neo","Noto Sans KR",sans-serif;line-height:1.65}.wrap{width:min(1120px,calc(100% - 32px));margin:0 auto;padding:28px 0 72px}.hero,.panel,.slide-card{background:#fff;border:1px solid var(--line);box-shadow:0 16px 42px rgba(51,36,90,.08)}.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:36px;align-items:center;border-radius:34px;padding:46px}.badge{display:inline-flex;border-radius:999px;background:var(--accent);color:#fff;padding:8px 16px;font-weight:800}.hero h1{font-size:clamp(36px,5vw,62px);line-height:1.12;margin:22px 0 14px;word-break:keep-all}.meta{font-size:18px;font-weight:750;color:var(--muted)}.hero img{width:100%;border-radius:26px}.status{margin-top:22px;border-radius:20px;background:var(--soft);padding:16px 18px;font-weight:800;color:var(--dark)}.panel{margin-top:28px;border-radius:30px;padding:34px}.panel h2{font-size:30px;line-height:1.2;margin:0 0 18px;color:var(--dark)}.worksheet{display:grid;grid-template-columns:minmax(300px,.75fr) minmax(0,1.25fr);gap:30px;align-items:start}.worksheet img{width:100%;border:1px solid var(--line);border-radius:22px}.downloads{display:grid;gap:10px}.downloads a{display:flex;justify-content:space-between;gap:18px;border:1px solid var(--line);border-radius:16px;padding:14px 16px;color:var(--dark);font-weight:800;text-decoration:none}.downloads a:hover,.downloads a:focus-visible{border-color:var(--accent);background:var(--soft)}.slides{display:grid;gap:18px}.slide-card{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;border-radius:24px;padding:24px}.slide-number{display:grid;place-items:center;width:54px;height:54px;border-radius:18px;background:var(--accent);color:#fff;font-weight:900}.eyebrow{color:var(--accent);font-size:13px;font-weight:900;letter-spacing:.08em}.slide-card h3{margin:4px 0 10px;font-size:24px;word-break:keep-all}.slide-card ul{margin:0;padding-left:20px}.slide-card p{margin:14px 0 0;padding:12px 14px;border-radius:14px;background:var(--soft)}details{border:1px solid var(--line);border-radius:18px;padding:16px 18px}summary{cursor:pointer;font-weight:900;color:var(--dark)}pre{white-space:pre-wrap;word-break:keep-all;font:inherit}.privacy{border-left:5px solid var(--warm);padding-left:16px;color:var(--muted)}@media(max-width:800px){.hero,.worksheet{grid-template-columns:1fr}.hero{padding:28px}.panel{padding:24px}.slide-card{grid-template-columns:48px minmax(0,1fr)}.slide-number{width:44px;height:44px}}
+:root{--accent:${palette.accent};--dark:#2f2638;--soft:#f5f0fc;--line:#ddd4e8;--muted:#6d6474}*{box-sizing:border-box}body{margin:0;background:#faf9fc;color:var(--dark);font-family:"Apple SD Gothic Neo","Noto Sans KR",sans-serif;line-height:1.7}.wrap{width:min(900px,calc(100% - 32px));margin:0 auto;padding:42px 0 72px}.heading{padding:0 2px 26px;border-bottom:1px solid var(--line)}h1{margin:0;font-size:clamp(34px,6vw,54px);line-height:1.18;word-break:keep-all}.meta{margin:10px 0 0;color:var(--muted);font-weight:700}.section{margin-top:24px;padding:28px;border:1px solid var(--line);border-radius:22px;background:#fff}.section h2{margin:0 0 14px;font-size:25px;line-height:1.3}.section p{margin:0 0 16px}.download{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:12px;background:var(--accent);padding:11px 20px;color:#fff;font-weight:800;text-decoration:none}.download.secondary{margin-top:18px;background:#fff;color:var(--accent);border:1px solid var(--accent)}.download:hover,.download:focus-visible{filter:brightness(.94)}.worksheet-image{display:block;width:min(100%,680px);margin:18px auto 22px;border:1px solid var(--line);border-radius:14px}.guide{margin:0;padding-left:22px}.guide li{margin:0 0 12px}.guide li:last-child{margin-bottom:0}.pending{color:var(--muted)}@media(max-width:640px){.wrap{padding-top:28px}.section{padding:22px}}
 </style></head><body><main class="wrap">
-<section class="hero"><div><span class="badge">수업 꾸러미 ${String(lesson.sequence).padStart(2, "0")} / 30</span><h1>${escapeHtml(lesson.title)}</h1><p class="meta">${escapeHtml(lesson.grade)} · ${escapeHtml(lesson.unit)} · ${lesson.durationMinutes}분</p><p>${escapeHtml(lesson.targetBehavior)}</p><div class="status">자료 상태 · 활동지와 수업 기록 공개 완료 · PPT는 Claude 제작 후 추가 예정</div></div><img src="${staticPrefix(lesson.id, digest)}/${filenames.representative}" alt="${escapeHtml(lesson.title)} 수업의 핵심 수학 개념을 표현한 대표 이미지"></section>
-<section class="panel"><h2>수업 설계 의도</h2><p>학생이 답만 고르는 데서 멈추지 않고 자료의 정보, 핵심 관계, 계산 결과, 설명을 연결하도록 설계했습니다. 짝 설명 뒤 같은 생각을 혼자 기록하게 하여 개인별 학습 증거를 남깁니다.</p><p class="privacy">실제 학생 이름·얼굴·학급·댓글을 사용하지 않았으며, 풀이 비교는 익명 합성 사례로 구성했습니다.</p></section>
-<section class="panel worksheet"><div><h2>통합 활동지 1개</h2><img src="${staticPrefix(lesson.id, digest)}/${filenames.worksheetPng}" alt="${escapeHtml(lesson.title)} 한 장짜리 통합 활동지 미리보기" loading="lazy"></div><div><h2>수업 자료 받기</h2><p>한 차시에서 사용하는 생각 순서, 따라 풀기, 새 문제 설명, 오류 탐정, 나가기 표를 활동지 한 장에 묶었습니다.</p><div class="downloads">${downloads.map(([label, filename]) => `<a href="${downloadUrl(lesson.id, filename)}"><span>${escapeHtml(label)}</span><span>다운로드</span></a>`).join("")}</div></div></section>
-<section class="panel"><h2>슬라이드별 내용과 수업 의도</h2><div class="slides">${slides}</div></section>
-<section class="panel"><h2>교사용 정답</h2><details><summary>정답과 관찰 포인트 펼치기</summary><pre>${escapeHtml(buildAnswerKeyMarkdown(lesson, model))}</pre></details></section>
+<header class="heading"><h1>${escapeHtml(lesson.title)}</h1><p class="meta">${escapeHtml(lesson.grade)} · ${escapeHtml(lesson.unit)} · ${lesson.durationMinutes}분</p></header>
+<section class="section" data-section="ppt"><h2>PPT</h2>${pptBlock}</section>
+<section class="section" data-section="worksheet"><h2>활동지</h2><img class="worksheet-image" src="${staticPrefix(lesson.id, digest)}/${filenames.worksheetPng}" alt="${escapeHtml(lesson.title)} 활동지" loading="lazy"><a class="download" href="${downloadUrl(lesson.id, filenames.worksheetPdf)}">활동지 다운로드</a></section>
+<section class="section" data-section="guide"><h2>수업은 이렇게 진행해 보세요</h2><ol class="guide">${guide.map((paragraph) => `<li>${escapeHtml(paragraph)}</li>`).join("")}</ol><a class="download secondary" href="${practiceUrl}" target="_blank" rel="noreferrer">관련 문제 더 풀기</a></section>
 </main></body></html>`;
 }
 
@@ -594,6 +624,7 @@ function packageFilenames(lessonId) {
     worksheetSvg: `${lessonId}-worksheet.svg`,
     worksheetPng: `${lessonId}-worksheet.png`,
     worksheetPdf: `${lessonId}-worksheet.pdf`,
+    pptx: `${lessonId}.pptx`,
     representative: "representative-image.png",
     intent: "teaching-intent.md",
     answerKey: "teacher-answer-key.md",
@@ -606,6 +637,7 @@ function contentTypeFor(filename) {
   if (filename.endsWith(".png")) return "image/png";
   if (filename.endsWith(".svg")) return "image/svg+xml";
   if (filename.endsWith(".pdf")) return "application/pdf";
+  if (filename.endsWith(".pptx")) return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
   if (filename.endsWith(".json")) return "application/json";
   return "text/markdown; charset=utf-8";
 }
@@ -621,8 +653,9 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
   const worksheetRoot = path.join(lessonRoot, "worksheet");
   const supportRoot = path.join(lessonRoot, "support");
   const webPackageRoot = path.join(lessonRoot, "web-package");
-  // These three directories are fully generated. Resetting them prevents an
-  // older digest or a received PPTX from leaking into the non-PPT package.
+  // These three directories are fully generated. The received PPTX stays in
+  // its separate claude directory and is copied into the public package only
+  // when the original file exists.
   resetDirectory(worksheetRoot);
   resetDirectory(supportRoot);
   resetDirectory(webPackageRoot);
@@ -639,9 +672,20 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
   const handoffRoot = path.join(lessonRoot, "content-handoff");
   const handoffMarkdownPath = path.join(handoffRoot, filenames.handoffMarkdown);
   const handoffJsonPath = path.join(handoffRoot, filenames.handoffJson);
+  const worksheetBackgroundPath = path.join(repoRoot, WORKSHEET_BACKGROUND_RELATIVE_PATH);
+  const receivedPptxPath = path.join(lessonRoot, "claude", filenames.pptx);
+  const pptAvailable = fs.existsSync(receivedPptxPath);
 
+  ensure(fs.existsSync(worksheetBackgroundPath), `활동지 배경 이미지가 없습니다: ${worksheetBackgroundPath}`);
   writeUtf8(worksheetSvgPath, renderWorksheetSvg(model));
-  await sharp(Buffer.from(fs.readFileSync(worksheetSvgPath, "utf8"))).png({ compressionLevel: 9 }).toFile(worksheetPngPath);
+  const worksheetBackground = await sharp(worksheetBackgroundPath)
+    .resize(SERIES_ASSET_CONTRACT.worksheetWidth, SERIES_ASSET_CONTRACT.worksheetHeight, { fit: "fill" })
+    .png()
+    .toBuffer();
+  await sharp(worksheetBackground)
+    .composite([{ input: Buffer.from(fs.readFileSync(worksheetSvgPath, "utf8")) }])
+    .png({ compressionLevel: 9 })
+    .toFile(worksheetPngPath);
   await writePdfFromPng(worksheetPngPath, worksheetPdfPath);
   writeUtf8(representativeSvgPath, renderRepresentativeSvg(model));
   await sharp(Buffer.from(fs.readFileSync(representativeSvgPath, "utf8"))).png({ compressionLevel: 9 }).toFile(representativeImagePath);
@@ -649,15 +693,11 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
   writeUtf8(answerKeyPath, buildAnswerKeyMarkdown(lesson, model));
 
   const sourceFiles = {
-    [filenames.worksheetSvg]: worksheetSvgPath,
     [filenames.worksheetPng]: worksheetPngPath,
     [filenames.worksheetPdf]: worksheetPdfPath,
     [filenames.representative]: representativeImagePath,
-    [filenames.intent]: teachingIntentPath,
-    [filenames.answerKey]: answerKeyPath,
-    [filenames.handoffMarkdown]: handoffMarkdownPath,
-    [filenames.handoffJson]: handoffJsonPath,
   };
+  if (pptAvailable) sourceFiles[filenames.pptx] = receivedPptxPath;
   for (const [name, filePath] of Object.entries(sourceFiles)) ensure(fs.existsSync(filePath), `${lesson.id}의 ${name} 파일이 없습니다.`);
 
   const digestInput = Object.entries(sourceFiles).sort(([a], [b]) => a.localeCompare(b)).map(([name, filePath]) => `${name}:${fileHash(filePath)}`).join("\n");
@@ -673,12 +713,19 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
       bytes: fs.statSync(filePath).size,
       sha256: fileHash(filePath),
       contentType: contentTypeFor(filename),
-      role: filename === filenames.representative ? "thumbnail" : filename.startsWith(`${lesson.id}-worksheet`) ? "worksheet" : filename.startsWith("claude-") ? "content-handoff" : "teacher-support",
+      role: filename === filenames.representative
+        ? "thumbnail"
+        : filename === filenames.pptx
+          ? "presentation"
+          : "worksheet",
     };
   });
-  const downloadAssets = [filenames.worksheetPdf, filenames.worksheetPng, filenames.worksheetSvg, filenames.intent, filenames.answerKey, filenames.handoffMarkdown, filenames.handoffJson];
+  const downloadAssets = [
+    ...(pptAvailable ? [filenames.pptx] : []),
+    filenames.worksheetPdf,
+  ];
   const manifest = {
-    schemaVersion: 2,
+    schemaVersion: 3,
     seriesId: "vivasam-2026-middleofmath-30",
     generatedAt: FIXED_BUILD_TIME,
     lessonId: lesson.id,
@@ -691,18 +738,19 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
     durationMinutes: lesson.durationMinutes,
     slideCount: lesson.slides.length,
     worksheetCount: 1,
-    pptAuthor: "Claude",
-    pptStatus: "awaiting-claude",
+    pptStatus: pptAvailable ? "available" : "awaiting-claude",
     sourceHtml: "source.html",
     digest,
     thumbnailAsset: `${digest}/${filenames.representative}`,
     worksheetAsset: `${digest}/${filenames.worksheetPng}`,
+    pptAsset: pptAvailable ? `${digest}/${filenames.pptx}` : "",
+    practiceUrl: practiceUrlFor(lesson),
     downloadAssets,
     assets,
   };
   const packageHtmlPath = path.join(webPackageRoot, "source.html");
   const packageManifestPath = path.join(webPackageRoot, "manifest.json");
-  writeUtf8(packageHtmlPath, buildPackageHtml({ lesson, model, digest, filenames }));
+  writeUtf8(packageHtmlPath, buildPackageHtml({ lesson, model, digest, filenames, pptAvailable }));
   writeUtf8(packageManifestPath, stableJson(manifest));
 
   const supportManifest = {
@@ -834,18 +882,40 @@ async function buildReviewContactSheets(items, { repoRoot = REPO_ROOT } = {}) {
   return { reviewRoot, worksheetSheet, representativeSheet, indexPath };
 }
 
-async function buildSeriesAssets({ repoRoot = REPO_ROOT, eduititRoot = DEFAULT_EDUITIT_ROOT, syncEduitit = true } = {}) {
-  const lessons = loadSeriesLessons({ repoRoot });
+function hasReceivedPptx(repoRoot, lesson) {
+  return fs.existsSync(path.join(repoRoot, "artifacts", "vivasam", lesson.id, "claude", `${lesson.id}.pptx`));
+}
+
+function removePrematureGeneratedAssets(repoRoot, lessons) {
+  for (const lesson of lessons) {
+    const lessonRoot = path.join(repoRoot, "artifacts", "vivasam", lesson.id);
+    for (const directory of ["worksheet", "support", "web-package"]) {
+      fs.rmSync(path.join(lessonRoot, directory), { recursive: true, force: true });
+    }
+    fs.rmSync(path.join(lessonRoot, "non-ppt-artifact-manifest.json"), { force: true });
+  }
+  fs.rmSync(path.join(repoRoot, "artifacts", "vivasam", "review"), { recursive: true, force: true });
+}
+
+async function buildSeriesAssets({ repoRoot = REPO_ROOT, eduititRoot = DEFAULT_EDUITIT_ROOT, syncEduitit = true, availableOnly = false } = {}) {
+  const allLessons = loadSeriesLessons({ repoRoot });
+  const lessons = availableOnly ? allLessons.filter((lesson) => hasReceivedPptx(repoRoot, lesson)) : allLessons;
+  ensure(lessons.length > 0, "공개할 PPT가 있는 차시가 없습니다.");
+  if (availableOnly) {
+    const receivedIds = new Set(lessons.map((lesson) => lesson.id));
+    removePrematureGeneratedAssets(repoRoot, allLessons.filter((lesson) => !receivedIds.has(lesson.id)));
+  }
   const items = [];
   for (const lesson of lessons) items.push(await buildLessonAssets(lesson, { repoRoot }));
-  const review = await buildReviewContactSheets(items, { repoRoot });
+  const review = items.length === SERIES_ASSET_CONTRACT.packageCount
+    ? await buildReviewContactSheets(items, { repoRoot })
+    : null;
   const seriesManifest = {
     schemaVersion: 1,
     seriesId: "vivasam-2026-middleofmath-30",
     generatedAt: FIXED_BUILD_TIME,
     count: items.length,
-    pptAuthor: "Claude",
-    pptStatus: "awaiting-claude",
+    pptStatus: items.every((item) => item.manifest.pptStatus === "available") ? "available" : "partial",
     records: items.map((item) => ({
       sequence: item.lesson.sequence,
       lessonId: item.lesson.id,
@@ -853,6 +923,7 @@ async function buildSeriesAssets({ repoRoot = REPO_ROOT, eduititRoot = DEFAULT_E
       grade: item.lesson.grade,
       unit: item.lesson.unit,
       digest: item.digest,
+      pptStatus: item.manifest.pptStatus,
       packageManifest: `${item.lesson.id}/manifest.json`,
     })),
   };
@@ -869,12 +940,17 @@ async function buildSeriesAssets({ repoRoot = REPO_ROOT, eduititRoot = DEFAULT_E
 
 function validatePackage(item) {
   const manifest = JSON.parse(fs.readFileSync(item.packageManifestPath, "utf8"));
+  ensure(manifest.schemaVersion === 3, `${item.lesson.id} 패키지 스키마가 최신이 아닙니다.`);
   ensure(manifest.lessonId === item.lesson.id, `${item.lesson.id} 패키지 lessonId가 다릅니다.`);
   ensure(manifest.digest === item.digest, `${item.lesson.id} 패키지 digest가 다릅니다.`);
   ensure(manifest.worksheetCount === 1, `${item.lesson.id} 패키지 활동지 수가 1이 아닙니다.`);
-  ensure(manifest.pptStatus === "awaiting-claude", `${item.lesson.id} PPT 대기 상태가 아닙니다.`);
-  ensure(manifest.assets.every((asset) => !asset.path.endsWith(".pptx")), `${item.lesson.id} 패키지에 Codex PPT가 섞였습니다.`);
-  ensure(manifest.downloadAssets.length === 7, `${item.lesson.id} 다운로드 자료 수가 7이 아닙니다.`);
+  ensure(["available", "awaiting-claude"].includes(manifest.pptStatus), `${item.lesson.id} PPT 상태가 잘못되었습니다.`);
+  const pptAssets = manifest.assets.filter((asset) => asset.path.endsWith(".pptx"));
+  const pptAvailable = manifest.pptStatus === "available";
+  ensure(pptAssets.length === (pptAvailable ? 1 : 0), `${item.lesson.id} PPT 파일과 상태가 다릅니다.`);
+  ensure(manifest.downloadAssets.length === (pptAvailable ? 2 : 1), `${item.lesson.id} 공개 다운로드 수가 잘못되었습니다.`);
+  ensure(/^https:\/\/middle-of-math-student\.vercel\.app\/\?practice=g3s[12]-[a-z-]+$/.test(manifest.practiceUrl), `${item.lesson.id} 관련 문제 링크가 잘못되었습니다.`);
+  ensure(manifest.assets.every((asset) => !/\.(?:md|json|svg)$/i.test(asset.path)), `${item.lesson.id} 공개 패키지에 내부 자료가 섞였습니다.`);
   const expectedFiles = ["manifest.json", "source.html", ...manifest.assets.map((asset) => asset.path)].sort();
   const actualFiles = listRelativeFiles(item.packageRoot);
   ensure(JSON.stringify(actualFiles) === JSON.stringify(expectedFiles), `${item.lesson.id} 패키지에 manifest 밖의 잔여 파일이 있습니다.`);
@@ -886,13 +962,16 @@ function validatePackage(item) {
   }
   const html = fs.readFileSync(item.packageHtmlPath, "utf8");
   ensure(!/data:(?:image|text\/html)/i.test(html), `${item.lesson.id} 패키지에 data URL이 있습니다.`);
-  ensure(html.includes("통합 활동지 1개"), `${item.lesson.id} 패키지에 통합 활동지 계약이 없습니다.`);
-  ensure(html.includes("PPT는 Claude 제작 후 추가 예정"), `${item.lesson.id} 패키지에 PPT 대기 안내가 없습니다.`);
+  ensure((html.match(/data-section=/g) || []).length === 3, `${item.lesson.id} 공개 페이지는 세 섹션이어야 합니다.`);
+  for (const heading of ["PPT", "활동지", "수업은 이렇게 진행해 보세요"]) ensure(html.includes(heading), `${item.lesson.id} 공개 페이지에 ${heading} 섹션이 없습니다.`);
+  ensure(html.includes(`href="${manifest.practiceUrl}"`), `${item.lesson.id} 공개 페이지에 관련 문제 링크가 없습니다.`);
+  for (const forbidden of ["비바샘", "개인정보", "Claude", "교사용 정답", "수업 설계 의도", "슬라이드별 내용"]) ensure(!html.includes(forbidden), `${item.lesson.id} 공개 페이지에 금지 문구가 있습니다: ${forbidden}`);
   for (const filename of manifest.downloadAssets) ensure(html.includes(downloadUrl(item.lesson.id, filename)), `${item.lesson.id} 패키지에 ${filename} 다운로드 링크가 없습니다.`);
 }
 
-async function validateSeriesArtifacts({ repoRoot = REPO_ROOT } = {}) {
-  const lessons = loadSeriesLessons({ repoRoot });
+async function validateSeriesArtifacts({ repoRoot = REPO_ROOT, availableOnly = false } = {}) {
+  const allLessons = loadSeriesLessons({ repoRoot });
+  const lessons = availableOnly ? allLessons.filter((lesson) => hasReceivedPptx(repoRoot, lesson)) : allLessons;
   const items = [];
   for (const lesson of lessons) {
     const lessonRoot = path.join(repoRoot, "artifacts", "vivasam", lesson.id);
@@ -923,7 +1002,7 @@ async function validateSeriesArtifacts({ repoRoot = REPO_ROOT } = {}) {
     validatePackage(item);
     items.push(item);
   }
-  ensure(items.length === 30, "검증된 차시 수가 30이 아닙니다.");
+  ensure(items.length === lessons.length, "검증된 차시 수가 대상 차시 수와 다릅니다.");
   return {
     lessonCount: items.length,
     worksheetCount: items.length,
@@ -945,14 +1024,15 @@ async function main() {
     ? DEFAULT_EDUITIT_ROOT
     : path.resolve(argv[eduititRootFlag + 1]);
   const checkOnly = args.has("--check");
+  const availableOnly = args.has("--available-only");
   if (checkOnly) {
-    const report = await validateSeriesArtifacts({ repoRoot: REPO_ROOT });
+    const report = await validateSeriesArtifacts({ repoRoot: REPO_ROOT, availableOnly });
     process.stdout.write(`검증 완료: ${report.lessonCount}개 차시 · 통합 활동지 ${report.worksheetCount}개 · 대표 이미지 ${report.representativeImageCount}개 · Eduitit 패키지 ${report.packageCount}개\n`);
     return;
   }
   const syncEduitit = !args.has("--no-sync-eduitit");
-  const result = await buildSeriesAssets({ repoRoot: REPO_ROOT, eduititRoot, syncEduitit });
-  const report = await validateSeriesArtifacts({ repoRoot: REPO_ROOT });
+  const result = await buildSeriesAssets({ repoRoot: REPO_ROOT, eduititRoot, syncEduitit, availableOnly });
+  const report = await validateSeriesArtifacts({ repoRoot: REPO_ROOT, availableOnly });
   process.stdout.write(`생성 완료: ${result.items.length}개 차시\n`);
   process.stdout.write(`통합 활동지: ${report.worksheetCount}/30\n`);
   process.stdout.write(`수업 의도·정답·대표 이미지: ${report.supportCount}/30\n`);

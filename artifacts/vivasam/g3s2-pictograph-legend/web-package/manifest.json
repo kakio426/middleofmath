@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "seriesId": "vivasam-2026-middleofmath-30",
   "generatedAt": "2026-08-07T00:00:00.000Z",
   "lessonId": "g3s2-pictograph-legend",
@@ -12,77 +12,45 @@
   "durationMinutes": 40,
   "slideCount": 11,
   "worksheetCount": 1,
-  "pptAuthor": "Claude",
-  "pptStatus": "awaiting-claude",
+  "pptStatus": "available",
   "sourceHtml": "source.html",
-  "digest": "c39a74a8292c",
-  "thumbnailAsset": "c39a74a8292c/representative-image.png",
-  "worksheetAsset": "c39a74a8292c/g3s2-pictograph-legend-worksheet.png",
+  "digest": "9d123bb62677",
+  "thumbnailAsset": "9d123bb62677/representative-image.png",
+  "worksheetAsset": "9d123bb62677/g3s2-pictograph-legend-worksheet.png",
+  "pptAsset": "9d123bb62677/g3s2-pictograph-legend.pptx",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-pictograph",
   "downloadAssets": [
-    "g3s2-pictograph-legend-worksheet.pdf",
-    "g3s2-pictograph-legend-worksheet.png",
-    "g3s2-pictograph-legend-worksheet.svg",
-    "teaching-intent.md",
-    "teacher-answer-key.md",
-    "claude-ppt-content.md",
-    "claude-ppt-content.json"
+    "g3s2-pictograph-legend.pptx",
+    "g3s2-pictograph-legend-worksheet.pdf"
   ],
   "assets": [
     {
-      "path": "c39a74a8292c/claude-ppt-content.json",
-      "bytes": 4921,
-      "sha256": "afadfb20d065f6dab28d63d0c2a8a1fb24ab5393676deae69b18aa809bc7105d",
-      "contentType": "application/json",
-      "role": "content-handoff"
-    },
-    {
-      "path": "c39a74a8292c/claude-ppt-content.md",
-      "bytes": 3635,
-      "sha256": "adeb8eb77caeed0f744c11c3471380b59a39ec944163bf937088755fe8efcac4",
-      "contentType": "text/markdown; charset=utf-8",
-      "role": "content-handoff"
-    },
-    {
-      "path": "c39a74a8292c/g3s2-pictograph-legend-worksheet.pdf",
-      "bytes": 143918,
-      "sha256": "181986fb5d0f29ebfbbe08187767202433d33ca4b5dd98431b55e99969caaf8c",
+      "path": "9d123bb62677/g3s2-pictograph-legend-worksheet.pdf",
+      "bytes": 2249051,
+      "sha256": "baa20fb3ebfa23c5351fe0f38116870ec0e489aa54ad2dfb855442c9f1eddb41",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "c39a74a8292c/g3s2-pictograph-legend-worksheet.png",
-      "bytes": 142229,
-      "sha256": "aea336926bbef45efa7d5cf21febdc6111d89e9d145a86bfb0998f461e8ab91f",
+      "path": "9d123bb62677/g3s2-pictograph-legend-worksheet.png",
+      "bytes": 2359050,
+      "sha256": "e8bf81d9565808b73722883e7f52cb8346ec8607d276dde2a40aa0682742221a",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "c39a74a8292c/g3s2-pictograph-legend-worksheet.svg",
-      "bytes": 13568,
-      "sha256": "5505eb67aa33d94465a8def7a5404f7dfd100ab9e2af979ea837afed68e2e81c",
-      "contentType": "image/svg+xml",
-      "role": "worksheet"
+      "path": "9d123bb62677/g3s2-pictograph-legend.pptx",
+      "bytes": 4304986,
+      "sha256": "9f7c0a0eb8b8f78d79332e5cfce6c54c85c100f68c4dd5cdc6b2b4fd35520b75",
+      "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "role": "presentation"
     },
     {
-      "path": "c39a74a8292c/representative-image.png",
-      "bytes": 55194,
-      "sha256": "cab0f7ba26e7cb65aecef4e38945f9245b3f1a58ea3652e53a5592a89ff30768",
+      "path": "9d123bb62677/representative-image.png",
+      "bytes": 55221,
+      "sha256": "9a402b50d8119adb2eef273f1c916db5d43d5117fff0fcaaa75446fad5908e7a",
       "contentType": "image/png",
       "role": "thumbnail"
-    },
-    {
-      "path": "c39a74a8292c/teacher-answer-key.md",
-      "bytes": 1396,
-      "sha256": "201db3526476a93f2198b93891fd93dc7d4e8bb918db739ed9baad6ef195fb73",
-      "contentType": "text/markdown; charset=utf-8",
-      "role": "teacher-support"
-    },
-    {
-      "path": "c39a74a8292c/teaching-intent.md",
-      "bytes": 7212,
-      "sha256": "012d06afbb3a542ebf7fcd37df5a0c4366f4cd84ddf9472a84794da2660e95de",
-      "contentType": "text/markdown; charset=utf-8",
-      "role": "teacher-support"
     }
   ]
 }
