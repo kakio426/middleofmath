@@ -48,15 +48,15 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
   const validated = validateTracker(updated, { trackerPath });
   const summary = summarizeTracker(validated);
 
-  assert.equal(summary.worksheetsValidated, 2);
-  assert.equal(summary.supportValidated, 2);
-  assert.equal(summary.packagesValidated, 2);
-  assert.equal(summary.localRecordsPublished, 2);
-  assert.equal(summary.claudePptsAwaiting, 28);
+  assert.equal(summary.worksheetsValidated, 3);
+  assert.equal(summary.supportValidated, 3);
+  assert.equal(summary.packagesValidated, 3);
+  assert.equal(summary.localRecordsPublished, 3);
+  assert.equal(summary.claudePptsAwaiting, 27);
   assert.equal(summary.claudePptsValidated, 0);
   assert.equal(summary.productionPublished, 0);
 
-  for (const bundle of validated.bundles.slice(0, 2)) {
+  for (const bundle of validated.bundles.slice(0, 3)) {
     assert.equal(bundle.worksheet.status, "validated");
     assert.match(bundle.worksheet.sourcePath, /-worksheet\.prompt\.txt$/);
     assert.doesNotMatch(bundle.worksheet.sourcePath, /\.svg$/i);
@@ -73,7 +73,7 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
     assert.equal(bundle.ppt.status, "received");
     assert.equal(bundle.ppt.slideCount, 12);
   }
-  for (const bundle of validated.bundles.slice(2)) {
+  for (const bundle of validated.bundles.slice(3)) {
     assert.equal(bundle.worksheet.status, "not-started");
     assert.equal(bundle.support.intentStatus, "not-started");
     assert.equal(bundle.eduitit.packageStatus, "not-started");

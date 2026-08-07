@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
   "generatedAt": "2026-08-07T00:00:00.000Z",
-  "count": 2,
+  "count": 3,
   "pptStatus": "available",
   "records": [
     {
@@ -24,6 +24,16 @@
       "digest": "3d4cabf98fe2",
       "pptStatus": "available",
       "packageManifest": "g3s1-multiplication-groups-model/manifest.json"
+    },
+    {
+      "sequence": 3,
+      "lessonId": "g3s1-multiplication-array-transfer",
+      "title": "줄과 칸으로 전체 수 찾기",
+      "grade": "초등 3학년 1학기",
+      "unit": "1. 곱셈",
+      "digest": "2de55ea9fac9",
+      "pptStatus": "available",
+      "packageManifest": "g3s1-multiplication-array-transfer/manifest.json"
     }
   ]
 }

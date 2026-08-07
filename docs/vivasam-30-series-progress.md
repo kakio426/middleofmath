@@ -2,7 +2,7 @@
 
 이 문서는 `tools/vivasam-bundle/series-tracker.json`에서 자동 생성됩니다. 직접 고치지 말고 `track-series.cjs update`로 원장을 갱신하세요.
 
-- 원장 최종 갱신: 2026-08-07T15:30:41.709Z
+- 원장 최종 갱신: 2026-08-07T22:18:22.541Z
 - 생산 계약: PPT 30개 · PPT당 약 11장(차시별 가변) · PPT당 통합 활동지 1개 · 활동지 총 30개
 - 역할: Claude는 PPTX만 제작, Codex는 PPT 내용 원고와 PPT 외 모든 산출물·플랫폼·검증·추적 담당
 
@@ -12,25 +12,25 @@
 |---|---:|---:|
 | 주제 등록 | 30 | 30 |
 | 내용 원고 검증 | 30 | 30 |
-| 통합 활동지 검증 | 2 | 30 |
-| Claude PPTX 수령 | 2 | 30 |
-| 설계 의도·정답·대표 이미지 검증 | 2 | 30 |
-| Eduitit 패키지 검증 | 2 | 30 |
-| Eduitit 로컬 공개·비로그인 접근 검증 | 2 | 30 |
-| 운영 공개·비로그인 접근 검증 | 2 | 30 |
+| 통합 활동지 검증 | 3 | 30 |
+| Claude PPTX 수령 | 3 | 30 |
+| 설계 의도·정답·대표 이미지 검증 | 3 | 30 |
+| Eduitit 패키지 검증 | 3 | 30 |
+| Eduitit 로컬 공개·비로그인 접근 검증 | 3 | 30 |
+| 운영 공개·비로그인 접근 검증 | 0 | 30 |
 | 교사 커뮤니티·블로그·SNS 게시 | 0 | 30 |
 | 나의 레이스 등록 | 0 | 30 |
 | 전 과정 완료 | 0 | 30 |
 
-현재 Claude PPTX 수령 대기: 28개. 남은 전체 완료 슬롯: 30개.
+현재 Claude PPTX 수령 대기: 27개. 남은 전체 완료 슬롯: 30개.
 
 ## 30개 슬롯
 
 | 번호 | 수업 | 슬라이드 | 내용 | 통합 활동지 1개 | Claude PPT | 지원 자료 | Eduitit 패키지 | 로컬 공개/익명 접근 | 운영 공개 | 공유·레이스 | 다음 할 일 |
 |---:|---|---:|---|---|---|---|---|---|---|---|---|
-| 01 | 그림 하나에 숨은 수 | 11 | validated | validated | received | validated | validated | published/production-passed | deployed | 미게시 | 교사 커뮤니티·블로그·SNS 공유 |
-| 02 | 같은 묶음은 곱셈으로 | 11 | validated | validated | received | validated | validated | published/production-passed | deployed | 미게시 | 교사 커뮤니티·블로그·SNS 공유 |
-| 03 | 줄과 칸으로 전체 수 찾기 | 11 | validated | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude PPTX 수령 |
+| 01 | 그림 하나에 숨은 수 | 11 | validated | validated | received | validated | validated | published/local-passed | not-deployed | 미게시 | 운영 배포·비로그인 접근 검증 |
+| 02 | 같은 묶음은 곱셈으로 | 11 | validated | validated | received | validated | validated | published/local-passed | not-deployed | 미게시 | 운영 배포·비로그인 접근 검증 |
+| 03 | 줄과 칸으로 전체 수 찾기 | 11 | validated | validated | received | validated | validated | published/local-passed | not-deployed | 미게시 | 운영 배포·비로그인 접근 검증 |
 | 04 | 34×2를 두 부분으로 | 11 | validated | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude PPTX 수령 |
 | 05 | 상자 수를 자릿값으로 곱하기 | 11 | validated | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude PPTX 수령 |
 | 06 | 18개를 똑같이 나누면 | 11 | validated | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude PPTX 수령 |
@@ -74,6 +74,8 @@
 
 | 시각 | 번호 | 이벤트 | 근거 |
 |---|---:|---|---|
+| 2026-08-07T22:18:22.541Z | 전체 | PPT 수령분 산출물·Eduitit 로컬 공개 검증 완료 | 수령된 PPTX 3개를 기준으로 통합 활동지·수업 진행 안내·대표 이미지와 Eduitit 공개 패키지를 만들고 비로그인 접근을 검증했다. 나머지 슬롯은 PPTX 수령 대기로 되돌렸다. |
+| 2026-08-07T22:02:20.251Z | 03 | Claude PPTX 수령 | 외부 제작본을 변환하지 않고 원본 그대로 보관했다. 11장 원고를 동기 유발 한 장으로 나눈 12장 구성으로 확인했으며 수학 내용은 일치한다. |
 | 2026-08-07T15:30:41.709Z | 전체 | Eduitit 운영 공개·비로그인 검증 완료 | PPT 수령분 2개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다. |
 | 2026-08-07T15:20:33.319Z | 전체 | PPT 수령분 산출물·Eduitit 로컬 공개 검증 완료 | 수령된 PPTX 2개를 기준으로 통합 활동지·수업 진행 안내·대표 이미지와 Eduitit 공개 패키지를 만들고 비로그인 접근을 검증했다. 나머지 슬롯은 PPTX 수령 대기로 되돌렸다. |
 | 2026-08-07T14:17:29.124Z | 전체 | Eduitit 운영 공개·비로그인 검증 완료 | PPT 수령분 2개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다. |
@@ -92,5 +94,3 @@
 | 2026-08-07T08:30:27.106Z | 26 | Claude 전달용 PPT 내용 원고 검증 | 초등 3학년 2학기 승인 소스의 fraction.convert 단계로 11장 내용 원고를 검증했다. |
 | 2026-08-07T08:30:27.103Z | 25 | Claude 전달용 PPT 내용 원고 검증 | 초등 3학년 2학기 승인 소스의 fraction.part-whole 단계로 11장 내용 원고를 검증했다. |
 | 2026-08-07T08:30:27.099Z | 24 | Claude 전달용 PPT 내용 원고 검증 | 초등 3학년 2학기 승인 소스의 circle.diameter 단계로 11장 내용 원고를 검증했다. |
-| 2026-08-07T08:30:27.097Z | 23 | Claude 전달용 PPT 내용 원고 검증 | 초등 3학년 2학기 승인 소스의 circle.parts 단계로 11장 내용 원고를 검증했다. |
-| 2026-08-07T08:30:27.094Z | 22 | Claude 전달용 PPT 내용 원고 검증 | 초등 3학년 2학기 승인 소스의 division.remainder-check 단계로 11장 내용 원고를 검증했다. |

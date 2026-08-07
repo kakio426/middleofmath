@@ -32,12 +32,27 @@
         "thumbnail": 200,
         "worksheet": 200
       }
+    },
+    {
+      "digest": "2de55ea9fac9",
+      "etag304": true,
+      "lessonId": "g3s1-multiplication-array-transfer",
+      "localRecordId": "e0eb0dc2-f97d-4bc4-8b7a-292f8d7a3564",
+      "sequence": 3,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
     }
   ],
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "verified": 2,
-  "recordedAt": "2026-08-07T15:20:33.319Z",
+  "verified": 3,
+  "recordedAt": "2026-08-07T22:18:22.541Z",
   "scope": "local-django-publication",
   "productionStatus": "not-deployed"
 }

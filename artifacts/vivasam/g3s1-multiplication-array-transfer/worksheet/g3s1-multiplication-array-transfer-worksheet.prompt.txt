@@ -1,0 +1,33 @@
+# 1. Scene:
+초등학교 3학년이 연필로 직접 풀 수 있는 세로형 수학 활동지 한 장. 맨 위는 독립된 로고 구역과 제목 구역으로 나누고 두 구역 사이에 넉넉한 흰 여백을 둔다. 좌상단 로고 구역에는 둥근 보라색 구름과 흰색 소문자 영문 로고를 작게 둔다. 제목은 로고보다 아래쪽에서 시작하며 페이지 너비 안에서 자연스럽게 한 줄 또는 두 줄로 정리한다. 본문에는 동일한 너비의 둥근 문제 카드 세 개를 위에서 아래로 쌓고, 카드 사이 간격은 카드 내부 여백보다 넓게 유지한다.
+
+첫 번째 카드는 네 개의 연필 봉지를 한 줄로 보여 준다. 각 봉지 안에는 노란 연필이 정확히 세 자루씩 들어 있어 전체가 네 묶음, 묶음마다 세 자루로 읽힌다. 그림 아래에는 서로 떨어진 선택 상자 세 개를 같은 크기로 배치한다.
+
+두 번째 카드는 학생이 바둑돌 배열을 직접 그릴 수 있는 크고 깨끗한 빈 사각형을 왼쪽에 둔다. 빈 사각형은 학생이 처음부터 채우는 완전히 빈 상태이며 연한 필기 안내선만 있다. 오른쪽에는 식을 쓰는 긴 빈칸과 답을 쓰는 긴 빈칸을 각각 독립된 상자로 둔다.
+
+세 번째 카드는 문제 문장 아래에 두 개의 풀이 상자를 세로로 분리해 놓고, 그 아래에 먼저 고칠 부분과 바른 식을 적을 수 있는 넓은 줄 두 칸을 둔다. 이 카드는 글을 쓰는 공간을 넉넉하게 사용한다. 하단에는 네 단계 생각 순서를 짧은 화살표 흐름으로 보여 준다. 전체 페이지 가장자리에는 약 5%의 안전 여백을 두고, 모든 글과 그림은 각 카드 안에서 충분히 떨어져 있다.
+
+# 2. Camera:
+인쇄된 종이를 정면에서 수직으로 내려다본 평면 구성. 원근 왜곡이 없는 2D 교과서 활동지이며 모든 카드와 수학 배열이 수평·수직 그리드에 정확히 맞는다.
+
+# 3. Lighting:
+균일하고 밝은 종이 조명, 부드럽고 얕은 카드 그림자, 글자와 수학 그림의 경계가 또렷하게 읽히는 명암.
+
+# 4. Color grading:
+따뜻한 아이보리 배경 #FFFDF8, 진한 남보라 글자 #30245F, 대표 보라 #7756D8, 연보라 카드 #F3EEFF, 노란 강조 #F6C94C, 검은 바둑돌 #25232A. 보라색 60%, 아이보리 30%, 노란색 10%의 안정된 학습지 팔레트.
+
+# 5. Texture/Medium:
+깨끗한 초등 수학 교과서 인쇄물, 부드러운 무광 종이 질감, 굵고 선명한 한국어 고딕 글자, 단순한 플랫 벡터풍 학습 그림, 충분한 필기 공간.
+
+# 6. Text-in-image:
+top-left English logo "eduitit" in white lowercase text inside the purple cloud. dominant Korean headline "줄과 칸으로 전체 수 찾기" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 1. 곱셈" directly below the headline.
+
+First card Korean header "1. 묶음의 수를 식으로 나타내기". Korean question "연필이 한 봉지에 3자루씩 4봉지 있어요. 알맞은 식과 답을 고르세요." Three separate choice boxes read "3×4=12자루", "3+4=7자루", "4자루".
+
+Second card Korean header "2. 줄과 칸을 식으로 나타내기". Korean question "바둑돌을 한 줄에 6개씩 7줄 놓았습니다. 모두 몇 개일까요?" The large empty drawing box is labeled "그림으로 나타내기". Two answer labels read "식" and "답", with the unit "개" after the second empty box.
+
+Third card Korean header "3. 잘못된 풀이 고치기". Korean question "붙임 딱지를 한 줄에 5장씩 6줄 붙였습니다." The first work box label reads "첫 번째 풀이" and its work reads "5+6=11장". The second work box label reads "두 번째 풀이" and its work reads "6장". Korean instruction "먼저 고칠 부분과 바른 식을 써 보세요." appears above two wide writing lines.
+
+Bottom Korean process line reads "한 묶음의 수 → 묶음 수 → 곱셈식 → 단위". 모든 한글은 어절 단위로만 줄이 바뀌며 낱말 중간이 나뉘지 않는다. 모든 텍스트는 한 번씩만, 완벽히 또렷하게. All text appears once, perfectly legible — no duplicate text, no extra words, no invented glyphs, no watermark.
+
+AR 2:3

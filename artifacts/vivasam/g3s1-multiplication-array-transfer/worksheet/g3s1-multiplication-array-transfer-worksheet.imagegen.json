@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-e1f8ec84-f8bc-43ce-934d-06125c88158c.png",
+  "promptFile": "g3s1-multiplication-array-transfer-worksheet.prompt.txt",
+  "promptSha256": "79aa176b4bc62bdd075810a8626357110d1846c4205fcc30f5e63b270eb38290",
+  "imageFile": "g3s1-multiplication-array-transfer-worksheet.png",
+  "imageSha256": "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-07T22:11:21Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Groups": 4,
+      "problem1PerGroup": 3,
+      "problem1ChoiceLabels": [
+        "3×4=12자루",
+        "3+4=7자루",
+        "4자루"
+      ],
+      "problem3WorkLabels": [
+        "5+6=11장",
+        "6장"
+      ]
+    }
+  }
+}

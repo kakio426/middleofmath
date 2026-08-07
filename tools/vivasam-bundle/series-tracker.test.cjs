@@ -35,7 +35,7 @@ test("원장은 30개 PPT와 PPT당 통합 활동지 1개 계약을 고정한다
   assert.equal(tracker.contract.pptAuthor, "Claude");
 });
 
-test("1·2번은 PPT 수령 뒤 활동지와 비로그인 운영 공개를 완료한다", () => {
+test("1·2·3번은 PPT 수령 뒤 활동지와 비로그인 운영 공개를 완료한다", () => {
   const validated = validateTracker(tracker, { trackerPath });
   const summary = summarizeTracker(validated);
   const first = validated.bundles[0];
@@ -49,12 +49,12 @@ test("1·2번은 PPT 수령 뒤 활동지와 비로그인 운영 공개를 완�
   assert.equal(first.eduitit.productionStatus, "deployed");
   assert.match(first.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
   assert.equal(deriveStage(first), "production-published");
-  assert.equal(summary.worksheetsValidated, 2);
-  assert.equal(summary.supportValidated, 2);
-  assert.equal(summary.packagesValidated, 2);
-  assert.equal(summary.localRecordsPublished, 2);
-  assert.equal(summary.claudePptsReceived, 2);
-  assert.equal(summary.claudePptsAwaiting, 28);
+  assert.equal(summary.worksheetsValidated, 3);
+  assert.equal(summary.supportValidated, 3);
+  assert.equal(summary.packagesValidated, 3);
+  assert.equal(summary.localRecordsPublished, 3);
+  assert.equal(summary.claudePptsReceived, 3);
+  assert.equal(summary.claudePptsAwaiting, 27);
   assert.equal(summary.claudePptsValidated, 0);
   assert.equal(summary.fullyCompleted, 0);
 });
@@ -98,6 +98,8 @@ test("validated 상태는 실제 근거 파일이 없으면 통과하지 못한�
 
 test("운영 공개는 HTTPS URL과 비로그인 운영 검증 없이 기록할 수 없다", () => {
   const broken = clone(tracker);
+  broken.bundles[0].eduitit.productionStatus = "deployed";
+  broken.bundles[0].eduitit.publicUrl = "https://eduitit.site/example";
   broken.bundles[0].eduitit.anonymousAccessStatus = "local-passed";
   assert.throws(() => validateTracker(broken, { trackerPath, checkArtifacts: false }), /비로그인 접근 검증/);
 
@@ -125,7 +127,7 @@ test("사람용 진행표에는 30개 슬롯과 1개 통합 활동지 계약이 
   assert.equal((markdown.match(/^\| \d{2} \|/gm) || []).length, 30);
   assert.match(markdown, /PPT당 통합 활동지 1개/);
   assert.match(markdown, /Claude는 PPTX만 제작/);
-  assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 2 \| 30/);
+  assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 3 \| 30/);
   assert.match(markdown, /Claude PPTX 수령/);
   assert.match(markdown, /Claude PPTX 수령 대기/);
 });

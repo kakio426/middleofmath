@@ -2,7 +2,6 @@
 from pathlib import Path
 
 from docx import Document
-from docx.enum.section import WD_SECTION
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
@@ -10,7 +9,8 @@ from docx.shared import Inches, Pt, RGBColor
 
 
 ROOT = Path(__file__).resolve().parents[2]
-OUTPUT = ROOT / "artifacts" / "vivasam" / "vivasam-registration-input-01-02.docx"
+OUTPUT = ROOT / "artifacts" / "vivasam" / "vivasam-registration-input-01-03.docx"
+PRODUCTION_EVIDENCE = ROOT / "artifacts" / "vivasam" / "eduitit-production-publication.json"
 BLUE = RGBColor(46, 116, 181)
 INK = RGBColor(31, 45, 61)
 MUTED = RGBColor(92, 103, 112)
@@ -18,6 +18,7 @@ MUTED = RGBColor(92, 103, 112)
 LESSONS = [
     {
         "number": "01",
+        "lesson_id": "g3s2-pictograph-legend",
         "title": "그림 하나에 숨은 수",
         "target": "초등 3학년 2학기 · 6. 그림그래프",
         "intent": (
@@ -31,6 +32,7 @@ LESSONS = [
     },
     {
         "number": "02",
+        "lesson_id": "g3s1-multiplication-groups-model",
         "title": "같은 묶음은 곱셈으로",
         "target": "초등 3학년 1학기 · 1. 곱셈",
         "intent": (
@@ -42,7 +44,34 @@ LESSONS = [
         "url": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
         "image": ROOT / "artifacts" / "vivasam" / "g3s1-multiplication-groups-model" / "support" / "representative-image.png",
     },
+    {
+        "number": "03",
+        "lesson_id": "g3s1-multiplication-array-transfer",
+        "title": "줄과 칸으로 전체 수 찾기",
+        "target": "초등 3학년 1학기 · 1. 곱셈",
+        "intent": (
+            "배열을 보자마자 두 수를 더하지 않고, 한 줄에 몇 개씩 몇 줄이 있는지 차례로 짚어 보게 했습니다. "
+            "처음에는 같은 그림을 두고 30과 11이라는 서로 다른 답을 비교하며 각 수가 무엇을 뜻하는지 말하게 하고, "
+            "이후에는 연필 봉지와 바둑돌처럼 배치가 달라져도 한 묶음의 수와 묶음 수를 찾아 곱셈식으로 옮기게 했습니다. "
+            "마지막에는 잘못된 풀이에서 처음 어긋난 지점을 직접 고쳐 쓰게 해, 계산보다 상황을 읽는 힘이 남도록 구성했습니다."
+        ),
+        "url": "",
+        "image": ROOT / "artifacts" / "vivasam" / "g3s1-multiplication-array-transfer" / "support" / "representative-image.png",
+    },
 ]
+
+
+def production_urls():
+    if not PRODUCTION_EVIDENCE.exists():
+        return {}
+    import json
+
+    payload = json.loads(PRODUCTION_EVIDENCE.read_text(encoding="utf-8"))
+    return {
+        record["lessonId"]: record["publicUrl"]
+        for record in payload.get("records", [])
+        if record.get("lessonId") and record.get("publicUrl")
+    }
 
 
 def set_font(run, size=11, bold=False, color=INK):
@@ -111,16 +140,17 @@ def add_page_number(paragraph):
 
 
 def build():
+    urls = production_urls()
     doc = Document()
     section = doc.sections[0]
     section.page_width = Inches(8.5)
     section.page_height = Inches(11)
-    section.top_margin = Inches(0.78)
-    section.right_margin = Inches(0.9)
-    section.bottom_margin = Inches(0.72)
-    section.left_margin = Inches(0.9)
-    section.header_distance = Inches(0.35)
-    section.footer_distance = Inches(0.35)
+    section.top_margin = Inches(1)
+    section.right_margin = Inches(1)
+    section.bottom_margin = Inches(1)
+    section.left_margin = Inches(1)
+    section.header_distance = Inches(0.492)
+    section.footer_distance = Inches(0.492)
 
     normal = doc.styles["Normal"]
     normal.font.name = "Pretendard"
@@ -170,19 +200,22 @@ def build():
         add_label(doc, "URL 등록")
         url_paragraph = doc.add_paragraph()
         set_paragraph(url_paragraph, after=8, line=1.0)
-        add_hyperlink(url_paragraph, lesson["url"], lesson["url"])
+        url = urls.get(lesson["lesson_id"], lesson["url"])
+        if not url:
+            raise RuntimeError(f"운영 공개 URL이 없습니다: {lesson['lesson_id']}")
+        add_hyperlink(url_paragraph, url, url)
 
         add_label(doc, "이미지 등록")
         picture = doc.add_paragraph()
         picture.alignment = WD_ALIGN_PARAGRAPH.CENTER
         set_paragraph(picture, after=4, line=1.0)
-        picture.add_run().add_picture(str(lesson["image"]), width=Inches(5.55))
+        picture.add_run().add_picture(str(lesson["image"]), width=Inches(5.05))
         image_path = doc.add_paragraph()
         image_path.alignment = WD_ALIGN_PARAGRAPH.CENTER
         set_paragraph(image_path, after=0, line=1.0)
         set_font(image_path.add_run(str(lesson["image"].relative_to(ROOT))), size=8.5, color=MUTED)
 
-    doc.core_properties.title = "수업 자료 등록용 입력 내용 01-02"
+    doc.core_properties.title = "수업 자료 등록용 입력 내용 01-03"
     doc.core_properties.subject = "교과목, 수업 설계 의도, 공개 URL, 대표 이미지"
     doc.core_properties.author = ""
     doc.core_properties.last_modified_by = ""

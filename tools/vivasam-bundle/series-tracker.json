@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-07T15:30:41.709Z",
+  "updatedAt": "2026-08-07T22:18:22.541Z",
   "contract": {
     "targetDeckCount": 30,
     "preferredSlidesPerDeck": 11,
@@ -100,7 +100,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.pdf",
-        "validatedAt": "2026-08-07T15:20:33.319Z"
+        "validatedAt": "2026-08-07T22:18:22.541Z"
       },
       "ppt": {
         "status": "received",
@@ -125,11 +125,11 @@
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-pictograph-legend",
         "digest": "20c347053492",
         "localRecordStatus": "published",
-        "localRecordId": "2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/",
-        "validatedAt": "2026-08-07T15:30:41.709Z"
+        "localRecordId": "f1a382eb-762a-4212-bf49-34db1c2af346",
+        "anonymousAccessStatus": "local-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-07T22:18:22.541Z"
       },
       "notes": []
     },
@@ -155,7 +155,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.pdf",
-        "validatedAt": "2026-08-07T15:20:33.319Z"
+        "validatedAt": "2026-08-07T22:18:22.541Z"
       },
       "ppt": {
         "status": "received",
@@ -179,11 +179,11 @@
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model",
         "digest": "3d4cabf98fe2",
         "localRecordStatus": "published",
-        "localRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
-        "validatedAt": "2026-08-07T15:30:41.709Z"
+        "localRecordId": "86a18a01-1903-4dfc-a398-cb3f3ed2ead6",
+        "anonymousAccessStatus": "local-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-07T22:18:22.541Z"
       },
       "notes": []
     },
@@ -205,39 +205,39 @@
       },
       "worksheet": {
         "filename": "g3s1-multiplication-array-transfer-worksheet.png",
-        "status": "not-started",
-        "sourcePath": "",
-        "pngPath": "",
-        "pdfPath": "",
-        "validatedAt": ""
+        "status": "validated",
+        "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/worksheet/g3s1-multiplication-array-transfer-worksheet.prompt.txt",
+        "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/worksheet/g3s1-multiplication-array-transfer-worksheet.png",
+        "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/worksheet/g3s1-multiplication-array-transfer-worksheet.pdf",
+        "validatedAt": "2026-08-07T22:18:22.541Z"
       },
       "ppt": {
-        "status": "awaiting-claude",
-        "pptxPath": "",
-        "slideCount": null,
+        "status": "received",
+        "pptxPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/claude/g3s1-multiplication-array-transfer.pptx",
+        "slideCount": 12,
         "intakeReportPath": "",
         "renderedPdfPath": "",
         "slidesDirectory": "",
         "validatedAt": ""
       },
       "support": {
-        "intentStatus": "not-started",
-        "intentPath": "",
-        "answerKeyStatus": "not-started",
-        "answerKeyPath": "",
-        "representativeImageStatus": "not-started",
-        "representativeImagePath": ""
+        "intentStatus": "validated",
+        "intentPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/support/teaching-intent.md",
+        "answerKeyStatus": "validated",
+        "answerKeyPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/support/teacher-answer-key.md",
+        "representativeImageStatus": "validated",
+        "representativeImagePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/support/representative-image.png"
       },
       "eduitit": {
-        "packageStatus": "not-started",
-        "packagePath": "",
-        "digest": "",
-        "localRecordStatus": "unpublished",
-        "localRecordId": "",
-        "anonymousAccessStatus": "not-tested",
+        "packageStatus": "validated",
+        "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-array-transfer",
+        "digest": "2de55ea9fac9",
+        "localRecordStatus": "published",
+        "localRecordId": "e0eb0dc2-f97d-4bc4-8b7a-292f8d7a3564",
+        "anonymousAccessStatus": "local-passed",
         "productionStatus": "not-deployed",
         "publicUrl": "",
-        "validatedAt": ""
+        "validatedAt": "2026-08-07T22:18:22.541Z"
       },
       "notes": []
     },
@@ -1958,6 +1958,18 @@
       "sequence": null,
       "event": "Eduitit 운영 공개·비로그인 검증 완료",
       "detail": "PPT 수령분 2개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다."
+    },
+    {
+      "at": "2026-08-07T22:02:20.251Z",
+      "sequence": 3,
+      "event": "Claude PPTX 수령",
+      "detail": "외부 제작본을 변환하지 않고 원본 그대로 보관했다. 11장 원고를 동기 유발 한 장으로 나눈 12장 구성으로 확인했으며 수학 내용은 일치한다."
+    },
+    {
+      "at": "2026-08-07T22:18:22.541Z",
+      "sequence": null,
+      "event": "PPT 수령분 산출물·Eduitit 로컬 공개 검증 완료",
+      "detail": "수령된 PPTX 3개를 기준으로 통합 활동지·수업 진행 안내·대표 이미지와 Eduitit 공개 패키지를 만들고 비로그인 접근을 검증했다. 나머지 슬롯은 PPTX 수령 대기로 되돌렸다."
     }
   ]
 }

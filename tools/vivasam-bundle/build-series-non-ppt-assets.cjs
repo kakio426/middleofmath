@@ -47,6 +47,12 @@ const WORKSHEET_MATH_VISUAL_CONTRACTS = Object.freeze({
     problem2PerGroup: 4,
     choiceLabels: ["30장", "11장", "6장"],
   },
+  "g3s1-multiplication-array-transfer": {
+    problem1Groups: 4,
+    problem1PerGroup: 3,
+    problem1ChoiceLabels: ["3×4=12자루", "3+4=7자루", "4자루"],
+    problem3WorkLabels: ["5+6=11장", "6장"],
+  },
 });
 
 const PALETTE_BY_DOMAIN = Object.freeze({
@@ -426,7 +432,24 @@ function integratedSectionForKind(kind) {
 }
 
 function buildTeachingIntentMarkdown(lesson) {
-  const rows = lesson.slides.map((slide) => `| ${slide.number} | ${escapeMarkdown(slide.phase)} | ${slide.minutes}분 | ${escapeMarkdown(slide.title)} | ${escapeMarkdown(slide.intent)} | ${escapeMarkdown(slide.teacherMove)} | ${escapeMarkdown(slide.studentAction)} | ${escapeMarkdown(slide.evidence)} | ${integratedSectionForKind(slide.kind)} |`).join("\n");
+  const intentSlides = lesson.id === "g3s1-multiplication-array-transfer"
+    ? [
+        ...lesson.slides.slice(0, 2),
+        {
+          number: 3,
+          phase: "동기 유발",
+          displayMinutes: "앞 슬라이드와 4분 공유",
+          kind: "dilemma",
+          title: "줄 수만 바뀌면 답도 바뀔까요?",
+          intent: "한 줄의 수는 그대로 두고 줄 수만 5줄에서 6줄로 바꿔, 전체 수가 무엇 때문에 달라지는지 눈으로 비교하게 한다.",
+          teacherMove: "두 그림에서 같은 것과 달라진 것을 먼저 찾게 하고, 계산은 그다음에 하게 한다.",
+          studentAction: "한 줄의 5장은 그대로이고 줄 수만 하나 늘었다는 점을 말한다.",
+          evidence: "학생이 5와 6을 단순히 더하지 않고 반복 횟수가 바뀌었다고 설명하는지 확인한다.",
+        },
+        ...lesson.slides.slice(2).map((slide) => ({ ...slide, number: slide.number + 1 })),
+      ]
+    : lesson.slides;
+  const rows = intentSlides.map((slide) => `| ${slide.number} | ${escapeMarkdown(slide.phase)} | ${slide.displayMinutes || `${slide.minutes}분`} | ${escapeMarkdown(slide.title)} | ${escapeMarkdown(slide.intent)} | ${escapeMarkdown(slide.teacherMove)} | ${escapeMarkdown(slide.studentAction)} | ${escapeMarkdown(slide.evidence)} | ${integratedSectionForKind(slide.kind)} |`).join("\n");
   return `# ${lesson.title} — 슬라이드별 수업 설계 의도
 
 - 교과목: ${lesson.subject}
@@ -522,6 +545,14 @@ function practiceUrlFor(lesson) {
 }
 
 function buildLessonGuide(lesson) {
+  if (lesson.id === "g3s1-multiplication-array-transfer") {
+    return [
+      "처음에는 붙임 딱지 5장씩 6줄 그림과 30장·11장 두 답만 보여 주세요. 30초 동안 혼자 생각한 뒤, 어느 답이 맞는지보다 어떤 수를 한 묶음의 수와 묶음 수로 보았는지 먼저 말하게 합니다.",
+      "연필 문제에서는 봉지 하나의 연필 수와 봉지 수를 각각 동그라미 치게 합니다. 두 수를 찾았으면 3×4를 적고, 12가 무엇의 개수인지 ‘12자루’까지 말하게 해 주세요.",
+      "바둑돌 문제는 활동지의 빈 칸에 6개씩 7줄을 직접 그리게 합니다. 짝끼리 그림·식·답을 바꿔 보며 6과 7이 각각 무엇을 뜻하는지 확인합니다.",
+      "마무리에서는 5+6=11장과 6장 풀이를 살펴봅니다. 틀렸다고만 하지 말고 처음 잘못된 지점을 표시한 뒤, 바른 식 5×6=30장을 스스로 고쳐 쓰게 합니다.",
+    ];
+  }
   const opening = findSlide(lesson, "dilemma", 2);
   const modelSlide = findSlide(lesson, "model", 5);
   const guided = findSlide(lesson, "guided", 6);
@@ -581,6 +612,16 @@ function contentTypeFor(filename) {
 function copyFile(source, destination) {
   ensureDir(path.dirname(destination));
   fs.copyFileSync(source, destination);
+}
+
+function receivedSlideCountForLesson(lesson, { repoRoot = REPO_ROOT, pptAvailable = false } = {}) {
+  if (!pptAvailable) return lesson.slides.length;
+  const trackerPath = path.join(repoRoot, "tools", "vivasam-bundle", "series-tracker.json");
+  const tracker = JSON.parse(fs.readFileSync(trackerPath, "utf8"));
+  const bundle = tracker.bundles.find((item) => item.sequence === lesson.sequence);
+  ensure(bundle?.lessonId === lesson.id, `${lesson.id}의 PPT 추적 슬롯을 찾지 못했습니다.`);
+  ensure(Number.isInteger(bundle.ppt?.slideCount) && bundle.ppt.slideCount > 0, `${lesson.id}의 수령 PPT 슬라이드 수가 없습니다.`);
+  return bundle.ppt.slideCount;
 }
 
 async function validateWorksheetImagegenSource(lesson, { worksheetRoot, filenames = packageFilenames(lesson.id) }) {
@@ -666,6 +707,7 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
   const handoffJsonPath = path.join(handoffRoot, filenames.handoffJson);
   const receivedPptxPath = path.join(lessonRoot, "claude", filenames.pptx);
   const pptAvailable = fs.existsSync(receivedPptxPath);
+  const publishedSlideCount = receivedSlideCountForLesson(lesson, { repoRoot, pptAvailable });
 
   // PDF is only a print wrapper around the untouched whole-page image.
   // Never place generated text, SVG, HTML, or another raster layer over it.
@@ -719,7 +761,7 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
     grade: lesson.grade,
     unit: lesson.unit,
     durationMinutes: lesson.durationMinutes,
-    slideCount: lesson.slides.length,
+    slideCount: publishedSlideCount,
     worksheetCount: 1,
     pptStatus: pptAvailable ? "available" : "awaiting-claude",
     sourceHtml: "source.html",
