@@ -3,7 +3,8 @@
   "generatedAt": "2026-08-07T00:00:00.000Z",
   "lessonId": "g3s1-multiplication-groups-model",
   "worksheet": {
-    "source": "worksheet/g3s1-multiplication-groups-model-worksheet.svg",
+    "source": "worksheet/g3s1-multiplication-groups-model-worksheet.prompt.txt",
+    "generationMetadata": "worksheet/g3s1-multiplication-groups-model-worksheet.imagegen.json",
     "png": "worksheet/g3s1-multiplication-groups-model-worksheet.png",
     "pdf": "worksheet/g3s1-multiplication-groups-model-worksheet.pdf",
     "count": 1
@@ -14,7 +15,7 @@
     "representativeImage": "support/representative-image.png"
   },
   "package": {
-    "digest": "4f47bb433fe7",
+    "digest": "3d4cabf98fe2",
     "manifest": "web-package/manifest.json",
     "html": "web-package/source.html"
   }

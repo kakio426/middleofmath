@@ -14,10 +14,10 @@
   "worksheetCount": 1,
   "pptStatus": "available",
   "sourceHtml": "source.html",
-  "digest": "4f47bb433fe7",
-  "thumbnailAsset": "4f47bb433fe7/representative-image.png",
-  "worksheetAsset": "4f47bb433fe7/g3s1-multiplication-groups-model-worksheet.png",
-  "pptAsset": "4f47bb433fe7/g3s1-multiplication-groups-model.pptx",
+  "digest": "3d4cabf98fe2",
+  "thumbnailAsset": "3d4cabf98fe2/representative-image.png",
+  "worksheetAsset": "3d4cabf98fe2/g3s1-multiplication-groups-model-worksheet.png",
+  "pptAsset": "3d4cabf98fe2/g3s1-multiplication-groups-model.pptx",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication",
   "downloadAssets": [
     "g3s1-multiplication-groups-model.pptx",
@@ -25,28 +25,28 @@
   ],
   "assets": [
     {
-      "path": "4f47bb433fe7/g3s1-multiplication-groups-model-worksheet.pdf",
-      "bytes": 2241689,
-      "sha256": "e39cf02364781159dabbaae5303e7f59e3667eea694092c10ee9ff127469ae21",
+      "path": "3d4cabf98fe2/g3s1-multiplication-groups-model-worksheet.pdf",
+      "bytes": 1227319,
+      "sha256": "b12ba1da086d09f825713c85105e07a15f6bc2466fa84af56381023afe79222f",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "4f47bb433fe7/g3s1-multiplication-groups-model-worksheet.png",
-      "bytes": 2352760,
-      "sha256": "b39ac2ccdf79264be381d3b9b6b840103cf6a665ff89cdf0200321388848e133",
+      "path": "3d4cabf98fe2/g3s1-multiplication-groups-model-worksheet.png",
+      "bytes": 1307984,
+      "sha256": "b01d618df1f3e151d259f63bbe08e5e4943b0b475541af82905555c1be01c83c",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "4f47bb433fe7/g3s1-multiplication-groups-model.pptx",
+      "path": "3d4cabf98fe2/g3s1-multiplication-groups-model.pptx",
       "bytes": 4309946,
       "sha256": "a1ef75802f572a098db22c8b383338979a106c34fb3909b325cefd2a616863b2",
       "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
       "role": "presentation"
     },
     {
-      "path": "4f47bb433fe7/representative-image.png",
+      "path": "3d4cabf98fe2/representative-image.png",
       "bytes": 50821,
       "sha256": "6ce69eb8a963b48cb7d8d647a07ee1463e632557680bca6a81a306c8774cdcf6",
       "contentType": "image/png",

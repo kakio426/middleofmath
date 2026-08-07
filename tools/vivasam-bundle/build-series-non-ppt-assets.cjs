@@ -16,17 +16,14 @@ const REPO_ROOT = path.resolve(__dirname, "../..");
 const ARTIFACTS_ROOT = path.join(REPO_ROOT, "artifacts", "vivasam");
 const DEFAULT_EDUITIT_ROOT = path.resolve(REPO_ROOT, "../eduitit");
 const FIXED_BUILD_TIME = "2026-08-07T00:00:00.000Z";
-const WORKSHEET_BACKGROUND_RELATIVE_PATH = path.join(
-  "tools",
-  "vivasam-bundle",
-  "assets",
-  "worksheet-paper-purple-cloud.png",
-);
+const WORKSHEET_IMAGEGEN_SCHEMA_VERSION = 1;
 
 const SERIES_ASSET_CONTRACT = Object.freeze({
-  version: 2,
-  worksheetWidth: 1240,
-  worksheetHeight: 1754,
+  version: 3,
+  worksheetWidth: 1024,
+  worksheetHeight: 1536,
+  worksheetAspectRatio: "2:3",
+  worksheetGenerationMode: "built-in-imagegen",
   representativeWidth: 1200,
   representativeHeight: 675,
   titleMaxCharactersPerLine: 11,
@@ -35,6 +32,21 @@ const SERIES_ASSET_CONTRACT = Object.freeze({
   worksheetFilesPerDeck: 1,
   pptAuthor: "Claude",
   codexOwnsNonPptArtifacts: true,
+});
+
+const WORKSHEET_MATH_VISUAL_CONTRACTS = Object.freeze({
+  "g3s2-pictograph-legend": {
+    problem1Rows: [4, 2],
+    problem2Rows: [3, 2],
+    problem3EmptyStars: 6,
+  },
+  "g3s1-multiplication-groups-model": {
+    problem1Rows: 6,
+    problem1PerRow: 5,
+    problem2Groups: 5,
+    problem2PerGroup: 4,
+    choiceLabels: ["30장", "11장", "6장"],
+  },
 });
 
 const PALETTE_BY_DOMAIN = Object.freeze({
@@ -382,93 +394,6 @@ function conceptVisual(model, { x, y, width, height, accent, warm }) {
   return `<g aria-label="범례가 있는 그림그래프"><rect x="${x + 10}" y="${y + 16}" width="${width - 20}" height="${height - 32}" rx="25" fill="#FFFFFF" opacity=".82"/>${symbols}<text x="${x + 38}" y="${y + 142}" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="800" fill="${accent}">★ 1개 = 5</text></g>`;
 }
 
-function sectionBox({ x, y, width, height, number, title, palette, body }) {
-  return `<g>
-    <rect x="${x}" y="${y}" width="${width}" height="${height}" rx="28" fill="#FFFFFF" stroke="#DDD8EA" stroke-width="3"/>
-    <circle cx="${x + 42}" cy="${y + 43}" r="24" fill="${palette.accent}"/>
-    <text x="${x + 42}" y="${y + 51}" font-family="Apple SD Gothic Neo, sans-serif" font-size="23" font-weight="800" text-anchor="middle" fill="#FFFFFF">${number}</text>
-    ${textElement({ x: x + 82, y: y + 52, text: title, fontSize: 27, weight: 800, color: palette.dark, maxCharacters: 18, maxLines: 1 })}
-    ${body}
-  </g>`;
-}
-
-function answerLines(x, y, width, count = 2, gap = 54) {
-  return Array.from({ length: count }, (_, index) => `<line x1="${x}" y1="${y + index * gap}" x2="${x + width}" y2="${y + index * gap}" stroke="#BFB8CE" stroke-width="2" stroke-dasharray="8 8"/>`).join("");
-}
-
-function renderWorksheetSvg(model) {
-  const palette = PALETTE_BY_DOMAIN[model.domain];
-  const titleLines = wrapText(model.title, { maxCharacters: 22, maxLines: 2, minLastLineCharacters: 4, hardMax: 26 });
-  const routeText = model.routeSteps.map((step, index) => `${index + 1}. ${step}`).join("  →  ");
-  const printableChoices = Array.from(model.guided.choices || "").length <= 38 ? model.guided.choices : "";
-  const sectionHeading = (number, title, y) => `<g>
-    <circle cx="94" cy="${y - 8}" r="23" fill="${palette.accent}"/>
-    <text x="94" y="${y}" font-family="Apple SD Gothic Neo, sans-serif" font-size="20" font-weight="850" text-anchor="middle" fill="#FFFFFF">${number}</text>
-    <text x="132" y="${y}" font-family="Apple SD Gothic Neo, sans-serif" font-size="27" font-weight="850" fill="${palette.dark}">${escapeXml(title)}</text>
-    <line x1="132" y1="${y + 17}" x2="1148" y2="${y + 17}" stroke="${palette.accent}" stroke-width="3" opacity=".38"/>
-  </g>`;
-
-  const guidedContext = model.guided.context
-    ? textElement({ x: 92, y: 544, text: model.guided.context, fontSize: 18, weight: 650, color: "#665E72", maxCharacters: 48, maxLines: 2, hardMaxCharacters: 54 })
-    : "";
-  const guidedPrompt = textElement({ x: 92, y: 604, text: model.guided.prompt, fontSize: 23, weight: 800, color: "#302441", maxCharacters: 39, maxLines: 3, hardMaxCharacters: 48 });
-  const guidedChoices = printableChoices
-    ? textElement({ x: 92, y: 696, text: `보기  ${printableChoices}`, fontSize: 18, weight: 700, color: palette.accent, maxCharacters: 50, maxLines: 2, hardMaxCharacters: 56 })
-    : "";
-
-  const transferPrompt = textElement({ x: 92, y: 882, text: model.transfer.prompt, fontSize: 23, weight: 800, color: "#302441", maxCharacters: 39, maxLines: 3, hardMaxCharacters: 48 });
-  const transferCues = model.transfer.cues.length
-    ? textElement({ x: 92, y: 962, text: model.transfer.cues.join(" · "), fontSize: 18, weight: 650, color: "#665E72", maxCharacters: 48, maxLines: 2, hardMaxCharacters: 54 })
-    : "";
-
-  const errorText = model.errorCases.map((item, index) => {
-    const y = 1190 + index * 82;
-    return `<g><text x="96" y="${y}" font-family="Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="850" fill="${palette.accent}">${String.fromCharCode(65 + index)}.</text>${textElement({ x: 132, y, text: item, fontSize: 18, weight: 650, color: "#3C3447", maxCharacters: 48, maxLines: 2, hardMaxCharacters: 54 })}</g>`;
-  }).join("");
-
-  const exitText = model.exitItems.map((item, index) => {
-    const y = 1474 + index * 82;
-    const textX = index === 2 ? 190 : 138;
-    return `<g><circle cx="102" cy="${y - 7}" r="18" fill="${index === 2 ? palette.warm : palette.accent}"/><text x="102" y="${y}" font-family="Apple SD Gothic Neo, sans-serif" font-size="16" font-weight="850" text-anchor="middle" fill="${index === 2 ? palette.dark : "#FFFFFF"}">${index + 1}</text>${textElement({ x: textX, y, text: item, fontSize: 18, weight: 650, color: "#3C3447", maxCharacters: index === 2 ? 43 : 46, maxLines: 2, hardMaxCharacters: index === 2 ? 49 : 52 })}<line x1="${textX}" y1="${y + 35}" x2="1140" y2="${y + 35}" stroke="#BEB1D1" stroke-width="2" stroke-dasharray="7 9"/></g>`;
-  }).join("");
-
-  const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="${SERIES_ASSET_CONTRACT.worksheetWidth}" height="${SERIES_ASSET_CONTRACT.worksheetHeight}" viewBox="0 0 ${SERIES_ASSET_CONTRACT.worksheetWidth} ${SERIES_ASSET_CONTRACT.worksheetHeight}" role="img" aria-label="${escapeXml(model.title)} 통합 활동지">
-  <text x="124" y="91" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-size="25" font-weight="900" text-anchor="middle" fill="#FFFFFF">eduitit</text>
-  <text x="1140" y="82" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="750" text-anchor="end" fill="#6D5A87">${String(model.sequence).padStart(2, "0")} / 30</text>
-  ${textElement({ x: 78, y: 196, text: titleLines, fontSize: 42, weight: 900, color: "#352064", maxCharacters: 26, maxLines: 2, lineHeight: 1.18 })}
-  ${textElement({ x: 80, y: 286, text: `${model.grade} · ${model.unit}`, fontSize: 19, weight: 700, color: "#6A6073", maxCharacters: 42, maxLines: 1, hardMaxCharacters: 48 })}
-  <text x="1142" y="286" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="700" text-anchor="end" fill="#6A6073">이름 __________________</text>
-  ${conceptVisual(model, { x: 914, y: 116, width: 250, height: 145, accent: palette.accent, warm: palette.warm })}
-  <path d="M78 332 C300 312 488 350 700 329 S1000 320 1158 335" fill="none" stroke="#D5C5EB" stroke-width="4" stroke-linecap="round"/>
-  <text x="82" y="378" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="850" fill="#6B4AA0">생각 순서</text>
-  ${textElement({ x: 196, y: 378, text: routeText, fontSize: 18, weight: 700, color: "#44384F", maxCharacters: 62, maxLines: 2, hardMaxCharacters: 70 })}
-
-  ${sectionHeading(1, "먼저 같이 풀어 봐요", 486)}
-  ${guidedContext}
-  ${guidedPrompt}
-${guidedChoices}
-  <text x="92" y="744" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="800" fill="#6A6073">식과 답</text>
-  ${answerLines(196, 742, 940, 2, 48)}
-
-  ${sectionHeading(2, "이번에는 혼자 풀어 봐요", 826)}
-  ${transferPrompt}
-  ${transferCues}
-  <text x="92" y="1020" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="800" fill="#6A6073">풀이와 설명</text>
-  ${answerLines(220, 1018, 916, 2, 48)}
-
-  ${sectionHeading(3, "어디에서 생각이 달라졌을까요?", 1134)}
-  ${errorText}
-  <text x="92" y="1348" font-family="Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="800" fill="#6A6073">먼저 고칠 부분과 그 까닭</text>
-  ${answerLines(298, 1346, 838, 1, 48)}
-
-  ${sectionHeading(4, "수업을 마치며 확인해요", 1418)}
-  ${exitText}
-  <text x="82" y="1705" font-family="Apple SD Gothic Neo, sans-serif" font-size="16" font-weight="750" fill="#766A80">MIDDLE OF MATH</text>
-</svg>`;
-  return svg;
-}
-
 function renderRepresentativeSvg(model) {
   const palette = PALETTE_BY_DOMAIN[model.domain];
   const titleLines = wrapRepresentativeTitle(model.title);
@@ -568,8 +493,18 @@ async function writePdfFromPng(pngPath, pdfPath) {
   pdf.setCreationDate(fixedDate);
   pdf.setModificationDate(fixedDate);
   const image = await pdf.embedPng(fs.readFileSync(pngPath));
-  const page = pdf.addPage([595.276, 841.89]);
-  page.drawImage(image, { x: 0, y: 0, width: 595.276, height: 841.89 });
+  const pageWidth = 595.276;
+  const pageHeight = 841.89;
+  const page = pdf.addPage([pageWidth, pageHeight]);
+  const scale = Math.min(pageWidth / image.width, pageHeight / image.height);
+  const width = image.width * scale;
+  const height = image.height * scale;
+  page.drawImage(image, {
+    x: (pageWidth - width) / 2,
+    y: (pageHeight - height) / 2,
+    width,
+    height,
+  });
   fs.writeFileSync(pdfPath, await pdf.save({ useObjectStreams: false, addDefaultPage: false }));
 }
 
@@ -621,7 +556,8 @@ function buildPackageHtml({ lesson, model, digest, filenames, pptAvailable }) {
 
 function packageFilenames(lessonId) {
   return {
-    worksheetSvg: `${lessonId}-worksheet.svg`,
+    worksheetPrompt: `${lessonId}-worksheet.prompt.txt`,
+    worksheetMetadata: `${lessonId}-worksheet.imagegen.json`,
     worksheetPng: `${lessonId}-worksheet.png`,
     worksheetPdf: `${lessonId}-worksheet.pdf`,
     pptx: `${lessonId}.pptx`,
@@ -647,24 +583,80 @@ function copyFile(source, destination) {
   fs.copyFileSync(source, destination);
 }
 
+async function validateWorksheetImagegenSource(lesson, { worksheetRoot, filenames = packageFilenames(lesson.id) }) {
+  const promptPath = path.join(worksheetRoot, filenames.worksheetPrompt);
+  const metadataPath = path.join(worksheetRoot, filenames.worksheetMetadata);
+  const pngPath = path.join(worksheetRoot, filenames.worksheetPng);
+  const pdfPath = path.join(worksheetRoot, filenames.worksheetPdf);
+  for (const [label, filePath] of Object.entries({ prompt: promptPath, imagegenMetadata: metadataPath, png: pngPath })) {
+    ensure(fs.existsSync(filePath), `${lesson.id} 활동지 ${label} 파일이 없습니다.`);
+  }
+
+  const allowedFiles = new Set([
+    filenames.worksheetPrompt,
+    filenames.worksheetMetadata,
+    filenames.worksheetPng,
+    filenames.worksheetPdf,
+  ]);
+  const actualFiles = listRelativeFiles(worksheetRoot);
+  ensure(actualFiles.every((filename) => allowedFiles.has(filename)), `${lesson.id} 활동지 폴더에는 이미지 생성 원본·PNG·PDF만 둘 수 있습니다: ${actualFiles.filter((filename) => !allowedFiles.has(filename)).join(", ")}`);
+  ensure(actualFiles.every((filename) => !/\.(?:svg|html?|css)$/i.test(filename)), `${lesson.id} 활동지는 CSS·HTML·SVG로 구성할 수 없습니다.`);
+
+  const prompt = fs.readFileSync(promptPath, "utf8").trim();
+  for (const section of ["# 1. Scene:", "# 2. Camera:", "# 3. Lighting:", "# 4. Color grading:", "# 5. Texture/Medium:", "# 6. Text-in-image:"]) {
+    ensure(prompt.includes(section), `${lesson.id} 이미지 생성 프롬프트에 ${section} 섹션이 없습니다.`);
+  }
+  ensure(/\beduitit\b/i.test(prompt), `${lesson.id} 이미지 생성 프롬프트에 eduitit 로고 지시가 없습니다.`);
+  ensure(/보라색\s*구름/.test(prompt), `${lesson.id} 이미지 생성 프롬프트에 보라색 구름 지시가 없습니다.`);
+  ensure(/AR\s+2:3\s*$/i.test(prompt), `${lesson.id} 이미지 생성 프롬프트는 마지막 줄이 AR 2:3이어야 합니다.`);
+
+  const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
+  ensure(metadata.schemaVersion === WORKSHEET_IMAGEGEN_SCHEMA_VERSION, `${lesson.id} 이미지 생성 메타데이터 스키마가 잘못되었습니다.`);
+  ensure(metadata.generationMode === SERIES_ASSET_CONTRACT.worksheetGenerationMode, `${lesson.id} 활동지는 내장 이미지 생성 한 번으로 만든 완성 이미지여야 합니다.`);
+  ensure(metadata.generator === "image_gen", `${lesson.id} 활동지 생성기는 image_gen이어야 합니다.`);
+  ensure(/^exec-[a-z0-9-]+\.png$/i.test(metadata.sourceOutputId || ""), `${lesson.id} 이미지 생성 출력 식별자가 없습니다.`);
+  ensure(metadata.promptFile === filenames.worksheetPrompt, `${lesson.id} 프롬프트 파일명이 메타데이터와 다릅니다.`);
+  ensure(metadata.imageFile === filenames.worksheetPng, `${lesson.id} PNG 파일명이 메타데이터와 다릅니다.`);
+  ensure(metadata.promptSha256 === fileHash(promptPath), `${lesson.id} 프롬프트 해시가 메타데이터와 다릅니다.`);
+  ensure(metadata.imageSha256 === fileHash(pngPath), `${lesson.id} PNG 해시가 메타데이터와 다릅니다.`);
+
+  const imageMetadata = await sharp(pngPath).metadata();
+  ensure(imageMetadata.format === "png", `${lesson.id} 활동지 완성본은 PNG여야 합니다.`);
+  ensure(imageMetadata.width === SERIES_ASSET_CONTRACT.worksheetWidth && imageMetadata.height === SERIES_ASSET_CONTRACT.worksheetHeight, `${lesson.id} 활동지는 1024×1536 세로형 완성 이미지여야 합니다.`);
+  ensure(metadata.width === imageMetadata.width && metadata.height === imageMetadata.height, `${lesson.id} 이미지 크기 메타데이터가 실제 PNG와 다릅니다.`);
+
+  const qa = metadata.visualQa || {};
+  for (const flag of ["logoTitleSeparated", "allQuestionTextLegible", "choicesVisuallySeparated", "answerSpacesPresent", "noOverlapsOrClipping"]) {
+    ensure(qa[flag] === true, `${lesson.id} 활동지 시각 QA가 통과되지 않았습니다: ${flag}`);
+  }
+  ensure(qa.reviewedAt, `${lesson.id} 활동지 시각 QA 시간이 없습니다.`);
+  const expectedCounts = WORKSHEET_MATH_VISUAL_CONTRACTS[lesson.id];
+  ensure(expectedCounts, `${lesson.id} 활동지를 만들기 전에 수학 시각물 수량 계약을 추가하세요.`);
+  ensure(JSON.stringify(qa.mathVisualCounts) === JSON.stringify(expectedCounts), `${lesson.id} 활동지의 수학 시각물 수량 계약이 다릅니다.`);
+
+  return { promptPath, metadataPath, pngPath, pdfPath, metadata };
+}
+
 async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
   const artifactsRoot = path.join(repoRoot, "artifacts", "vivasam");
   const lessonRoot = path.join(artifactsRoot, lesson.id);
   const worksheetRoot = path.join(lessonRoot, "worksheet");
   const supportRoot = path.join(lessonRoot, "support");
   const webPackageRoot = path.join(lessonRoot, "web-package");
-  // These three directories are fully generated. The received PPTX stays in
-  // its separate claude directory and is copied into the public package only
-  // when the original file exists.
-  resetDirectory(worksheetRoot);
+  // The worksheet prompt, generation metadata, and single finished PNG are
+  // authored through built-in imagegen and must survive package rebuilds.
+  // Support files and the public web package remain reproducible outputs.
+  ensureDir(worksheetRoot);
   resetDirectory(supportRoot);
   resetDirectory(webPackageRoot);
 
   const model = buildWorksheetModel(lesson);
   const filenames = packageFilenames(lesson.id);
-  const worksheetSvgPath = path.join(worksheetRoot, filenames.worksheetSvg);
-  const worksheetPngPath = path.join(worksheetRoot, filenames.worksheetPng);
-  const worksheetPdfPath = path.join(worksheetRoot, filenames.worksheetPdf);
+  const worksheetSource = await validateWorksheetImagegenSource(lesson, { worksheetRoot, filenames });
+  const worksheetPromptPath = worksheetSource.promptPath;
+  const worksheetMetadataPath = worksheetSource.metadataPath;
+  const worksheetPngPath = worksheetSource.pngPath;
+  const worksheetPdfPath = worksheetSource.pdfPath;
   const representativeSvgPath = path.join(supportRoot, "representative-image.svg");
   const representativeImagePath = path.join(supportRoot, filenames.representative);
   const teachingIntentPath = path.join(supportRoot, filenames.intent);
@@ -672,20 +664,11 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
   const handoffRoot = path.join(lessonRoot, "content-handoff");
   const handoffMarkdownPath = path.join(handoffRoot, filenames.handoffMarkdown);
   const handoffJsonPath = path.join(handoffRoot, filenames.handoffJson);
-  const worksheetBackgroundPath = path.join(repoRoot, WORKSHEET_BACKGROUND_RELATIVE_PATH);
   const receivedPptxPath = path.join(lessonRoot, "claude", filenames.pptx);
   const pptAvailable = fs.existsSync(receivedPptxPath);
 
-  ensure(fs.existsSync(worksheetBackgroundPath), `활동지 배경 이미지가 없습니다: ${worksheetBackgroundPath}`);
-  writeUtf8(worksheetSvgPath, renderWorksheetSvg(model));
-  const worksheetBackground = await sharp(worksheetBackgroundPath)
-    .resize(SERIES_ASSET_CONTRACT.worksheetWidth, SERIES_ASSET_CONTRACT.worksheetHeight, { fit: "fill" })
-    .png()
-    .toBuffer();
-  await sharp(worksheetBackground)
-    .composite([{ input: Buffer.from(fs.readFileSync(worksheetSvgPath, "utf8")) }])
-    .png({ compressionLevel: 9 })
-    .toFile(worksheetPngPath);
+  // PDF is only a print wrapper around the untouched whole-page image.
+  // Never place generated text, SVG, HTML, or another raster layer over it.
   await writePdfFromPng(worksheetPngPath, worksheetPdfPath);
   writeUtf8(representativeSvgPath, renderRepresentativeSvg(model));
   await sharp(Buffer.from(fs.readFileSync(representativeSvgPath, "utf8"))).png({ compressionLevel: 9 }).toFile(representativeImagePath);
@@ -758,7 +741,8 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
     generatedAt: FIXED_BUILD_TIME,
     lessonId: lesson.id,
     worksheet: {
-      source: path.relative(lessonRoot, worksheetSvgPath).split(path.sep).join("/"),
+      source: path.relative(lessonRoot, worksheetPromptPath).split(path.sep).join("/"),
+      generationMetadata: path.relative(lessonRoot, worksheetMetadataPath).split(path.sep).join("/"),
       png: path.relative(lessonRoot, worksheetPngPath).split(path.sep).join("/"),
       pdf: path.relative(lessonRoot, worksheetPdfPath).split(path.sep).join("/"),
       count: 1,
@@ -777,7 +761,8 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
     model,
     digest,
     lessonRoot,
-    worksheetSvgPath,
+    worksheetPromptPath,
+    worksheetMetadataPath,
     worksheetPngPath,
     worksheetPdfPath,
     representativeImagePath,
@@ -986,17 +971,22 @@ async function validateSeriesArtifacts({ repoRoot = REPO_ROOT, availableOnly = f
       packageRoot: path.join(lessonRoot, "web-package"),
       packageManifestPath,
       packageHtmlPath: path.join(lessonRoot, "web-package", "source.html"),
-      worksheetSvgPath: path.join(lessonRoot, "worksheet", filenames.worksheetSvg),
+      worksheetPromptPath: path.join(lessonRoot, "worksheet", filenames.worksheetPrompt),
+      worksheetMetadataPath: path.join(lessonRoot, "worksheet", filenames.worksheetMetadata),
       worksheetPngPath: path.join(lessonRoot, "worksheet", filenames.worksheetPng),
       worksheetPdfPath: path.join(lessonRoot, "worksheet", filenames.worksheetPdf),
       representativeImagePath: path.join(lessonRoot, "support", filenames.representative),
       teachingIntentPath: path.join(lessonRoot, "support", filenames.intent),
       answerKeyPath: path.join(lessonRoot, "support", filenames.answerKey),
     };
-    for (const [label, filePath] of Object.entries({ worksheetSvg: item.worksheetSvgPath, worksheetPng: item.worksheetPngPath, worksheetPdf: item.worksheetPdfPath, representative: item.representativeImagePath, intent: item.teachingIntentPath, answerKey: item.answerKeyPath })) ensure(fs.existsSync(filePath), `${lesson.id} ${label}가 없습니다.`);
+    for (const [label, filePath] of Object.entries({ worksheetPrompt: item.worksheetPromptPath, worksheetMetadata: item.worksheetMetadataPath, worksheetPng: item.worksheetPngPath, worksheetPdf: item.worksheetPdfPath, representative: item.representativeImagePath, intent: item.teachingIntentPath, answerKey: item.answerKeyPath })) ensure(fs.existsSync(filePath), `${lesson.id} ${label}가 없습니다.`);
+    await validateWorksheetImagegenSource(lesson, {
+      worksheetRoot: path.join(lessonRoot, "worksheet"),
+      filenames,
+    });
     const worksheetMetadata = await sharp(item.worksheetPngPath).metadata();
     const representativeMetadata = await sharp(item.representativeImagePath).metadata();
-    ensure(worksheetMetadata.width === SERIES_ASSET_CONTRACT.worksheetWidth && worksheetMetadata.height === SERIES_ASSET_CONTRACT.worksheetHeight, `${lesson.id} 활동지 크기가 A4 렌더 계약과 다릅니다.`);
+    ensure(worksheetMetadata.width === SERIES_ASSET_CONTRACT.worksheetWidth && worksheetMetadata.height === SERIES_ASSET_CONTRACT.worksheetHeight, `${lesson.id} 활동지 크기가 이미지 생성 계약과 다릅니다.`);
     ensure(representativeMetadata.width === SERIES_ASSET_CONTRACT.representativeWidth && representativeMetadata.height === SERIES_ASSET_CONTRACT.representativeHeight, `${lesson.id} 대표 이미지 크기가 다릅니다.`);
     ensure(fs.readFileSync(item.worksheetPdfPath).subarray(0, 4).toString("ascii") === "%PDF", `${lesson.id} 활동지 PDF가 올바르지 않습니다.`);
     validatePackage(item);
@@ -1059,7 +1049,7 @@ module.exports = {
   buildWorksheetModel,
   loadSeriesLessons,
   renderRepresentativeSvg,
-  renderWorksheetSvg,
+  validateWorksheetImagegenSource,
   validateSeriesArtifacts,
   wrapRepresentativeTitle,
   wrapText,

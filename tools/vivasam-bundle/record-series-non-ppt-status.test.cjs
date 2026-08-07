@@ -58,6 +58,9 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
 
   for (const bundle of validated.bundles.slice(0, 2)) {
     assert.equal(bundle.worksheet.status, "validated");
+    assert.match(bundle.worksheet.sourcePath, /-worksheet\.prompt\.txt$/);
+    assert.doesNotMatch(bundle.worksheet.sourcePath, /\.svg$/i);
+    assert.ok(fs.existsSync(bundle.worksheet.sourcePath.replace("middleofmath:", path.resolve(__dirname, "../..") + path.sep)));
     assert.ok(fs.existsSync(bundle.worksheet.pngPath.replace("middleofmath:", path.resolve(__dirname, "../..") + path.sep)));
     assert.equal(bundle.support.intentStatus, "validated");
     assert.equal(bundle.support.answerKeyStatus, "validated");

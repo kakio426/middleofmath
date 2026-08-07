@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-07T14:17:29.124Z",
+  "updatedAt": "2026-08-07T15:30:41.709Z",
   "contract": {
     "targetDeckCount": 30,
     "preferredSlidesPerDeck": 11,
@@ -97,10 +97,10 @@
       "worksheet": {
         "status": "validated",
         "filename": "g3s2-pictograph-legend-worksheet.png",
-        "sourcePath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.svg",
+        "sourcePath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.pdf",
-        "validatedAt": "2026-08-07T14:17:01.983Z"
+        "validatedAt": "2026-08-07T15:20:33.319Z"
       },
       "ppt": {
         "status": "received",
@@ -123,13 +123,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-pictograph-legend",
-        "digest": "9d123bb62677",
+        "digest": "20c347053492",
         "localRecordStatus": "published",
         "localRecordId": "2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae",
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/",
-        "validatedAt": "2026-08-07T14:17:29.124Z"
+        "validatedAt": "2026-08-07T15:30:41.709Z"
       },
       "notes": []
     },
@@ -152,10 +152,10 @@
       "worksheet": {
         "filename": "g3s1-multiplication-groups-model-worksheet.png",
         "status": "validated",
-        "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.svg",
+        "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.pdf",
-        "validatedAt": "2026-08-07T14:17:01.983Z"
+        "validatedAt": "2026-08-07T15:20:33.319Z"
       },
       "ppt": {
         "status": "received",
@@ -177,13 +177,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model",
-        "digest": "4f47bb433fe7",
+        "digest": "3d4cabf98fe2",
         "localRecordStatus": "published",
         "localRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
-        "validatedAt": "2026-08-07T14:17:29.124Z"
+        "validatedAt": "2026-08-07T15:30:41.709Z"
       },
       "notes": []
     },
@@ -1943,6 +1943,18 @@
     },
     {
       "at": "2026-08-07T14:17:29.124Z",
+      "sequence": null,
+      "event": "Eduitit 운영 공개·비로그인 검증 완료",
+      "detail": "PPT 수령분 2개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다."
+    },
+    {
+      "at": "2026-08-07T15:20:33.319Z",
+      "sequence": null,
+      "event": "PPT 수령분 산출물·Eduitit 로컬 공개 검증 완료",
+      "detail": "수령된 PPTX 2개를 기준으로 통합 활동지·수업 진행 안내·대표 이미지와 Eduitit 공개 패키지를 만들고 비로그인 접근을 검증했다. 나머지 슬롯은 PPTX 수령 대기로 되돌렸다."
+    },
+    {
+      "at": "2026-08-07T15:30:41.709Z",
       "sequence": null,
       "event": "Eduitit 운영 공개·비로그인 검증 완료",
       "detail": "PPT 수령분 2개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다."

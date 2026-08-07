@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-552a2893-d7bb-40e4-891b-ffb4f6631858.png",
+  "promptFile": "g3s1-multiplication-groups-model-worksheet.prompt.txt",
+  "promptSha256": "e9590195b92bdda1bd64d15f73b23adba9d388db3a240d0efe19ad419148362c",
+  "imageFile": "g3s1-multiplication-groups-model-worksheet.png",
+  "imageSha256": "b01d618df1f3e151d259f63bbe08e5e4943b0b475541af82905555c1be01c83c",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-07T15:17:33Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Rows": 6,
+      "problem1PerRow": 5,
+      "problem2Groups": 5,
+      "problem2PerGroup": 4,
+      "choiceLabels": ["30장", "11장", "6장"]
+    }
+  }
+}

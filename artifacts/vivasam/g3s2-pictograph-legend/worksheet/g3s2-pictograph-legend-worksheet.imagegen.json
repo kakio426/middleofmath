@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-6ce8815e-55cc-4280-ab77-20af61a2f4d1.png",
+  "promptFile": "g3s2-pictograph-legend-worksheet.prompt.txt",
+  "promptSha256": "63ae14559d38df974c09ed0fdb873b6e74ea65bf154693cd9601650c8b98af67",
+  "imageFile": "g3s2-pictograph-legend-worksheet.png",
+  "imageSha256": "49b7311804eba015a099b92f30195996ff0d0abe88016bf2d3e1e52399fdd261",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-07T15:04:53Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Rows": [4, 2],
+      "problem2Rows": [3, 2],
+      "problem3EmptyStars": 6
+    }
+  }
+}

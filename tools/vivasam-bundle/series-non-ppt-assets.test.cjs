@@ -1,6 +1,7 @@
 "use strict";
 
 const assert = require("node:assert/strict");
+const crypto = require("node:crypto");
 const fs = require("node:fs");
 const path = require("node:path");
 const test = require("node:test");
@@ -16,6 +17,10 @@ const {
 } = require("./build-series-non-ppt-assets.cjs");
 
 const repoRoot = path.resolve(__dirname, "../..");
+
+function fileHash(filePath) {
+  return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
+}
 
 function listRelativeFiles(directory) {
   const files = [];
@@ -84,6 +89,31 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
   assert.equal(new Set(report.representativeImageHashes).size, 2);
 
   for (const item of report.items) {
+    const worksheetRoot = path.dirname(item.worksheetPngPath);
+    const worksheetFiles = listRelativeFiles(worksheetRoot);
+    assert.deepEqual(worksheetFiles, [
+      `${item.lessonId}-worksheet.imagegen.json`,
+      `${item.lessonId}-worksheet.pdf`,
+      `${item.lessonId}-worksheet.png`,
+      `${item.lessonId}-worksheet.prompt.txt`,
+    ]);
+    assert.equal(worksheetFiles.some((file) => /\.(?:svg|html?|css)$/i.test(file)), false, item.lessonId);
+
+    const prompt = fs.readFileSync(item.worksheetPromptPath, "utf8");
+    const generation = JSON.parse(fs.readFileSync(item.worksheetMetadataPath, "utf8"));
+    assert.equal(generation.schemaVersion, 1);
+    assert.equal(generation.generationMode, "built-in-imagegen");
+    assert.equal(generation.generator, "image_gen");
+    assert.match(generation.sourceOutputId, /^exec-[a-z0-9-]+\.png$/i);
+    assert.equal(generation.promptSha256, fileHash(item.worksheetPromptPath));
+    assert.equal(generation.imageSha256, fileHash(item.worksheetPngPath));
+    assert.match(prompt.trim(), /AR 2:3$/);
+    assert.match(prompt, /보라색\s*구름/);
+    assert.match(prompt, /eduitit/i);
+    for (const flag of ["logoTitleSeparated", "allQuestionTextLegible", "choicesVisuallySeparated", "answerSpacesPresent", "noOverlapsOrClipping"]) {
+      assert.equal(generation.visualQa[flag], true, `${item.lessonId}: ${flag}`);
+    }
+
     const worksheetMetadata = await sharp(item.worksheetPngPath).metadata();
     const representativeMetadata = await sharp(item.representativeImagePath).metadata();
     assert.deepEqual(
@@ -97,6 +127,23 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
       item.lessonId,
     );
     assert.equal(fs.readFileSync(item.worksheetPdfPath).subarray(0, 4).toString("ascii"), "%PDF");
+
+    if (item.lessonId === "g3s2-pictograph-legend") {
+      assert.deepEqual(generation.visualQa.mathVisualCounts, {
+        problem1Rows: [4, 2],
+        problem2Rows: [3, 2],
+        problem3EmptyStars: 6,
+      });
+    }
+    if (item.lessonId === "g3s1-multiplication-groups-model") {
+      assert.deepEqual(generation.visualQa.mathVisualCounts, {
+        problem1Rows: 6,
+        problem1PerRow: 5,
+        problem2Groups: 5,
+        problem2PerGroup: 4,
+        choiceLabels: ["30장", "11장", "6장"],
+      });
+    }
 
     const manifest = JSON.parse(fs.readFileSync(item.packageManifestPath, "utf8"));
     const html = fs.readFileSync(item.packageHtmlPath, "utf8");

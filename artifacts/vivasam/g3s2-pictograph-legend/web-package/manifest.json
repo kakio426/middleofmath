@@ -14,10 +14,10 @@
   "worksheetCount": 1,
   "pptStatus": "available",
   "sourceHtml": "source.html",
-  "digest": "9d123bb62677",
-  "thumbnailAsset": "9d123bb62677/representative-image.png",
-  "worksheetAsset": "9d123bb62677/g3s2-pictograph-legend-worksheet.png",
-  "pptAsset": "9d123bb62677/g3s2-pictograph-legend.pptx",
+  "digest": "20c347053492",
+  "thumbnailAsset": "20c347053492/representative-image.png",
+  "worksheetAsset": "20c347053492/g3s2-pictograph-legend-worksheet.png",
+  "pptAsset": "20c347053492/g3s2-pictograph-legend.pptx",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-pictograph",
   "downloadAssets": [
     "g3s2-pictograph-legend.pptx",
@@ -25,28 +25,28 @@
   ],
   "assets": [
     {
-      "path": "9d123bb62677/g3s2-pictograph-legend-worksheet.pdf",
-      "bytes": 2249051,
-      "sha256": "baa20fb3ebfa23c5351fe0f38116870ec0e489aa54ad2dfb855442c9f1eddb41",
+      "path": "20c347053492/g3s2-pictograph-legend-worksheet.pdf",
+      "bytes": 1071027,
+      "sha256": "06a2215425053735c84f47846cf18953604055c8ad8748562b01b732b1aa3102",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "9d123bb62677/g3s2-pictograph-legend-worksheet.png",
-      "bytes": 2359050,
-      "sha256": "e8bf81d9565808b73722883e7f52cb8346ec8607d276dde2a40aa0682742221a",
+      "path": "20c347053492/g3s2-pictograph-legend-worksheet.png",
+      "bytes": 1178918,
+      "sha256": "49b7311804eba015a099b92f30195996ff0d0abe88016bf2d3e1e52399fdd261",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "9d123bb62677/g3s2-pictograph-legend.pptx",
+      "path": "20c347053492/g3s2-pictograph-legend.pptx",
       "bytes": 4304986,
       "sha256": "9f7c0a0eb8b8f78d79332e5cfce6c54c85c100f68c4dd5cdc6b2b4fd35520b75",
       "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
       "role": "presentation"
     },
     {
-      "path": "9d123bb62677/representative-image.png",
+      "path": "20c347053492/representative-image.png",
       "bytes": 55221,
       "sha256": "9a402b50d8119adb2eef273f1c916db5d43d5117fff0fcaaa75446fad5908e7a",
       "contentType": "image/png",

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "verifiedAt": "2026-08-07T14:17:29.124Z",
-  "commitHash": "eea66afa25c663d864b8e8ec8046001467dc8b98",
+  "verifiedAt": "2026-08-07T15:30:41.709Z",
+  "commitHash": "b4a92b418242d858e8f83fac27d79bcbb4a2993e",
   "baseUrl": "https://eduitit.site",
   "catalogUrl": "https://eduitit.site/edu-materials/?category=lesson_bundle",
   "catalogStatus": 200,
@@ -20,13 +20,13 @@
     {
       "sequence": 1,
       "lessonId": "g3s2-pictograph-legend",
-      "digest": "9d123bb62677",
+      "digest": "20c347053492",
       "productionRecordId": "2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae",
       "publicUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/",
       "runUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-pictograph-legend/download/g3s2-pictograph-legend-worksheet.pdf/",
       "pptUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-pictograph-legend/download/g3s2-pictograph-legend.pptx/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-pictograph-legend/9d123bb62677/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-pictograph-legend/20c347053492/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -47,13 +47,13 @@
     {
       "sequence": 2,
       "lessonId": "g3s1-multiplication-groups-model",
-      "digest": "4f47bb433fe7",
+      "digest": "3d4cabf98fe2",
       "productionRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
       "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
       "runUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/run/",
       "worksheetUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-groups-model/download/g3s1-multiplication-groups-model-worksheet.pdf/",
       "pptUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-groups-model/download/g3s1-multiplication-groups-model.pptx/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model/4f47bb433fe7/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model/3d4cabf98fe2/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,

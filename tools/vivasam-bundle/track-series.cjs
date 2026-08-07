@@ -247,9 +247,10 @@ function validateBundle(tracker, rawBundle, context) {
     ensure(isTimestamp(bundle.worksheet.validatedAt), `${bundle.sequence}번 활동지 검증 시각이 없습니다.`);
     ensure(bundle.worksheet.filename, `${bundle.sequence}번 통합 활동지 파일명이 없습니다.`);
     if (checkArtifacts) {
-      requireTrackedArtifact(bundle.worksheet.sourcePath, roots, `${bundle.sequence}번 통합 활동지 편집 원본`);
+      const promptPath = requireTrackedArtifact(bundle.worksheet.sourcePath, roots, `${bundle.sequence}번 통합 활동지 이미지 생성 프롬프트`);
       const pngPath = requireTrackedArtifact(bundle.worksheet.pngPath, roots, `${bundle.sequence}번 통합 활동지 PNG`);
       requireTrackedArtifact(bundle.worksheet.pdfPath, roots, `${bundle.sequence}번 통합 활동지 PDF`);
+      ensure(promptPath.endsWith(".prompt.txt"), `${bundle.sequence}번 활동지 원본은 이미지 생성 프롬프트여야 합니다.`);
       ensure(path.basename(pngPath) === bundle.worksheet.filename, `${bundle.sequence}번 활동지 PNG 파일명이 원장과 다릅니다.`);
     }
   }

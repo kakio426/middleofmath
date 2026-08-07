@@ -128,7 +128,7 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
       ...bundle.worksheet,
       status: "validated",
       filename: `${lessonId}-worksheet.png`,
-      sourcePath: `${artifactRoot}/worksheet/${lessonId}-worksheet.svg`,
+      sourcePath: `${artifactRoot}/worksheet/${lessonId}-worksheet.prompt.txt`,
       pngPath: `${artifactRoot}/worksheet/${lessonId}-worksheet.png`,
       pdfPath: `${artifactRoot}/worksheet/${lessonId}-worksheet.pdf`,
       validatedAt: now,

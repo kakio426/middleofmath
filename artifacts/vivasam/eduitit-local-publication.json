@@ -4,10 +4,10 @@
   "catalogStatus": 200,
   "records": [
     {
-      "digest": "9d123bb62677",
+      "digest": "20c347053492",
       "etag304": true,
       "lessonId": "g3s2-pictograph-legend",
-      "localRecordId": "2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae",
+      "localRecordId": "f1a382eb-762a-4212-bf49-34db1c2af346",
       "sequence": 1,
       "statuses": {
         "detail": 200,
@@ -19,10 +19,10 @@
       }
     },
     {
-      "digest": "4f47bb433fe7",
+      "digest": "3d4cabf98fe2",
       "etag304": true,
       "lessonId": "g3s1-multiplication-groups-model",
-      "localRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
+      "localRecordId": "86a18a01-1903-4dfc-a398-cb3f3ed2ead6",
       "sequence": 2,
       "statuses": {
         "detail": 200,
@@ -37,7 +37,7 @@
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
   "verified": 2,
-  "recordedAt": "2026-08-07T14:17:01.983Z",
+  "recordedAt": "2026-08-07T15:20:33.319Z",
   "scope": "local-django-publication",
   "productionStatus": "not-deployed"
 }

@@ -3,7 +3,8 @@
   "generatedAt": "2026-08-07T00:00:00.000Z",
   "lessonId": "g3s2-pictograph-legend",
   "worksheet": {
-    "source": "worksheet/g3s2-pictograph-legend-worksheet.svg",
+    "source": "worksheet/g3s2-pictograph-legend-worksheet.prompt.txt",
+    "generationMetadata": "worksheet/g3s2-pictograph-legend-worksheet.imagegen.json",
     "png": "worksheet/g3s2-pictograph-legend-worksheet.png",
     "pdf": "worksheet/g3s2-pictograph-legend-worksheet.pdf",
     "count": 1
@@ -14,7 +15,7 @@
     "representativeImage": "support/representative-image.png"
   },
   "package": {
-    "digest": "9d123bb62677",
+    "digest": "20c347053492",
     "manifest": "web-package/manifest.json",
     "html": "web-package/source.html"
   }
