@@ -937,7 +937,13 @@ async function validateSeriesArtifacts({ repoRoot = REPO_ROOT } = {}) {
 }
 
 async function main() {
-  const args = new Set(process.argv.slice(2));
+  const argv = process.argv.slice(2);
+  const args = new Set(argv);
+  const eduititRootFlag = argv.indexOf("--eduitit-root");
+  ensure(eduititRootFlag === -1 || argv[eduititRootFlag + 1], "--eduitit-root 뒤에 경로를 입력하세요.");
+  const eduititRoot = eduititRootFlag === -1
+    ? DEFAULT_EDUITIT_ROOT
+    : path.resolve(argv[eduititRootFlag + 1]);
   const checkOnly = args.has("--check");
   if (checkOnly) {
     const report = await validateSeriesArtifacts({ repoRoot: REPO_ROOT });
@@ -945,7 +951,7 @@ async function main() {
     return;
   }
   const syncEduitit = !args.has("--no-sync-eduitit");
-  const result = await buildSeriesAssets({ repoRoot: REPO_ROOT, eduititRoot: DEFAULT_EDUITIT_ROOT, syncEduitit });
+  const result = await buildSeriesAssets({ repoRoot: REPO_ROOT, eduititRoot, syncEduitit });
   const report = await validateSeriesArtifacts({ repoRoot: REPO_ROOT });
   process.stdout.write(`생성 완료: ${result.items.length}개 차시\n`);
   process.stdout.write(`통합 활동지: ${report.worksheetCount}/30\n`);

@@ -16,7 +16,7 @@ const artifactsRoot = path.join(repoRoot, "artifacts", "vivasam");
 const trackerPath = path.join(__dirname, "series-tracker.json");
 const SOURCE_CHECKSUMS = Object.freeze({
   1: "0656d583e8bf2987f456e47887a0d7243f6b611a4b586f45c11eeba7dca88112",
-  2: "d00b8d1ebf69b7028804768663bbf72bef76c0cc5260386dbc83ed4887862c08",
+  2: "afe6e080570e79438ec70ddcfe676ed78bc918ebd1acf5b48ab1fa46012408a2",
 });
 
 function artifactPaths(entry) {

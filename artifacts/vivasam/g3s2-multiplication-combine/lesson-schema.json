@@ -23,12 +23,12 @@
     "packages/content/src/grade3-semester2-complete.ts",
     "packages/content/src/grade3-semester2-coverage.ts",
     "packages/content/src/grade3-semester2-rationales.ts",
-    "manifest checksum: d00b8d1ebf69b7028804768663bbf72bef76c0cc5260386dbc83ed4887862c08",
+    "manifest checksum: afe6e080570e79438ec70ddcfe676ed78bc918ebd1acf5b48ab1fa46012408a2",
     "learnerStageId: multiplication.combine",
     "judgmentIds: g3s2-mul-02, g3s2-mul-04"
   ],
   "mathOracle": {
-    "sourceChecksum": "d00b8d1ebf69b7028804768663bbf72bef76c0cc5260386dbc83ed4887862c08",
+    "sourceChecksum": "afe6e080570e79438ec70ddcfe676ed78bc918ebd1acf5b48ab1fa46012408a2",
     "sourceJudgments": [
       {
         "judgmentId": "g3s2-mul-02",
@@ -276,7 +276,7 @@
         "judgmentId": "g3s2-mul-04",
         "choiceId": "721",
         "rationale": "십의 자리 부분곱 120에서 20을 빠뜨려 바른 답보다 20 작게 합쳤습니다.",
-        "derivation": "600+120+21에서 120을 100만큼 줄여 600+100+21=721로 계산했습니다."
+        "derivation": "600+120+21에서 십의 자리 부분곱 120을 100으로 보고 600+100+21=721로 계산했습니다."
       },
       {
         "judgmentId": "g3s2-mul-04",

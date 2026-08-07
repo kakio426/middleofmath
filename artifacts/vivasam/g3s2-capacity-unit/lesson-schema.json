@@ -23,12 +23,12 @@
     "packages/content/src/grade3-semester2-complete.ts",
     "packages/content/src/grade3-semester2-coverage.ts",
     "packages/content/src/grade3-semester2-rationales.ts",
-    "manifest checksum: d00b8d1ebf69b7028804768663bbf72bef76c0cc5260386dbc83ed4887862c08",
+    "manifest checksum: afe6e080570e79438ec70ddcfe676ed78bc918ebd1acf5b48ab1fa46012408a2",
     "learnerStageId: measurement.capacity",
     "judgmentIds: g3s2-measure-01, g3s2-measure-03"
   ],
   "mathOracle": {
-    "sourceChecksum": "d00b8d1ebf69b7028804768663bbf72bef76c0cc5260386dbc83ed4887862c08",
+    "sourceChecksum": "afe6e080570e79438ec70ddcfe676ed78bc918ebd1acf5b48ab1fa46012408a2",
     "sourceJudgments": [
       {
         "judgmentId": "g3s2-measure-01",
@@ -275,8 +275,8 @@
       {
         "judgmentId": "g3s2-measure-03",
         "choiceId": "2030ml",
-        "rationale": "2L와 300mL를 바꾼 값으로 더하지 않고 2와 030을 자리 맞춤 없이 이어 썼습니다.",
-        "derivation": "2×1000+300=2300 대신 2|030=2030mL로 적었습니다."
+        "rationale": "mL 부분을 한 자리 밀어 읽어 300mL를 30mL 크기로 처리했습니다.",
+        "derivation": "2L를 2000mL로 바꾼 뒤 300mL를 30mL로 읽어 2000+30=2030mL로 적었습니다."
       },
       {
         "judgmentId": "g3s2-measure-03",

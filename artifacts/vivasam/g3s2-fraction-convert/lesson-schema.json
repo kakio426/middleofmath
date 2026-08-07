@@ -23,12 +23,12 @@
     "packages/content/src/grade3-semester2-complete.ts",
     "packages/content/src/grade3-semester2-coverage.ts",
     "packages/content/src/grade3-semester2-rationales.ts",
-    "manifest checksum: d00b8d1ebf69b7028804768663bbf72bef76c0cc5260386dbc83ed4887862c08",
+    "manifest checksum: afe6e080570e79438ec70ddcfe676ed78bc918ebd1acf5b48ab1fa46012408a2",
     "learnerStageId: fraction.convert",
     "judgmentIds: g3s2-frac-11, g3s2-frac-12"
   ],
   "mathOracle": {
-    "sourceChecksum": "d00b8d1ebf69b7028804768663bbf72bef76c0cc5260386dbc83ed4887862c08",
+    "sourceChecksum": "afe6e080570e79438ec70ddcfe676ed78bc918ebd1acf5b48ab1fa46012408a2",
     "sourceJudgments": [
       {
         "judgmentId": "g3s2-frac-11",

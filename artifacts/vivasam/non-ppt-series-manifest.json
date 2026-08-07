@@ -165,7 +165,7 @@
       "title": "부분곱을 빠짐없이 더하기",
       "grade": "초등 3학년 2학기",
       "unit": "1. 곱셈",
-      "digest": "bed6ba398496",
+      "digest": "b2a6eaad391e",
       "packageManifest": "g3s2-multiplication-combine/manifest.json"
     },
     {
@@ -183,7 +183,7 @@
       "title": "나눗셈이 묻는 두 가지",
       "grade": "초등 3학년 2학기",
       "unit": "2. 나눗셈",
-      "digest": "58e9f215cba2",
+      "digest": "fc17f73bc9e3",
       "packageManifest": "g3s2-division-meaning/manifest.json"
     },
     {
@@ -201,7 +201,7 @@
       "title": "몫과 나머지로 처음 수 확인하기",
       "grade": "초등 3학년 2학기",
       "unit": "2. 나눗셈",
-      "digest": "428a5779e604",
+      "digest": "4237b3c4c5d1",
       "packageManifest": "g3s2-division-remainder-check/manifest.json"
     },
     {
@@ -255,7 +255,7 @@
       "title": "L를 mL로 정확히 바꾸기",
       "grade": "초등 3학년 2학기",
       "unit": "5. 들이와 무게",
-      "digest": "40cd2ad0d627",
+      "digest": "2797ce8ff359",
       "packageManifest": "g3s2-capacity-unit/manifest.json"
     },
     {

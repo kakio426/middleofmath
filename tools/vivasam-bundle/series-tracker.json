@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-07T11:49:56.872Z",
+  "updatedAt": "2026-08-07T12:12:44.008Z",
   "contract": {
     "targetDeckCount": 30,
     "preferredSlidesPerDeck": 11,
@@ -104,7 +104,7 @@
       },
       "ppt": {
         "status": "awaiting-claude",
-        "legacyPptxPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/g3s2-pictograph-legend.pptx"
+        "legacyPptxPath": ""
       },
       "support": {
         "intentStatus": "validated",
@@ -123,7 +123,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -171,7 +171,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -219,7 +219,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/bf456499-f56d-4bf5-86e2-2179f4ce354a/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -267,7 +267,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/9d3ac7a8-6596-429d-bac5-a3a75ad4540c/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -315,7 +315,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/b8d42be0-1a5d-4de9-88c5-a655c6066d68/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -363,7 +363,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -411,7 +411,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/2394fb2a-487a-4f92-ad63-bc18c69d9cdd/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -459,7 +459,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/3c532785-a5f9-4c15-a4d2-896d7ab79e6d/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -507,7 +507,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/6c1fef76-72ec-4036-a9ba-a0db4f929ae4/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -555,7 +555,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/76592b0e-23ff-42e5-980a-768078775c9f/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -603,7 +603,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/e81b3b1a-c2e2-4a05-b0cb-a14d71ed25f8/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -651,7 +651,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/c47118fa-55ba-4a7a-bae8-15ce4a60501e/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -699,7 +699,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/7a7f121f-04ad-4ba4-a547-1e30ee9fb3b5/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -747,7 +747,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/77d10703-2f12-4373-944e-78ef81526086/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -795,7 +795,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/fcd6ce94-a7e5-4dca-af6d-4f996f49a5f1/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -843,7 +843,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/45fd9710-81d7-4792-b079-e9911605e2a8/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -891,7 +891,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/65d1a3aa-bbe5-403d-be56-73c7e6d60c29/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -933,13 +933,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-multiplication-combine",
-        "digest": "bed6ba398496",
+        "digest": "b2a6eaad391e",
         "localRecordStatus": "published",
         "localRecordId": "333bce9f-515f-4c32-acb9-c56a2b37d17d",
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/73ebf7b2-b4e5-4ee7-8992-4cc364c2bfd9/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -987,7 +987,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/6f2c7f32-b96d-4e68-9d1f-4fb21e15cb84/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1029,13 +1029,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-division-meaning",
-        "digest": "58e9f215cba2",
+        "digest": "fc17f73bc9e3",
         "localRecordStatus": "published",
         "localRecordId": "2b5e8d2c-a7a4-48ec-883e-2383234daec4",
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/82bbb53f-d5aa-4f46-b3fe-3e805fecb530/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1083,7 +1083,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/61037655-2af2-47f5-b111-76ee165bbcc0/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1125,13 +1125,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-division-remainder-check",
-        "digest": "428a5779e604",
+        "digest": "4237b3c4c5d1",
         "localRecordStatus": "published",
         "localRecordId": "ef183d4c-0dd7-4621-b200-843d8ee72924",
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/6732ca19-4aed-4ba9-a0bb-677aa8a27ae8/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1179,7 +1179,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/8cab9775-d12e-4ec1-a261-a0afb323ca94/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1227,7 +1227,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/2d306307-a92a-4570-9284-8f7fdf074d32/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1275,7 +1275,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/112fd707-abf1-4d7c-bedd-06bd507d0bf3/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1323,7 +1323,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/fc053fed-9118-486f-a719-4b60b757dbd8/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1371,7 +1371,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/e9fc9a07-fd63-4a7e-95b4-966bb57f91f3/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1413,13 +1413,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-capacity-unit",
-        "digest": "40cd2ad0d627",
+        "digest": "2797ce8ff359",
         "localRecordStatus": "published",
         "localRecordId": "aa9851ac-dfa4-4ca8-bf30-a711b97a2dc1",
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/822d7f5d-b22d-48f3-88af-e4c431b61301/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1467,7 +1467,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/8d553b1c-92dc-4506-b4a6-4dd360c74b27/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     },
@@ -1515,7 +1515,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/9ec7cf1d-26f1-418c-8e13-b2db1640e524/",
-        "validatedAt": "2026-08-07T11:49:56.872Z"
+        "validatedAt": "2026-08-07T12:12:44.008Z"
       },
       "notes": []
     }
@@ -1739,6 +1739,12 @@
     },
     {
       "at": "2026-08-07T11:49:56.872Z",
+      "sequence": null,
+      "event": "Eduitit 운영 공개·비로그인 검증 30개 완료",
+      "detail": "운영 수업 꾸러미 30개를 게시하고 목록·상세·실행·렌더·썸네일·대표 이미지·활동지 다운로드와 ETag 304를 비로그인 외부 HTTP로 검증했다. Claude PPTX와 커뮤니티·나의 레이스 등록은 별도 상태로 유지했다."
+    },
+    {
+      "at": "2026-08-07T12:12:44.008Z",
       "sequence": null,
       "event": "Eduitit 운영 공개·비로그인 검증 30개 완료",
       "detail": "운영 수업 꾸러미 30개를 게시하고 목록·상세·실행·렌더·썸네일·대표 이미지·활동지 다운로드와 ETag 304를 비로그인 외부 HTTP로 검증했다. Claude PPTX와 커뮤니티·나의 레이스 등록은 별도 상태로 유지했다."

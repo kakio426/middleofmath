@@ -275,6 +275,7 @@ function parseArgs(argv) {
     evidencePath: DEFAULT_EVIDENCE_PATH,
     baseUrl: DEFAULT_BASE_URL,
     commitHash: "",
+    eduititRoot: "",
   };
   while (argv.length) {
     const token = argv.shift();
@@ -285,6 +286,11 @@ function parseArgs(argv) {
     else if (token === "--evidence") options.evidencePath = path.resolve(argv.shift() || "");
     else if (token === "--base-url") options.baseUrl = argv.shift() || "";
     else if (token === "--commit") options.commitHash = argv.shift() || "";
+    else if (token === "--eduitit-root") {
+      const value = argv.shift();
+      ensure(value, "--eduitit-root 뒤에 경로를 입력하세요.");
+      options.eduititRoot = path.resolve(value);
+    }
     else throw new Error(`알 수 없는 옵션입니다: ${token}`);
   }
   ensure(options.verificationPath || options.publicationPath, "--publication 또는 --verification-json이 필요합니다.");
@@ -301,7 +307,10 @@ async function main() {
     );
   const loaded = loadTracker(options.trackerPath);
   const tracker = applyProductionVerificationToTracker(loaded.tracker, verification);
-  const validated = validateTracker(tracker, { trackerPath: loaded.trackerPath });
+  const validated = validateTracker(tracker, {
+    trackerPath: loaded.trackerPath,
+    roots: options.eduititRoot ? { eduitit: options.eduititRoot } : {},
+  });
   writeAtomic(options.evidencePath, `${JSON.stringify(verification, null, 2)}\n`);
   writeAtomic(loaded.trackerPath, `${JSON.stringify(tracker, null, 2)}\n`);
   writeDashboard(validated, options.dashboardPath);
