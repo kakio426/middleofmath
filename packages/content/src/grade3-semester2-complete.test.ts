@@ -39,14 +39,14 @@ async function checksum(
 }
 
 describe("3학년 2학기 완성 문제은행", () => {
-  it("has a canonical checksum for the v2.1.0 review payload", async () => {
+  it("has a canonical checksum for the v2.2.0 review payload", async () => {
     expect(await checksum()).toBe(grade3Semester2CompleteDiagnosis.manifest.checksum);
   });
 
   it("keeps v1 immutable and publishes the expanded bank as a separate v2 review", () => {
     expect(grade3Semester2Diagnosis.manifest.version).toBe("1.0.0");
     expect(grade3Semester2Diagnosis.judgments).toHaveLength(12);
-    expect(grade3Semester2CompleteDiagnosis.manifest.version).toBe("2.1.0");
+    expect(grade3Semester2CompleteDiagnosis.manifest.version).toBe("2.2.0");
     expect(grade3Semester2CompleteDiagnosis.manifest.status).toBe("review");
 
     const result = validateDiagnosisSet(grade3Semester2CompleteDiagnosis, {
@@ -222,7 +222,7 @@ describe("3학년 2학기 완성 문제은행", () => {
       rows: [{ label: "책", count: 4 }]
     });
     expect(byId.get("g3s2-graph-05")?.visual.kind).toBe("item-collection");
-    expect(byId.get("g3s2-graph-06")?.visual.kind).toBe("data-table");
+    expect(byId.get("g3s2-graph-06")?.visual.kind).toBe("item-collection");
     expect(byId.get("g3s2-div-05")?.visual.kind).toBe("item-collection");
   });
 });

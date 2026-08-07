@@ -106,7 +106,7 @@ const stageAuthoring: StageRationaleAuthoring[] = [
         "721",
         "partial-products-combined-without-place-value",
         "십의 자리 부분곱 120에서 20을 빠뜨려 바른 답보다 20 작게 합쳤습니다.",
-        "600+120+21에서 120을 100만큼 줄여 600+100+21=721로 계산했습니다."
+        "600+120+21에서 십의 자리 부분곱 120을 100으로 보고 600+100+21=721로 계산했습니다."
       ],
       [
         "g3s2-mul-04",
@@ -344,10 +344,10 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       ],
       [
         "g3s2-div-08",
-        "7x5-plus6",
+        "6plus7plus5",
         "confirmation-structure-rebuilt",
-        "나누는 수·몫·나머지의 역할을 모두 바꾸어 임의의 곱과 합을 만들었습니다.",
-        "6×7+5=47의 수를 바꾸어 7×5+6=41로 계산했습니다."
+        "6개씩 7묶음이라는 관계를 곱셈으로 묶지 않고 세 수를 나란히 더했습니다.",
+        "6×7+5=47을 6+7+5=18로 바꾸었습니다."
       ]
     ]
   ),
@@ -383,10 +383,10 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       ],
       [
         "g3s2-div-10",
-        "about-80-each",
+        "about-200-each",
         "quotient-scale-too-large",
-        "158의 절반에 가까운 수를 골라 8명에게 나눈다는 조건을 약하게 적용했습니다.",
-        "160÷8≈20 대신 160÷2=80을 어림값으로 사용했습니다."
+        "세 자리 수를 8명에게 나누는데도 한 사람 몫을 백의 자리로 크게 보았습니다.",
+        "160÷8≈20에 0을 하나 더 붙여 약 200개로 어림했습니다."
       ]
     ]
   ),
@@ -539,10 +539,10 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       ],
       [
         "g3s2-circle-08",
-        "25cm",
+        "opening-varies",
         "fixed-opening-condition-lost",
-        "컴퍼스의 한 번 정한 거리를 그대로 쓰지 않고 길이를 제곱했습니다.",
-        "벌림 5cm를 5×5=25cm로 바꾸었습니다."
+        "한 번 정한 벌림이 원을 그리는 동안 유지된다는 조건을 놓쳐 반지름이 정해지지 않는다고 보았습니다.",
+        "벌림 5cm가 그리는 도중 바뀔 수 있다고 판단해 반지름을 하나로 정하지 않았습니다."
       ]
     ]
   ),
@@ -885,8 +885,8 @@ const stageAuthoring: StageRationaleAuthoring[] = [
         "g3s2-measure-03",
         "2030ml",
         "milliliter-place-misread",
-        "2L와 300mL를 바꾼 값으로 더하지 않고 2와 030을 자리 맞춤 없이 이어 썼습니다.",
-        "2×1000+300=2300 대신 2|030=2030mL로 적었습니다."
+        "mL 부분을 한 자리 밀어 읽어 300mL를 30mL 크기로 처리했습니다.",
+        "2L를 2000mL로 바꾼 뒤 300mL를 30mL로 읽어 2000+30=2030mL로 적었습니다."
       ],
       [
         "g3s2-measure-03",
@@ -917,8 +917,8 @@ const stageAuthoring: StageRationaleAuthoring[] = [
         "g3s2-measure-07",
         "1l200ml",
         "operation-structure-confused",
-        "두 들이를 합해야 하는데 큰 양에서 작은 양을 빼어 차를 구했습니다.",
-        "2L300mL+1L500mL 대신 |2L300mL-1L500mL|=1L200mL로 계산했습니다."
+        "두 들이를 합해야 하는데 같은 단위끼리 큰 수에서 작은 수를 빼어 차를 구했습니다.",
+        "더하지 않고 L끼리 2-1=1, mL끼리 500-300=200을 해 1L200mL로 적었습니다."
       ],
       [
         "g3s2-measure-08",
@@ -1020,7 +1020,7 @@ const stageAuthoring: StageRationaleAuthoring[] = [
     "두 오답은 모두 1t=1000kg 관계와 t·kg 혼합 무게를 kg으로 바꾸는 단계에서 함께 관찰합니다.",
     {
       "kilogram-place-misread": "kg으로 쓸 때 0의 자리 위치를 잘못 놓음",
-      "ton-value-enlarged-or-dropped": "t 부분을 1000kg 크기로 반영하지 못함"
+      "ton-value-enlarged": "t 부분을 1000kg보다 열 배 크게 바꿈"
     },
     [
       [
@@ -1033,7 +1033,7 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       [
         "g3s2-measure-11",
         "10000kg",
-        "ton-value-enlarged-or-dropped",
+        "ton-value-enlarged",
         "1t과 kg 사이에 0을 하나 더 붙여 실제보다 열 배 크게 바꾸었습니다.",
         "1t=1000kg 대신 1t=10000kg으로 변환했습니다."
       ],
@@ -1041,15 +1041,15 @@ const stageAuthoring: StageRationaleAuthoring[] = [
         "g3s2-measure-12",
         "2050kg",
         "kilogram-place-misread",
-        "2t와 500kg을 바꾼 값으로 더하지 않고 2와 050을 이어 썼습니다.",
-        "2×1000+500=2500 대신 2|050=2050kg으로 적었습니다."
+        "kg 부분을 한 자리 밀어 읽어 500kg을 50kg 크기로 처리했습니다.",
+        "2t을 2000kg으로 바꾼 뒤 500kg을 50kg으로 읽어 2000+50=2050kg으로 적었습니다."
       ],
       [
         "g3s2-measure-12",
-        "500kg",
-        "ton-value-enlarged-or-dropped",
-        "2t을 kg으로 바꾸지 않고 혼합 무게에서 500kg 부분만 남겼습니다.",
-        "2×1000+500에서 2×1000을 빠뜨려 500kg으로 계산했습니다."
+        "20500kg",
+        "ton-value-enlarged",
+        "1t을 10000kg으로 보아 t 부분을 실제보다 열 배 크게 바꾼 뒤 500kg을 더했습니다.",
+        "2×1000+500=2500 대신 2×10000+500=20500kg으로 계산했습니다."
       ]
     ]
   ),
@@ -1117,17 +1117,17 @@ const stageAuthoring: StageRationaleAuthoring[] = [
       ],
       [
         "g3s2-graph-06",
-        "3-rabbits",
+        "2-cats-counted",
         "wrong-category-counted",
-        "표에서 토끼 행이 아니라 고양이 행의 값 3을 읽었습니다.",
-        "토끼 2 대신 고양이 3을 같은 범주로 판단했습니다."
+        "토끼를 묻는데 고양이 두 마리를 세어 다른 종류의 수를 답했습니다.",
+        "토끼 4마리 대신 고양이 2마리를 해당 범주로 판단했습니다."
       ],
       [
         "g3s2-graph-06",
-        "7-rabbits",
+        "7-all-animals",
         "all-categories-counted",
-        "토끼 한 행의 값을 읽지 않고 표의 세 동물 수를 모두 더했습니다.",
-        "토끼 2 대신 고양이3+토끼2+강아지2=7을 계산했습니다."
+        "토끼만 골라 세지 않고 그림의 동물을 종류 구분 없이 모두 셌습니다.",
+        "토끼 4마리 대신 전체 4+2+1=7마리를 계산했습니다."
       ]
     ]
   ),

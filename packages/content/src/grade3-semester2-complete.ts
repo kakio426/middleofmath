@@ -261,7 +261,7 @@ const addedStages: LearnerStage[] = [
 ];
 
 const addedSignals: SignalDefinition[] = [
-  makeSignal("multiplication.two-digit-factor", "두 자리 수를 곱하는 부분곱", "medium", "두 자리 수를 십과 일로 나누어 각각 곱한 뒤 합치는 연습을 하고 있습니다.", "십의 자리와 일의 자리에서 생기는 두 부분곱 중 하나를 빠뜨리는 선택이 관찰되었습니다.", "곱하는 수를 십과 일로 나누고 두 곱을 각각 적게 하세요.", "23×12에서 12를 10과 2로 나누어 말해 보게 해주세요."),
+  makeSignal("multiplication.two-digit-factor", "두 자리 수를 곱하는 부분곱", "medium", "두 자리 수를 십과 일로 나누어 각각 곱한 뒤 합치는 연습을 하고 있습니다.", "두 부분곱을 각각 구한 뒤 자릿값에 맞게 더하는 과정이 안정적이지 않습니다.", "곱하는 수를 십과 일로 나누고 두 곱을 각각 적게 하세요.", "23×12에서 12를 10과 2로 나누어 말해 보게 해주세요."),
   makeSignal("multiplication.estimate", "곱셈 결과 어림", "low", "곱셈 결과가 어느 정도인지 가까운 수로 먼저 가늠하는 연습을 하고 있습니다.", "곱셈의 크기를 자릿수와 연결하는 근거가 더 필요합니다.", "곱하는 수를 가까운 십의 자리 수로 바꾸어 먼저 계산하세요.", "48을 50으로 보았을 때 50×6이 얼마쯤인지 물어봐 주세요."),
   makeSignal("division.meaning", "나눗셈의 뜻과 곱셈 관계", "high", "전체와 한 묶음의 수를 보고 몇 묶음인지 찾는 관계를 익히고 있습니다.", "전체, 묶음 수, 한 묶음의 수를 서로 연결하는 과정이 흔들립니다.", "같은 수만큼 묶어 보고 곱셈식과 나눗셈식을 함께 쓰게 하세요.", "24개를 6개씩 묶으면 몇 묶음인지 함께 놓아보세요."),
   makeSignal("division.remainder-check", "몫과 나머지 확인", "medium", "몫과 나머지로 처음 수가 맞는지 다시 확인하는 연습을 하고 있습니다.", "나머지를 나누는 수보다 작게 남기고 원래 수를 확인하는 과정이 안정적이지 않습니다.", "나누는 수×몫+나머지로 원래 수가 되는지 확인하세요.", "29=4×7+1에서 각 수가 무엇을 뜻하는지 물어봐 주세요."),
@@ -334,7 +334,7 @@ const addedJudgments: Judgment[] = [
   }),
   makeJudgment({
     id: "g3s2-div-04", unitId: "division", learnerStageId: "division.equal-sharing",
-    curriculumAnchorIds: ["[4수01-05]", "[4수01-06]"], context: "6+6+6=18이에요.",
+    curriculumAnchorIds: ["[4수01-05]", "[4수01-06]"],
     prompt: "공 18개를 상자 3개에 똑같이 담으면 한 상자에 몇 개씩 담을까요?",
     visual: { kind: "none" }, signalId: "division.equal-share",
     answers: [{ id: "6", label: "6개" }, { id: "3-boxes", label: "3개" }, { id: "21", label: "21개" }]
@@ -352,7 +352,7 @@ const addedJudgments: Judgment[] = [
   }),
   makeJudgment({
     id: "g3s2-div-06", unitId: "division", learnerStageId: "division.meaning",
-    curriculumAnchorIds: ["[4수01-05]"], context: "접시 5개에 쿠키를 7개씩 놓았어요.",
+    curriculumAnchorIds: ["[4수01-05]"], context: "쿠키 35개를 접시 5개에 똑같이 나누어 놓았어요.",
     prompt: "한 접시의 쿠키 수를 구하는 식은 무엇일까요?",
     visual: { kind: "division-groups", total: 35, groups: 5 }, signalId: "division.meaning",
     answers: [{ id: "35-div-5", label: "35÷5=7" }, { id: "35-div-5-wrong", label: "35÷5=5" }, { id: "35-minus-5", label: "35-5=30" }]
@@ -367,7 +367,7 @@ const addedJudgments: Judgment[] = [
     id: "g3s2-div-08", unitId: "division", learnerStageId: "division.remainder-check",
     curriculumAnchorIds: ["[4수01-05]", "[4수01-06]"], prompt: "47개를 6개씩 묶으면 7묶음이 되고 5개가 남아요. 알맞은 식은 무엇일까요?",
     visual: { kind: "division-groups", total: 47, groups: 7 }, signalId: "division.remainder-check",
-    answers: [{ id: "6x7-plus5", label: "6×7+5=47" }, { id: "6x5-plus7", label: "6×5+7=37" }, { id: "7x5-plus6", label: "7×5+6=41" }]
+    answers: [{ id: "6x7-plus5", label: "6×7+5=47" }, { id: "6x5-plus7", label: "6×5+7=37" }, { id: "6plus7plus5", label: "6+7+5=18" }]
   }),
   makeJudgment({
     id: "g3s2-div-09", unitId: "division", learnerStageId: "division.estimate",
@@ -380,7 +380,7 @@ const addedJudgments: Judgment[] = [
     curriculumAnchorIds: ["[4수01-08]"], context: "구슬 158개를 8명에게 비슷하게 나누려고 해요.",
     prompt: "한 사람에게 몇 개쯤 돌아갈까요?", visual: { kind: "none" },
     signalId: "division.estimate",
-    answers: [{ id: "about-20-each", label: "20개쯤" }, { id: "about-2-each", label: "2개쯤" }, { id: "about-80-each", label: "80개쯤" }]
+    answers: [{ id: "about-20-each", label: "20개쯤" }, { id: "about-2-each", label: "2개쯤" }, { id: "about-200-each", label: "200개쯤" }]
   }),
   makeJudgment({
     id: "g3s2-circle-03", unitId: "circle", learnerStageId: "circle.parts",
@@ -419,7 +419,7 @@ const addedJudgments: Judgment[] = [
     id: "g3s2-circle-08", unitId: "circle", learnerStageId: "circle.compass",
     curriculumAnchorIds: ["[4수03-07]"], prompt: "컴퍼스를 5cm 벌려 그린 원의 반지름은 얼마일까요?",
     visual: { kind: "circle", mode: "compass-radius", radiusValue: 5 }, signalId: "circle.compass",
-    answers: [{ id: "5cm", label: "5cm" }, { id: "10cm", label: "10cm" }, { id: "25cm", label: "25cm" }]
+    answers: [{ id: "5cm", label: "5cm" }, { id: "10cm", label: "10cm" }, { id: "opening-varies", label: "그릴 때마다 달라져요" }]
   })
 ];
 
@@ -443,14 +443,23 @@ const fractionMeasurementGraphJudgments: Judgment[] = [
   makeJudgment({
     id: "g3s2-frac-05", unitId: "fraction", learnerStageId: "fraction.discrete",
     curriculumAnchorIds: ["[4수01-09]"], prompt: "단추 12개의 1/3은 몇 개일까요?",
-    visual: { kind: "fraction-bar", numerator: 1, denominator: 3 }, interactionType: "fraction-bar",
+    visual: {
+      kind: "item-collection",
+      ariaLabel: "흩어져 있는 단추 12개",
+      items: Array.from({ length: 12 }, () => "●")
+    }, interactionType: "fraction-bar",
     signalId: "fraction.discrete",
     answers: [{ id: "4-buttons", label: "4개" }, { id: "3-buttons", label: "3개" }, { id: "9-buttons", label: "9개" }]
   }),
   makeJudgment({
     id: "g3s2-frac-06", unitId: "fraction", learnerStageId: "fraction.discrete",
     curriculumAnchorIds: ["[4수01-09]"], context: "붙임 딱지가 20장 있어요.",
-    prompt: "20장의 3/5은 몇 장일까요?", visual: { kind: "fraction-bar", numerator: 3, denominator: 5 }, interactionType: "fraction-bar",
+    prompt: "20장의 3/5은 몇 장일까요?",
+    visual: {
+      kind: "item-collection",
+      ariaLabel: "흩어져 있는 붙임 딱지 20장",
+      items: Array.from({ length: 20 }, () => "■")
+    }, interactionType: "fraction-bar",
     signalId: "fraction.discrete",
     answers: [{ id: "12-stickers", label: "12장" }, { id: "4-stickers", label: "4장" }, { id: "15-stickers", label: "15장" }]
   }),
@@ -632,7 +641,7 @@ const fractionMeasurementGraphJudgments: Judgment[] = [
       targetUnit: "kg"
     }, interactionType: "measurement",
     signalId: "measurement.ton",
-    answers: [{ id: "2500kg", label: "2500kg" }, { id: "2050kg", label: "2050kg" }, { id: "500kg", label: "500kg" }]
+    answers: [{ id: "2500kg", label: "2500kg" }, { id: "2050kg", label: "2050kg" }, { id: "20500kg", label: "20500kg" }]
   }),
   makeJudgment({
     id: "g3s2-measure-13", unitId: "measurement", learnerStageId: "measurement.weight-arithmetic",
@@ -691,20 +700,15 @@ const fractionMeasurementGraphJudgments: Judgment[] = [
   }),
   makeJudgment({
     id: "g3s2-graph-06", unitId: "pictograph", learnerStageId: "pictograph.classify-table",
-    curriculumAnchorIds: ["[4수04-01]"], context: "동물 수를 표로 정리했습니다.",
+    curriculumAnchorIds: ["[4수04-01]"], context: "동물 그림을 종류별로 나누어 세어 보세요.",
     prompt: "토끼는 몇 마리일까요?",
     visual: {
-      kind: "data-table",
-      title: "좋아하는 동물 조사",
-      rows: [
-        { label: "고양이", value: "3" },
-        { label: "강아지", value: "2" },
-        { label: "토끼", value: "?" },
-        { label: "전체", value: "7" }
-      ]
+      kind: "item-collection",
+      ariaLabel: "토끼, 고양이, 토끼, 강아지, 토끼, 고양이, 토끼",
+      items: ["🐰", "🐱", "🐰", "🐶", "🐰", "🐱", "🐰"]
     },
     signalId: "pictograph.classify-table",
-    answers: [{ id: "2-rabbits", label: "2" }, { id: "3-rabbits", label: "3" }, { id: "7-rabbits", label: "7" }]
+    answers: [{ id: "4-rabbits", label: "4마리" }, { id: "2-cats-counted", label: "2마리" }, { id: "7-all-animals", label: "7마리" }]
   }),
   makeJudgment({
     id: "g3s2-graph-07", unitId: "pictograph", learnerStageId: "pictograph.convert",
@@ -824,6 +828,13 @@ const signals = grade3Semester2Diagnosis.signals
         homePrompt: "네 접시에 10개씩 놓고 12개가 남았다면 처음에는 몇 개인지 물어봐 주세요."
       };
     }
+    if (signal.id === "division.equal-share") {
+      return {
+        ...signal,
+        teachingMove: "나누어야 할 양을 묶음 수만큼의 동그라미에 하나씩 번갈아 놓게 해보세요.",
+        homePrompt: "물건을 접시 몇 개에 똑같이 놓으면 한 접시에 몇 개인지 함께 놓아보세요."
+      };
+    }
     if (signal.id === "circle.radius-diameter") {
       return {
         ...signal,
@@ -871,8 +882,8 @@ const diagnosis: DiagnosisSet = {
   ...grade3Semester2Diagnosis,
   manifest: {
     ...grade3Semester2Diagnosis.manifest,
-    version: "2.1.0",
-    checksum: "d00b8d1ebf69b7028804768663bbf72bef76c0cc5260386dbc83ed4887862c08",
+    version: "2.2.0",
+    checksum: "5b8648f0ec6f7d963d8e47d4cac70299473daf7c077770423040428dec952713",
     estimatedMinutes: 32,
     status: "review"
   },
