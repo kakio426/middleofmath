@@ -32,6 +32,10 @@ test("원장은 30개 PPT와 PPT당 통합 활동지 1개 계약을 고정한다
   assert.equal(tracker.contract.targetDeckCount, 30);
   assert.equal(tracker.contract.worksheetsPerDeck, 1);
   assert.equal(tracker.contract.targetWorksheetCount, 30);
+  assert.equal(tracker.contract.mathcanvasActivitiesPerDeck, 1);
+  assert.equal(tracker.contract.mathcanvasReusePolicy, "owner-manual-curated-only");
+  assert.equal(tracker.contract.mathcanvasPrototypeReuse, false);
+  assert.equal(tracker.contract.mathcanvasExternalProjectReuse, false);
   assert.equal(tracker.contract.pptAuthor, "Claude");
 });
 
@@ -133,6 +137,8 @@ test("사람용 진행표에는 30개 슬롯과 1개 통합 활동지 계약이 
   assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 3 \| 30/);
   assert.match(markdown, /Claude HTML\/PPTX 수령/);
   assert.match(markdown, /Claude HTML\/PPTX 수령 대기/);
+  assert.match(markdown, /MathCanvas 활동 연결 완료/);
+  assert.match(markdown, /로그인한 선생님의 내 캔버스/);
 });
 
 test("상태 갱신은 원장 이력과 사람용 진행표를 함께 남긴다", () => {
@@ -155,9 +161,20 @@ test("상태 갱신은 원장 이력과 사람용 진행표를 함께 남긴다"
       detail: "원장과 파생 진행표가 함께 갱신되는지 확인했다.",
       allowDowngrade: false,
     });
+    updateTracker({
+      trackerPath: temporaryTrackerPath,
+      dashboardPath: temporaryDashboardPath,
+      sequence: 1,
+      sets: [],
+      note: "테스트 이력",
+      event: "같은 메모 재기록 테스트",
+      detail: "같은 메모는 한 번만 보관한다.",
+      allowDowngrade: false,
+    });
     const updated = JSON.parse(fs.readFileSync(temporaryTrackerPath, "utf8"));
-    assert.equal(updated.history.length, beforeHistoryCount + 1);
-    assert.equal(updated.history.at(-1).event, "추적 갱신 테스트");
+    assert.equal(updated.history.length, beforeHistoryCount + 2);
+    assert.equal(updated.history.at(-1).event, "같은 메모 재기록 테스트");
+    assert.equal(updated.bundles[0].notes.filter((note) => note === "테스트 이력").length, 1);
     assert.ok(fs.readFileSync(temporaryDashboardPath, "utf8").includes("테스트 이력"));
   } finally {
     fs.rmSync(temporaryRoot, { recursive: true, force: true });

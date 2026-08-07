@@ -1,13 +1,17 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-07T22:18:22.541Z",
+  "updatedAt": "2026-08-07T23:28:20.089Z",
   "contract": {
     "targetDeckCount": 30,
     "preferredSlidesPerDeck": 11,
     "slideCountIsFlexible": true,
     "worksheetsPerDeck": 1,
     "targetWorksheetCount": 30,
+    "mathcanvasActivitiesPerDeck": 1,
+    "mathcanvasReusePolicy": "owner-manual-curated-only",
+    "mathcanvasPrototypeReuse": false,
+    "mathcanvasExternalProjectReuse": false,
     "pptAuthor": "Claude",
     "codexOwnsNonPptArtifacts": true
   },
@@ -36,6 +40,19 @@
       "sourcePath": "",
       "pngPath": "",
       "pdfPath": "",
+      "validatedAt": ""
+    },
+    "mathcanvas": {
+      "status": "not-started",
+      "route": "",
+      "intakePath": "",
+      "resultPath": "",
+      "worksheetSha256": "",
+      "manualProjectId": "",
+      "templateId": "",
+      "projectId": "",
+      "editorUrl": "",
+      "publicStudentUrl": "",
       "validatedAt": ""
     },
     "ppt": {
@@ -244,7 +261,22 @@
         "publicUrl": "",
         "validatedAt": "2026-08-07T22:18:22.541Z"
       },
-      "notes": []
+      "notes": [
+        "수동 제작본 검수 결과를 반영했으며 다른 사람 자료와 기존 AI 프로토타입은 재사용하지 않습니다."
+      ],
+      "mathcanvas": {
+        "intakePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/mathcanvas/worksheet-intake.json",
+        "resultPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/mathcanvas/activity-result.json",
+        "worksheetSha256": "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8",
+        "manualProjectId": "",
+        "templateId": "number.multiplication.group-array-meaning-v1",
+        "projectId": "TBmzEW",
+        "editorUrl": "https://mathcanvas.vivasam.com/ko/view/TBmzEW",
+        "publicStudentUrl": "",
+        "validatedAt": "2026-08-07T23:27:28.898Z",
+        "status": "created",
+        "route": "owner-generated"
+      }
     },
     {
       "sequence": 4,
@@ -1975,6 +2007,24 @@
       "sequence": null,
       "event": "PPT 수령분 산출물·Eduitit 로컬 공개 검증 완료",
       "detail": "수령된 PPTX 3개를 기준으로 통합 활동지·수업 진행 안내·대표 이미지와 Eduitit 공개 패키지를 만들고 비로그인 접근을 검증했다. 나머지 슬롯은 PPTX 수령 대기로 되돌렸다."
+    },
+    {
+      "at": "2026-08-07T23:06:08.443Z",
+      "sequence": 3,
+      "event": "MathCanvas 선별·생성 상태 갱신",
+      "detail": "owner-template-review-required: 활동지 해시 65be8eb9aeac"
+    },
+    {
+      "at": "2026-08-07T23:24:49.223Z",
+      "sequence": 3,
+      "event": "MathCanvas 선별·생성 상태 갱신",
+      "detail": "owner-template-review-required: 활동지 해시 65be8eb9aeac"
+    },
+    {
+      "at": "2026-08-07T23:28:20.089Z",
+      "sequence": 3,
+      "event": "MathCanvas 선별·생성 상태 갱신",
+      "detail": "created: 활동지 해시 65be8eb9aeac"
     }
   ]
 }

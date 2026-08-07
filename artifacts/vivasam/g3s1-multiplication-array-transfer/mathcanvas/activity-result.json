@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "status": "created",
+  "intakeHash": "90e4994fa0caedea8433b2f361342ecf2a55a85c1a8334741f6d7dac8e5c11d1",
+  "lessonId": "g3s1-multiplication-array-transfer",
+  "worksheetSha256": "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8",
+  "manualReview": {
+    "lessonId": "g3s1-multiplication-array-transfer",
+    "accountScope": "current-owner-my-canvas",
+    "accountDisplayName": "유병주 선생님",
+    "reviewedAt": "2026-08-07T22:55:00.000Z",
+    "inspectedProjectIds": [
+      "a9sw5l",
+      "I9a004"
+    ],
+    "decision": "no-usable-manual",
+    "searchNotes": [
+      "내 캔버스에서 곱셈 관련 수동 제작 후보를 직접 열어 화면을 확인했습니다.",
+      "두 후보 모두 같은 묶음의 의미를 선택·검증·설명하는 이번 차시 목표를 충족하지 못했습니다."
+    ]
+  },
+  "intake": {
+    "intakeId": "g3s1-multiplication-array-transfer-65be8eb9aeac",
+    "lessonId": "g3s1-multiplication-array-transfer",
+    "worksheetFilename": "g3s1-multiplication-array-transfer-worksheet.png",
+    "worksheetSha256": "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8"
+  },
+  "sourcePolicy": {
+    "reusableProjectSource": "owner-manual-curated",
+    "generatedProjectSource": "owner-mathcanvas-ai",
+    "prototypeProjectReuse": false,
+    "externalProjectReuse": false
+  },
+  "route": "create-new-owner-project",
+  "recommendation": {
+    "supported": true,
+    "recommendation": {
+      "supported": true,
+      "templateId": "number.multiplication.group-array-meaning-v1",
+      "recommendedGrade": 3,
+      "standardCode": "[2수01-10]",
+      "learningGoal": "같은 수씩 묶인 상황을 곱셈식과 배열로 연결하고, 두 수가 나타내는 뜻을 설명할 수 있다.",
+      "problemCount": 2,
+      "difficulty": "normal",
+      "manipulation": "multiplication-array-choice-drag",
+      "rationale": [
+        "요청을 등록된 활동 유형과 성취기준에 연결했습니다."
+      ],
+      "caveats": [
+        "고정 스냅샷은 성취기준 코드와 상위 단원 위치를 확인하는 보조 자료입니다. 공식 목표 문구는 교육부 원문을 기준으로 삼습니다.",
+        "조작 뒤 학생의 설명을 확인하는 후속 활동이 필요합니다."
+      ],
+      "blockingReasons": [],
+      "sources": [
+        {
+          "title": "교육부 고시 제2022-33호 [별책 8] 수학과 교육과정",
+          "url": "https://ncic.re.kr/inv/org/download.do?year=2022&seq=10003559&orgType=ogi4",
+          "version": "교육부 고시 제2022-33호"
+        },
+        {
+          "title": "DECK6/korean-elementary-learning-map",
+          "url": "https://github.com/DECK6/korean-elementary-learning-map",
+          "version": "3ef0563084aa2a9baaa47da2c1ec0ebf5d7edc5c"
+        }
+      ]
+    },
+    "draftId": "draft-802a0d64-590a-44de-a1ef-30a7dd485afd",
+    "activitySpecHash": "f0aa2d623e502ec6276ca747aaeabc805372a6b30b9d35a364025edf79e621da",
+    "expiresAt": "2026-08-07T23:54:49.201Z",
+    "activitySummary": {
+      "title": "같은 수씩 묶은 배열과 곱셈식 연결하기",
+      "studentInstructions": [
+        "① 문제에 맞는 곱셈식을 골라 놓으세요.",
+        "② 괄호 한 묶음의 점 수와 묶음 수를 세어 식의 두 수와 비교하세요.",
+        "③ 처음 고른 식을 바꿀 수 있고, 앞 수와 뒤 수가 뜻하는 것을 쓰세요."
+      ]
+    },
+    "teacherAnswerKey": [
+      {
+        "problemNumber": 1,
+        "answer": "3\\times4",
+        "explanation": "한 묶음에 3개가 있고 그런 묶음이 4개이므로 3\\times4=12입니다."
+      },
+      {
+        "problemNumber": 2,
+        "answer": "6\\times7",
+        "explanation": "한 묶음에 6개가 있고 그런 묶음이 7개이므로 6\\times7=42입니다."
+      }
+    ],
+    "approvalPrompt": "추천한 학년, 문제 수, 난이도와 조작 방식을 확인한 뒤 ‘이대로 만들어줘’라고 승인해 주세요."
+  },
+  "completedAt": "2026-08-07T23:27:28.898Z",
+  "creationMode": "fresh-canary-adopted",
+  "canaryApproval": {
+    "reviewer": "owner-loop-visual-qa",
+    "reviewedAt": "2026-08-07T23:27:28.898Z",
+    "evidenceObservedAt": "2026-08-07T23:23:51.813Z",
+    "blueprintId": "number.multiplication.group-array-meaning-v1",
+    "blueprintContentHash": "844dd2349fa73213fc9425073a1a799bd42c486c95c9b3c772ea9eb93ad6f900",
+    "payloadHash": "4561a11b53de880027f902bf0c2a06fc95ba46bf06e2b063be9e15d4ba5231de",
+    "evidencePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/mathcanvas/activity-canary-evidence.json",
+    "initialPreviewPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/mathcanvas/activity-initial.png",
+    "previewPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/mathcanvas/activity-after-choice.png"
+  },
+  "creation": {
+    "status": "succeeded",
+    "projectId": "TBmzEW",
+    "editorUrl": "https://mathcanvas.vivasam.com/ko/view/TBmzEW",
+    "completedAt": "2026-08-07T23:23:48.872Z"
+  }
+}

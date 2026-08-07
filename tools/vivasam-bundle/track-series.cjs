@@ -10,6 +10,7 @@ const DEFAULT_DASHBOARD_PATH = path.resolve(__dirname, "../../docs/vivasam-30-se
 const STATUS_VALUES = Object.freeze({
   "content.status": ["not-started", "drafting", "validated"],
   "worksheet.status": ["not-started", "drafting", "validated"],
+  "mathcanvas.status": ["not-started", "intake-ready", "manual-review-required", "manual-selected", "template-required", "template-review-required", "ready-to-create", "created", "public-link-ready"],
   "ppt.status": ["not-started", "awaiting-claude", "received", "validated"],
   "support.intentStatus": ["not-started", "drafting", "validated"],
   "support.answerKeyStatus": ["not-started", "drafting", "validated"],
@@ -25,6 +26,7 @@ const STATUS_VALUES = Object.freeze({
 const STATUS_RANK = Object.freeze({
   "content.status": { "not-started": 0, drafting: 1, validated: 2 },
   "worksheet.status": { "not-started": 0, drafting: 1, validated: 2 },
+  "mathcanvas.status": { "not-started": 0, "intake-ready": 1, "manual-review-required": 2, "template-required": 3, "template-review-required": 4, "ready-to-create": 5, "manual-selected": 6, created: 6, "public-link-ready": 7 },
   "ppt.status": { "not-started": 0, "awaiting-claude": 1, received: 2, validated: 3 },
   "support.intentStatus": { "not-started": 0, drafting: 1, validated: 2 },
   "support.answerKeyStatus": { "not-started": 0, drafting: 1, validated: 2 },
@@ -56,6 +58,17 @@ const UPDATABLE_PATHS = new Set([
   "worksheet.pngPath",
   "worksheet.pdfPath",
   "worksheet.validatedAt",
+  "mathcanvas.status",
+  "mathcanvas.route",
+  "mathcanvas.intakePath",
+  "mathcanvas.resultPath",
+  "mathcanvas.worksheetSha256",
+  "mathcanvas.manualProjectId",
+  "mathcanvas.templateId",
+  "mathcanvas.projectId",
+  "mathcanvas.editorUrl",
+  "mathcanvas.publicStudentUrl",
+  "mathcanvas.validatedAt",
   "ppt.status",
   "ppt.format",
   "ppt.pptxPath",
@@ -177,6 +190,13 @@ function isHttpUrl(value) {
   }
 }
 
+function isMathCanvasEditorUrl(value) {
+  if (!isHttpUrl(value)) return false;
+  const url = new URL(value);
+  return url.origin === "https://mathcanvas.vivasam.com"
+    && /^\/ko\/view\/[A-Za-z0-9_-]+$/.test(url.pathname);
+}
+
 function getNested(object, dottedPath) {
   return dottedPath.split(".").reduce((current, key) => current?.[key], object);
 }
@@ -256,6 +276,44 @@ function validateBundle(tracker, rawBundle, context) {
       ensure(promptPath.endsWith(".prompt.txt"), `${bundle.sequence}번 활동지 원본은 이미지 생성 프롬프트여야 합니다.`);
       ensure(path.basename(pngPath) === bundle.worksheet.filename, `${bundle.sequence}번 활동지 PNG 파일명이 원장과 다릅니다.`);
     }
+  }
+
+  if (bundle.mathcanvas.status !== "not-started") {
+    ensure(bundle.content.status === "validated", `${bundle.sequence}번 MathCanvas는 내용 검증 뒤 연결해야 합니다.`);
+    ensure(bundle.worksheet.status === "validated", `${bundle.sequence}번 MathCanvas는 통합 활동지 1개 검증 뒤 연결해야 합니다.`);
+    ensure(/^[a-f0-9]{64}$/.test(bundle.mathcanvas.worksheetSha256), `${bundle.sequence}번 MathCanvas 활동지 해시가 없습니다.`);
+    if (checkArtifacts) {
+      requireTrackedArtifact(bundle.mathcanvas.intakePath, roots, `${bundle.sequence}번 MathCanvas 활동지 intake`);
+      if (bundle.mathcanvas.status !== "intake-ready") {
+        requireTrackedArtifact(bundle.mathcanvas.resultPath, roots, `${bundle.sequence}번 MathCanvas 처리 결과`);
+      }
+    }
+  }
+  if (bundle.mathcanvas.status === "manual-review-required") {
+    ensure(!bundle.mathcanvas.route, `${bundle.sequence}번 수동 제작본 검수 전에는 재사용 경로를 정할 수 없습니다.`);
+  }
+  if (bundle.mathcanvas.status === "manual-selected") {
+    ensure(bundle.mathcanvas.route === "owner-manual", `${bundle.sequence}번 수동 제작본 경로가 잘못되었습니다.`);
+    ensure(/^[A-Za-z0-9_-]+$/.test(bundle.mathcanvas.manualProjectId), `${bundle.sequence}번 수동 제작 MathCanvas projectId가 없습니다.`);
+    ensure(bundle.mathcanvas.projectId === bundle.mathcanvas.manualProjectId, `${bundle.sequence}번 선택 projectId가 서로 다릅니다.`);
+    ensure(isMathCanvasEditorUrl(bundle.mathcanvas.editorUrl), `${bundle.sequence}번 MathCanvas 편집 URL이 잘못되었습니다.`);
+    ensure(isTimestamp(bundle.mathcanvas.validatedAt), `${bundle.sequence}번 수동 제작본 검수 시각이 없습니다.`);
+  }
+  if (["template-required", "template-review-required", "ready-to-create", "created", "public-link-ready"].includes(bundle.mathcanvas.status)) {
+    ensure(bundle.mathcanvas.route === "owner-generated", `${bundle.sequence}번 자동 제작 경로가 잘못되었습니다.`);
+  }
+  if (["template-review-required", "ready-to-create", "created", "public-link-ready"].includes(bundle.mathcanvas.status)) {
+    ensure(/^[A-Za-z0-9._-]+$/.test(bundle.mathcanvas.templateId), `${bundle.sequence}번 MathCanvas templateId가 없습니다.`);
+  }
+  if (["created", "public-link-ready"].includes(bundle.mathcanvas.status)) {
+    ensure(/^[A-Za-z0-9_-]+$/.test(bundle.mathcanvas.projectId), `${bundle.sequence}번 새 MathCanvas projectId가 없습니다.`);
+    ensure(isMathCanvasEditorUrl(bundle.mathcanvas.editorUrl), `${bundle.sequence}번 새 MathCanvas 편집 URL이 잘못되었습니다.`);
+    ensure(isTimestamp(bundle.mathcanvas.validatedAt), `${bundle.sequence}번 새 MathCanvas 검증 시각이 없습니다.`);
+  }
+  if (bundle.mathcanvas.status === "public-link-ready") {
+    ensure(isHttpUrl(bundle.mathcanvas.publicStudentUrl) && bundle.mathcanvas.publicStudentUrl.startsWith("https://"), `${bundle.sequence}번 MathCanvas 학생 공개 URL은 HTTPS여야 합니다.`);
+  } else {
+    ensure(!bundle.mathcanvas.publicStudentUrl, `${bundle.sequence}번 공개 검증 전에는 MathCanvas 학생 URL을 기록할 수 없습니다.`);
   }
 
   if (bundle.ppt.status !== "not-started") ensure(bundle.content.status === "validated", `${bundle.sequence}번 Claude PPT 상태는 내용 검증 뒤 올릴 수 있습니다.`);
@@ -345,6 +403,10 @@ function validateTracker(tracker, options = {}) {
   ensure(tracker.contract?.slideCountIsFlexible === true, "슬라이드 수가 가변으로 열려 있지 않습니다.");
   ensure(tracker.contract?.worksheetsPerDeck === 1, "PPT 한 개당 통합 활동지가 1개가 아닙니다.");
   ensure(tracker.contract?.targetWorksheetCount === 30, "전체 통합 활동지 목표가 30개가 아닙니다.");
+  ensure(tracker.contract?.mathcanvasActivitiesPerDeck === 1, "PPT 한 개당 MathCanvas 활동 목표가 1개가 아닙니다.");
+  ensure(tracker.contract?.mathcanvasReusePolicy === "owner-manual-curated-only", "MathCanvas 재사용 범위가 선생님 수동 제작본으로 고정되지 않았습니다.");
+  ensure(tracker.contract?.mathcanvasPrototypeReuse === false, "기존 AI 프로토타입 MathCanvas 재사용이 금지되지 않았습니다.");
+  ensure(tracker.contract?.mathcanvasExternalProjectReuse === false, "외부 MathCanvas 프로젝트 재사용이 금지되지 않았습니다.");
   ensure(tracker.contract?.pptAuthor === "Claude", "PPT 제작 주체가 Claude로 고정되지 않았습니다.");
   ensure(tracker.contract?.codexOwnsNonPptArtifacts === true, "PPT 외 산출물의 Codex 소유 계약이 없습니다.");
   ensure(isPlainObject(tracker.bundleDefaults), "bundleDefaults가 없습니다.");
@@ -359,6 +421,8 @@ function validateTracker(tracker, options = {}) {
   const bundles = tracker.bundles.map((bundle) => validateBundle(tracker, bundle, { checkArtifacts, roots }));
   validateUniqueNonEmpty(bundles.map((bundle) => bundle.lessonId), "lessonId");
   validateUniqueNonEmpty(bundles.map((bundle) => bundle.worksheet.filename), "통합 활동지 파일명");
+  validateUniqueNonEmpty(bundles.map((bundle) => bundle.mathcanvas.projectId), "MathCanvas projectId");
+  validateUniqueNonEmpty(bundles.map((bundle) => bundle.mathcanvas.publicStudentUrl), "MathCanvas 학생 공개 URL");
   validateUniqueNonEmpty(bundles.map((bundle) => bundle.eduitit.digest), "Eduitit digest");
   validateUniqueNonEmpty(bundles.map((bundle) => bundle.eduitit.localRecordId), "Eduitit 레코드 ID");
   validateUniqueNonEmpty(bundles.map((bundle) => bundle.eduitit.publicUrl), "운영 공개 URL");
@@ -382,6 +446,10 @@ function supportComplete(bundle) {
     && bundle.support.representativeImageStatus === "validated";
 }
 
+function mathcanvasReady(bundle) {
+  return ["manual-selected", "created", "public-link-ready"].includes(bundle.mathcanvas.status);
+}
+
 function deriveStage(bundle) {
   if (!bundle.lessonId) return "unplanned";
   if (bundle.submission.raceRecordStatus === "registered") return "submitted";
@@ -403,6 +471,12 @@ function nextAction(bundle) {
   if (bundle.worksheet.status !== "validated") pending.push("통합 활동지 1개 제작");
   if (!supportComplete(bundle)) pending.push("수업 진행 안내·대표 이미지 완성");
   if (pending.length) return pending.join(" + ");
+  if (bundle.mathcanvas.status === "not-started") return "활동지에서 MathCanvas intake 생성";
+  if (bundle.mathcanvas.status === "intake-ready" || bundle.mathcanvas.status === "manual-review-required") return "로그인한 내 캔버스에서 수동 제작본 직접 선별";
+  if (bundle.mathcanvas.status === "template-required") return "없는 유형의 MathCanvas 활동 자동 구현";
+  if (bundle.mathcanvas.status === "template-review-required") return "새 MathCanvas 활동 검증·화면 확인·생성";
+  if (bundle.mathcanvas.status === "ready-to-create") return "검증된 새 MathCanvas 프로젝트 생성";
+  if (!mathcanvasReady(bundle)) return "MathCanvas 활동 연결 완료";
   if (bundle.eduitit.packageStatus !== "validated") return "Eduitit 최종 패키지 재빌드·검증";
   if (bundle.eduitit.localRecordStatus !== "published") return bundle.eduitit.localRecordStatus === "stale" ? "Eduitit 로컬 레코드 재발행" : "Eduitit 로컬 공개";
   if (bundle.eduitit.productionStatus !== "deployed") return "운영 배포·비로그인 접근 검증";
@@ -419,6 +493,10 @@ function summarizeTracker(validated) {
     registeredLessons: count((bundle) => Boolean(bundle.lessonId)),
     contentValidated: count((bundle) => bundle.content.status === "validated"),
     worksheetsValidated: count((bundle) => bundle.worksheet.status === "validated"),
+    mathcanvasManualSelected: count((bundle) => bundle.mathcanvas.status === "manual-selected"),
+    mathcanvasGenerated: count((bundle) => ["created", "public-link-ready"].includes(bundle.mathcanvas.status)),
+    mathcanvasReady: count(mathcanvasReady),
+    mathcanvasPublicLinks: count((bundle) => bundle.mathcanvas.status === "public-link-ready"),
     claudePptsAwaiting: count((bundle) => bundle.ppt.status === "awaiting-claude"),
     claudePptsReceived: count((bundle) => ["received", "validated"].includes(bundle.ppt.status)),
     claudePptsValidated: count((bundle) => bundle.ppt.status === "validated"),
@@ -444,7 +522,7 @@ function renderDashboard(validated) {
       ? "레이스 등록"
       : bundle.submission.communityPostStatus === "posted" ? "게시 완료" : "미게시";
     const localPublication = `${bundle.eduitit.localRecordStatus}/${bundle.eduitit.anonymousAccessStatus}`;
-    return `| ${String(bundle.sequence).padStart(2, "0")} | ${markdownCell(bundle.title || bundle.lessonId)} | ${markdownCell(bundle.declaredSlideCount)} | ${bundle.content.status} | ${bundle.worksheet.status} | ${bundle.ppt.status} | ${supportComplete(bundle) ? "validated" : "pending"} | ${bundle.eduitit.packageStatus} | ${localPublication} | ${bundle.eduitit.productionStatus} | ${share} | ${markdownCell(nextAction(bundle))} |`;
+    return `| ${String(bundle.sequence).padStart(2, "0")} | ${markdownCell(bundle.title || bundle.lessonId)} | ${markdownCell(bundle.declaredSlideCount)} | ${bundle.content.status} | ${bundle.worksheet.status} | ${bundle.mathcanvas.status} | ${bundle.ppt.status} | ${supportComplete(bundle) ? "validated" : "pending"} | ${bundle.eduitit.packageStatus} | ${localPublication} | ${bundle.eduitit.productionStatus} | ${share} | ${markdownCell(nextAction(bundle))} |`;
   }).join("\n");
   const historyRows = validated.tracker.history.slice(-20).reverse().map((entry) =>
     `| ${markdownCell(entry.at)} | ${entry.sequence === null ? "전체" : String(entry.sequence).padStart(2, "0")} | ${markdownCell(entry.event)} | ${markdownCell(entry.detail)} |`,
@@ -467,7 +545,11 @@ function renderDashboard(validated) {
 | 주제 등록 | ${summary.registeredLessons} | 30 |
 | 내용 원고 검증 | ${summary.contentValidated} | 30 |
 | 통합 활동지 검증 | ${summary.worksheetsValidated} | 30 |
-| Claude 발표 화면 수령 | ${summary.claudePptsReceived} | 30 |
+| MathCanvas 수동 제작본 선택 | ${summary.mathcanvasManualSelected} | 상황별 |
+| MathCanvas 새 활동 생성 | ${summary.mathcanvasGenerated} | 상황별 |
+| MathCanvas 활동 연결 완료 | ${summary.mathcanvasReady} | 30 |
+| MathCanvas 학생 공개 링크 검증 | ${summary.mathcanvasPublicLinks} | 지원 시 |
+| Claude HTML/PPTX 수령 | ${summary.claudePptsReceived} | 30 |
 | 설계 의도·정답·대표 이미지 검증 | ${summary.supportValidated} | 30 |
 | Eduitit 패키지 검증 | ${summary.packagesValidated} | 30 |
 | Eduitit 로컬 공개·비로그인 접근 검증 | ${summary.localAnonymousAccessPassed} | 30 |
@@ -480,13 +562,16 @@ function renderDashboard(validated) {
 
 ## 30개 슬롯
 
-| 번호 | 수업 | 슬라이드 | 내용 | 통합 활동지 1개 | Claude PPT | 지원 자료 | Eduitit 패키지 | 로컬 공개/익명 접근 | 운영 공개 | 공유·레이스 | 다음 할 일 |
-|---:|---|---:|---|---|---|---|---|---|---|---|---|
+| 번호 | 수업 | 슬라이드 | 내용 | 통합 활동지 1개 | MathCanvas | Claude PPT | 지원 자료 | Eduitit 패키지 | 로컬 공개/익명 접근 | 운영 공개 | 공유·레이스 | 다음 할 일 |
+|---:|---|---:|---|---|---|---|---|---|---|---|---|---|
 ${rows}
 
 ## 판정 원칙
 
 - 이전 Codex 제작 발표 화면이나 슬라이드별 활동지는 새 계약의 Claude HTML/PPTX 또는 통합 활동지 1개 완료로 계산하지 않습니다.
+- MathCanvas는 로그인한 선생님의 내 캔버스에서 직접 만든 수동 자료를 화면 검수한 뒤 차시별 허용 목록으로만 재사용합니다. 다른 사람 자료와 기존 AI·프로토타입 프로젝트는 재사용하지 않습니다.
+- 쓸 만한 수동 자료가 없을 때만 새 MathCanvas 활동을 자동 제작합니다. MathCanvas 활동은 별도 활동지 장수로 계산하지 않습니다.
+- MathCanvas 편집 URL과 학생 공개 URL은 구분합니다. 공개 접근을 검증하기 전에는 학생 링크로 기록하지 않습니다.
 - \`validated\`, \`published\`, \`deployed\`, \`registered\`는 대응 파일·ID·URL·검증 시각이 있을 때만 기록합니다.
 - Eduitit 운영 공개는 HTTPS 공개 URL과 비로그인 운영 접근 검증이 모두 있어야 완료입니다.
 - 나의 레이스 등록은 먼저 교사 커뮤니티·블로그·SNS 게시물 URL이 있어야 완료입니다.
@@ -593,7 +678,8 @@ function updateTracker(options) {
     setNested(rawBundle, fieldPath, value);
   }
   if (options.note) {
-    rawBundle.notes = [...before.notes, options.note.trim()];
+    const note = options.note.trim();
+    rawBundle.notes = before.notes.includes(note) ? before.notes : [...before.notes, note];
   }
   const after = materializeBundle(tracker, rawBundle);
   assertNoUnapprovedDowngrade(before, after, options.sets.map(([fieldPath]) => fieldPath), options.allowDowngrade);
@@ -762,6 +848,7 @@ module.exports = {
   resolveTrackedPath,
   summarizeTracker,
   supportComplete,
+  mathcanvasReady,
   toTrackedPath,
   updateTracker,
   validateTracker,

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "intakeId": "g3s1-multiplication-array-transfer-65be8eb9aeac",
+  "generatedAt": "2026-08-07T22:11:21.000Z",
+  "sourcePolicy": {
+    "reusableProjectSource": "owner-manual-curated",
+    "generatedProjectSource": "owner-mathcanvas-ai",
+    "prototypeProjectReuse": false,
+    "externalProjectReuse": false
+  },
+  "lesson": {
+    "lessonId": "g3s1-multiplication-array-transfer",
+    "title": "줄과 칸으로 전체 수 찾기",
+    "gradeLabel": "초등 3학년 1학기",
+    "unit": "1. 곱셈",
+    "targetBehavior": "같은 묶음을 곱셈으로 나타낸다. 식·자료·한 문장으로 근거를 설명한다.",
+    "worksheetTitle": "줄과 칸으로 전체 수 찾기 통합 활동지",
+    "curriculumAnchorIds": [
+      "[4수01-04]"
+    ]
+  },
+  "worksheet": {
+    "filename": "g3s1-multiplication-array-transfer-worksheet.png",
+    "sha256": "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8",
+    "width": 1024,
+    "height": 1536,
+    "inspectedAt": "2026-08-07T22:11:21.000Z",
+    "visualQa": {
+      "logoTitleSeparated": true,
+      "allQuestionTextLegible": true,
+      "choicesVisuallySeparated": true,
+      "answerSpacesPresent": true,
+      "noOverlapsOrClipping": true
+    }
+  },
+  "mathEvidence": {
+    "answerLabels": [
+      "30장",
+      "3×4=12",
+      "6×7=42개",
+      "한 묶음의 수 × 묶음 수 = 전체 수",
+      "3×4=12자루",
+      "3+4=7자루",
+      "4자루"
+    ],
+    "misconceptions": [
+      "3×4 대신 3+4=7로 계산했습니다.",
+      "한 묶음의 수와 묶음 수를 곱하지 않고 한 번씩 더했습니다.",
+      "4봉지의 묶음 수 4를 연필 전체 수로 사용했습니다.",
+      "네 묶음 안의 연필을 세지 않고 묶음 수만 전체라고 보았습니다.",
+      "5×6 대신 5+6=11로 계산했습니다.",
+      "다섯 장이 여섯 번 반복되는 관계를 두 수의 합으로 바꾸었습니다.",
+      "6줄의 묶음 수 6을 붙임 딱지 전체 수로 사용했습니다.",
+      "각 줄의 다섯 장을 반영하지 않고 줄 수만 전체라고 보았습니다."
+    ],
+    "visualSummary": [
+      "활동지 수학 시각 정보: {\"problem1Groups\":4,\"problem1PerGroup\":3,\"problem1ChoiceLabels\":[\"3×4=12자루\",\"3+4=7자루\",\"4자루\"],\"problem3WorkLabels\":[\"5+6=11장\",\"6장\"]}",
+      "같은 수의 묶음을 곱셈으로 나타내기",
+      "상황: 붙임 딱지를 한 줄에 5장씩 6줄 붙였어요.",
+      "배열 자료: 붙임 딱지, 6줄, 한 줄에 5개",
+      "1. 같은 묶음을 곱셈으로 나타낸다",
+      "2. 한 묶음의 수 × 묶음 수 = 전체 수",
+      "1. 한 묶음의 수 찾기",
+      "2. 묶음 수 찾기",
+      "3. 두 수를 곱셈식으로 나타내기",
+      "핵심 이유: 한 묶음의 수 × 묶음 수 = 전체 수",
+      "배열 자료: 연필, 4줄, 한 줄에 3개",
+      "선택지: 3×4=12 / 3+4=7 / 4",
+      "문제: 바둑돌을 한 줄에 6개씩 7줄 놓았습니다. 모두 몇 개일까요?",
+      "한 줄 6개",
+      "모두 7줄",
+      "다시 볼 문제: 바둑돌을 한 줄에 6개씩 7줄 놓았습니다. 모두 몇 개일까요?",
+      "확인할 핵심 관계: 한 묶음의 수 × 묶음 수 = 전체 수",
+      "검토할 답 11장: 5×6 대신 5+6=11로 계산했습니다.",
+      "검토할 답 6장: 6줄의 묶음 수 6을 붙임 딱지 전체 수로 사용했습니다.",
+      "확인 기준: 한 묶음의 수 × 묶음 수 = 전체 수"
+    ]
+  },
+  "recommendation": {
+    "problemCount": 2,
+    "difficulty": "normal"
+  }
+}
