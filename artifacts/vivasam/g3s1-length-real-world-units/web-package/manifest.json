@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-length-real-world-units",
+  "sequence": 15,
+  "title": "크기에 맞는 길이 단위",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "4. 길이",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "c40585b8ea89",
+  "thumbnailAsset": "c40585b8ea89/representative-image.png",
+  "worksheetAsset": "c40585b8ea89/g3s1-length-real-world-units-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "c40585b8ea89/g3s1-length-real-world-units-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-length",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-length-real-world-units-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "c40585b8ea89/g3s1-length-real-world-units-slides.html",
+      "bytes": 8409631,
+      "sha256": "d8c80386cf2845c794129df3f3b9a55ef5c9d9ef98f5b5f8593f97ab2cbb6a43",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "c40585b8ea89/g3s1-length-real-world-units-worksheet.pdf",
+      "bytes": 1111622,
+      "sha256": "835266640ce5fb9639962b2e871902bed318ea021b4034183d7af14e41402186",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "c40585b8ea89/g3s1-length-real-world-units-worksheet.png",
+      "bytes": 1209415,
+      "sha256": "72ec01a446e1cf71a949ad1696257c2956702a369d851fb08a8ebe827c3b179c",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "c40585b8ea89/representative-image.png",
+      "bytes": 51456,
+      "sha256": "ba362e3abaaf4c48fc30db61fe1a31ff824249c58c79ae6a1cea878749033b07",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-fraction-equal-parts",
+  "sequence": 10,
+  "title": "분수의 첫 조건, 똑같이",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "3. 분수",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "a8c2578f0748",
+  "thumbnailAsset": "a8c2578f0748/representative-image.png",
+  "worksheetAsset": "a8c2578f0748/g3s1-fraction-equal-parts-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "a8c2578f0748/g3s1-fraction-equal-parts-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-fraction",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-fraction-equal-parts-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "a8c2578f0748/g3s1-fraction-equal-parts-slides.html",
+      "bytes": 8406502,
+      "sha256": "61b7defd5293a2e802e9ddbd7cb97286c715d4236d3531164201386fadb0460e",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "a8c2578f0748/g3s1-fraction-equal-parts-worksheet.pdf",
+      "bytes": 1100701,
+      "sha256": "38d3d29cfc7eadcd04d80191dea67b6dc26cdce098e9627eaff8c6a1e17499ec",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "a8c2578f0748/g3s1-fraction-equal-parts-worksheet.png",
+      "bytes": 1193896,
+      "sha256": "67666a41dd77f77bc0019d25b8bc58b2f5e3663b0e2ff6d777ab71730d4cad10",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "a8c2578f0748/representative-image.png",
+      "bytes": 50486,
+      "sha256": "fea00dfa7647788ff613328f77289f4875c6e6048e8893563069a6aabc85751c",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

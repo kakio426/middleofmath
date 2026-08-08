@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-f8717aa1-452a-4233-9ee5-955a0b991c97.png",
+  "promptFile": "g3s2-multiplication-two-digit-worksheet.prompt.txt",
+  "promptSha256": "af62448ccb394c238779668cdaf75f0e1aacee17e046a3d68a49e3c7d027ef13",
+  "imageFile": "g3s2-multiplication-two-digit-worksheet.png",
+  "imageSha256": "097158c78aab3c3f6b885765febce96945f5f26666b6a156e92c8a45bb92bb16",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.604Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Decomposition": [
+        "14×20",
+        "14×1"
+      ],
+      "problem1ChoiceLabels": [
+        "294자루",
+        "284자루",
+        "35자루"
+      ],
+      "problem2Decomposition": [
+        "32×10",
+        "32×4"
+      ]
+    }
+  }
+}

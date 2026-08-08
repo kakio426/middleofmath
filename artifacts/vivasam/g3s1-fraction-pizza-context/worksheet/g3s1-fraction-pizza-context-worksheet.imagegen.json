@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-44874590-9828-4518-bf82-c243e7f03985.png",
+  "promptFile": "g3s1-fraction-pizza-context-worksheet.prompt.txt",
+  "promptSha256": "6acc73ba8011627a0bd28ab34c2181a4019f8ea3759e601c82470d4a546f0dc8",
+  "imageFile": "g3s1-fraction-pizza-context-worksheet.png",
+  "imageSha256": "df99f044b1ce1d12bd4e985900ad89ff9de21f8179a8dd68f80d585c30e229f5",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.594Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Parts": 5,
+      "problem1SelectedParts": 2,
+      "problem1ChoiceLabels": [
+        "2/5",
+        "5/2",
+        "2/3"
+      ],
+      "problem2PizzaParts": 10,
+      "problem2EatenParts": 4
+    }
+  }
+}

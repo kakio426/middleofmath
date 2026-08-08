@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-fraction-part-whole",
+  "sequence": 25,
+  "title": "색칠한 부분을 분수로",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "4. 분수",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "a322a60aa2ec",
+  "thumbnailAsset": "a322a60aa2ec/representative-image.png",
+  "worksheetAsset": "a322a60aa2ec/g3s2-fraction-part-whole-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "a322a60aa2ec/g3s2-fraction-part-whole-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-fraction",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s2-fraction-part-whole-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "a322a60aa2ec/g3s2-fraction-part-whole-slides.html",
+      "bytes": 8403117,
+      "sha256": "c59c1f88d22fd95b19d2705e2e620f3a76857d256ab3128d93c2b5fb6d6da145",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "a322a60aa2ec/g3s2-fraction-part-whole-worksheet.pdf",
+      "bytes": 1030146,
+      "sha256": "8f61a69606b60437f97154504c5bebaf795b43c70d2bf867d09f2f1cd9acd211",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "a322a60aa2ec/g3s2-fraction-part-whole-worksheet.png",
+      "bytes": 1139106,
+      "sha256": "f4f945162496f5acc84ed00f2780809f1bb5e2bb9e0741be8b54ffcd1553004d",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "a322a60aa2ec/representative-image.png",
+      "bytes": 49756,
+      "sha256": "3ba9e4b7fdc6e82cccf46a5b4d54f95d3330255513fd56d22489182e55605ef3",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

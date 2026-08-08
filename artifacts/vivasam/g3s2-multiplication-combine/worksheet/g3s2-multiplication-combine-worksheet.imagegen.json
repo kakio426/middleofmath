@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-e33faf07-4646-472f-9fd1-a6a5adeaf389.png",
+  "promptFile": "g3s2-multiplication-combine-worksheet.prompt.txt",
+  "promptSha256": "d5467d5f959ba984fbec64b7c3abaa98baf5facf5bec6d52d9751e5bdd5258f0",
+  "imageFile": "g3s2-multiplication-combine-worksheet.png",
+  "imageSha256": "d08db77766ebc1a20f9bd24bc35526793aeca790cf79d134ac2c35c00d4fd202",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.602Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1PartialProducts": [
+        "600",
+        "120",
+        "21"
+      ],
+      "problem1ChoiceLabels": [
+        "741자루",
+        "721자루",
+        "621자루"
+      ],
+      "problem2PartialProducts": [
+        "600",
+        "30",
+        "9"
+      ]
+    }
+  }
+}

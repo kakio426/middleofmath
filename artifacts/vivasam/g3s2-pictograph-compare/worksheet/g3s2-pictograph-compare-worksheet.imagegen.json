@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-618c2d9d-6a7b-488e-822c-341b25b42d33.png",
+  "promptFile": "g3s2-pictograph-compare-worksheet.prompt.txt",
+  "promptSha256": "7a98c259c76d58ede891bd3f2c89893ae70cc2b1c5763f8e9bbd359c1c09bec2",
+  "imageFile": "g3s2-pictograph-compare-worksheet.png",
+  "imageSha256": "38d84ebea3868545b9f0d7a4827e52b39c853be199a99afd97cf66e3d30b5186",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.621Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Legend": "● 1개=3명",
+      "problem1Rows": {
+        "축구": 5,
+        "야구": 3,
+        "농구": 1
+      },
+      "problem1ChoiceLabels": [
+        "3명",
+        "1명",
+        "9명"
+      ],
+      "problem2Legend": "■ 1개=4명",
+      "problem2Rows": {
+        "A반": 5,
+        "B반": 2
+      }
+    }
+  }
+}

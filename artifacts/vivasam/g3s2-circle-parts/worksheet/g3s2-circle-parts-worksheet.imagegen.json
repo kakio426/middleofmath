@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-748df186-86ae-47e3-965e-3ff3313fe359.png",
+  "promptFile": "g3s2-circle-parts-worksheet.prompt.txt",
+  "promptSha256": "32f9c5233ef14f1088417d4e15bf25538145a7e57daacc92b500a1c7e719442e",
+  "imageFile": "g3s2-circle-parts-worksheet.png",
+  "imageSha256": "dea7e2ff7c59a10f368afd0abf6f67c95d8155071b53ed1dd53e11a952e8722c",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.610Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1PointLabels": [
+        "O",
+        "A"
+      ],
+      "problem1Segments": [
+        "OA"
+      ],
+      "problem1ChoiceLabels": [
+        "반지름",
+        "지름",
+        "중심"
+      ],
+      "problem2Segments": [
+        "OA"
+      ]
+    }
+  }
+}

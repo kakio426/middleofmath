@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-fraction-fix-partition",
+  "sequence": 11,
+  "title": "같지 않은 조각을 고쳐 나누기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "3. 분수",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "c4da3fbc982c",
+  "thumbnailAsset": "c4da3fbc982c/representative-image.png",
+  "worksheetAsset": "c4da3fbc982c/g3s1-fraction-fix-partition-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "c4da3fbc982c/g3s1-fraction-fix-partition-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-fraction",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-fraction-fix-partition-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "c4da3fbc982c/g3s1-fraction-fix-partition-slides.html",
+      "bytes": 8406299,
+      "sha256": "afd87dbea419b445e42e63a838badac796361da3a1a526033d6c8d0cddd1ecc4",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "c4da3fbc982c/g3s1-fraction-fix-partition-worksheet.pdf",
+      "bytes": 1022005,
+      "sha256": "0c29534e1edfd1f11557ddc9d8fc5b58c09a935510566476edee4befc3d3a333",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "c4da3fbc982c/g3s1-fraction-fix-partition-worksheet.png",
+      "bytes": 1137887,
+      "sha256": "94fd29f67e6bbb3cc38e527a023481a68ad076c815b221a6a67bfaf7952129c1",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "c4da3fbc982c/representative-image.png",
+      "bytes": 51343,
+      "sha256": "13ebad6b87b324b0129783d499fd046f24adbb9d2e940f4f91899669da81fc59",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

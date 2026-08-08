@@ -18,9 +18,9 @@ test("extractCoreIntent keeps the complete Korean paragraph", () => {
 
 test("submission register contains only the received and publicly verified lessons", () => {
   const register = buildSubmissionRegister(tracker);
-  assert.equal(register.records.length, 6);
-  assert.equal(register.completedRecordCount, 6);
-  assert.equal(new Set(register.records.map((record) => record.publicUrl)).size, 6);
+  assert.equal(register.records.length, 30);
+  assert.equal(register.completedRecordCount, 30);
+  assert.equal(new Set(register.records.map((record) => record.publicUrl)).size, 30);
   for (const record of register.records) {
     assert.equal(record.subject, "수학");
     assert.match(record.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
@@ -32,7 +32,7 @@ test("submission register contains only the received and publicly verified lesso
     assert.ok(record.teachingIntent.length > 40);
   }
   const markdown = renderSubmissionRegisterMarkdown(register);
-  assert.equal((markdown.match(/^## \d{2}\./gm) || []).length, 6);
-  assert.match(markdown, /현재 작성 완료: 6\/30/);
+  assert.equal((markdown.match(/^## \d{2}\./gm) || []).length, 30);
+  assert.match(markdown, /현재 작성 완료: 30\/30/);
   assert.doesNotMatch(markdown, /교사용 정답|PPT 내용 원고/);
 });

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-371db4d4-506f-4797-bda2-7cac39bca07c.png",
+  "promptFile": "g3s2-multiplication-place-value-worksheet.prompt.txt",
+  "promptSha256": "e40a2561822840445c0aa66583e02036d44a3d24047770bd0c72bf0628c8b6a7",
+  "imageFile": "g3s2-multiplication-place-value-worksheet.png",
+  "imageSha256": "debe2a96faae8a2047e5cf9c09374e0f90cfa0968055e3e6bc6a26daabdd7212",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.601Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1PlaceValuePart": "300×3",
+      "problem1ChoiceLabels": [
+        "900장",
+        "90장",
+        "327장"
+      ],
+      "problem2Parts": [
+        "200×3",
+        "40×3",
+        "1×3"
+      ]
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-capacity-unit",
+  "sequence": 28,
+  "title": "L를 mL로 정확히 바꾸기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "5. 들이와 무게",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "cc2f93875a07",
+  "thumbnailAsset": "cc2f93875a07/representative-image.png",
+  "worksheetAsset": "cc2f93875a07/g3s2-capacity-unit-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "cc2f93875a07/g3s2-capacity-unit-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-measurement",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s2-capacity-unit-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "cc2f93875a07/g3s2-capacity-unit-slides.html",
+      "bytes": 8411996,
+      "sha256": "8f386ee19812a660503aff38b7a113656ef1717e9b68577a885aba2a95ed8bc0",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "cc2f93875a07/g3s2-capacity-unit-worksheet.pdf",
+      "bytes": 1045395,
+      "sha256": "c5b0f6ea2defc302326cd0124badbbe6e4e243f09d18c6205236123cbd71c5a8",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "cc2f93875a07/g3s2-capacity-unit-worksheet.png",
+      "bytes": 1167087,
+      "sha256": "c635b772f840cc8ff20ff5bd172bae0358714940589d28bf9f8085bb73be02b9",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "cc2f93875a07/representative-image.png",
+      "bytes": 50691,
+      "sha256": "b2f1a52a76c8028b031697a48e5c08b621add8239d5cd75443db8d8db4aae748",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

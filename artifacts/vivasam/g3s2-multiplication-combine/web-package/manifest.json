@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-multiplication-combine",
+  "sequence": 18,
+  "title": "부분곱을 빠짐없이 더하기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "1. 곱셈",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "ff58a11ac0f5",
+  "thumbnailAsset": "ff58a11ac0f5/representative-image.png",
+  "worksheetAsset": "ff58a11ac0f5/g3s2-multiplication-combine-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "ff58a11ac0f5/g3s2-multiplication-combine-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-multiplication",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s2-multiplication-combine-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "ff58a11ac0f5/g3s2-multiplication-combine-slides.html",
+      "bytes": 9178201,
+      "sha256": "b34708300d4e2d25596b69ae39d7a7b686fceecf19e250ac5964c89e5905c8ae",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "ff58a11ac0f5/g3s2-multiplication-combine-worksheet.pdf",
+      "bytes": 1066657,
+      "sha256": "712214d2b3e70d3c227bfbb0bae29f0b21add8d5b6de9d433accd1cac82139dd",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "ff58a11ac0f5/g3s2-multiplication-combine-worksheet.png",
+      "bytes": 1182582,
+      "sha256": "d08db77766ebc1a20f9bd24bc35526793aeca790cf79d134ac2c35c00d4fd202",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "ff58a11ac0f5/representative-image.png",
+      "bytes": 51497,
+      "sha256": "8c1f36a2d94714a18b8e6ca1100f2a4d06d19879f98e0b0bc2a2ff486eae0ba1",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

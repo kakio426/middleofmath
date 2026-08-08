@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-weight-unit",
+  "sequence": 29,
+  "title": "kg을 g으로 정확히 바꾸기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "5. 들이와 무게",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "4bf93961ed0e",
+  "thumbnailAsset": "4bf93961ed0e/representative-image.png",
+  "worksheetAsset": "4bf93961ed0e/g3s2-weight-unit-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "4bf93961ed0e/g3s2-weight-unit-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-measurement",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s2-weight-unit-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "4bf93961ed0e/g3s2-weight-unit-slides.html",
+      "bytes": 8792302,
+      "sha256": "0986e965d61262f427ad1d77d3e133658ab6b0d345328de08ad61dff245f6142",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "4bf93961ed0e/g3s2-weight-unit-worksheet.pdf",
+      "bytes": 1002085,
+      "sha256": "7b064d520b521622ae63b1c408e6611d4f8142fbe7038eea86c712fcdcd5b09c",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "4bf93961ed0e/g3s2-weight-unit-worksheet.png",
+      "bytes": 1140588,
+      "sha256": "c18ad2984879ae1c92bd8e557b1228f16a9e93a61d5c696c6088b40616115f2d",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "4bf93961ed0e/representative-image.png",
+      "bytes": 54033,
+      "sha256": "d3d1fddb8cecb13459043a27179120716a634b5e5cc72682fbfb9158a507785b",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

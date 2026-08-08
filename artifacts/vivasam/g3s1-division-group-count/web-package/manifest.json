@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-division-group-count",
+  "sequence": 9,
+  "title": "몇 묶음인지 곱셈으로 확인하기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "2. 나눗셈",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "10aad6354d2d",
+  "thumbnailAsset": "10aad6354d2d/representative-image.png",
+  "worksheetAsset": "10aad6354d2d/g3s1-division-group-count-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "10aad6354d2d/g3s1-division-group-count-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-division",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-division-group-count-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "10aad6354d2d/g3s1-division-group-count-slides.html",
+      "bytes": 8226209,
+      "sha256": "159cbb255e35ce22bbc66d2873acf7e8ef4b77ef54050d8039dba59416bb547c",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "10aad6354d2d/g3s1-division-group-count-worksheet.pdf",
+      "bytes": 1065169,
+      "sha256": "db020e27d0edb72e9fd45120245de542906f093175c9d7df321393350ea4e064",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "10aad6354d2d/g3s1-division-group-count-worksheet.png",
+      "bytes": 1153951,
+      "sha256": "423dc30f55f019db989f6beda8071c7475afceb3da266970bbc6888f944a6d7b",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "10aad6354d2d/representative-image.png",
+      "bytes": 55605,
+      "sha256": "89954c9e7ea19dc0b9864a698e512117fee594bcd0736d94a8107f83eace70b7",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

@@ -7,7 +7,7 @@
       "digest": "4ba76bae9760",
       "etag304": true,
       "lessonId": "g3s2-pictograph-legend",
-      "localRecordId": "77e2bbe8-d2c0-4e81-b98e-db20d496919d",
+      "localRecordId": "506219b9-9d6d-4a0f-b5bb-247c7cb2234f",
       "sequence": 1,
       "statuses": {
         "detail": 200,
@@ -23,7 +23,7 @@
       "digest": "cf5c407775e3",
       "etag304": true,
       "lessonId": "g3s1-multiplication-groups-model",
-      "localRecordId": "69d96bfa-cf61-464c-a1a4-95d85808cbfc",
+      "localRecordId": "5114254a-7661-400a-b8f6-5a6e16935535",
       "sequence": 2,
       "statuses": {
         "detail": 200,
@@ -39,7 +39,7 @@
       "digest": "3dc5dfce03fa",
       "etag304": true,
       "lessonId": "g3s1-multiplication-array-transfer",
-      "localRecordId": "198c2d6c-5165-49e2-90e0-1d7a1766ec49",
+      "localRecordId": "2ce57595-e465-46aa-82ad-ac51222de5a4",
       "sequence": 3,
       "statuses": {
         "detail": 200,
@@ -55,7 +55,7 @@
       "digest": "0dc470a95dfb",
       "etag304": true,
       "lessonId": "g3s1-multiplication-place-value-model",
-      "localRecordId": "da9e27ce-7bdc-49a4-9182-e6e1a0b04bef",
+      "localRecordId": "c5afe6fe-92b8-4fdf-84c7-f66280228b82",
       "sequence": 4,
       "statuses": {
         "detail": 200,
@@ -71,7 +71,7 @@
       "digest": "e041efb07707",
       "etag304": true,
       "lessonId": "g3s1-multiplication-place-value-context",
-      "localRecordId": "08f8d052-67c8-4080-a4c5-1d33cb232f8a",
+      "localRecordId": "432c19f1-26e1-4012-a3aa-01b602bbe31c",
       "sequence": 5,
       "statuses": {
         "detail": 200,
@@ -87,8 +87,392 @@
       "digest": "21ca89affd04",
       "etag304": true,
       "lessonId": "g3s1-division-equal-sharing",
-      "localRecordId": "125209f7-1a9d-4363-9912-91d0905a4b60",
+      "localRecordId": "3c5cc172-4b27-4730-a003-ca8c8e06405b",
       "sequence": 6,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "5f4185a02ba7",
+      "etag304": true,
+      "lessonId": "g3s1-division-missing-factor",
+      "localRecordId": "fe5893e3-123f-4cec-bd4d-2433b0010fe8",
+      "sequence": 7,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "76ba91267cca",
+      "etag304": true,
+      "lessonId": "g3s1-division-fact-family",
+      "localRecordId": "e443a437-1d62-4619-8240-8ee3e4d6bb68",
+      "sequence": 8,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "10aad6354d2d",
+      "etag304": true,
+      "lessonId": "g3s1-division-group-count",
+      "localRecordId": "fbe182aa-8873-462f-9a08-6d5425e8f131",
+      "sequence": 9,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "a8c2578f0748",
+      "etag304": true,
+      "lessonId": "g3s1-fraction-equal-parts",
+      "localRecordId": "04e8ad30-1692-4686-a8cf-645661b1a741",
+      "sequence": 10,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "c4da3fbc982c",
+      "etag304": true,
+      "lessonId": "g3s1-fraction-fix-partition",
+      "localRecordId": "56c146ec-c36d-48a5-ba5c-b6ff4fb4d9ca",
+      "sequence": 11,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "cc4faa83d6aa",
+      "etag304": true,
+      "lessonId": "g3s1-fraction-part-whole",
+      "localRecordId": "59443a80-c0b5-4f09-b2cb-f1c3f44deba8",
+      "sequence": 12,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "23b8cb4ba8cc",
+      "etag304": true,
+      "lessonId": "g3s1-fraction-pizza-context",
+      "localRecordId": "b6551f71-206e-470e-ac86-1c74bb4acb1d",
+      "sequence": 13,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "7e7d6830db33",
+      "etag304": true,
+      "lessonId": "g3s1-length-centimeter-meter",
+      "localRecordId": "6ba9760f-0a58-470e-8b94-b32e6d5e7c9d",
+      "sequence": 14,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "c40585b8ea89",
+      "etag304": true,
+      "lessonId": "g3s1-length-real-world-units",
+      "localRecordId": "71c8c8fa-b625-4e66-8d88-ba710d650d83",
+      "sequence": 15,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "f5238903a8f7",
+      "etag304": true,
+      "lessonId": "g3s1-length-unit-conversion",
+      "localRecordId": "6d1279de-52e0-4fa7-aa83-9d177935a8a5",
+      "sequence": 16,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "d3885aae904c",
+      "etag304": true,
+      "lessonId": "g3s2-multiplication-place-value",
+      "localRecordId": "faf0bd19-eb60-480a-beaf-165aa2ba2881",
+      "sequence": 17,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "ff58a11ac0f5",
+      "etag304": true,
+      "lessonId": "g3s2-multiplication-combine",
+      "localRecordId": "69f7aa5f-6ea0-41b4-b1a9-2242c2cc46bf",
+      "sequence": 18,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "6cf1d6ec7d70",
+      "etag304": true,
+      "lessonId": "g3s2-multiplication-two-digit",
+      "localRecordId": "d155466d-2be5-4d52-bdfa-85fffe472302",
+      "sequence": 19,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "6fccf71cebc7",
+      "etag304": true,
+      "lessonId": "g3s2-division-meaning",
+      "localRecordId": "92e5a6dd-ab1b-41d3-8614-0f2bcee73af5",
+      "sequence": 20,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "06a71e5055da",
+      "etag304": true,
+      "lessonId": "g3s2-division-remainder",
+      "localRecordId": "447e3929-f79e-4ce5-af39-3e10b0bb41c5",
+      "sequence": 21,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "92de6cdcdc5c",
+      "etag304": true,
+      "lessonId": "g3s2-division-remainder-check",
+      "localRecordId": "2cbbaffa-6486-4fe5-9185-d5d17fe205fa",
+      "sequence": 22,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "af7774df5948",
+      "etag304": true,
+      "lessonId": "g3s2-circle-parts",
+      "localRecordId": "d57dc1c9-55af-442f-b170-14c37f0e90d7",
+      "sequence": 23,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "5c1f49e0b279",
+      "etag304": true,
+      "lessonId": "g3s2-circle-diameter",
+      "localRecordId": "f31f034f-5a05-4075-812b-064b442db4b6",
+      "sequence": 24,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "a322a60aa2ec",
+      "etag304": true,
+      "lessonId": "g3s2-fraction-part-whole",
+      "localRecordId": "606da750-5a2f-4773-89d3-44d2f3499607",
+      "sequence": 25,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "afa8fecf2833",
+      "etag304": true,
+      "lessonId": "g3s2-fraction-convert",
+      "localRecordId": "c4c5d582-33cb-4410-a3dc-c3231c866c7c",
+      "sequence": 26,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "276513d3d635",
+      "etag304": true,
+      "lessonId": "g3s2-fraction-compare",
+      "localRecordId": "21a1310a-61eb-4ecb-bc8d-dfe3d3964576",
+      "sequence": 27,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "cc2f93875a07",
+      "etag304": true,
+      "lessonId": "g3s2-capacity-unit",
+      "localRecordId": "78d5933b-713c-4fbb-8c6b-e7910e3d1080",
+      "sequence": 28,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "4bf93961ed0e",
+      "etag304": true,
+      "lessonId": "g3s2-weight-unit",
+      "localRecordId": "319f657f-e596-4995-9ed0-a3792c8fdb73",
+      "sequence": 29,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "90bc4ff0619d",
+      "etag304": true,
+      "lessonId": "g3s2-pictograph-compare",
+      "localRecordId": "3f98d4a2-7c4a-4bc4-a0a8-2758b4721c18",
+      "sequence": 30,
       "statuses": {
         "detail": 200,
         "ppt": 200,
@@ -102,8 +486,8 @@
   ],
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "verified": 6,
-  "recordedAt": "2026-08-08T07:37:39.994Z",
+  "verified": 30,
+  "recordedAt": "2026-08-08T08:46:46.290Z",
   "scope": "local-django-publication",
   "productionStatus": "not-deployed"
 }

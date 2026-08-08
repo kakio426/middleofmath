@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-fe15e3f4-8a45-4247-aad1-d9d432af94ca.png",
+  "promptFile": "g3s2-division-remainder-worksheet.prompt.txt",
+  "promptSha256": "39735758c67d2fc4ea893ca3d35c15f22bd854e62c9cb60587c51ba16a935964",
+  "imageFile": "g3s2-division-remainder-worksheet.png",
+  "imageSha256": "564f3248cda83ac8ed14ab819a3b06a4d914cf655e12ed35535bd598a5eb8dfc",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.607Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Boxes": 4,
+      "problem1PerBox": 10,
+      "problem1Remaining": 28,
+      "problem1Total": 68,
+      "problem1ChoiceLabels": [
+        "68개",
+        "40개",
+        "28개"
+      ],
+      "problem2Numbers": [
+        67,
+        50,
+        17
+      ]
+    }
+  }
+}

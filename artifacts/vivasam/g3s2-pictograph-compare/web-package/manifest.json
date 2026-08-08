@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-pictograph-compare",
+  "sequence": 30,
+  "title": "그림그래프의 실제 차이 구하기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "6. 그림그래프",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "90bc4ff0619d",
+  "thumbnailAsset": "90bc4ff0619d/representative-image.png",
+  "worksheetAsset": "90bc4ff0619d/g3s2-pictograph-compare-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "90bc4ff0619d/g3s2-pictograph-compare-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-pictograph",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s2-pictograph-compare-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "90bc4ff0619d/g3s2-pictograph-compare-slides.html",
+      "bytes": 8200732,
+      "sha256": "cd52fe0e53e8cabf8463d2b0ae40026bcf39a06d66243b7f7d03e80ef260178f",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "90bc4ff0619d/g3s2-pictograph-compare-worksheet.pdf",
+      "bytes": 1099946,
+      "sha256": "0353b81d4a8e0564c802ed941efc23f47d90e1a1899aad02f9bcb1f153ca0472",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "90bc4ff0619d/g3s2-pictograph-compare-worksheet.png",
+      "bytes": 1192906,
+      "sha256": "38d84ebea3868545b9f0d7a4827e52b39c853be199a99afd97cf66e3d30b5186",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "90bc4ff0619d/representative-image.png",
+      "bytes": 54967,
+      "sha256": "65a3ed74cca84394521beab2bf23ed71617a0856e9626cf034c13f84dbaf0a1a",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

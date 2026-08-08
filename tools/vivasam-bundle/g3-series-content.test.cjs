@@ -134,10 +134,10 @@ test("추적 원장은 내용 30개와 수령된 HTML 발표 자료 30개를 정
   assert.equal(summary.claudePptsReceived, 30);
   assert.equal(summary.claudePptsAwaiting, 0);
   assert.equal(summary.claudePptsValidated, 0);
-  assert.equal(summary.worksheetsValidated, 6);
-  assert.equal(summary.supportValidated, 6);
-  assert.equal(summary.packagesValidated, 6);
-  assert.equal(summary.localRecordsPublished, 6);
-  assert.equal(summary.productionPublished, 6);
+  assert.equal(summary.worksheetsValidated, 30);
+  assert.equal(summary.supportValidated, 30);
+  assert.equal(summary.packagesValidated, 30);
+  assert.equal(summary.localRecordsPublished, 30);
+  assert.equal(summary.productionPublished, 30);
   assert.equal(summary.fullyCompleted, 0);
 });

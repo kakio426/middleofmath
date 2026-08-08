@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-circle-diameter",
+  "sequence": 24,
+  "title": "반지름 두 개가 만드는 지름",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "3. 원",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "5c1f49e0b279",
+  "thumbnailAsset": "5c1f49e0b279/representative-image.png",
+  "worksheetAsset": "5c1f49e0b279/g3s2-circle-diameter-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "5c1f49e0b279/g3s2-circle-diameter-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-circle",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s2-circle-diameter-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "5c1f49e0b279/g3s2-circle-diameter-slides.html",
+      "bytes": 8199354,
+      "sha256": "0ee41f404decb007c322f0e7e3b5d0fb70fdaf245fb51dc0a92e8fcf47ecdbed",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "5c1f49e0b279/g3s2-circle-diameter-worksheet.pdf",
+      "bytes": 1018457,
+      "sha256": "e29c2ced2b626dd1b5152de59116681df8c2e9153ed1b69db74de189442096d7",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "5c1f49e0b279/g3s2-circle-diameter-worksheet.png",
+      "bytes": 1164855,
+      "sha256": "7216548b14ae5a31a58a161077c16dab2ad6ae2e9e1330a7dac7295f21fbf1a1",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "5c1f49e0b279/representative-image.png",
+      "bytes": 51710,
+      "sha256": "2242cc6396601dd27ccdaad7aea3bdb2d71bda0f7ab9271a3d5d264137f31358",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

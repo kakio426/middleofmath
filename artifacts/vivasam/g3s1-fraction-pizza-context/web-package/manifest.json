@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-fraction-pizza-context",
+  "sequence": 13,
+  "title": "피자에서 분모와 분자 찾기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "3. 분수",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "23b8cb4ba8cc",
+  "thumbnailAsset": "23b8cb4ba8cc/representative-image.png",
+  "worksheetAsset": "23b8cb4ba8cc/g3s1-fraction-pizza-context-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "23b8cb4ba8cc/g3s1-fraction-pizza-context-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-fraction",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-fraction-pizza-context-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "23b8cb4ba8cc/g3s1-fraction-pizza-context-slides.html",
+      "bytes": 8202126,
+      "sha256": "2d78becbd8e34d88a8564999c1dc7b5ec896e9f02173b6290db3ee2a0c22397a",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "23b8cb4ba8cc/g3s1-fraction-pizza-context-worksheet.pdf",
+      "bytes": 1051556,
+      "sha256": "b8440f8089e7ec1a713ed1632ef4c4631d29c301ecd5f8ec64be96c45c531f21",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "23b8cb4ba8cc/g3s1-fraction-pizza-context-worksheet.png",
+      "bytes": 1197501,
+      "sha256": "df99f044b1ce1d12bd4e985900ad89ff9de21f8179a8dd68f80d585c30e229f5",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "23b8cb4ba8cc/representative-image.png",
+      "bytes": 52303,
+      "sha256": "19af7c7327ab5b4f490f4f9b96b92ecaccd0ddfaefc4767f3d8ef5f626ce9902",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

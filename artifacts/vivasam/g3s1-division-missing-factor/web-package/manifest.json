@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-division-missing-factor",
+  "sequence": 7,
+  "title": "곱셈의 빈칸으로 몫 찾기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "2. 나눗셈",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "5f4185a02ba7",
+  "thumbnailAsset": "5f4185a02ba7/representative-image.png",
+  "worksheetAsset": "5f4185a02ba7/g3s1-division-missing-factor-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "5f4185a02ba7/g3s1-division-missing-factor-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-division",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-division-missing-factor-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "5f4185a02ba7/g3s1-division-missing-factor-slides.html",
+      "bytes": 8207915,
+      "sha256": "56523c33fcc4f8f410683f3cb03b11c23290d7940b430dc0158bea4033d89031",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "5f4185a02ba7/g3s1-division-missing-factor-worksheet.pdf",
+      "bytes": 1145734,
+      "sha256": "98f90030c8bb001d61e9d3fe616d5d4fdb7b02fd7d02b0320673e75babdeeb19",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "5f4185a02ba7/g3s1-division-missing-factor-worksheet.png",
+      "bytes": 1233235,
+      "sha256": "f77ff5b5e46ec97b27226d8c42defdf4551258af3770c22c6116e5968e276a31",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "5f4185a02ba7/representative-image.png",
+      "bytes": 52526,
+      "sha256": "6fd172bea7f0f40aca3c856bfb17e432495bf1ad0ab305b88da9b8a639d1ff1f",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

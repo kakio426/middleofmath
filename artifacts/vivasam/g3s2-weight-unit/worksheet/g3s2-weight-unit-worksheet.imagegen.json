@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-6e02265e-c1bc-4a34-9fea-6f3bb590e732.png",
+  "promptFile": "g3s2-weight-unit-worksheet.prompt.txt",
+  "promptSha256": "e01e3c053fa56d958554b06e978f3e65edea4e417140728d7bd18f5dd58daa6f",
+  "imageFile": "g3s2-weight-unit-worksheet.png",
+  "imageSha256": "c18ad2984879ae1c92bd8e557b1228f16a9e93a61d5c696c6088b40616115f2d",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.619Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1ChoiceLabels": [
+        "3050g",
+        "350g",
+        "3005g"
+      ],
+      "problem2Relations": [
+        "1kg=1000g",
+        "3kg=3000g"
+      ],
+      "problem2Input": "3kg 40g"
+    }
+  }
+}

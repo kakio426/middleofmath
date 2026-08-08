@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-multiplication-place-value",
+  "sequence": 17,
+  "title": "자릿값을 살려 먼저 곱하기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "1. 곱셈",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "d3885aae904c",
+  "thumbnailAsset": "d3885aae904c/representative-image.png",
+  "worksheetAsset": "d3885aae904c/g3s2-multiplication-place-value-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "d3885aae904c/g3s2-multiplication-place-value-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-multiplication",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s2-multiplication-place-value-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "d3885aae904c/g3s2-multiplication-place-value-slides.html",
+      "bytes": 8784680,
+      "sha256": "316c28add85d2afa4f75c5165da4566303e1e12a6695d271d6124bbc59abc2ef",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "d3885aae904c/g3s2-multiplication-place-value-worksheet.pdf",
+      "bytes": 1088308,
+      "sha256": "4a8622b3f626f4a22466c122b0f32a86de16d4444332881bcc9d52044d710a1a",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "d3885aae904c/g3s2-multiplication-place-value-worksheet.png",
+      "bytes": 1187326,
+      "sha256": "debe2a96faae8a2047e5cf9c09374e0f90cfa0968055e3e6bc6a26daabdd7212",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "d3885aae904c/representative-image.png",
+      "bytes": 52054,
+      "sha256": "70d7ad693982ece6623b966a95a97ec2028d002ea4f3b8e58d182b6404a6fd42",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

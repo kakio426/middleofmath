@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-fraction-compare",
+  "sequence": 27,
+  "title": "분모가 같은 분수 비교하기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "4. 분수",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "276513d3d635",
+  "thumbnailAsset": "276513d3d635/representative-image.png",
+  "worksheetAsset": "276513d3d635/g3s2-fraction-compare-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "276513d3d635/g3s2-fraction-compare-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-fraction",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s2-fraction-compare-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "276513d3d635/g3s2-fraction-compare-slides.html",
+      "bytes": 8790615,
+      "sha256": "b3073b6d29aca4f16c0c62a13e9cb00c4bb6a00b9312678916097a01c2e9f6f9",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "276513d3d635/g3s2-fraction-compare-worksheet.pdf",
+      "bytes": 1063909,
+      "sha256": "f11212f8f3f4eaac5d5402fda20154ea23284e70495cce5578f954f0de51f835",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "276513d3d635/g3s2-fraction-compare-worksheet.png",
+      "bytes": 1176237,
+      "sha256": "4aab8492a5867023f8e2db51e957f0eda83c73d52a793697ddebe78364972f3c",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "276513d3d635/representative-image.png",
+      "bytes": 50187,
+      "sha256": "17f5c4c2ffe5bb4760cbfceb9a2f07b87d2b5020a614fdc0c489a6175c0e2552",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

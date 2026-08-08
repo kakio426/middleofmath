@@ -48,15 +48,15 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
   const validated = validateTracker(updated, { trackerPath });
   const summary = summarizeTracker(validated);
 
-  assert.equal(summary.worksheetsValidated, 6);
-  assert.equal(summary.supportValidated, 6);
-  assert.equal(summary.packagesValidated, 6);
-  assert.equal(summary.localRecordsPublished, 6);
+  assert.equal(summary.worksheetsValidated, 30);
+  assert.equal(summary.supportValidated, 30);
+  assert.equal(summary.packagesValidated, 30);
+  assert.equal(summary.localRecordsPublished, 30);
   assert.equal(summary.claudePptsAwaiting, 0);
   assert.equal(summary.claudePptsValidated, 0);
-  assert.equal(summary.productionPublished, 6);
+  assert.equal(summary.productionPublished, 30);
 
-  for (const bundle of validated.bundles.slice(0, 6)) {
+  for (const bundle of validated.bundles) {
     assert.equal(bundle.worksheet.status, "validated");
     assert.match(bundle.worksheet.sourcePath, /-worksheet\.prompt\.txt$/);
     assert.doesNotMatch(bundle.worksheet.sourcePath, /\.svg$/i);
@@ -67,21 +67,13 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
     assert.equal(bundle.support.representativeImageStatus, "validated");
     assert.equal(bundle.eduitit.packageStatus, "validated");
     assert.equal(bundle.eduitit.localRecordStatus, "published");
-    assert.equal(bundle.eduitit.anonymousAccessStatus, "production-passed");
-    assert.equal(bundle.eduitit.productionStatus, "deployed");
-    assert.match(bundle.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
     assert.equal(bundle.ppt.status, "received");
     assert.equal(bundle.ppt.slideCount, 12);
   }
-  for (const bundle of validated.bundles.slice(6)) {
-    assert.equal(bundle.worksheet.status, "not-started");
-    assert.equal(bundle.support.intentStatus, "not-started");
-    assert.equal(bundle.eduitit.packageStatus, "not-started");
-    assert.equal(bundle.eduitit.localRecordStatus, "unpublished");
-    assert.equal(bundle.eduitit.productionStatus, "not-deployed");
-    assert.equal(bundle.ppt.status, "received");
-    assert.equal(bundle.ppt.format, "html");
-    assert.equal(bundle.ppt.slideCount, 12);
+  for (const bundle of validated.bundles) {
+    assert.equal(bundle.eduitit.anonymousAccessStatus, "production-passed");
+    assert.equal(bundle.eduitit.productionStatus, "deployed");
+    assert.match(bundle.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
   }
 });
 

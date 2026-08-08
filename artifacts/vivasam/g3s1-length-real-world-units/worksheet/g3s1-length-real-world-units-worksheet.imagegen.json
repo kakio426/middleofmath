@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-f149b7e8-ccb1-4224-97f8-51411abf4815.png",
+  "promptFile": "g3s1-length-real-world-units-worksheet.prompt.txt",
+  "promptSha256": "0d7632dea138d38f94bd4f1a0ceb4d80753f9223a4e97936dc257f1f8a729ef2",
+  "imageFile": "g3s1-length-real-world-units-worksheet.png",
+  "imageSha256": "72ec01a446e1cf71a949ad1696257c2956702a369d851fb08a8ebe827c3b179c",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.597Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Object": "연필",
+      "problem1ChoiceLabels": [
+        "약 15cm",
+        "약 15m",
+        "약 15mm"
+      ],
+      "problem2Objects": [
+        "단추 두께 약 2mm",
+        "도시 사이 약 5km"
+      ]
+    }
+  }
+}

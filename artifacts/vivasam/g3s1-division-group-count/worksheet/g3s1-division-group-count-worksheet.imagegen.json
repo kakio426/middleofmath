@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-513e9330-2737-4917-ba94-e5646ab1f415.png",
+  "promptFile": "g3s1-division-group-count-worksheet.prompt.txt",
+  "promptSha256": "3da0068cdfad66f86d0d103dcf8aa717f5f72e8b3a1dd767852772e928d0f5bb",
+  "imageFile": "g3s1-division-group-count-worksheet.png",
+  "imageSha256": "423dc30f55f019db989f6beda8071c7475afceb3da266970bbc6888f944a6d7b",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.587Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Equation": "4×6=24",
+      "problem1ChoiceLabels": [
+        "6",
+        "4",
+        "20"
+      ],
+      "problem2StickerCards": 42,
+      "problem2GroupSize": 6
+    }
+  }
+}

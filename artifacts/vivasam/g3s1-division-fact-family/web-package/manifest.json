@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-division-fact-family",
+  "sequence": 8,
+  "title": "한 곱셈식에서 두 나눗셈식",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "2. 나눗셈",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "76ba91267cca",
+  "thumbnailAsset": "76ba91267cca/representative-image.png",
+  "worksheetAsset": "76ba91267cca/g3s1-division-fact-family-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "76ba91267cca/g3s1-division-fact-family-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-division",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-division-fact-family-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "76ba91267cca/g3s1-division-fact-family-slides.html",
+      "bytes": 9192935,
+      "sha256": "b2e30588efcf1b5112ac74e15c35e51a0f136f574fccf33fb4bb003002bb962b",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "76ba91267cca/g3s1-division-fact-family-worksheet.pdf",
+      "bytes": 1058844,
+      "sha256": "5e89daeb4f6d8a64ad85ef4547713ac49fc76e7e832f835fc6487d6be28d1067",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "76ba91267cca/g3s1-division-fact-family-worksheet.png",
+      "bytes": 1154128,
+      "sha256": "651dded4ebcfe87ca8928eafaf2dbe51e8670fb811555fb2ebd3d1066c824ab8",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "76ba91267cca/representative-image.png",
+      "bytes": 53963,
+      "sha256": "57de460e679b22612247dc6ea218cbac71108993a9ea026c185c2c033b4cf20a",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

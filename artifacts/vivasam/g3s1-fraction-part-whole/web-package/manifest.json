@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-fraction-part-whole",
+  "sequence": 12,
+  "title": "전체와 부분을 분수로 읽기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "3. 분수",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "cc4faa83d6aa",
+  "thumbnailAsset": "cc4faa83d6aa/representative-image.png",
+  "worksheetAsset": "cc4faa83d6aa/g3s1-fraction-part-whole-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "cc4faa83d6aa/g3s1-fraction-part-whole-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-fraction",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-fraction-part-whole-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "cc4faa83d6aa/g3s1-fraction-part-whole-slides.html",
+      "bytes": 8403376,
+      "sha256": "3394d11e8602f2800160b3976076d240e47b081f2dca9422d8a229256f96b002",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "cc4faa83d6aa/g3s1-fraction-part-whole-worksheet.pdf",
+      "bytes": 1114175,
+      "sha256": "68b4084dccd0727e006c317184215a6b277146c0f1b6cd00c93edba50322cf5e",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "cc4faa83d6aa/g3s1-fraction-part-whole-worksheet.png",
+      "bytes": 1202922,
+      "sha256": "04081d81efb7dbbfbfb7f8d34bd76422c3723ea6a990a3ad9c7e03eb021c214e",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "cc4faa83d6aa/representative-image.png",
+      "bytes": 51454,
+      "sha256": "ee4fc865f1c5bbb7ab4c6609597f75359e603c5586e490397e13fd6c47cdbc59",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

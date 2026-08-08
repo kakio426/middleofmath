@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-e02eb3c7-9cc1-4dde-996e-c3355153dc62.png",
+  "promptFile": "g3s1-division-fact-family-worksheet.prompt.txt",
+  "promptSha256": "c7e8b2a07cd1465a52ca484b748539ece725a1ea101428318d09a9eb8e0df866",
+  "imageFile": "g3s1-division-fact-family-worksheet.png",
+  "imageSha256": "651dded4ebcfe87ca8928eafaf2dbe51e8670fb811555fb2ebd3d1066c824ab8",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.586Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1StickerCards": 35,
+      "problem1GroupSize": 5,
+      "problem1ChoiceLabels": [
+        "7",
+        "5",
+        "30"
+      ],
+      "problem2Equations": [
+        "32÷8=□",
+        "32÷4=□"
+      ]
+    }
+  }
+}

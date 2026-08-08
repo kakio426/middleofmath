@@ -39,10 +39,10 @@ test("원장은 30개 PPT와 PPT당 통합 활동지 1개 계약을 고정한다
   assert.equal(tracker.contract.pptAuthor, "Claude");
 });
 
-test("30개 Claude HTML 수령과 1~6번 운영 공개 검증을 함께 추적한다", () => {
+test("30개 Claude HTML 수령과 30개 운영 공개 검증을 함께 추적한다", () => {
   const validated = validateTracker(tracker, { trackerPath });
   const summary = summarizeTracker(validated);
-  for (const bundle of validated.bundles.slice(0, 6)) {
+  for (const bundle of validated.bundles) {
     assert.equal(bundle.content.status, "validated");
     assert.equal(bundle.worksheet.status, "validated");
     assert.equal(bundle.ppt.status, "received");
@@ -61,17 +61,14 @@ test("30개 Claude HTML 수령과 1~6번 운영 공개 검증을 함께 추적�
     assert.match(bundle.ppt.htmlPath, /-slides\.html$/);
     assert.match(bundle.ppt.intakeReportPath, /html-intake\.json$/);
   }
-  for (const bundle of validated.bundles.slice(6)) {
-    assert.equal(bundle.worksheet.status, "not-started");
-    assert.equal(bundle.eduitit.packageStatus, "not-started");
-  }
-  assert.equal(summary.worksheetsValidated, 6);
-  assert.equal(summary.supportValidated, 6);
-  assert.equal(summary.packagesValidated, 6);
-  assert.equal(summary.localRecordsPublished, 6);
+  assert.equal(summary.worksheetsValidated, 30);
+  assert.equal(summary.supportValidated, 30);
+  assert.equal(summary.packagesValidated, 30);
+  assert.equal(summary.localRecordsPublished, 30);
   assert.equal(summary.claudePptsReceived, 30);
   assert.equal(summary.claudePptsAwaiting, 0);
   assert.equal(summary.claudePptsValidated, 0);
+  assert.equal(summary.productionPublished, 30);
   assert.equal(summary.fullyCompleted, 0);
 });
 
@@ -145,7 +142,7 @@ test("사람용 진행표에는 30개 슬롯과 1개 통합 활동지 계약이 
   assert.equal((markdown.match(/^\| \d{2} \|/gm) || []).length, 30);
   assert.match(markdown, /PPT당 통합 활동지 1개/);
   assert.match(markdown, /Claude는 발표 화면\(HTML 우선, 기존 PPTX 호환\)만 제작/);
-  assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 6 \| 30/);
+  assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 30 \| 30/);
   assert.match(markdown, /Claude HTML\/PPTX 수령/);
   assert.match(markdown, /Claude HTML\/PPTX 수령 대기/);
   assert.match(markdown, /MathCanvas 활동 연결 완료/);

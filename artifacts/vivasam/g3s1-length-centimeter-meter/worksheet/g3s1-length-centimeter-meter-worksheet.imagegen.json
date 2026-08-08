@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-4aa5c3cc-5c11-46df-9b5e-3c7f60547a54.png",
+  "promptFile": "g3s1-length-centimeter-meter-worksheet.prompt.txt",
+  "promptSha256": "900409781fc843ef22df3ff218b81f5b7af2ab1b5c711da3ae2f19807cd447db",
+  "imageFile": "g3s1-length-centimeter-meter-worksheet.png",
+  "imageSha256": "6dd136bf8213a8120fc02ff063c7300bbb7392e1a9a3aa26de8579d82b0c5f6a",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.595Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Object": "교실 문",
+      "problem1ChoiceLabels": [
+        "약 2m",
+        "약 2km",
+        "약 2cm"
+      ],
+      "problem2Objects": [
+        "지우개 약 4cm",
+        "복도 약 20m"
+      ]
+    }
+  }
+}

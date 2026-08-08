@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-cb26936c-bac0-444b-8e19-5dfa4c1e7401.png",
+  "promptFile": "g3s2-capacity-unit-worksheet.prompt.txt",
+  "promptSha256": "dc773f739a1f1dadce33de18d47c4285668f7254915d8caf596256f3d3dfebf8",
+  "imageFile": "g3s2-capacity-unit-worksheet.png",
+  "imageSha256": "c635b772f840cc8ff20ff5bd172bae0358714940589d28bf9f8085bb73be02b9",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.618Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1ChoiceLabels": [
+        "2300mL",
+        "2030mL",
+        "300mL"
+      ],
+      "problem2Relations": [
+        "1L=1000mL",
+        "2L=2000mL"
+      ],
+      "problem2Input": "2L 250mL"
+    }
+  }
+}

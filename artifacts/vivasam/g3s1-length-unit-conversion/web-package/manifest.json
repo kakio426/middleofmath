@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-length-unit-conversion",
+  "sequence": 16,
+  "title": "m·cm, km·m 연결하기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "4. 길이",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "f5238903a8f7",
+  "thumbnailAsset": "f5238903a8f7/representative-image.png",
+  "worksheetAsset": "f5238903a8f7/g3s1-length-unit-conversion-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "f5238903a8f7/g3s1-length-unit-conversion-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-length",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-length-unit-conversion-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "f5238903a8f7/g3s1-length-unit-conversion-slides.html",
+      "bytes": 8209249,
+      "sha256": "814b55ca21f89003bf08fa966ee4e97630b789a59912dce2c9901716dfcde251",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "f5238903a8f7/g3s1-length-unit-conversion-worksheet.pdf",
+      "bytes": 969401,
+      "sha256": "2804eab8fe83ec71af9833ee2df449527654247dbc077a1a8323379432d06202",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "f5238903a8f7/g3s1-length-unit-conversion-worksheet.png",
+      "bytes": 1123195,
+      "sha256": "83bd8d622688fe7081b6c896c308091b66bb439af0d0fe6088331edef043e0e0",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "f5238903a8f7/representative-image.png",
+      "bytes": 51661,
+      "sha256": "7c33cab25ac13dfcf72096dcc49bc9ca19be9bafb0256bf9fb83e72915723e7e",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

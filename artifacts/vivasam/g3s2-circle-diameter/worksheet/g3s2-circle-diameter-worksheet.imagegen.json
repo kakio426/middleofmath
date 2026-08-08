@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-7238a773-53e2-484d-8f2b-2193bd50be20.png",
+  "promptFile": "g3s2-circle-diameter-worksheet.prompt.txt",
+  "promptSha256": "4df0e9915186859a2cd07d3df669ea890f41667e65e344b7f111f31e6a867132",
+  "imageFile": "g3s2-circle-diameter-worksheet.png",
+  "imageSha256": "7216548b14ae5a31a58a161077c16dab2ad6ae2e9e1330a7dac7295f21fbf1a1",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.611Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1RadiusCm": 6,
+      "problem1ChoiceLabels": [
+        "12cm",
+        "6cm",
+        "36cm"
+      ],
+      "problem2RadiusCm": 7
+    }
+  }
+}

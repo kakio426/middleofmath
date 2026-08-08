@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-f3c99da4-01b9-4e10-b363-f738f24c3f66.png",
+  "promptFile": "g3s1-length-unit-conversion-worksheet.prompt.txt",
+  "promptSha256": "e0c159582b8cde9b330e717ce431e635b40518124976d5a45740b0574b9a9845",
+  "imageFile": "g3s1-length-unit-conversion-worksheet.png",
+  "imageSha256": "83bd8d622688fe7081b6c896c308091b66bb439af0d0fe6088331edef043e0e0",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.599Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1ChoiceLabels": [
+        "2000m",
+        "200m",
+        "20000m"
+      ],
+      "problem2Relations": [
+        "1m=100cm",
+        "1km=1000m"
+      ],
+      "problem2Inputs": [
+        "3m",
+        "4km"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-8bc1c8cf-a29d-4e85-83a7-5d7f08a920f6.png",
+  "promptFile": "g3s1-division-missing-factor-worksheet.prompt.txt",
+  "promptSha256": "de8b86fade59683f2ae44f21ed46ce40a0bf43d160b9c59bcc00d0e3ea8fb190",
+  "imageFile": "g3s1-division-missing-factor-worksheet.png",
+  "imageSha256": "f77ff5b5e46ec97b27226d8c42defdf4551258af3770c22c6116e5968e276a31",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.582Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Cookies": 12,
+      "problem1Recipients": 3,
+      "problem1ChoiceLabels": [
+        "4개",
+        "3개",
+        "9개"
+      ],
+      "problem2Equation": "7×□=35"
+    }
+  }
+}

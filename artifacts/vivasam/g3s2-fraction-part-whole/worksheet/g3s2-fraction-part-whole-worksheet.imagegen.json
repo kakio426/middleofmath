@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-45bf74ed-7e62-44be-a541-74e20969f2da.png",
+  "promptFile": "g3s2-fraction-part-whole-worksheet.prompt.txt",
+  "promptSha256": "68d9be920095ac72501f0fdec2c625071249c934c72639728ef2f1063e577eb2",
+  "imageFile": "g3s2-fraction-part-whole-worksheet.png",
+  "imageSha256": "f4f945162496f5acc84ed00f2780809f1bb5e2bb9e0741be8b54ffcd1553004d",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.613Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Parts": 8,
+      "problem1SelectedParts": 5,
+      "problem1ChoiceLabels": [
+        "5/8",
+        "8/5",
+        "5/1"
+      ],
+      "problem2Parts": 10,
+      "problem2SelectedParts": 6
+    }
+  }
+}

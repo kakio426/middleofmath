@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-991af1df-d633-4ebf-a565-67d86e3226ac.png",
+  "promptFile": "g3s2-division-remainder-check-worksheet.prompt.txt",
+  "promptSha256": "e95e62795e0d72f73582d9a2e81d8a9dc40d79d496f1d94655805879d3ecc53b",
+  "imageFile": "g3s2-division-remainder-check-worksheet.png",
+  "imageSha256": "cb53cce4085f4fb10d2d4bddb3f2e58d88fc520b2a10a508514df12b84f28276",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.608Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1ChoiceLabels": [
+        "6×7+5=47",
+        "6×5+7=37",
+        "6+7+5=18"
+      ],
+      "problem2Check": "6×6+2=38"
+    }
+  }
+}

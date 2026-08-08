@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-pictograph-compare",
+  "worksheet": {
+    "source": "worksheet/g3s2-pictograph-compare-worksheet.prompt.txt",
+    "generationMetadata": "worksheet/g3s2-pictograph-compare-worksheet.imagegen.json",
+    "png": "worksheet/g3s2-pictograph-compare-worksheet.png",
+    "pdf": "worksheet/g3s2-pictograph-compare-worksheet.pdf",
+    "count": 1
+  },
+  "support": {
+    "teachingIntent": "support/teaching-intent.md",
+    "answerKey": "support/teacher-answer-key.md",
+    "representativeImage": "support/representative-image.png"
+  },
+  "package": {
+    "digest": "90bc4ff0619d",
+    "manifest": "web-package/manifest.json",
+    "html": "web-package/source.html"
+  }
+}

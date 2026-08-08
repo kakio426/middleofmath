@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-dfbce36a-f6e8-4368-9618-4ae1030f6e9b.png",
+  "promptFile": "g3s2-fraction-compare-worksheet.prompt.txt",
+  "promptSha256": "02ba04b2036b95c7af500b58350cf052ca16ba91203a366f6ba32ccf6fb726bf",
+  "imageFile": "g3s2-fraction-compare-worksheet.png",
+  "imageSha256": "4aab8492a5867023f8e2db51e957f0eda83c73d52a793697ddebe78364972f3c",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.616Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Denominator": 7,
+      "problem1Numerators": [
+        3,
+        6
+      ],
+      "problem1ChoiceLabels": [
+        "6/7",
+        "3/7",
+        "두 분수는 같아요"
+      ],
+      "problem2Denominator": 8,
+      "problem2Numerators": [
+        3,
+        7
+      ]
+    }
+  }
+}

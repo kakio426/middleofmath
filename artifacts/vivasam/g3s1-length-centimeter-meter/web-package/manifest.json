@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-length-centimeter-meter",
+  "sequence": 14,
+  "title": "연필에는 cm, 문에는 m",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "4. 길이",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "7e7d6830db33",
+  "thumbnailAsset": "7e7d6830db33/representative-image.png",
+  "worksheetAsset": "7e7d6830db33/g3s1-length-centimeter-meter-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "7e7d6830db33/g3s1-length-centimeter-meter-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-length",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-length-centimeter-meter-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "7e7d6830db33/g3s1-length-centimeter-meter-slides.html",
+      "bytes": 8207407,
+      "sha256": "0bccd3aa14a2781c5ed6c7e44ac21abb00fc90c4715e675ef670e18e31ab1e1a",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "7e7d6830db33/g3s1-length-centimeter-meter-worksheet.pdf",
+      "bytes": 1204854,
+      "sha256": "2a5234a12dd34e669529d712397520d3d384010e7d0bf09b6ada03aee17680d0",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "7e7d6830db33/g3s1-length-centimeter-meter-worksheet.png",
+      "bytes": 1230173,
+      "sha256": "6dd136bf8213a8120fc02ff063c7300bbb7392e1a9a3aa26de8579d82b0c5f6a",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "7e7d6830db33/representative-image.png",
+      "bytes": 50914,
+      "sha256": "f41cdd7a0ff4bd1a083d45c861e7ed8df80440505172b627cf698a21842dc52f",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

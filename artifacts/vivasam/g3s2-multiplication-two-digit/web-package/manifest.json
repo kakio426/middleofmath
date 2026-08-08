@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-multiplication-two-digit",
+  "sequence": 19,
+  "title": "두 자리 수를 나누어 곱하기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "1. 곱셈",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "6cf1d6ec7d70",
+  "thumbnailAsset": "6cf1d6ec7d70/representative-image.png",
+  "worksheetAsset": "6cf1d6ec7d70/g3s2-multiplication-two-digit-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "6cf1d6ec7d70/g3s2-multiplication-two-digit-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-multiplication",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s2-multiplication-two-digit-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "6cf1d6ec7d70/g3s2-multiplication-two-digit-slides.html",
+      "bytes": 8790378,
+      "sha256": "f78df01ade63f61e0d4ccd0d0728343d4acd28579ad2442681e53f55524f24ee",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "6cf1d6ec7d70/g3s2-multiplication-two-digit-worksheet.pdf",
+      "bytes": 1067668,
+      "sha256": "ce5b9d52b65a30e84e7f78f4a8a799e21a00104760c42108ccebc9eaf6691116",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "6cf1d6ec7d70/g3s2-multiplication-two-digit-worksheet.png",
+      "bytes": 1190223,
+      "sha256": "097158c78aab3c3f6b885765febce96945f5f26666b6a156e92c8a45bb92bb16",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "6cf1d6ec7d70/representative-image.png",
+      "bytes": 50715,
+      "sha256": "c66684e759170f54dae67613e362c9015c147768fe84bd28a3c5391e1d01c119",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

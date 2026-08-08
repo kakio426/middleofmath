@@ -2,7 +2,7 @@
 
 이 문서는 `tools/vivasam-bundle/series-tracker.json`에서 자동 생성됩니다. 직접 고치지 말고 `track-series.cjs update`로 원장을 갱신하세요.
 
-- 원장 최종 갱신: 2026-08-08T07:41:06.351Z
+- 원장 최종 갱신: 2026-08-08T09:10:25.355Z
 - 생산 계약: PPT 30개 · PPT당 약 11장(차시별 가변) · PPT당 통합 활동지 1개 · 활동지 총 30개
 - 역할: Claude는 발표 화면(HTML 우선, 기존 PPTX 호환)만 제작, Codex는 내용 원고와 발표 화면 외 모든 산출물·플랫폼·검증·추적 담당
 
@@ -12,16 +12,16 @@
 |---|---:|---:|
 | 주제 등록 | 30 | 30 |
 | 내용 원고 검증 | 30 | 30 |
-| 통합 활동지 검증 | 6 | 30 |
+| 통합 활동지 검증 | 30 | 30 |
 | MathCanvas 수동 제작본 선택 | 0 | 상황별 |
 | MathCanvas 새 활동 생성 | 1 | 상황별 |
 | MathCanvas 활동 연결 완료 | 1 | 30 |
 | MathCanvas 학생 공개 링크 검증 | 0 | 지원 시 |
 | Claude HTML/PPTX 수령 | 30 | 30 |
-| 설계 의도·정답·대표 이미지 검증 | 6 | 30 |
-| Eduitit 패키지 검증 | 6 | 30 |
-| Eduitit 로컬 공개·비로그인 접근 검증 | 6 | 30 |
-| 운영 공개·비로그인 접근 검증 | 6 | 30 |
+| 설계 의도·정답·대표 이미지 검증 | 30 | 30 |
+| Eduitit 패키지 검증 | 30 | 30 |
+| Eduitit 로컬 공개·비로그인 접근 검증 | 30 | 30 |
+| 운영 공개·비로그인 접근 검증 | 30 | 30 |
 | 교사 커뮤니티·블로그·SNS 게시 | 0 | 30 |
 | 나의 레이스 등록 | 0 | 30 |
 | 전 과정 완료 | 0 | 30 |
@@ -38,30 +38,30 @@
 | 04 | 34×2를 두 부분으로 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
 | 05 | 상자 수를 자릿값으로 곱하기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
 | 06 | 18개를 똑같이 나누면 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
-| 07 | 곱셈의 빈칸으로 몫 찾기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 08 | 한 곱셈식에서 두 나눗셈식 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 09 | 몇 묶음인지 곱셈으로 확인하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 10 | 분수의 첫 조건, 똑같이 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 11 | 같지 않은 조각을 고쳐 나누기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 12 | 전체와 부분을 분수로 읽기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 13 | 피자에서 분모와 분자 찾기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 14 | 연필에는 cm, 문에는 m | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 15 | 크기에 맞는 길이 단위 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 16 | m·cm, km·m 연결하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 17 | 자릿값을 살려 먼저 곱하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 18 | 부분곱을 빠짐없이 더하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 19 | 두 자리 수를 나누어 곱하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 20 | 나눗셈이 묻는 두 가지 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 21 | 먼저 나누고 남은 수 찾기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 22 | 몫과 나머지로 처음 수 확인하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 23 | 원의 중심과 반지름 찾기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 24 | 반지름 두 개가 만드는 지름 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 25 | 색칠한 부분을 분수로 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 26 | 가분수를 대분수로 바꾸기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 27 | 분모가 같은 분수 비교하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 28 | L를 mL로 정확히 바꾸기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 29 | kg을 g으로 정확히 바꾸기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
-| 30 | 그림그래프의 실제 차이 구하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 07 | 곱셈의 빈칸으로 몫 찾기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 08 | 한 곱셈식에서 두 나눗셈식 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 09 | 몇 묶음인지 곱셈으로 확인하기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 10 | 분수의 첫 조건, 똑같이 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 11 | 같지 않은 조각을 고쳐 나누기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 12 | 전체와 부분을 분수로 읽기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 13 | 피자에서 분모와 분자 찾기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 14 | 연필에는 cm, 문에는 m | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 15 | 크기에 맞는 길이 단위 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 16 | m·cm, km·m 연결하기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 17 | 자릿값을 살려 먼저 곱하기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 18 | 부분곱을 빠짐없이 더하기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 19 | 두 자리 수를 나누어 곱하기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 20 | 나눗셈이 묻는 두 가지 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 21 | 먼저 나누고 남은 수 찾기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 22 | 몫과 나머지로 처음 수 확인하기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 23 | 원의 중심과 반지름 찾기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 24 | 반지름 두 개가 만드는 지름 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 25 | 색칠한 부분을 분수로 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 26 | 가분수를 대분수로 바꾸기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 27 | 분모가 같은 분수 비교하기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 28 | L를 mL로 정확히 바꾸기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 29 | kg을 g으로 정확히 바꾸기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
+| 30 | 그림그래프의 실제 차이 구하기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
 
 ## 판정 원칙
 
@@ -84,6 +84,9 @@
 
 | 시각 | 번호 | 이벤트 | 근거 |
 |---|---:|---|---|
+| 2026-08-08T09:10:25.355Z | 전체 | Eduitit 운영 공개·비로그인 검증 완료 | PPT 수령분 30개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다. |
+| 2026-08-08T08:46:46.290Z | 전체 | 발표 화면 수령분 산출물·Eduitit 로컬 공개 검증 완료 | 통합 활동지까지 준비된 Claude HTML/PPTX 30개를 Eduitit 공개 패키지로 만들고 비로그인 접근을 검증했다. 발표 화면만 도착한 슬롯은 수령 상태를 보존하고 게시를 대기한다. |
+| 2026-08-08T08:45:22.095Z | 전체 | 발표 화면 수령분 산출물·Eduitit 로컬 공개 검증 완료 | 통합 활동지까지 준비된 Claude HTML/PPTX 30개를 Eduitit 공개 패키지로 만들고 비로그인 접근을 검증했다. 발표 화면만 도착한 슬롯은 수령 상태를 보존하고 게시를 대기한다. |
 | 2026-08-08T07:41:06.351Z | 전체 | Eduitit 운영 공개·비로그인 검증 완료 | PPT 수령분 6개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다. |
 | 2026-08-08T07:39:32.137Z | 전체 | Eduitit 운영 공개·비로그인 검증 완료 | PPT 수령분 6개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다. |
 | 2026-08-08T07:37:39.994Z | 전체 | 발표 화면 수령분 산출물·Eduitit 로컬 공개 검증 완료 | 통합 활동지까지 준비된 Claude HTML/PPTX 6개를 Eduitit 공개 패키지로 만들고 비로그인 접근을 검증했다. 발표 화면만 도착한 슬롯은 수령 상태를 보존하고 게시를 대기한다. |
@@ -101,6 +104,3 @@
 | 2026-08-08T07:24:16.008Z | 20 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
 | 2026-08-08T07:24:15.948Z | 19 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
 | 2026-08-08T07:24:15.889Z | 18 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
-| 2026-08-08T07:24:15.827Z | 17 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
-| 2026-08-08T07:24:15.765Z | 16 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
-| 2026-08-08T07:24:15.704Z | 15 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |

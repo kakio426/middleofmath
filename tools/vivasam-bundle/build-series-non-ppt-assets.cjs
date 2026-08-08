@@ -11,6 +11,7 @@ const sharp = require("sharp");
 const pictographLesson = require("./lesson-pictograph.cjs");
 const { SERIES_PLAN } = require("./g3-series-plan.cjs");
 const { wrapKoreanWords } = require("./korean-text-flow.cjs");
+const { REMAINING_WORKSHEET_MATH_VISUAL_CONTRACTS } = require("./remaining-worksheet-imagegen-specs.cjs");
 
 const REPO_ROOT = path.resolve(__dirname, "../..");
 const ARTIFACTS_ROOT = path.join(REPO_ROOT, "artifacts", "vivasam");
@@ -72,6 +73,7 @@ const WORKSHEET_MATH_VISUAL_CONTRACTS = Object.freeze({
     problem2ChoiceLabels: ["4자루", "5자루", "15자루"],
     problem3WrongWork: "12÷3=3개",
   },
+  ...REMAINING_WORKSHEET_MATH_VISUAL_CONTRACTS,
 });
 
 const PALETTE_BY_DOMAIN = Object.freeze({

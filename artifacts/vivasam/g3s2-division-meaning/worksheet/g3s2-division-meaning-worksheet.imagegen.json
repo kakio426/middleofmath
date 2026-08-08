@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-2d966e8c-1895-4a82-ad26-016309899576.png",
+  "promptFile": "g3s2-division-meaning-worksheet.prompt.txt",
+  "promptSha256": "f9c8737e38dc3f7c5c1f77dc2135c26c849c8328743a2605767cb1ae67dadc46",
+  "imageFile": "g3s2-division-meaning-worksheet.png",
+  "imageSha256": "e245e3928b3ad62d3a79fe4bfaef7c9557085725e5fd98ea27cf0b83def7e0ed",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.605Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Groups": 5,
+      "problem1PerGroup": 7,
+      "problem1Total": 35,
+      "problem1ChoiceLabels": [
+        "35÷5=7",
+        "35÷5=5",
+        "35-5=30"
+      ],
+      "problem2Groups": 4,
+      "problem2PerGroup": 7,
+      "problem2Total": 28
+    }
+  }
+}

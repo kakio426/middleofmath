@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-20133c39-2796-42c2-8186-88aefc8d305a.png",
+  "promptFile": "g3s1-fraction-fix-partition-worksheet.prompt.txt",
+  "promptSha256": "4114511cfc0eaac063d71d1f5f21d2fe5682396687ae477c17d4897f6479dffe",
+  "imageFile": "g3s1-fraction-fix-partition-worksheet.png",
+  "imageSha256": "94fd29f67e6bbb3cc38e527a023481a68ad076c815b221a6a67bfaf7952129c1",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.591Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1CandidateParts": [
+        4,
+        4,
+        3
+      ],
+      "problem1CandidateEqualSizes": [
+        true,
+        false,
+        true
+      ],
+      "problem2UnequalParts": 5
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s2-fraction-convert",
+  "sequence": 26,
+  "title": "가분수를 대분수로 바꾸기",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 2학기",
+  "unit": "4. 분수",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "afa8fecf2833",
+  "thumbnailAsset": "afa8fecf2833/representative-image.png",
+  "worksheetAsset": "afa8fecf2833/g3s2-fraction-convert-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "afa8fecf2833/g3s2-fraction-convert-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-fraction",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s2-fraction-convert-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "afa8fecf2833/g3s2-fraction-convert-slides.html",
+      "bytes": 9170067,
+      "sha256": "9f2aa8228ad465a0cd4cedd851cfc30c140bd567433645669d0eabca7c59db04",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "afa8fecf2833/g3s2-fraction-convert-worksheet.pdf",
+      "bytes": 1013699,
+      "sha256": "b3a49b1bff625f83c453d5383b7effe1072de452c3da65efeafce05ed6661de7",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "afa8fecf2833/g3s2-fraction-convert-worksheet.png",
+      "bytes": 1138363,
+      "sha256": "bac94ef020e21ff421a984d346e3a124231c9860c3073944458aa90878c447a5",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "afa8fecf2833/representative-image.png",
+      "bytes": 49472,
+      "sha256": "e2ea0bc2cc645f712239f90bf1a51b1613e0adf8aee156eb326f292d21a8eba4",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-71ad2e52-f228-47f9-a48b-867652996db7.png",
+  "promptFile": "g3s1-fraction-equal-parts-worksheet.prompt.txt",
+  "promptSha256": "88795a5dbdcb844d0fde817156b5334eaf8953786c3c061819431796864fd3ac",
+  "imageFile": "g3s1-fraction-equal-parts-worksheet.png",
+  "imageSha256": "67666a41dd77f77bc0019d25b8bc58b2f5e3663b0e2ff6d777ab71730d4cad10",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.589Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1EqualSixParts": 6,
+      "problem1UnequalSixParts": 6,
+      "problem1EqualFiveParts": 5,
+      "problem2EqualParts": 5
+    }
+  }
+}

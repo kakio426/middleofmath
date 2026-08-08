@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-51b79697-1427-4d0a-b89d-06a67504da7e.png",
+  "promptFile": "g3s2-fraction-convert-worksheet.prompt.txt",
+  "promptSha256": "4daa54201fe841879c05f2a0529d5e3c47389dccd57295c40a323cffbe527ba2",
+  "imageFile": "g3s2-fraction-convert-worksheet.png",
+  "imageSha256": "bac94ef020e21ff421a984d346e3a124231c9860c3073944458aa90878c447a5",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T08:40:57.614Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1MixedNumber": "3과 1/4",
+      "problem1ChoiceLabels": [
+        "13/4",
+        "7/4",
+        "3/4"
+      ],
+      "problem2QuarterPieces": 11,
+      "problem2WholeGroups": 2,
+      "problem2Remainder": 3
+    }
+  }
+}

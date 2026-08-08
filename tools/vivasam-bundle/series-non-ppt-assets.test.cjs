@@ -9,6 +9,7 @@ const test = require("node:test");
 
 const sharp = require("sharp");
 const seriesTracker = require("./series-tracker.json");
+const { REMAINING_WORKSHEET_MATH_VISUAL_CONTRACTS } = require("./remaining-worksheet-imagegen-specs.cjs");
 
 const {
   SERIES_ASSET_CONTRACT,
@@ -118,13 +119,13 @@ test("대표 이미지 제목은 어절을 자르지 않고 최대 두 줄로 �
 
 test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만든다", async () => {
   const report = await validateSeriesArtifacts({ repoRoot, availableOnly: true });
-  assert.equal(report.lessonCount, 6);
-  assert.equal(report.worksheetCount, 6);
-  assert.equal(report.packageCount, 6);
-  assert.equal(report.supportCount, 6);
-  assert.equal(report.representativeImageCount, 6);
-  assert.equal(new Set(report.worksheetHashes).size, 6);
-  assert.equal(new Set(report.representativeImageHashes).size, 6);
+  assert.equal(report.lessonCount, 30);
+  assert.equal(report.worksheetCount, 30);
+  assert.equal(report.packageCount, 30);
+  assert.equal(report.supportCount, 30);
+  assert.equal(report.representativeImageCount, 30);
+  assert.equal(new Set(report.worksheetHashes).size, 30);
+  assert.equal(new Set(report.representativeImageHashes).size, 30);
 
   for (const item of report.items) {
     const worksheetRoot = path.dirname(item.worksheetPngPath);
@@ -150,6 +151,13 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
     assert.match(prompt, /eduitit/i);
     for (const flag of ["logoTitleSeparated", "allQuestionTextLegible", "choicesVisuallySeparated", "answerSpacesPresent", "noOverlapsOrClipping"]) {
       assert.equal(generation.visualQa[flag], true, `${item.lessonId}: ${flag}`);
+    }
+    if (REMAINING_WORKSHEET_MATH_VISUAL_CONTRACTS[item.lessonId]) {
+      assert.deepEqual(
+        generation.visualQa.mathVisualCounts,
+        REMAINING_WORKSHEET_MATH_VISUAL_CONTRACTS[item.lessonId],
+        `${item.lessonId}: 수학 시각 요소 계약`,
+      );
     }
 
     const worksheetMetadata = await sharp(item.worksheetPngPath).metadata();
@@ -255,27 +263,23 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
     }
   }
 
-  for (const lesson of loadSeriesLessons().filter((lesson) => ![1, 2, 3, 4, 5, 6].includes(lesson.sequence))) {
-    const lessonRoot = path.join(repoRoot, "artifacts", "vivasam", lesson.id);
-    for (const directory of ["worksheet", "support", "web-package"]) {
-      assert.equal(fs.existsSync(path.join(lessonRoot, directory)), false, `${lesson.id}: ${directory}`);
-    }
-    assert.equal(fs.existsSync(path.join(lessonRoot, "non-ppt-artifact-manifest.json")), false, lesson.id);
-  }
 });
 
-test("전체 접촉표는 PPT 30개가 모두 도착하기 전에는 만들지 않는다", () => {
-  assert.equal(fs.existsSync(path.join(repoRoot, "artifacts", "vivasam", "review")), false);
+test("전체 접촉표는 PPT 30개와 활동지 30개를 한 번에 검토할 수 있게 만든다", () => {
+  const reviewRoot = path.join(repoRoot, "artifacts", "vivasam", "review");
+  assert.equal(fs.existsSync(path.join(reviewRoot, "worksheets-contact-sheet.png")), true);
+  assert.equal(fs.existsSync(path.join(reviewRoot, "representative-images-contact-sheet.png")), true);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(reviewRoot, "index.json"), "utf8")).count, 30);
 });
 
 test("PPT가 도착한 원본과 Eduitit 동기화 폴더에는 공개 자료만 있다", () => {
-  const lessons = loadSeriesLessons().filter((lesson) => [1, 2, 3, 4, 5, 6].includes(lesson.sequence));
+  const lessons = loadSeriesLessons();
   const eduititRoot = process.env.EDUITIT_ROOT
     ? path.resolve(process.env.EDUITIT_ROOT)
     : path.resolve(repoRoot, "../eduitit");
   const syncedRoot = path.join(eduititRoot, "edu_materials", "static", "edu_materials", "lesson_bundles");
   const syncedLessonDirectories = fs.readdirSync(syncedRoot, { withFileTypes: true }).filter((entry) => entry.isDirectory());
-  assert.equal(syncedLessonDirectories.length, 6);
+  assert.equal(syncedLessonDirectories.length, 30);
 
   for (const lesson of lessons) {
     for (const packageRoot of [
