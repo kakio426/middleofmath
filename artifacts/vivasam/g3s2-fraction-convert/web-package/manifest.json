@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 2학기",
-  "unit": "4. 분수",
+  "unit": "4. 분수와 소수",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 26,
+    "lessonId": "g3s2-fraction-convert",
+    "semester": 2,
+    "unitNumber": 4,
+    "unitTitle": "분수와 소수",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-10"
+    ],
+    "lessonRange": "6차시",
+    "lessonTitle": "대분수를 알아볼까요?",
+    "textbookPages": {
+      "start": 88,
+      "end": 89
+    },
+    "usageNote": "가분수 개념을 이어 분모만큼 묶어 대분수로 바꾼다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "afa8fecf2833",
-  "thumbnailAsset": "afa8fecf2833/representative-image.png",
-  "worksheetAsset": "afa8fecf2833/g3s2-fraction-convert-worksheet.png",
+  "digest": "f93716b1e8b4",
+  "thumbnailAsset": "f93716b1e8b4/representative-image.png",
+  "worksheetAsset": "f93716b1e8b4/g3s2-fraction-convert-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "afa8fecf2833/g3s2-fraction-convert-slides.html",
+  "slideHtmlAsset": "f93716b1e8b4/g3s2-fraction-convert-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-fraction-convert",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "afa8fecf2833/g3s2-fraction-convert-slides.html",
-      "bytes": 9170067,
-      "sha256": "9f2aa8228ad465a0cd4cedd851cfc30c140bd567433645669d0eabca7c59db04",
+      "path": "f93716b1e8b4/g3s2-fraction-convert-slides.html",
+      "bytes": 9175620,
+      "sha256": "f4df78c29fbf85be22258c0e8628c33cca18f77e3811f4b14e54fb4888eef16e",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "afa8fecf2833/g3s2-fraction-convert-worksheet.pdf",
-      "bytes": 1013699,
-      "sha256": "b3a49b1bff625f83c453d5383b7effe1072de452c3da65efeafce05ed6661de7",
+      "path": "f93716b1e8b4/g3s2-fraction-convert-worksheet.pdf",
+      "bytes": 982295,
+      "sha256": "8b771c6d0e0bcf1d537504c80a58dd5a7bc9ae5cda6389ad19ee4aead8e78356",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "afa8fecf2833/g3s2-fraction-convert-worksheet.png",
-      "bytes": 1138363,
-      "sha256": "bac94ef020e21ff421a984d346e3a124231c9860c3073944458aa90878c447a5",
+      "path": "f93716b1e8b4/g3s2-fraction-convert-worksheet.png",
+      "bytes": 991243,
+      "sha256": "f537f7ea0241dbb5a8c3204a417ae936bd641bdc829ebcb36ab572d76740ad4a",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "afa8fecf2833/representative-image.png",
-      "bytes": 49472,
-      "sha256": "e2ea0bc2cc645f712239f90bf1a51b1613e0adf8aee156eb326f292d21a8eba4",
+      "path": "f93716b1e8b4/representative-image.png",
+      "bytes": 50141,
+      "sha256": "2f612edaae6bdc625a8e9862351462408774392d0cd41be25df88fd83588aa64",
       "contentType": "image/png",
       "role": "thumbnail"
     }

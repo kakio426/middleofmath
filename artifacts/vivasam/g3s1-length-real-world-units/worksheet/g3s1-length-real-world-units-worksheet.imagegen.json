@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-f149b7e8-ccb1-4224-97f8-51411abf4815.png",
   "promptFile": "g3s1-length-real-world-units-worksheet.prompt.txt",
-  "promptSha256": "0d7632dea138d38f94bd4f1a0ceb4d80753f9223a4e97936dc257f1f8a729ef2",
+  "promptSha256": "4347f6f247d2e88a3575f733f078537daa17ee193c1c97dcfb46517fbc9712b7",
   "imageFile": "g3s1-length-real-world-units-worksheet.png",
-  "imageSha256": "72ec01a446e1cf71a949ad1696257c2956702a369d851fb08a8ebe827c3b179c",
+  "imageSha256": "40a10a99033239343b5f820801575618a4b29b1fdeed2def85100692b8f7323c",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T08:40:57.597Z",
+    "reviewedAt": "2026-08-08T13:12:24.505Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -28,5 +28,26 @@
         "도시 사이 약 5km"
       ]
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "72ec01a446e1cf71a949ad1696257c2956702a369d851fb08a8ebe827c3b179c",
+    "appliedAt": "2026-08-08T13:12:24.505Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 50,
+          "top": 208,
+          "width": 610,
+          "height": 54
+        },
+        "text": "초등 3학년 1학기 · 5. 길이와 시간"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 28926
   }
 }

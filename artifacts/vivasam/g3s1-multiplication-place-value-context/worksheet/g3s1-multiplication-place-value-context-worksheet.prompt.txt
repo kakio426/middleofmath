@@ -22,7 +22,7 @@
 깨끗한 초등 수학 교과서형 플랫 교육 그래픽, 또렷한 한국어 고딕체, 굵은 번호, 둥근 모서리 카드, 규칙적인 정렬, 부드러운 무광 종이 질감, 충분한 필기 공간.
 
 # 6. Text-in-image:
-top-left English logo "eduitit" in white lowercase text inside the purple cloud. Korean headline "상자 수를 자릿값으로 곱하기" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 1. 곱셈" directly below the headline. Top-right name field reads "이름 __________".
+top-left English logo "eduitit" in white lowercase text inside the purple cloud. Korean headline "상자 수를 자릿값으로 곱하기" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 4. 곱셈" directly below the headline. Top-right name field reads "이름 __________".
 
 First card Korean header "1. 상황을 식으로 나타내요". Korean question "공책이 42권씩 든 상자가 2개 있어요. 공책은 모두 몇 권일까요?" Each of the exactly two box illustrations is labeled "42권". Three separate choice boxes read "① 84권", "② 8권", "③ 44권". The answer label reads "식 ____________________".
 

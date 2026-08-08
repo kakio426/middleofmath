@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-71ad2e52-f228-47f9-a48b-867652996db7.png",
   "promptFile": "g3s1-fraction-equal-parts-worksheet.prompt.txt",
-  "promptSha256": "88795a5dbdcb844d0fde817156b5334eaf8953786c3c061819431796864fd3ac",
+  "promptSha256": "02cd40fbc14da8da541d7f9e2af2aac8df13438feb2661c5bfa75fe32cbaf3af",
   "imageFile": "g3s1-fraction-equal-parts-worksheet.png",
-  "imageSha256": "67666a41dd77f77bc0019d25b8bc58b2f5e3663b0e2ff6d777ab71730d4cad10",
+  "imageSha256": "825e95db71d42541fecba769d98d1f240ab3c9be0d0b783c17199f1d6dafcde1",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T08:40:57.589Z",
+    "reviewedAt": "2026-08-08T13:12:21.745Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -22,5 +22,26 @@
       "problem1EqualFiveParts": 5,
       "problem2EqualParts": 5
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "67666a41dd77f77bc0019d25b8bc58b2f5e3663b0e2ff6d777ab71730d4cad10",
+    "appliedAt": "2026-08-08T13:12:21.745Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 230,
+          "top": 190,
+          "width": 590,
+          "height": 68
+        },
+        "text": "초등 3학년 1학기 · 6. 분수와 소수"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 36008
   }
 }

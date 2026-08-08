@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-b55761d9-57ec-4513-8514-7cba6186fbaa.png",
   "promptFile": "g3s1-division-equal-sharing-worksheet.prompt.txt",
-  "promptSha256": "282e9f857ae4cb9765cd3a199fb58e85b2a1e2b267dd967de8aae736626d3a79",
+  "promptSha256": "4c9694fe4aff92c84710a41fdb750b6052636a24a99f271faa1fc04d5e6da769",
   "imageFile": "g3s1-division-equal-sharing-worksheet.png",
-  "imageSha256": "d6653fa4fc01377ec45542c2b2a16cad967a2bf991285b0ee2d111a2da2aa3a3",
+  "imageSha256": "70b342ef93242c80ef6aecd8b9a169f494e0602b2491a17482af57b82c810068",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T01:14:11Z",
+    "reviewedAt": "2026-08-08T13:12:19.562Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -19,8 +19,33 @@
     "mathVisualCounts": {
       "problem1SourceCookies": 18,
       "problem1RecipientPlates": 6,
-      "problem2ChoiceLabels": ["4자루", "5자루", "15자루"],
+      "problem2ChoiceLabels": [
+        "4자루",
+        "5자루",
+        "15자루"
+      ],
       "problem3WrongWork": "12÷3=3개"
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "d6653fa4fc01377ec45542c2b2a16cad967a2bf991285b0ee2d111a2da2aa3a3",
+    "appliedAt": "2026-08-08T13:12:19.562Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 240,
+          "top": 210,
+          "width": 560,
+          "height": 65
+        },
+        "text": "초등 3학년 1학기 · 3. 나눗셈"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 32685
   }
 }

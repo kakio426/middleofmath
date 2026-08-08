@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-dfbce36a-f6e8-4368-9618-4ae1030f6e9b.png",
   "promptFile": "g3s2-fraction-compare-worksheet.prompt.txt",
-  "promptSha256": "02ba04b2036b95c7af500b58350cf052ca16ba91203a366f6ba32ccf6fb726bf",
+  "promptSha256": "34d17a0be6190eab8508f3aff02962802a8cab0a814f487e104807a31251d8b0",
   "imageFile": "g3s2-fraction-compare-worksheet.png",
-  "imageSha256": "4aab8492a5867023f8e2db51e957f0eda83c73d52a793697ddebe78364972f3c",
+  "imageSha256": "b34cfa540d8c55515a3af30d5677f72411f37d89e457cca3baccca9268d6eb02",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T08:40:57.616Z",
+    "reviewedAt": "2026-08-08T13:12:26.982Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -33,5 +33,26 @@
         7
       ]
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "4aab8492a5867023f8e2db51e957f0eda83c73d52a793697ddebe78364972f3c",
+    "appliedAt": "2026-08-08T13:12:26.982Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 50,
+          "top": 210,
+          "width": 640,
+          "height": 54
+        },
+        "text": "초등 3학년 2학기 · 4. 분수와 소수"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 30847
   }
 }

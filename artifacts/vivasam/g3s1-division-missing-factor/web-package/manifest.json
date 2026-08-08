@@ -8,18 +8,40 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "2. 나눗셈",
+  "unit": "3. 나눗셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 7,
+    "lessonId": "g3s1-division-missing-factor",
+    "semester": 1,
+    "unitNumber": 3,
+    "unitTitle": "나눗셈",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-05",
+      "4수01-06"
+    ],
+    "lessonRange": "6차시",
+    "lessonTitle": "나눗셈의 몫을 곱셈식으로 구해 볼까요?",
+    "textbookPages": {
+      "start": 77,
+      "end": 79
+    },
+    "usageNote": "곱셈식의 빈 요인을 찾아 몫을 구하고 관련 나눗셈식으로 확인한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "5f4185a02ba7",
-  "thumbnailAsset": "5f4185a02ba7/representative-image.png",
-  "worksheetAsset": "5f4185a02ba7/g3s1-division-missing-factor-worksheet.png",
+  "digest": "b3639b04d85a",
+  "thumbnailAsset": "b3639b04d85a/representative-image.png",
+  "worksheetAsset": "b3639b04d85a/g3s1-division-missing-factor-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "5f4185a02ba7/g3s1-division-missing-factor-slides.html",
+  "slideHtmlAsset": "b3639b04d85a/g3s1-division-missing-factor-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-division-missing-factor",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +49,30 @@
   ],
   "assets": [
     {
-      "path": "5f4185a02ba7/g3s1-division-missing-factor-slides.html",
-      "bytes": 8207915,
-      "sha256": "56523c33fcc4f8f410683f3cb03b11c23290d7940b430dc0158bea4033d89031",
+      "path": "b3639b04d85a/g3s1-division-missing-factor-slides.html",
+      "bytes": 8207947,
+      "sha256": "7cf39d45811dff4c76d08beac185a4d557ed54718e5ef2312ad82676bdd060ab",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "5f4185a02ba7/g3s1-division-missing-factor-worksheet.pdf",
-      "bytes": 1145734,
-      "sha256": "98f90030c8bb001d61e9d3fe616d5d4fdb7b02fd7d02b0320673e75babdeeb19",
+      "path": "b3639b04d85a/g3s1-division-missing-factor-worksheet.pdf",
+      "bytes": 1118829,
+      "sha256": "6ca42e68a2a087515ee6fb3f63e22ec566712c8552d2b4bb69d5d43656d3e7db",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "5f4185a02ba7/g3s1-division-missing-factor-worksheet.png",
-      "bytes": 1233235,
-      "sha256": "f77ff5b5e46ec97b27226d8c42defdf4551258af3770c22c6116e5968e276a31",
+      "path": "b3639b04d85a/g3s1-division-missing-factor-worksheet.png",
+      "bytes": 1138919,
+      "sha256": "df73e1428e36154de823c2a641ef006668f1cea6bc4611497ec438c054306499",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "5f4185a02ba7/representative-image.png",
-      "bytes": 52526,
-      "sha256": "6fd172bea7f0f40aca3c856bfb17e432495bf1ad0ab305b88da9b8a639d1ff1f",
+      "path": "b3639b04d85a/representative-image.png",
+      "bytes": 52534,
+      "sha256": "571bfe7c26c046606b1e15c4b1e2a036875ffcb00bb02ff8104f57d0d81f8203",
       "contentType": "image/png",
       "role": "thumbnail"
     }

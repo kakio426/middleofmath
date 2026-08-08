@@ -9,17 +9,38 @@
   "subjectCode": "MATH",
   "grade": "초등 3학년 2학기",
   "unit": "2. 나눗셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 21,
+    "lessonId": "g3s2-division-remainder",
+    "semester": 2,
+    "unitNumber": 2,
+    "unitTitle": "나눗셈",
+    "alignmentType": "multi-lesson",
+    "standardCodes": [
+      "4수01-06"
+    ],
+    "lessonRange": "4~7차시",
+    "lessonTitle": "나머지가 없는·있는 (몇십몇)÷(몇)",
+    "textbookPages": {
+      "start": 38,
+      "end": 47
+    },
+    "usageNote": "나머지가 없는 계산에서 10개씩 먼저 나누는 방법을 확인한 뒤, 남은 수도 다시 나누어 몫과 최종 나머지를 구별한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "06a71e5055da",
-  "thumbnailAsset": "06a71e5055da/representative-image.png",
-  "worksheetAsset": "06a71e5055da/g3s2-division-remainder-worksheet.png",
+  "digest": "9f1ea6738405",
+  "thumbnailAsset": "9f1ea6738405/representative-image.png",
+  "worksheetAsset": "9f1ea6738405/g3s2-division-remainder-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "06a71e5055da/g3s2-division-remainder-slides.html",
+  "slideHtmlAsset": "9f1ea6738405/g3s2-division-remainder-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-division-remainder",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "06a71e5055da/g3s2-division-remainder-slides.html",
-      "bytes": 8449229,
-      "sha256": "7ff6a265bdee52738fb3d6fe24321eda0f2bce2d0791ba029dae15dd4f870f64",
+      "path": "9f1ea6738405/g3s2-division-remainder-slides.html",
+      "bytes": 3073714,
+      "sha256": "53a2ee6d76cd79caa4f201ed474b9dd46bb6859eb16080768ca05bf0fe81658b",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "06a71e5055da/g3s2-division-remainder-worksheet.pdf",
+      "path": "9f1ea6738405/g3s2-division-remainder-worksheet.pdf",
       "bytes": 1106094,
       "sha256": "6b80f6f3e55fe61914bb56cd839a61d3b71d5992419ce14f62baa744bec7947a",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "06a71e5055da/g3s2-division-remainder-worksheet.png",
+      "path": "9f1ea6738405/g3s2-division-remainder-worksheet.png",
       "bytes": 1199193,
       "sha256": "564f3248cda83ac8ed14ab819a3b06a4d914cf655e12ed35535bd598a5eb8dfc",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "06a71e5055da/representative-image.png",
-      "bytes": 52010,
-      "sha256": "5dcf9b12ebcf1b6ab2271452282d15a106c77ae33e8494548b75ef342468798f",
+      "path": "9f1ea6738405/representative-image.png",
+      "bytes": 52657,
+      "sha256": "8036bedc0c253b072af45b6e94863b88eb7773338545da6930c49464fade6e42",
       "contentType": "image/png",
       "role": "thumbnail"
     }

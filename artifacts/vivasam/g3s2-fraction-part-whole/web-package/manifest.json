@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 2학기",
-  "unit": "4. 분수",
+  "unit": "4. 분수와 소수",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 25,
+    "lessonId": "g3s2-fraction-part-whole",
+    "semester": 2,
+    "unitNumber": 4,
+    "unitTitle": "분수와 소수",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-09"
+    ],
+    "lessonRange": "2차시",
+    "lessonTitle": "분수로 나타내어 볼까요?",
+    "textbookPages": {
+      "start": 80,
+      "end": 81
+    },
+    "usageNote": "등분된 전체에서 주어진 부분을 분수로 나타낸다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "a322a60aa2ec",
-  "thumbnailAsset": "a322a60aa2ec/representative-image.png",
-  "worksheetAsset": "a322a60aa2ec/g3s2-fraction-part-whole-worksheet.png",
+  "digest": "f7aa21822170",
+  "thumbnailAsset": "f7aa21822170/representative-image.png",
+  "worksheetAsset": "f7aa21822170/g3s2-fraction-part-whole-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "a322a60aa2ec/g3s2-fraction-part-whole-slides.html",
+  "slideHtmlAsset": "f7aa21822170/g3s2-fraction-part-whole-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-fraction-part-whole",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "a322a60aa2ec/g3s2-fraction-part-whole-slides.html",
-      "bytes": 8403117,
-      "sha256": "c59c1f88d22fd95b19d2705e2e620f3a76857d256ab3128d93c2b5fb6d6da145",
+      "path": "f7aa21822170/g3s2-fraction-part-whole-slides.html",
+      "bytes": 8406846,
+      "sha256": "093bc8724b0aa5af3b8447be00f6be93d63ebab1e7b91a7e612a11cda6c5cef9",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "a322a60aa2ec/g3s2-fraction-part-whole-worksheet.pdf",
-      "bytes": 1030146,
-      "sha256": "8f61a69606b60437f97154504c5bebaf795b43c70d2bf867d09f2f1cd9acd211",
+      "path": "f7aa21822170/g3s2-fraction-part-whole-worksheet.pdf",
+      "bytes": 999805,
+      "sha256": "07ba4b91967990b69378d7df591f4294ceeb30b0244d4d34b7a1c2fd61322051",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "a322a60aa2ec/g3s2-fraction-part-whole-worksheet.png",
-      "bytes": 1139106,
-      "sha256": "f4f945162496f5acc84ed00f2780809f1bb5e2bb9e0741be8b54ffcd1553004d",
+      "path": "f7aa21822170/g3s2-fraction-part-whole-worksheet.png",
+      "bytes": 1010716,
+      "sha256": "147ac787ad36dba985334acce71eaa699327600d9f8aab48919a99722752853e",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "a322a60aa2ec/representative-image.png",
-      "bytes": 49756,
-      "sha256": "3ba9e4b7fdc6e82cccf46a5b4d54f95d3330255513fd56d22489182e55605ef3",
+      "path": "f7aa21822170/representative-image.png",
+      "bytes": 50457,
+      "sha256": "996580a70f25095f0d4ca10dc541437cd6a3c60dadd1b54474d22b572d7b51f5",
       "contentType": "image/png",
       "role": "thumbnail"
     }

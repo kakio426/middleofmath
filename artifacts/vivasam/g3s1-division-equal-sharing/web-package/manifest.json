@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "2. 나눗셈",
+  "unit": "3. 나눗셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 6,
+    "lessonId": "g3s1-division-equal-sharing",
+    "semester": 1,
+    "unitNumber": 3,
+    "unitTitle": "나눗셈",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-05"
+    ],
+    "lessonRange": "2차시",
+    "lessonTitle": "똑같이 나누어 볼까요?",
+    "textbookPages": {
+      "start": 62,
+      "end": 65
+    },
+    "usageNote": "전체를 같은 수의 묶음에 똑같이 나누며 한 묶음의 수를 구한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "21ca89affd04",
-  "thumbnailAsset": "21ca89affd04/representative-image.png",
-  "worksheetAsset": "21ca89affd04/g3s1-division-equal-sharing-worksheet.png",
+  "digest": "0c46d8def08b",
+  "thumbnailAsset": "0c46d8def08b/representative-image.png",
+  "worksheetAsset": "0c46d8def08b/g3s1-division-equal-sharing-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "21ca89affd04/g3s1-division-equal-sharing-slides.html",
+  "slideHtmlAsset": "0c46d8def08b/g3s1-division-equal-sharing-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-division-equal-sharing",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "21ca89affd04/g3s1-division-equal-sharing-slides.html",
-      "bytes": 8411956,
-      "sha256": "f659da5c8d337ca2bca66891df6f335c3e944c2f100d8ec916b318e3f861ba96",
+      "path": "0c46d8def08b/g3s1-division-equal-sharing-slides.html",
+      "bytes": 8411979,
+      "sha256": "6291e262936ebdcb2a732aa5afdec4da005ec7c30d7760c6564dc2b6f9e35984",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "21ca89affd04/g3s1-division-equal-sharing-worksheet.pdf",
-      "bytes": 1320621,
-      "sha256": "d54b9a10c37d24d424d1b83f1e8fe23070b85d0969aa867f5f590c28a04b1414",
+      "path": "0c46d8def08b/g3s1-division-equal-sharing-worksheet.pdf",
+      "bytes": 1291427,
+      "sha256": "2eb09e9d087792f0252d2189ead0217cefe7ebaeee997d37f6dd2522b31a7f13",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "21ca89affd04/g3s1-division-equal-sharing-worksheet.png",
-      "bytes": 1356750,
-      "sha256": "d6653fa4fc01377ec45542c2b2a16cad967a2bf991285b0ee2d111a2da2aa3a3",
+      "path": "0c46d8def08b/g3s1-division-equal-sharing-worksheet.png",
+      "bytes": 1332628,
+      "sha256": "70b342ef93242c80ef6aecd8b9a169f494e0602b2491a17482af57b82c810068",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "21ca89affd04/representative-image.png",
-      "bytes": 51252,
-      "sha256": "c7b9fefcf04e035800d35c513bf6e28cf2873c568ff5119fdc67362c495e6114",
+      "path": "0c46d8def08b/representative-image.png",
+      "bytes": 51263,
+      "sha256": "b39dde406697b46c315ee6a22e18b95c2ecd8897b189fea69aa55a2994314bd1",
       "contentType": "image/png",
       "role": "thumbnail"
     }

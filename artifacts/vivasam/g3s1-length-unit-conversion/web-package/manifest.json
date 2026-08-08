@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "4. 길이",
+  "unit": "5. 길이와 시간",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 16,
+    "lessonId": "g3s1-length-unit-conversion",
+    "semester": 1,
+    "unitNumber": 5,
+    "unitTitle": "길이와 시간",
+    "alignmentType": "connection",
+    "standardCodes": [
+      "4수03-16"
+    ],
+    "lessonRange": "4차시 전후",
+    "lessonTitle": "m보다 큰 단위는 무엇일까요?",
+    "textbookPages": {
+      "start": 114,
+      "end": 115
+    },
+    "usageNote": "1m=100cm를 복습하면서 1km=1000m 관계로 연결한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "f5238903a8f7",
-  "thumbnailAsset": "f5238903a8f7/representative-image.png",
-  "worksheetAsset": "f5238903a8f7/g3s1-length-unit-conversion-worksheet.png",
+  "digest": "81754658937d",
+  "thumbnailAsset": "81754658937d/representative-image.png",
+  "worksheetAsset": "81754658937d/g3s1-length-unit-conversion-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "f5238903a8f7/g3s1-length-unit-conversion-slides.html",
+  "slideHtmlAsset": "81754658937d/g3s1-length-unit-conversion-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-length-unit-conversion",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "f5238903a8f7/g3s1-length-unit-conversion-slides.html",
-      "bytes": 8209249,
-      "sha256": "814b55ca21f89003bf08fa966ee4e97630b789a59912dce2c9901716dfcde251",
+      "path": "81754658937d/g3s1-length-unit-conversion-slides.html",
+      "bytes": 8211610,
+      "sha256": "c7e5b1a50a5ab2a75b0fc7ddd5941ca949ec5fe54fa9e237b3a11725be0ad02b",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "f5238903a8f7/g3s1-length-unit-conversion-worksheet.pdf",
-      "bytes": 969401,
-      "sha256": "2804eab8fe83ec71af9833ee2df449527654247dbc077a1a8323379432d06202",
+      "path": "81754658937d/g3s1-length-unit-conversion-worksheet.pdf",
+      "bytes": 945850,
+      "sha256": "0e2e283aee83fd74eb048d12d57e40226ae976d8ff816b642d7a5288231500a1",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "f5238903a8f7/g3s1-length-unit-conversion-worksheet.png",
-      "bytes": 1123195,
-      "sha256": "83bd8d622688fe7081b6c896c308091b66bb439af0d0fe6088331edef043e0e0",
+      "path": "81754658937d/g3s1-length-unit-conversion-worksheet.png",
+      "bytes": 950324,
+      "sha256": "85c0db435235ec874a18a1cfd6e8c306c4ca741017571babc3d5e1b3fff59db6",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "f5238903a8f7/representative-image.png",
-      "bytes": 51661,
-      "sha256": "7c33cab25ac13dfcf72096dcc49bc9ca19be9bafb0256bf9fb83e72915723e7e",
+      "path": "81754658937d/representative-image.png",
+      "bytes": 52451,
+      "sha256": "ec7be060cc2a2b65978f7e34af24400be2832ae0572ee03eefa7fd229df7e613",
       "contentType": "image/png",
       "role": "thumbnail"
     }

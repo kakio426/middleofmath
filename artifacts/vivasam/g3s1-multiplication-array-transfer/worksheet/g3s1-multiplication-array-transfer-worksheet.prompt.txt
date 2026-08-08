@@ -20,7 +20,7 @@
 깨끗한 초등 수학 교과서 인쇄물, 부드러운 무광 종이 질감, 굵고 선명한 한국어 고딕 글자, 단순한 플랫 벡터풍 학습 그림, 충분한 필기 공간.
 
 # 6. Text-in-image:
-top-left English logo "eduitit" in white lowercase text inside the purple cloud. dominant Korean headline "줄과 칸으로 전체 수 찾기" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 1. 곱셈" directly below the headline.
+top-left English logo "eduitit" in white lowercase text inside the purple cloud. dominant Korean headline "줄과 칸으로 전체 수 찾기" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 4. 곱셈" directly below the headline.
 
 First card Korean header "1. 묶음의 수를 식으로 나타내기". Korean question "연필이 한 봉지에 3자루씩 4봉지 있어요. 알맞은 식과 답을 고르세요." Three separate choice boxes read "3×4=12자루", "3+4=7자루", "4자루".
 

@@ -29,9 +29,12 @@ test("3번 활동지 1장을 수동 제작본 우선 MathCanvas intake로 고정
   });
   const evidence = assertWorksheetContract(bundle, roots);
   const lesson = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../artifacts/vivasam/g3s1-multiplication-array-transfer/lesson-schema.json"), "utf8"));
+  const worksheetMetadata = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../artifacts/vivasam/g3s1-multiplication-array-transfer/worksheet/g3s1-multiplication-array-transfer-worksheet.imagegen.json"), "utf8"));
   const intake = buildWorksheetIntake(bundle, lesson, evidence);
   assert.equal(intake.worksheet.filename, "g3s1-multiplication-array-transfer-worksheet.png");
-  assert.equal(intake.worksheet.sha256, "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8");
+  assert.equal(intake.worksheet.sha256, "79e23be2bc4a49966e02a957b17e51a3a36e4527bc3705defbac9db558981771");
+  assert.equal(worksheetMetadata.postProcessing.sourceImageSha256, "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8");
+  assert.equal(worksheetMetadata.postProcessing.outsideChangedPixels, 0);
   assert.deepEqual(intake.sourcePolicy, {
     reusableProjectSource: "owner-manual-curated",
     generatedProjectSource: "owner-mathcanvas-ai",

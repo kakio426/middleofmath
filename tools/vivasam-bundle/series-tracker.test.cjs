@@ -39,7 +39,7 @@ test("원장은 30개 PPT와 PPT당 통합 활동지 1개 계약을 고정한다
   assert.equal(tracker.contract.pptAuthor, "Claude");
 });
 
-test("30개 Claude HTML 수령과 30개 운영 공개 검증을 함께 추적한다", () => {
+test("30개 Claude HTML 수령과 새 패키지의 재발행 대기를 함께 추적한다", () => {
   const validated = validateTracker(tracker, { trackerPath });
   const summary = summarizeTracker(validated);
   for (const bundle of validated.bundles) {
@@ -49,10 +49,10 @@ test("30개 Claude HTML 수령과 30개 운영 공개 검증을 함께 추적한
     assert.equal(bundle.ppt.format, "html");
     assert.equal(bundle.ppt.slideCount, 12);
     assert.equal(bundle.eduitit.packageStatus, "validated");
-    assert.equal(bundle.eduitit.localRecordStatus, "published");
-    assert.equal(bundle.eduitit.anonymousAccessStatus, "production-passed");
-    assert.equal(bundle.eduitit.productionStatus, "deployed");
-    assert.match(bundle.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
+    assert.equal(bundle.eduitit.localRecordStatus, "stale");
+    assert.equal(bundle.eduitit.anonymousAccessStatus, "code-tests-passed");
+    assert.equal(bundle.eduitit.productionStatus, "not-deployed");
+    assert.equal(bundle.eduitit.publicUrl, "");
   }
   for (const bundle of validated.bundles) {
     assert.equal(bundle.ppt.status, "received");
@@ -64,11 +64,11 @@ test("30개 Claude HTML 수령과 30개 운영 공개 검증을 함께 추적한
   assert.equal(summary.worksheetsValidated, 30);
   assert.equal(summary.supportValidated, 30);
   assert.equal(summary.packagesValidated, 30);
-  assert.equal(summary.localRecordsPublished, 30);
+  assert.equal(summary.localRecordsPublished, 0);
   assert.equal(summary.claudePptsReceived, 30);
   assert.equal(summary.claudePptsAwaiting, 0);
   assert.equal(summary.claudePptsValidated, 0);
-  assert.equal(summary.productionPublished, 30);
+  assert.equal(summary.productionPublished, 0);
   assert.equal(summary.fullyCompleted, 0);
 });
 
@@ -113,11 +113,13 @@ test("운영 공개는 HTTPS URL과 비로그인 운영 검증 없이 기록할 
   const broken = clone(tracker);
   broken.bundles[0].eduitit.productionStatus = "deployed";
   broken.bundles[0].eduitit.publicUrl = "https://eduitit.site/example";
+  broken.bundles[0].eduitit.localRecordStatus = "published";
   broken.bundles[0].eduitit.anonymousAccessStatus = "local-passed";
   assert.throws(() => validateTracker(broken, { trackerPath, checkArtifacts: false }), /비로그인 접근 검증/);
 
   const insecure = clone(tracker);
   insecure.bundles[0].eduitit.productionStatus = "deployed";
+  insecure.bundles[0].eduitit.localRecordStatus = "published";
   insecure.bundles[0].eduitit.anonymousAccessStatus = "production-passed";
   insecure.bundles[0].eduitit.publicUrl = "http://eduitit.site/example";
   assert.throws(() => validateTracker(insecure, { trackerPath, checkArtifacts: false }), /HTTPS/);
@@ -142,7 +144,7 @@ test("사람용 진행표에는 30개 슬롯과 1개 통합 활동지 계약이 
   assert.equal((markdown.match(/^\| \d{2} \|/gm) || []).length, 30);
   assert.match(markdown, /PPT당 통합 활동지 1개/);
   assert.match(markdown, /Claude는 발표 화면\(HTML 우선, 기존 PPTX 호환\)만 제작/);
-  assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 30 \| 30/);
+  assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 0 \| 30/);
   assert.match(markdown, /Claude HTML\/PPTX 수령/);
   assert.match(markdown, /Claude HTML\/PPTX 수령 대기/);
   assert.match(markdown, /MathCanvas 활동 연결 완료/);

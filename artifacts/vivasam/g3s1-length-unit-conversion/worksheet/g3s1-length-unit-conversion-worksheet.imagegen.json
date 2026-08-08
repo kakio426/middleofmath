@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-f3c99da4-01b9-4e10-b363-f738f24c3f66.png",
   "promptFile": "g3s1-length-unit-conversion-worksheet.prompt.txt",
-  "promptSha256": "e0c159582b8cde9b330e717ce431e635b40518124976d5a45740b0574b9a9845",
+  "promptSha256": "33d5870a1d46a42a69d4cd65f0cacc7d7db4a10c8677e6c9128ade7b1d7f9bc5",
   "imageFile": "g3s1-length-unit-conversion-worksheet.png",
-  "imageSha256": "83bd8d622688fe7081b6c896c308091b66bb439af0d0fe6088331edef043e0e0",
+  "imageSha256": "85c0db435235ec874a18a1cfd6e8c306c4ca741017571babc3d5e1b3fff59db6",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T08:40:57.599Z",
+    "reviewedAt": "2026-08-08T13:12:25.128Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -31,5 +31,26 @@
         "4km"
       ]
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "83bd8d622688fe7081b6c896c308091b66bb439af0d0fe6088331edef043e0e0",
+    "appliedAt": "2026-08-08T13:12:25.128Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 50,
+          "top": 195,
+          "width": 620,
+          "height": 54
+        },
+        "text": "초등 3학년 1학기 · 5. 길이와 시간"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 28871
   }
 }

@@ -8,7 +8,7 @@ const REMAINING_WORKSHEET_MATH_VISUAL_CONTRACTS = Object.freeze({
   "g3s1-fraction-fix-partition": { problem1CandidateParts: [4, 4, 3], problem1CandidateEqualSizes: [true, false, true], problem2UnequalParts: 5 },
   "g3s1-fraction-part-whole": { problem1PizzaParts: 8, problem1SelectedParts: 3, problem1ChoiceLabels: ["3/8", "8/3", "3/5"], problem2Parts: 7, problem2SelectedParts: 3 },
   "g3s1-fraction-pizza-context": { problem1Parts: 5, problem1SelectedParts: 2, problem1ChoiceLabels: ["2/5", "5/2", "2/3"], problem2PizzaParts: 10, problem2EatenParts: 4 },
-  "g3s1-length-centimeter-meter": { problem1Object: "교실 문", problem1ChoiceLabels: ["약 2m", "약 2km", "약 2cm"], problem2Objects: ["지우개 약 4cm", "복도 약 20m"] },
+  "g3s1-length-centimeter-meter": { problem1Object: "교실 문", problem1ChoiceLabels: ["약 2m", "약 2km", "약 2cm"], problem2Objects: ["지우개 약 5cm", "복도 약 20m"] },
   "g3s1-length-real-world-units": { problem1Object: "연필", problem1ChoiceLabels: ["약 15cm", "약 15m", "약 15mm"], problem2Objects: ["단추 두께 약 2mm", "도시 사이 약 5km"] },
   "g3s1-length-unit-conversion": { problem1ChoiceLabels: ["2000m", "200m", "20000m"], problem2Relations: ["1m=100cm", "1km=1000m"], problem2Inputs: ["3m", "4km"] },
   "g3s2-multiplication-place-value": { problem1PlaceValuePart: "300×3", problem1ChoiceLabels: ["900장", "90장", "327장"], problem2Parts: ["200×3", "40×3", "1×3"] },

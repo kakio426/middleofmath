@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "3. 분수",
+  "unit": "6. 분수와 소수",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 11,
+    "lessonId": "g3s1-fraction-fix-partition",
+    "semester": 1,
+    "unitNumber": 6,
+    "unitTitle": "분수와 소수",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-09"
+    ],
+    "lessonRange": "2차시",
+    "lessonTitle": "똑같이 나누어 볼까요?",
+    "textbookPages": {
+      "start": 132,
+      "end": 133
+    },
+    "usageNote": "잘못 나눈 그림을 고치며 등분할 조건을 설명한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "c4da3fbc982c",
-  "thumbnailAsset": "c4da3fbc982c/representative-image.png",
-  "worksheetAsset": "c4da3fbc982c/g3s1-fraction-fix-partition-worksheet.png",
+  "digest": "61a39adee966",
+  "thumbnailAsset": "61a39adee966/representative-image.png",
+  "worksheetAsset": "61a39adee966/g3s1-fraction-fix-partition-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "c4da3fbc982c/g3s1-fraction-fix-partition-slides.html",
+  "slideHtmlAsset": "61a39adee966/g3s1-fraction-fix-partition-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-fraction-fix-partition",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "c4da3fbc982c/g3s1-fraction-fix-partition-slides.html",
-      "bytes": 8406299,
-      "sha256": "afd87dbea419b445e42e63a838badac796361da3a1a526033d6c8d0cddd1ecc4",
+      "path": "61a39adee966/g3s1-fraction-fix-partition-slides.html",
+      "bytes": 8409574,
+      "sha256": "2f2f0acd4b06437a074b3a6f76fec2ee118cebf9ebd22118d2644007d1a84bba",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "c4da3fbc982c/g3s1-fraction-fix-partition-worksheet.pdf",
-      "bytes": 1022005,
-      "sha256": "0c29534e1edfd1f11557ddc9d8fc5b58c09a935510566476edee4befc3d3a333",
+      "path": "61a39adee966/g3s1-fraction-fix-partition-worksheet.pdf",
+      "bytes": 1002844,
+      "sha256": "ea65d870caa92c270876dfab0cbd57618d1f23da69b79b6432a48aeee5fdf78d",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "c4da3fbc982c/g3s1-fraction-fix-partition-worksheet.png",
-      "bytes": 1137887,
-      "sha256": "94fd29f67e6bbb3cc38e527a023481a68ad076c815b221a6a67bfaf7952129c1",
+      "path": "61a39adee966/g3s1-fraction-fix-partition-worksheet.png",
+      "bytes": 1011481,
+      "sha256": "6b039c8cebfde683e62cb23421c4c3927e3d89b91d2f7f41ce5e4ee50dad1a45",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "c4da3fbc982c/representative-image.png",
-      "bytes": 51343,
-      "sha256": "13ebad6b87b324b0129783d499fd046f24adbb9d2e940f4f91899669da81fc59",
+      "path": "61a39adee966/representative-image.png",
+      "bytes": 52037,
+      "sha256": "85f180e37a77319c559ba331a6be7f59e6ce72bc3e7ec9c041052ad0e195c0fc",
       "contentType": "image/png",
       "role": "thumbnail"
     }

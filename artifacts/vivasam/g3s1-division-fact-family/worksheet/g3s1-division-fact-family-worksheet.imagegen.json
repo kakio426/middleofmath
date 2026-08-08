@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-e02eb3c7-9cc1-4dde-996e-c3355153dc62.png",
   "promptFile": "g3s1-division-fact-family-worksheet.prompt.txt",
-  "promptSha256": "c7e8b2a07cd1465a52ca484b748539ece725a1ea101428318d09a9eb8e0df866",
+  "promptSha256": "55b4cc02d7f21de21329c5389e699a80b01f1d82e269e051090ceb3549cfabc9",
   "imageFile": "g3s1-division-fact-family-worksheet.png",
-  "imageSha256": "651dded4ebcfe87ca8928eafaf2dbe51e8670fb811555fb2ebd3d1066c824ab8",
+  "imageSha256": "6afe771047675dc617c38d38c3a5f5b6cc9fae15c04bc72cc6e4e3aab9ba1acc",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T08:40:57.586Z",
+    "reviewedAt": "2026-08-08T13:12:20.748Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -29,5 +29,26 @@
         "32÷4=□"
       ]
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "651dded4ebcfe87ca8928eafaf2dbe51e8670fb811555fb2ebd3d1066c824ab8",
+    "appliedAt": "2026-08-08T13:12:20.748Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 50,
+          "top": 195,
+          "width": 520,
+          "height": 52
+        },
+        "text": "초등 3학년 1학기 · 3. 나눗셈"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 23124
   }
 }

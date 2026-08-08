@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 2학기",
-  "unit": "4. 분수",
+  "unit": "4. 분수와 소수",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 27,
+    "lessonId": "g3s2-fraction-compare",
+    "semester": 2,
+    "unitNumber": 4,
+    "unitTitle": "분수와 소수",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-11"
+    ],
+    "lessonRange": "7차시",
+    "lessonTitle": "분모가 같은 분수의 크기를 비교해 볼까요?",
+    "textbookPages": {
+      "start": 90,
+      "end": 91
+    },
+    "usageNote": "한 조각의 크기가 같을 때 분자와 전체 양의 관계로 비교한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "276513d3d635",
-  "thumbnailAsset": "276513d3d635/representative-image.png",
-  "worksheetAsset": "276513d3d635/g3s2-fraction-compare-worksheet.png",
+  "digest": "386f0a495515",
+  "thumbnailAsset": "386f0a495515/representative-image.png",
+  "worksheetAsset": "386f0a495515/g3s2-fraction-compare-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "276513d3d635/g3s2-fraction-compare-slides.html",
+  "slideHtmlAsset": "386f0a495515/g3s2-fraction-compare-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-fraction-compare",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "276513d3d635/g3s2-fraction-compare-slides.html",
-      "bytes": 8790615,
-      "sha256": "b3073b6d29aca4f16c0c62a13e9cb00c4bb6a00b9312678916097a01c2e9f6f9",
+      "path": "386f0a495515/g3s2-fraction-compare-slides.html",
+      "bytes": 8796573,
+      "sha256": "0cb665473bc63153362226ac83b289e544c43bbddbf4a3ec8f4ca5ae10d928c1",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "276513d3d635/g3s2-fraction-compare-worksheet.pdf",
-      "bytes": 1063909,
-      "sha256": "f11212f8f3f4eaac5d5402fda20154ea23284e70495cce5578f954f0de51f835",
+      "path": "386f0a495515/g3s2-fraction-compare-worksheet.pdf",
+      "bytes": 1043307,
+      "sha256": "2b6ba221bfe3e2aa4f3733888faf8f5bec6350b04e446df4a011ffd275e48d87",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "276513d3d635/g3s2-fraction-compare-worksheet.png",
-      "bytes": 1176237,
-      "sha256": "4aab8492a5867023f8e2db51e957f0eda83c73d52a793697ddebe78364972f3c",
+      "path": "386f0a495515/g3s2-fraction-compare-worksheet.png",
+      "bytes": 1056530,
+      "sha256": "b34cfa540d8c55515a3af30d5677f72411f37d89e457cca3baccca9268d6eb02",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "276513d3d635/representative-image.png",
-      "bytes": 50187,
-      "sha256": "17f5c4c2ffe5bb4760cbfceb9a2f07b87d2b5020a614fdc0c489a6175c0e2552",
+      "path": "386f0a495515/representative-image.png",
+      "bytes": 50856,
+      "sha256": "309e297b7799c577ebf6dbe385db6361baefb9ce3e213ad1485597199bf903a2",
       "contentType": "image/png",
       "role": "thumbnail"
     }

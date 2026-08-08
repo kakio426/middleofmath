@@ -7,10 +7,11 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "2. 나눗셈",
+  "unit": "3. 나눗셈",
   "durationMinutes": 40,
   "curriculumAnchorIds": [
-    "[4수01-05]"
+    "[4수01-05]",
+    "[4수01-06]"
   ],
   "targetBehavior": "한 묶음의 수를 구한다. 식·자료·한 문장으로 근거를 설명한다.",
   "privacyRule": "실제 학생 이름·얼굴·학급·댓글을 넣지 않고 모든 풀이 비교는 풀이 A/B로 표시한다.",

@@ -56,7 +56,7 @@ function buildSubmissionRegister(tracker) {
         raceRecordStatus: submission.raceRecordStatus,
       };
     });
-  ensure(records.length > 0 && records.length <= 30, "현재 공개 완료된 제출 기록 수가 잘못되었습니다.");
+  ensure(records.length <= 30, "현재 공개 완료된 제출 기록 수가 잘못되었습니다.");
   ensure(new Set(records.map((record) => record.lessonId)).size === records.length, "lessonId가 중복되었습니다.");
   ensure(new Set(records.map((record) => record.publicUrl)).size === records.length, "공개 URL이 중복되었습니다.");
   ensure(new Set(records.map((record) => record.teachingIntent)).size === records.length, "등록용 수업 설계 의도가 중복되었습니다.");

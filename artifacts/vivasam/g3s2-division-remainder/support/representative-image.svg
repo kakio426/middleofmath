@@ -8,7 +8,7 @@
   <rect x="98" y="96" width="244" height="50" rx="25" fill="#0F766E"/>
   <text x="220" y="129" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="850" text-anchor="middle" fill="#FFFFFF">수학 수업 21</text>
   <text x="102" y="246" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="58" font-weight="900" fill="#164E48" text-anchor="start" class=""><tspan x="102" dy="0">먼저 나누고</tspan><tspan x="102" dy="68">남은 수 찾기</tspan></text>
-  <text x="104" y="405" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="650" fill="#5D5668" text-anchor="start" class=""><tspan x="104" dy="0">먼저 나누고 남은 양 찾기</tspan></text>
+  <text x="104" y="405" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="650" fill="#5D5668" text-anchor="start" class=""><tspan x="104" dy="0">중간에 남은 수도 끝까지 나누기</tspan></text>
   <rect x="102" y="492" width="430" height="64" rx="28" fill="#E8F7F3"/>
   <text x="128" y="533" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="800" fill="#0F766E">초등 3학년 2학기 · 2. 나눗셈</text>
   <g transform="translate(718 123)">

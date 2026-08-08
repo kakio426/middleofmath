@@ -9,17 +9,38 @@
   "subjectCode": "MATH",
   "grade": "초등 3학년 2학기",
   "unit": "2. 나눗셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 22,
+    "lessonId": "g3s2-division-remainder-check",
+    "semester": 2,
+    "unitNumber": 2,
+    "unitTitle": "나눗셈",
+    "alignmentType": "multi-lesson",
+    "standardCodes": [
+      "4수01-06"
+    ],
+    "lessonRange": "6~7차시",
+    "lessonTitle": "나머지가 있는 (몇십몇)÷(몇)",
+    "textbookPages": {
+      "start": 42,
+      "end": 47
+    },
+    "usageNote": "나누는 수×몫+나머지로 결과를 검산하고 나머지의 뜻을 확인한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "92de6cdcdc5c",
-  "thumbnailAsset": "92de6cdcdc5c/representative-image.png",
-  "worksheetAsset": "92de6cdcdc5c/g3s2-division-remainder-check-worksheet.png",
+  "digest": "388af13a9295",
+  "thumbnailAsset": "388af13a9295/representative-image.png",
+  "worksheetAsset": "388af13a9295/g3s2-division-remainder-check-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "92de6cdcdc5c/g3s2-division-remainder-check-slides.html",
+  "slideHtmlAsset": "388af13a9295/g3s2-division-remainder-check-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-division-remainder-check",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,28 +48,28 @@
   ],
   "assets": [
     {
-      "path": "92de6cdcdc5c/g3s2-division-remainder-check-slides.html",
-      "bytes": 8431280,
-      "sha256": "a73aa214886e438da5922b3218eb4d6d8a4ee73620acd1bf79548b2d32785a20",
+      "path": "388af13a9295/g3s2-division-remainder-check-slides.html",
+      "bytes": 8431529,
+      "sha256": "1048d1d8a2660f6e015eaa7a7d7707f6ef2328b439973431f14fda85ffe057c9",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "92de6cdcdc5c/g3s2-division-remainder-check-worksheet.pdf",
+      "path": "388af13a9295/g3s2-division-remainder-check-worksheet.pdf",
       "bytes": 1078190,
       "sha256": "24fcfdf69b36579af2c34e4ff94d0c90ed8f2a3a79dcf7d54c48bfb213b62b3f",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "92de6cdcdc5c/g3s2-division-remainder-check-worksheet.png",
+      "path": "388af13a9295/g3s2-division-remainder-check-worksheet.png",
       "bytes": 1167768,
       "sha256": "cb53cce4085f4fb10d2d4bddb3f2e58d88fc520b2a10a508514df12b84f28276",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "92de6cdcdc5c/representative-image.png",
+      "path": "388af13a9295/representative-image.png",
       "bytes": 55421,
       "sha256": "e28bd2653f06af0ec605ea3622bdea0b9e2d5961f196164df6bf29a8b2090f08",
       "contentType": "image/png",

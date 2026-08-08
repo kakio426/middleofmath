@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-51b79697-1427-4d0a-b89d-06a67504da7e.png",
   "promptFile": "g3s2-fraction-convert-worksheet.prompt.txt",
-  "promptSha256": "4daa54201fe841879c05f2a0529d5e3c47389dccd57295c40a323cffbe527ba2",
+  "promptSha256": "95caac9f0449207ccf12b1bd59aa363dfdad63c5eae741064df08aeb2a1d0f89",
   "imageFile": "g3s2-fraction-convert-worksheet.png",
-  "imageSha256": "bac94ef020e21ff421a984d346e3a124231c9860c3073944458aa90878c447a5",
+  "imageSha256": "f537f7ea0241dbb5a8c3204a417ae936bd641bdc829ebcb36ab572d76740ad4a",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T08:40:57.614Z",
+    "reviewedAt": "2026-08-08T13:12:26.322Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -27,5 +27,26 @@
       "problem2WholeGroups": 2,
       "problem2Remainder": 3
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "bac94ef020e21ff421a984d346e3a124231c9860c3073944458aa90878c447a5",
+    "appliedAt": "2026-08-08T13:12:26.322Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 210,
+          "top": 190,
+          "width": 630,
+          "height": 75
+        },
+        "text": "초등 3학년 2학기 · 4. 분수와 소수"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 42425
   }
 }

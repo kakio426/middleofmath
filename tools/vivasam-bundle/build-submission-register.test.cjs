@@ -1,7 +1,6 @@
 "use strict";
 
 const assert = require("node:assert/strict");
-const fs = require("node:fs");
 const test = require("node:test");
 
 const tracker = require("./series-tracker.json");
@@ -16,24 +15,12 @@ test("extractCoreIntent keeps the complete Korean paragraph", () => {
   assert.equal(value, "첫 문장입니다. 둘째 문장입니다.");
 });
 
-test("submission register contains only the received and publicly verified lessons", () => {
+test("submission register excludes lessons until production access is verified", () => {
   const register = buildSubmissionRegister(tracker);
-  assert.equal(register.records.length, 30);
-  assert.equal(register.completedRecordCount, 30);
-  assert.equal(new Set(register.records.map((record) => record.publicUrl)).size, 30);
-  assert.equal(new Set(register.records.map((record) => record.teachingIntent)).size, 30);
-  for (const record of register.records) {
-    assert.equal(record.subject, "수학");
-    assert.match(record.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
-    assert.equal(record.pptStatus, "received");
-    assert.equal(record.slideCount, 12);
-    assert.equal(record.communityPostStatus, "not-posted");
-    assert.equal(record.raceRecordStatus, "not-registered");
-    assert.ok(fs.existsSync(record.representativeImagePath.replace("middleofmath:", "")));
-    assert.ok(record.teachingIntent.length > 40);
-  }
+  assert.equal(register.records.length, 0);
+  assert.equal(register.completedRecordCount, 0);
   const markdown = renderSubmissionRegisterMarkdown(register);
-  assert.equal((markdown.match(/^## \d{2}\./gm) || []).length, 30);
-  assert.match(markdown, /현재 작성 완료: 30\/30/);
+  assert.equal((markdown.match(/^## \d{2}\./gm) || []).length, 0);
+  assert.match(markdown, /현재 작성 완료: 0\/30/);
   assert.doesNotMatch(markdown, /교사용 정답|PPT 내용 원고/);
 });

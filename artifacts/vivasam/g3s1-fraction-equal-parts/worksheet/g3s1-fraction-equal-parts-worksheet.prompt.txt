@@ -18,7 +18,7 @@
 깨끗한 초등 수학 교과서형 플랫 교육 그래픽, 크고 또렷한 한국어 고딕체, 굵은 문제 번호, 둥근 모서리 카드, 규칙적인 정렬, 무광 종이 질감, 넉넉한 필기 공간.
 
 # 6. Text-in-image:
-top-left English logo "eduitit" in white lowercase text inside the purple cloud. Korean headline "분수의 첫 조건, 똑같이" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 3. 분수" directly below the headline. Top-right name field reads "이름 __________".
+top-left English logo "eduitit" in white lowercase text inside the purple cloud. Korean headline "분수의 첫 조건, 똑같이" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 6. 분수와 소수" directly below the headline. Top-right name field reads "이름 __________".
 
 First card Korean header "1. 함께 풀기". Korean context "민지는 종이띠를 1/6씩 나누었다고 말했어요.". Korean question "그림을 보고 바르게 고쳐 말한 것은 어느 것일까요?". 1번 선택 상자 "똑같은 크기 6조각으로 다시 나눠요", 2번 선택 상자 "지금처럼 크기가 달라도 6조각이면 돼요", 3번 선택 상자 "똑같은 크기 5조각으로 다시 나눠요". 각 선택 상자 왼쪽에는 빈 선택 원 하나가 있다.
 

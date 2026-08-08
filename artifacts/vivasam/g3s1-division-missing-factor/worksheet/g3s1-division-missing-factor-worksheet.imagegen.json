@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-8bc1c8cf-a29d-4e85-83a7-5d7f08a920f6.png",
   "promptFile": "g3s1-division-missing-factor-worksheet.prompt.txt",
-  "promptSha256": "de8b86fade59683f2ae44f21ed46ce40a0bf43d160b9c59bcc00d0e3ea8fb190",
+  "promptSha256": "fc1d4b05a69bdd0a85f05f1a8ba909bf00091303539b4a6bb6e7be74782f1f05",
   "imageFile": "g3s1-division-missing-factor-worksheet.png",
-  "imageSha256": "f77ff5b5e46ec97b27226d8c42defdf4551258af3770c22c6116e5968e276a31",
+  "imageSha256": "df73e1428e36154de823c2a641ef006668f1cea6bc4611497ec438c054306499",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T08:40:57.582Z",
+    "reviewedAt": "2026-08-08T13:12:20.114Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -26,5 +26,26 @@
       ],
       "problem2Equation": "7×□=35"
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "f77ff5b5e46ec97b27226d8c42defdf4551258af3770c22c6116e5968e276a31",
+    "appliedAt": "2026-08-08T13:12:20.114Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 220,
+          "top": 190,
+          "width": 600,
+          "height": 65
+        },
+        "text": "초등 3학년 1학기 · 3. 나눗셈"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 34972
   }
 }

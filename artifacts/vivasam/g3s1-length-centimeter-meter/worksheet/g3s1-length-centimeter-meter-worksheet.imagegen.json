@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-4aa5c3cc-5c11-46df-9b5e-3c7f60547a54.png",
   "promptFile": "g3s1-length-centimeter-meter-worksheet.prompt.txt",
-  "promptSha256": "900409781fc843ef22df3ff218b81f5b7af2ab1b5c711da3ae2f19807cd447db",
+  "promptSha256": "5382461f8a7b7b4de8d1988f817e88fa696223315dc7c67c8681aee416e3ed0a",
   "imageFile": "g3s1-length-centimeter-meter-worksheet.png",
-  "imageSha256": "6dd136bf8213a8120fc02ff063c7300bbb7392e1a9a3aa26de8579d82b0c5f6a",
+  "imageSha256": "3665f2d358a9af849052706b191762311a5ef08cc70e455eec8b33132abb6816",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T08:40:57.595Z",
+    "reviewedAt": "2026-08-08T13:12:23.896Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -24,9 +24,40 @@
         "약 2cm"
       ],
       "problem2Objects": [
-        "지우개 약 4cm",
+        "지우개 약 5cm",
         "복도 약 20m"
       ]
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "6dd136bf8213a8120fc02ff063c7300bbb7392e1a9a3aa26de8579d82b0c5f6a",
+    "appliedAt": "2026-08-08T13:12:23.896Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 202,
+          "top": 198,
+          "width": 620,
+          "height": 52
+        },
+        "text": "초등 3학년 1학기 · 5. 길이와 시간"
+      },
+      {
+        "kind": "math-value",
+        "bbox": {
+          "left": 170,
+          "top": 751,
+          "width": 225,
+          "height": 34
+        },
+        "text": "지우개 길이 약 5cm"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 35982
   }
 }

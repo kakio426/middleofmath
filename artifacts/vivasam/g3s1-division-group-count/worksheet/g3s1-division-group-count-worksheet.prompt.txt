@@ -18,7 +18,7 @@
 깨끗한 초등 수학 교과서형 플랫 교육 그래픽, 크고 또렷한 한국어 고딕체, 굵은 문제 번호, 둥근 모서리 카드, 규칙적인 정렬, 무광 종이 질감, 넉넉한 필기 공간.
 
 # 6. Text-in-image:
-top-left English logo "eduitit" in white lowercase text inside the purple cloud. Korean headline "몇 묶음인지 곱셈으로 확인하기" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 2. 나눗셈" directly below the headline. Top-right name field reads "이름 __________".
+top-left English logo "eduitit" in white lowercase text inside the purple cloud. Korean headline "몇 묶음인지 곱셈으로 확인하기" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 3. 나눗셈" directly below the headline. Top-right name field reads "이름 __________".
 
 First card Korean header "1. 함께 풀기". Korean context "4×6=24예요.". Korean question "24÷4의 몫은 얼마일까요?". 1번 선택 상자 "6", 2번 선택 상자 "4", 3번 선택 상자 "20". 각 선택 상자 왼쪽에는 빈 선택 원 하나가 있다.
 

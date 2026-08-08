@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-513e9330-2737-4917-ba94-e5646ab1f415.png",
   "promptFile": "g3s1-division-group-count-worksheet.prompt.txt",
-  "promptSha256": "3da0068cdfad66f86d0d103dcf8aa717f5f72e8b3a1dd767852772e928d0f5bb",
+  "promptSha256": "676b63a1c478cc3942f8de892ec961dea7700acbbc771388e5e769fe072c8075",
   "imageFile": "g3s1-division-group-count-worksheet.png",
-  "imageSha256": "423dc30f55f019db989f6beda8071c7475afceb3da266970bbc6888f944a6d7b",
+  "imageSha256": "1ecae40a93b810c496c21ea1658e6960b3b63966555c7f9f3265d5c8c64ed218",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T08:40:57.587Z",
+    "reviewedAt": "2026-08-08T13:12:21.253Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -26,5 +26,26 @@
       "problem2StickerCards": 42,
       "problem2GroupSize": 6
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "423dc30f55f019db989f6beda8071c7475afceb3da266970bbc6888f944a6d7b",
+    "appliedAt": "2026-08-08T13:12:21.253Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 250,
+          "top": 196,
+          "width": 530,
+          "height": 52
+        },
+        "text": "초등 3학년 1학기 · 3. 나눗셈"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 23738
   }
 }

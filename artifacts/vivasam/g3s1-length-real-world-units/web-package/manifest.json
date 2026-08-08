@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "4. 길이",
+  "unit": "5. 길이와 시간",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 15,
+    "lessonId": "g3s1-length-real-world-units",
+    "semester": 1,
+    "unitNumber": 5,
+    "unitTitle": "길이와 시간",
+    "alignmentType": "multi-lesson",
+    "standardCodes": [
+      "4수03-15"
+    ],
+    "lessonRange": "2~5차시",
+    "lessonTitle": "길이 단위 학습 종합 적용",
+    "textbookPages": {
+      "start": 110,
+      "end": 117
+    },
+    "usageNote": "mm, cm, m, km 중 대상 크기에 알맞은 단위를 고르는 종합 적용에 활용한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "c40585b8ea89",
-  "thumbnailAsset": "c40585b8ea89/representative-image.png",
-  "worksheetAsset": "c40585b8ea89/g3s1-length-real-world-units-worksheet.png",
+  "digest": "b71d9f55a282",
+  "thumbnailAsset": "b71d9f55a282/representative-image.png",
+  "worksheetAsset": "b71d9f55a282/g3s1-length-real-world-units-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "c40585b8ea89/g3s1-length-real-world-units-slides.html",
+  "slideHtmlAsset": "b71d9f55a282/g3s1-length-real-world-units-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-length-real-world-units",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "c40585b8ea89/g3s1-length-real-world-units-slides.html",
-      "bytes": 8409631,
-      "sha256": "d8c80386cf2845c794129df3f3b9a55ef5c9d9ef98f5b5f8593f97ab2cbb6a43",
+      "path": "b71d9f55a282/g3s1-length-real-world-units-slides.html",
+      "bytes": 8410526,
+      "sha256": "9bc8d742ba79df928b2df84b5cbea8dd761e60791577f9f3c8bc003a1714d978",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "c40585b8ea89/g3s1-length-real-world-units-worksheet.pdf",
-      "bytes": 1111622,
-      "sha256": "835266640ce5fb9639962b2e871902bed318ea021b4034183d7af14e41402186",
+      "path": "b71d9f55a282/g3s1-length-real-world-units-worksheet.pdf",
+      "bytes": 1090153,
+      "sha256": "752728ad46651bae332726fb85fc4ccbe78c5bf0b7c733a9fa654ecfe01cf3d9",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "c40585b8ea89/g3s1-length-real-world-units-worksheet.png",
-      "bytes": 1209415,
-      "sha256": "72ec01a446e1cf71a949ad1696257c2956702a369d851fb08a8ebe827c3b179c",
+      "path": "b71d9f55a282/g3s1-length-real-world-units-worksheet.png",
+      "bytes": 1112183,
+      "sha256": "40a10a99033239343b5f820801575618a4b29b1fdeed2def85100692b8f7323c",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "c40585b8ea89/representative-image.png",
-      "bytes": 51456,
-      "sha256": "ba362e3abaaf4c48fc30db61fe1a31ff824249c58c79ae6a1cea878749033b07",
+      "path": "b71d9f55a282/representative-image.png",
+      "bytes": 52235,
+      "sha256": "74a99ad14e00f409393d76605a898e7c774d0450d03e9f36289e228931c529b9",
       "contentType": "image/png",
       "role": "thumbnail"
     }

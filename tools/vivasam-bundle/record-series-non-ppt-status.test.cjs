@@ -54,7 +54,7 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
   assert.equal(summary.localRecordsPublished, 30);
   assert.equal(summary.claudePptsAwaiting, 0);
   assert.equal(summary.claudePptsValidated, 0);
-  assert.equal(summary.productionPublished, 30);
+  assert.equal(summary.productionPublished, 0);
 
   for (const bundle of validated.bundles) {
     assert.equal(bundle.worksheet.status, "validated");
@@ -71,9 +71,9 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
     assert.equal(bundle.ppt.slideCount, 12);
   }
   for (const bundle of validated.bundles) {
-    assert.equal(bundle.eduitit.anonymousAccessStatus, "production-passed");
-    assert.equal(bundle.eduitit.productionStatus, "deployed");
-    assert.match(bundle.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
+    assert.equal(bundle.eduitit.anonymousAccessStatus, "local-passed");
+    assert.equal(bundle.eduitit.productionStatus, "not-deployed");
+    assert.equal(bundle.eduitit.publicUrl, "");
   }
 });
 

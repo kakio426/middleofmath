@@ -18,7 +18,7 @@
 깨끗한 초등 수학 교과서형 플랫 교육 그래픽, 크고 또렷한 한국어 고딕체, 굵은 문제 번호, 둥근 모서리 카드, 규칙적인 정렬, 무광 종이 질감, 넉넉한 필기 공간.
 
 # 6. Text-in-image:
-top-left English logo "eduitit" in white lowercase text inside the purple cloud. Korean headline "가분수를 대분수로 바꾸기" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 2학기 · 4. 분수" directly below the headline. Top-right name field reads "이름 __________".
+top-left English logo "eduitit" in white lowercase text inside the purple cloud. Korean headline "가분수를 대분수로 바꾸기" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 2학기 · 4. 분수와 소수" directly below the headline. Top-right name field reads "이름 __________".
 
 First card Korean header "1. 함께 풀기". Korean question "3과 1/4을 가분수로 나타내면 무엇일까요?". 1번 선택 상자 "13/4", 2번 선택 상자 "7/4", 3번 선택 상자 "3/4". 각 선택 상자 왼쪽에는 빈 선택 원 하나가 있다.
 

@@ -8,18 +8,40 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "2. 나눗셈",
+  "unit": "3. 나눗셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 9,
+    "lessonId": "g3s1-division-group-count",
+    "semester": 1,
+    "unitNumber": 3,
+    "unitTitle": "나눗셈",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-05",
+      "4수01-06"
+    ],
+    "lessonRange": "6차시",
+    "lessonTitle": "나눗셈의 몫을 곱셈식으로 구해 볼까요?",
+    "textbookPages": {
+      "start": 77,
+      "end": 79
+    },
+    "usageNote": "몇 묶음인지 묻는 몫을 곱셈 사실로 확인한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "10aad6354d2d",
-  "thumbnailAsset": "10aad6354d2d/representative-image.png",
-  "worksheetAsset": "10aad6354d2d/g3s1-division-group-count-worksheet.png",
+  "digest": "097b5bb82020",
+  "thumbnailAsset": "097b5bb82020/representative-image.png",
+  "worksheetAsset": "097b5bb82020/g3s1-division-group-count-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "10aad6354d2d/g3s1-division-group-count-slides.html",
+  "slideHtmlAsset": "097b5bb82020/g3s1-division-group-count-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-division-group-count",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +49,30 @@
   ],
   "assets": [
     {
-      "path": "10aad6354d2d/g3s1-division-group-count-slides.html",
-      "bytes": 8226209,
-      "sha256": "159cbb255e35ce22bbc66d2873acf7e8ef4b77ef54050d8039dba59416bb547c",
+      "path": "097b5bb82020/g3s1-division-group-count-slides.html",
+      "bytes": 8229720,
+      "sha256": "08a915a48aad87b7af7220a84e263ca42f75595ec1b4d0fb945c3cf430a27389",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "10aad6354d2d/g3s1-division-group-count-worksheet.pdf",
-      "bytes": 1065169,
-      "sha256": "db020e27d0edb72e9fd45120245de542906f093175c9d7df321393350ea4e064",
+      "path": "097b5bb82020/g3s1-division-group-count-worksheet.pdf",
+      "bytes": 1048613,
+      "sha256": "4c0ba9dd5d8984ac454b14c7613e050b042224337a4d1e452cd5c778ba94ec0e",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "10aad6354d2d/g3s1-division-group-count-worksheet.png",
-      "bytes": 1153951,
-      "sha256": "423dc30f55f019db989f6beda8071c7475afceb3da266970bbc6888f944a6d7b",
+      "path": "097b5bb82020/g3s1-division-group-count-worksheet.png",
+      "bytes": 1059515,
+      "sha256": "1ecae40a93b810c496c21ea1658e6960b3b63966555c7f9f3265d5c8c64ed218",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "10aad6354d2d/representative-image.png",
-      "bytes": 55605,
-      "sha256": "89954c9e7ea19dc0b9864a698e512117fee594bcd0736d94a8107f83eace70b7",
+      "path": "097b5bb82020/representative-image.png",
+      "bytes": 55614,
+      "sha256": "c73ebe1e6bad864bcaea64db6a6d252ded58689671b5ff5f4cc3d1bc3054cb58",
       "contentType": "image/png",
       "role": "thumbnail"
     }

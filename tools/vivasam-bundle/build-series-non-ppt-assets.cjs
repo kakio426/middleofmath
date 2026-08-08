@@ -9,6 +9,7 @@ const { PDFDocument } = require("pdf-lib");
 const sharp = require("sharp");
 
 const pictographLesson = require("./lesson-pictograph.cjs");
+const { CURRICULUM_ALIGNMENT_BY_ID } = require("./g3-curriculum-alignments.cjs");
 const { SERIES_PLAN } = require("./g3-series-plan.cjs");
 const { wrapKoreanWords } = require("./korean-text-flow.cjs");
 const { REMAINING_WORKSHEET_MATH_VISUAL_CONTRACTS } = require("./remaining-worksheet-imagegen-specs.cjs");
@@ -174,13 +175,17 @@ function loadSeriesLessons({ repoRoot = REPO_ROOT } = {}) {
       : JSON.parse(fs.readFileSync(path.join(artifactsRoot, entry.lessonId, "lesson-schema.json"), "utf8"));
     ensure(source.id === entry.lessonId, `${entry.lessonId}의 수업 ID가 계획과 다릅니다.`);
     ensure(Array.isArray(source.slides) && source.slides.length === 11, `${entry.lessonId}의 슬라이드는 11장이어야 합니다.`);
+    const curriculum = CURRICULUM_ALIGNMENT_BY_ID[entry.lessonId];
+    ensure(curriculum, `${entry.lessonId}의 비상 교과서·성취기준 매핑이 없습니다.`);
+    ensure(curriculum.sequence === entry.sequence, `${entry.lessonId}의 교과서 매핑 순번이 계획과 다릅니다.`);
     return {
       ...source,
       sequence: entry.sequence,
       title: compact(source.title),
       subtitle: compact(source.subtitle),
-      grade: compact(source.grade),
-      unit: compact(source.unit),
+      grade: `초등 3학년 ${curriculum.semester}학기`,
+      unit: `${curriculum.unitNumber}. ${curriculum.unitTitle}`,
+      curriculum,
       targetBehavior: compact(source.targetBehavior),
       privacyRule: compact(source.privacyRule),
       slides: source.slides.map(normalizeSlide),
@@ -300,7 +305,7 @@ function buildWorksheetModel(lesson) {
 
   let errorCases = [];
   if (Array.isArray(errors.data?.cases)) errorCases = errors.data.cases.map((item) => `${item.label}: ${compact(item.text)}`);
-  if (!errorCases.length) errorCases = errors.visibleContent.filter((item) => /^(검토할 답|생각 [AB])/.test(item)).slice(0, 2);
+  if (!errorCases.length) errorCases = errors.visibleContent.filter((item) => /^(검토할 (?:답|풀이)|생각 [AB])/.test(item)).slice(0, 2);
 
   let exitItems = Array.isArray(exit.data?.items) ? exit.data.items.map(compact) : exit.visibleContent.slice(0, 3).map(stripPrefix);
   exitItems = exitItems.filter(Boolean).slice(0, 3);
@@ -318,6 +323,7 @@ function buildWorksheetModel(lesson) {
     subtitle: lesson.subtitle,
     grade: lesson.grade,
     unit: lesson.unit,
+    curriculum: lesson.curriculum,
     targetBehavior: lesson.targetBehavior,
     worksheetFile: `${lesson.id}-worksheet.png`,
     instruction: lesson.worksheet.instruction,
@@ -453,8 +459,9 @@ function integratedSectionForKind(kind) {
 }
 
 function buildTeachingIntentMarkdown(lesson) {
-  const intentSlides = lesson.id === "g3s1-multiplication-array-transfer"
-    ? [
+  let intentSlides = lesson.slides;
+  if (lesson.id === "g3s1-multiplication-array-transfer") {
+    intentSlides = [
         ...lesson.slides.slice(0, 2),
         {
           number: 3,
@@ -468,8 +475,24 @@ function buildTeachingIntentMarkdown(lesson) {
           evidence: "학생이 5와 6을 단순히 더하지 않고 반복 횟수가 바뀌었다고 설명하는지 확인한다.",
         },
         ...lesson.slides.slice(2).map((slide) => ({ ...slide, number: slide.number + 1 })),
-      ]
-    : lesson.slides;
+      ];
+  } else if (lesson.id === "g3s2-division-remainder") {
+    intentSlides = [
+      ...lesson.slides.slice(0, 2),
+      {
+        number: 3,
+        phase: "수학적 확인",
+        displayMinutes: "앞 화면과 4분 공유",
+        kind: "dilemma",
+        title: "12개도 다시 나눌 수 있을까요?",
+        intent: "예상 뒤에만 12÷4=3과 52÷4=13을 공개해 중간에 남은 수를 다시 나누어야 하는 이유를 확인한다.",
+        teacherMove: "학생의 첫 선택과 근거를 들은 뒤 확인 버튼을 눌러 세 계산을 순서대로 연결한다.",
+        studentAction: "처음 예상과 계산 결과를 비교하고 자신의 설명을 수정한다.",
+        evidence: "학생이 남은 수가 나누는 수보다 크거나 같으면 다시 나눌 수 있다고 말하는지 확인한다.",
+      },
+      ...lesson.slides.slice(2).map((slide) => ({ ...slide, number: slide.number + 1 })),
+    ];
+  }
   const rows = intentSlides.map((slide) => `| ${slide.number} | ${escapeMarkdown(slide.phase)} | ${slide.displayMinutes || `${slide.minutes}분`} | ${escapeMarkdown(slide.title)} | ${escapeMarkdown(slide.intent)} | ${escapeMarkdown(slide.teacherMove)} | ${escapeMarkdown(slide.studentAction)} | ${escapeMarkdown(slide.evidence)} | ${integratedSectionForKind(slide.kind)} |`).join("\n");
   return `# ${lesson.title} — 슬라이드별 수업 설계 의도
 
@@ -781,6 +804,26 @@ async function validateWorksheetImagegenSource(lesson, { worksheetRoot, filename
   ensure(metadata.promptSha256 === fileHash(promptPath), `${lesson.id} 프롬프트 해시가 메타데이터와 다릅니다.`);
   ensure(metadata.imageSha256 === fileHash(pngPath), `${lesson.id} PNG 해시가 메타데이터와 다릅니다.`);
 
+  if (metadata.postProcessing) {
+    const postProcessing = metadata.postProcessing;
+    ensure(postProcessing.mode === "deterministic-text-overlay", `${lesson.id} 활동지 후처리 방식이 허용된 텍스트 교정이 아닙니다.`);
+    ensure(postProcessing.tool === "sharp", `${lesson.id} 활동지 후처리 도구는 sharp여야 합니다.`);
+    ensure(postProcessing.script === "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs", `${lesson.id} 활동지 후처리 재현 스크립트가 다릅니다.`);
+    ensure(/^[a-f0-9]{64}$/.test(postProcessing.sourceImageSha256 || ""), `${lesson.id} 활동지 후처리 원본 해시가 없습니다.`);
+    ensure(postProcessing.appliedAt, `${lesson.id} 활동지 후처리 시간이 없습니다.`);
+    ensure(Array.isArray(postProcessing.regions) && postProcessing.regions.length > 0, `${lesson.id} 활동지 후처리 영역이 없습니다.`);
+    for (const region of postProcessing.regions) {
+      ensure(["curriculum-label", "math-value"].includes(region.kind), `${lesson.id} 활동지 후처리 영역 종류가 잘못되었습니다.`);
+      ensure(region.text && typeof region.text === "string", `${lesson.id} 활동지 후처리 문구가 없습니다.`);
+      const box = region.bbox || {};
+      ensure([box.left, box.top, box.width, box.height].every(Number.isInteger), `${lesson.id} 활동지 후처리 좌표는 정수여야 합니다.`);
+      ensure(box.left >= 0 && box.top >= 0 && box.width > 0 && box.height > 0, `${lesson.id} 활동지 후처리 영역 크기가 잘못되었습니다.`);
+      ensure(box.left + box.width <= SERIES_ASSET_CONTRACT.worksheetWidth && box.top + box.height <= SERIES_ASSET_CONTRACT.worksheetHeight, `${lesson.id} 활동지 후처리 영역이 캔버스를 벗어났습니다.`);
+    }
+    ensure(postProcessing.outsideChangedPixels === 0, `${lesson.id} 활동지 후처리가 선언 영역 밖 픽셀을 바꿨습니다.`);
+    ensure(Number.isInteger(postProcessing.changedPixels) && postProcessing.changedPixels > 0, `${lesson.id} 활동지 후처리 변경 픽셀 수가 없습니다.`);
+  }
+
   const imageMetadata = await sharp(pngPath).metadata();
   ensure(imageMetadata.format === "png", `${lesson.id} 활동지 완성본은 PNG여야 합니다.`);
   ensure(imageMetadata.width === SERIES_ASSET_CONTRACT.worksheetWidth && imageMetadata.height === SERIES_ASSET_CONTRACT.worksheetHeight, `${lesson.id} 활동지는 1024×1536 세로형 완성 이미지여야 합니다.`);
@@ -808,7 +851,9 @@ async function buildLessonAssets(lesson, {
   const supportRoot = path.join(lessonRoot, "support");
   const webPackageRoot = path.join(lessonRoot, "web-package");
   // The worksheet prompt, generation metadata, and single finished PNG are
-  // authored through built-in imagegen and must survive package rebuilds.
+  // authored through built-in imagegen. A declared, pixel-bounded text overlay
+  // may correct curriculum metadata without recreating the math content.
+  // These sources must survive package rebuilds.
   // Support files and the public web package remain reproducible outputs.
   ensureDir(worksheetRoot);
   resetDirectory(supportRoot);
@@ -833,7 +878,7 @@ async function buildLessonAssets(lesson, {
   const publishedSlideCount = receivedSlideCountForLesson(lesson, { repoRoot, trackerPath, presentation });
   const mathcanvasEditorUrl = mathCanvasEditorUrlFor(lesson, { repoRoot, trackerPath });
 
-  // PDF is only a print wrapper around the untouched whole-page image.
+  // PDF is only a print wrapper around the final whole-page image.
   // Never place generated text, SVG, HTML, or another raster layer over it.
   await writePdfFromPng(worksheetPngPath, worksheetPdfPath);
   writeUtf8(representativeSvgPath, renderRepresentativeSvg(model));
@@ -884,6 +929,7 @@ async function buildLessonAssets(lesson, {
     subjectCode: lesson.subjectCode || "MATH",
     grade: lesson.grade,
     unit: lesson.unit,
+    curriculum: lesson.curriculum,
     durationMinutes: lesson.durationMinutes,
     slideCount: publishedSlideCount,
     worksheetCount: 1,
@@ -1101,6 +1147,7 @@ async function buildSeriesAssets({
       title: item.lesson.title,
       grade: item.lesson.grade,
       unit: item.lesson.unit,
+      curriculum: item.lesson.curriculum,
       digest: item.digest,
       pptStatus: item.manifest.pptStatus,
       presentationMode: item.manifest.presentationMode || "pptx",
@@ -1123,6 +1170,7 @@ function validatePackage(item) {
   ensure([3, 4].includes(manifest.schemaVersion), `${item.lesson.id} 패키지 스키마가 최신이 아닙니다.`);
   ensure(manifest.lessonId === item.lesson.id, `${item.lesson.id} 패키지 lessonId가 다릅니다.`);
   ensure(manifest.digest === item.digest, `${item.lesson.id} 패키지 digest가 다릅니다.`);
+  ensure(JSON.stringify(manifest.curriculum) === JSON.stringify(item.lesson.curriculum), `${item.lesson.id} 교과서·성취기준 메타데이터가 다릅니다.`);
   ensure(manifest.worksheetCount === 1, `${item.lesson.id} 패키지 활동지 수가 1이 아닙니다.`);
   ensure(["available", "awaiting-claude"].includes(manifest.pptStatus), `${item.lesson.id} PPT 상태가 잘못되었습니다.`);
   const pptAssets = manifest.assets.filter((asset) => asset.path.endsWith(".pptx"));

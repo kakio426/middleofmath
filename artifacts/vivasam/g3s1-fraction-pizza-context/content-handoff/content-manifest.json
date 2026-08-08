@@ -6,13 +6,13 @@
   "files": [
     {
       "name": "claude-ppt-content.json",
-      "bytes": 5809,
-      "sha256": "84c5934b5e1d9cbec799ebab7f9cad4b93a39faed6c71b2b89bce4e02b12cda7"
+      "bytes": 5819,
+      "sha256": "2a079c60798487e3c2fc89b9a05cf3368c09c942d2593d6d3358b45116b13bba"
     },
     {
       "name": "claude-ppt-content.md",
-      "bytes": 4509,
-      "sha256": "d42041327b177899b6d253093a15651e401d86083d2f9ad234c2bc48758635e7"
+      "bytes": 4519,
+      "sha256": "da49613140cd90ee44668c036c783f272fb3af2745e9c6a52aa4a9e1cc463d3d"
     }
   ]
 }

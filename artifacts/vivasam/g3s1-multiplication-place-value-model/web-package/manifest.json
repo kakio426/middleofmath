@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "1. 곱셈",
+  "unit": "4. 곱셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 4,
+    "lessonId": "g3s1-multiplication-place-value-model",
+    "semester": 1,
+    "unitNumber": 4,
+    "unitTitle": "곱셈",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-04"
+    ],
+    "lessonRange": "3차시",
+    "lessonTitle": "(몇십몇)×(몇)을 구해 볼까요?(1)",
+    "textbookPages": {
+      "start": 90,
+      "end": 91
+    },
+    "usageNote": "받아올림이 없는 두 자리 수를 십과 일로 나누어 부분곱을 만든다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "0dc470a95dfb",
-  "thumbnailAsset": "0dc470a95dfb/representative-image.png",
-  "worksheetAsset": "0dc470a95dfb/g3s1-multiplication-place-value-model-worksheet.png",
+  "digest": "b4f9aaae411a",
+  "thumbnailAsset": "b4f9aaae411a/representative-image.png",
+  "worksheetAsset": "b4f9aaae411a/g3s1-multiplication-place-value-model-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "0dc470a95dfb/g3s1-multiplication-place-value-model-slides.html",
+  "slideHtmlAsset": "b4f9aaae411a/g3s1-multiplication-place-value-model-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication-place-value-model",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "0dc470a95dfb/g3s1-multiplication-place-value-model-slides.html",
-      "bytes": 8208144,
-      "sha256": "f2c84aa2942772b5f153828d7947e4fe95df2d54b08277d6bf57183c6167efa1",
+      "path": "b4f9aaae411a/g3s1-multiplication-place-value-model-slides.html",
+      "bytes": 8208161,
+      "sha256": "82628737a0fc1c8164ad931a1d1810b029d601eb36209c77549f9d0d0245177f",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "0dc470a95dfb/g3s1-multiplication-place-value-model-worksheet.pdf",
-      "bytes": 1189133,
-      "sha256": "622ecf50465bc9738b1cd76a8aff2c27991984c72b555aa95613c764cfaa5017",
+      "path": "b4f9aaae411a/g3s1-multiplication-place-value-model-worksheet.pdf",
+      "bytes": 1162486,
+      "sha256": "b3b602d649f01b8ff45401aaf9389a992ab07e0c5b6505461c9b3414932c21bf",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "0dc470a95dfb/g3s1-multiplication-place-value-model-worksheet.png",
-      "bytes": 1246716,
-      "sha256": "cd1411887250a7b94fea8053b773e9d6bc5d07667f5e19fd63010f321e6bef35",
+      "path": "b4f9aaae411a/g3s1-multiplication-place-value-model-worksheet.png",
+      "bytes": 1189031,
+      "sha256": "e81f723facba1b9d3b7980d9d0b563a7dda79ad47d3cef16fed2b508f7123a9f",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "0dc470a95dfb/representative-image.png",
-      "bytes": 49830,
-      "sha256": "5696349970382637f48391b871756897eb1a50da58c9292d323dccb4b1063ee8",
+      "path": "b4f9aaae411a/representative-image.png",
+      "bytes": 49900,
+      "sha256": "c24b1dc273c31e8308b07a6dc8292bfdc9e76a3456ecde947af34687c19f7e67",
       "contentType": "image/png",
       "role": "thumbnail"
     }

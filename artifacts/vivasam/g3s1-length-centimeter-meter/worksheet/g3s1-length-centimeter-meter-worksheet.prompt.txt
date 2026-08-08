@@ -18,11 +18,11 @@
 깨끗한 초등 수학 교과서형 플랫 교육 그래픽, 크고 또렷한 한국어 고딕체, 굵은 문제 번호, 둥근 모서리 카드, 규칙적인 정렬, 무광 종이 질감, 넉넉한 필기 공간.
 
 # 6. Text-in-image:
-top-left English logo "eduitit" in white lowercase text inside the purple cloud. Korean headline "연필에는 cm, 문에는 m" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 4. 길이" directly below the headline. Top-right name field reads "이름 __________".
+top-left English logo "eduitit" in white lowercase text inside the purple cloud. Korean headline "연필에는 cm, 문에는 m" in bold dark-purple geometric sans-serif. Korean subhead "초등 3학년 1학기 · 5. 길이와 시간" directly below the headline. Top-right name field reads "이름 __________".
 
 First card Korean header "1. 함께 풀기". Korean question "교실 문의 높이로 알맞은 것은 무엇일까요?". 1번 선택 상자 "약 2m", 2번 선택 상자 "약 2km", 3번 선택 상자 "약 2cm". 각 선택 상자 왼쪽에는 빈 선택 원 하나가 있다.
 
-Second card Korean header "2. 새 문제". Korean question "지우개의 길이와 복도의 길이에 알맞은 단위를 각각 고르세요.". cue box "지우개 길이 약 4cm", cue box "복도 길이 약 20m". 아래에 "식 ____________________"과 "답 ____________________"을 서로 다른 줄에 둔다.
+Second card Korean header "2. 새 문제". Korean question "지우개의 길이와 복도의 길이에 알맞은 단위를 각각 고르세요.". cue box "지우개 길이 약 5cm", cue box "복도 길이 약 20m". 아래에 "식 ____________________"과 "답 ____________________"을 서로 다른 줄에 둔다.
 
 Third card Korean header "3. 오류 탐정". Yellow wrong-answer box "약 15mm". Korean labels "첫 오류" and "바른 풀이" each followed by a long blank writing area.
 

@@ -9,17 +9,38 @@
   "subjectCode": "MATH",
   "grade": "초등 3학년 2학기",
   "unit": "2. 나눗셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 20,
+    "lessonId": "g3s2-division-meaning",
+    "semester": 2,
+    "unitNumber": 2,
+    "unitTitle": "나눗셈",
+    "alignmentType": "connection",
+    "standardCodes": [
+      "4수01-05"
+    ],
+    "lessonRange": "1차시 단원 도입~2차시 전",
+    "lessonTitle": "두 자리 수 나눗셈 전 뜻 진단",
+    "textbookPages": {
+      "start": 32,
+      "end": 35
+    },
+    "usageNote": "계산 절차 전에 한 묶음의 수와 묶음 수라는 나눗셈의 두 뜻을 진단한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "6fccf71cebc7",
-  "thumbnailAsset": "6fccf71cebc7/representative-image.png",
-  "worksheetAsset": "6fccf71cebc7/g3s2-division-meaning-worksheet.png",
+  "digest": "fb3a16e7f00c",
+  "thumbnailAsset": "fb3a16e7f00c/representative-image.png",
+  "worksheetAsset": "fb3a16e7f00c/g3s2-division-meaning-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "6fccf71cebc7/g3s2-division-meaning-slides.html",
+  "slideHtmlAsset": "fb3a16e7f00c/g3s2-division-meaning-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-division-meaning",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,28 +48,28 @@
   ],
   "assets": [
     {
-      "path": "6fccf71cebc7/g3s2-division-meaning-slides.html",
-      "bytes": 9188462,
-      "sha256": "5a2599c1faa101915587e6c578c3cb9457ef04f05f16734c2d226a75959d95f7",
+      "path": "fb3a16e7f00c/g3s2-division-meaning-slides.html",
+      "bytes": 9188494,
+      "sha256": "ba840ff67b7073a4cb8173b8125fe57a8cc82d8f86450460c599856fa5aa42c1",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "6fccf71cebc7/g3s2-division-meaning-worksheet.pdf",
+      "path": "fb3a16e7f00c/g3s2-division-meaning-worksheet.pdf",
       "bytes": 1038996,
       "sha256": "40d7e8111aa6bb94cfde58a0046589a2ed97052d342a9e0663eec333e845e113",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "6fccf71cebc7/g3s2-division-meaning-worksheet.png",
+      "path": "fb3a16e7f00c/g3s2-division-meaning-worksheet.png",
       "bytes": 1186587,
       "sha256": "e245e3928b3ad62d3a79fe4bfaef7c9557085725e5fd98ea27cf0b83def7e0ed",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "6fccf71cebc7/representative-image.png",
+      "path": "fb3a16e7f00c/representative-image.png",
       "bytes": 53174,
       "sha256": "5fd67933e074ee39cd0585171dcf6533a31b80a875223b88a8b3003ff1a31f38",
       "contentType": "image/png",

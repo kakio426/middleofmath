@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-08T11:09:07.565Z",
+  "updatedAt": "2026-08-08T13:48:13.226Z",
   "contract": {
     "targetDeckCount": 30,
     "preferredSlidesPerDeck": 11,
@@ -119,7 +119,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -145,12 +145,12 @@
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-pictograph-legend",
         "digest": "4ba76bae9760",
-        "localRecordStatus": "published",
+        "localRecordStatus": "stale",
         "localRecordId": "2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -160,7 +160,7 @@
       "title": "같은 묶음은 곱셈으로",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "1. 곱셈",
+      "unit": "4. 곱셈",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -176,7 +176,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -201,13 +201,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model",
-        "digest": "cf5c407775e3",
-        "localRecordStatus": "published",
+        "digest": "4618788d24ea",
+        "localRecordStatus": "stale",
         "localRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -217,7 +217,7 @@
       "title": "줄과 칸으로 전체 수 찾기",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "1. 곱셈",
+      "unit": "4. 곱셈",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -233,7 +233,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/worksheet/g3s1-multiplication-array-transfer-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/worksheet/g3s1-multiplication-array-transfer-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/worksheet/g3s1-multiplication-array-transfer-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -258,13 +258,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-array-transfer",
-        "digest": "3dc5dfce03fa",
-        "localRecordStatus": "published",
+        "digest": "00a756445f5f",
+        "localRecordStatus": "stale",
         "localRecordId": "bf456499-f56d-4bf5-86e2-2179f4ce354a",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/bf456499-f56d-4bf5-86e2-2179f4ce354a/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": [
         "수동 제작본 검수 결과를 반영했으며 다른 사람 자료와 기존 AI 프로토타입은 재사용하지 않습니다."
@@ -289,7 +289,7 @@
       "title": "34×2를 두 부분으로",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "1. 곱셈",
+      "unit": "4. 곱셈",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -305,7 +305,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/worksheet/g3s1-multiplication-place-value-model-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/worksheet/g3s1-multiplication-place-value-model-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/worksheet/g3s1-multiplication-place-value-model-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -329,13 +329,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-model",
-        "digest": "0dc470a95dfb",
-        "localRecordStatus": "published",
+        "digest": "b4f9aaae411a",
+        "localRecordStatus": "stale",
         "localRecordId": "9d3ac7a8-6596-429d-bac5-a3a75ad4540c",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/9d3ac7a8-6596-429d-bac5-a3a75ad4540c/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -345,7 +345,7 @@
       "title": "상자 수를 자릿값으로 곱하기",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "1. 곱셈",
+      "unit": "4. 곱셈",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -361,7 +361,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/worksheet/g3s1-multiplication-place-value-context-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/worksheet/g3s1-multiplication-place-value-context-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/worksheet/g3s1-multiplication-place-value-context-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -385,13 +385,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-context",
-        "digest": "e041efb07707",
-        "localRecordStatus": "published",
+        "digest": "8f8430293740",
+        "localRecordStatus": "stale",
         "localRecordId": "b8d42be0-1a5d-4de9-88c5-a655c6066d68",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/b8d42be0-1a5d-4de9-88c5-a655c6066d68/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -401,7 +401,7 @@
       "title": "18개를 똑같이 나누면",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "2. 나눗셈",
+      "unit": "3. 나눗셈",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -417,7 +417,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/worksheet/g3s1-division-equal-sharing-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/worksheet/g3s1-division-equal-sharing-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/worksheet/g3s1-division-equal-sharing-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -441,13 +441,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-division-equal-sharing",
-        "digest": "21ca89affd04",
-        "localRecordStatus": "published",
+        "digest": "0c46d8def08b",
+        "localRecordStatus": "stale",
         "localRecordId": "5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -457,7 +457,7 @@
       "title": "곱셈의 빈칸으로 몫 찾기",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "2. 나눗셈",
+      "unit": "3. 나눗셈",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -473,7 +473,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-division-missing-factor/worksheet/g3s1-division-missing-factor-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-division-missing-factor/worksheet/g3s1-division-missing-factor-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-division-missing-factor/worksheet/g3s1-division-missing-factor-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -497,13 +497,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-division-missing-factor",
-        "digest": "5f4185a02ba7",
-        "localRecordStatus": "published",
+        "digest": "b3639b04d85a",
+        "localRecordStatus": "stale",
         "localRecordId": "2394fb2a-487a-4f92-ad63-bc18c69d9cdd",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/2394fb2a-487a-4f92-ad63-bc18c69d9cdd/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -513,7 +513,7 @@
       "title": "한 곱셈식에서 두 나눗셈식",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "2. 나눗셈",
+      "unit": "3. 나눗셈",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -529,7 +529,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-division-fact-family/worksheet/g3s1-division-fact-family-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-division-fact-family/worksheet/g3s1-division-fact-family-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-division-fact-family/worksheet/g3s1-division-fact-family-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -553,13 +553,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-division-fact-family",
-        "digest": "76ba91267cca",
-        "localRecordStatus": "published",
+        "digest": "b68c2733d1f4",
+        "localRecordStatus": "stale",
         "localRecordId": "3c532785-a5f9-4c15-a4d2-896d7ab79e6d",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/3c532785-a5f9-4c15-a4d2-896d7ab79e6d/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -569,7 +569,7 @@
       "title": "몇 묶음인지 곱셈으로 확인하기",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "2. 나눗셈",
+      "unit": "3. 나눗셈",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -585,7 +585,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-division-group-count/worksheet/g3s1-division-group-count-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-division-group-count/worksheet/g3s1-division-group-count-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-division-group-count/worksheet/g3s1-division-group-count-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -609,13 +609,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-division-group-count",
-        "digest": "10aad6354d2d",
-        "localRecordStatus": "published",
+        "digest": "097b5bb82020",
+        "localRecordStatus": "stale",
         "localRecordId": "6c1fef76-72ec-4036-a9ba-a0db4f929ae4",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/6c1fef76-72ec-4036-a9ba-a0db4f929ae4/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:48:03.000Z"
       },
       "notes": []
     },
@@ -625,7 +625,7 @@
       "title": "분수의 첫 조건, 똑같이",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "3. 분수",
+      "unit": "6. 분수와 소수",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -641,7 +641,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-fraction-equal-parts/worksheet/g3s1-fraction-equal-parts-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-fraction-equal-parts/worksheet/g3s1-fraction-equal-parts-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-fraction-equal-parts/worksheet/g3s1-fraction-equal-parts-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -665,13 +665,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-fraction-equal-parts",
-        "digest": "a8c2578f0748",
-        "localRecordStatus": "published",
+        "digest": "bfee3093aa72",
+        "localRecordStatus": "stale",
         "localRecordId": "76592b0e-23ff-42e5-980a-768078775c9f",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/76592b0e-23ff-42e5-980a-768078775c9f/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -681,7 +681,7 @@
       "title": "같지 않은 조각을 고쳐 나누기",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "3. 분수",
+      "unit": "6. 분수와 소수",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -697,7 +697,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-fraction-fix-partition/worksheet/g3s1-fraction-fix-partition-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-fraction-fix-partition/worksheet/g3s1-fraction-fix-partition-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-fraction-fix-partition/worksheet/g3s1-fraction-fix-partition-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -721,13 +721,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-fraction-fix-partition",
-        "digest": "c4da3fbc982c",
-        "localRecordStatus": "published",
+        "digest": "61a39adee966",
+        "localRecordStatus": "stale",
         "localRecordId": "e81b3b1a-c2e2-4a05-b0cb-a14d71ed25f8",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/e81b3b1a-c2e2-4a05-b0cb-a14d71ed25f8/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -737,7 +737,7 @@
       "title": "전체와 부분을 분수로 읽기",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "3. 분수",
+      "unit": "6. 분수와 소수",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -753,7 +753,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-fraction-part-whole/worksheet/g3s1-fraction-part-whole-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-fraction-part-whole/worksheet/g3s1-fraction-part-whole-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-fraction-part-whole/worksheet/g3s1-fraction-part-whole-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -777,13 +777,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-fraction-part-whole",
-        "digest": "cc4faa83d6aa",
-        "localRecordStatus": "published",
+        "digest": "5b2d432bf9f8",
+        "localRecordStatus": "stale",
         "localRecordId": "c47118fa-55ba-4a7a-bae8-15ce4a60501e",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/c47118fa-55ba-4a7a-bae8-15ce4a60501e/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -793,7 +793,7 @@
       "title": "피자에서 분모와 분자 찾기",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "3. 분수",
+      "unit": "6. 분수와 소수",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -809,7 +809,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-fraction-pizza-context/worksheet/g3s1-fraction-pizza-context-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-fraction-pizza-context/worksheet/g3s1-fraction-pizza-context-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-fraction-pizza-context/worksheet/g3s1-fraction-pizza-context-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -833,13 +833,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-fraction-pizza-context",
-        "digest": "23b8cb4ba8cc",
-        "localRecordStatus": "published",
+        "digest": "95468a280fd3",
+        "localRecordStatus": "stale",
         "localRecordId": "7a7f121f-04ad-4ba4-a547-1e30ee9fb3b5",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/7a7f121f-04ad-4ba4-a547-1e30ee9fb3b5/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -849,7 +849,7 @@
       "title": "연필에는 cm, 문에는 m",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "4. 길이",
+      "unit": "5. 길이와 시간",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -857,7 +857,7 @@
         "schemaPath": "middleofmath:artifacts/vivasam/g3s1-length-centimeter-meter/lesson-schema.json",
         "handoffMarkdownPath": "middleofmath:artifacts/vivasam/g3s1-length-centimeter-meter/content-handoff/claude-ppt-content.md",
         "handoffJsonPath": "middleofmath:artifacts/vivasam/g3s1-length-centimeter-meter/content-handoff/claude-ppt-content.json",
-        "validatedAt": "2026-08-07T08:30:27.067Z"
+        "validatedAt": "2026-08-08T13:27:26.303Z"
       },
       "worksheet": {
         "filename": "g3s1-length-centimeter-meter-worksheet.png",
@@ -865,7 +865,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-length-centimeter-meter/worksheet/g3s1-length-centimeter-meter-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-length-centimeter-meter/worksheet/g3s1-length-centimeter-meter-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-length-centimeter-meter/worksheet/g3s1-length-centimeter-meter-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -889,13 +889,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-length-centimeter-meter",
-        "digest": "7e7d6830db33",
-        "localRecordStatus": "published",
+        "digest": "6a0b719dadd0",
+        "localRecordStatus": "stale",
         "localRecordId": "77d10703-2f12-4373-944e-78ef81526086",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/77d10703-2f12-4373-944e-78ef81526086/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -905,7 +905,7 @@
       "title": "크기에 맞는 길이 단위",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "4. 길이",
+      "unit": "5. 길이와 시간",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -921,7 +921,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-length-real-world-units/worksheet/g3s1-length-real-world-units-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-length-real-world-units/worksheet/g3s1-length-real-world-units-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-length-real-world-units/worksheet/g3s1-length-real-world-units-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -945,13 +945,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-length-real-world-units",
-        "digest": "c40585b8ea89",
-        "localRecordStatus": "published",
+        "digest": "b71d9f55a282",
+        "localRecordStatus": "stale",
         "localRecordId": "fcd6ce94-a7e5-4dca-af6d-4f996f49a5f1",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/fcd6ce94-a7e5-4dca-af6d-4f996f49a5f1/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -961,7 +961,7 @@
       "title": "m·cm, km·m 연결하기",
       "subject": "수학",
       "grade": "초등 3학년 1학기",
-      "unit": "4. 길이",
+      "unit": "5. 길이와 시간",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -977,7 +977,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-length-unit-conversion/worksheet/g3s1-length-unit-conversion-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-length-unit-conversion/worksheet/g3s1-length-unit-conversion-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-length-unit-conversion/worksheet/g3s1-length-unit-conversion-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1001,13 +1001,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-length-unit-conversion",
-        "digest": "f5238903a8f7",
-        "localRecordStatus": "published",
+        "digest": "81754658937d",
+        "localRecordStatus": "stale",
         "localRecordId": "45fd9710-81d7-4792-b079-e9911605e2a8",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/45fd9710-81d7-4792-b079-e9911605e2a8/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1033,7 +1033,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-multiplication-place-value/worksheet/g3s2-multiplication-place-value-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-multiplication-place-value/worksheet/g3s2-multiplication-place-value-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-multiplication-place-value/worksheet/g3s2-multiplication-place-value-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1057,13 +1057,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-multiplication-place-value",
-        "digest": "d3885aae904c",
-        "localRecordStatus": "published",
+        "digest": "02544f623764",
+        "localRecordStatus": "stale",
         "localRecordId": "65d1a3aa-bbe5-403d-be56-73c7e6d60c29",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/65d1a3aa-bbe5-403d-be56-73c7e6d60c29/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1089,7 +1089,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-multiplication-combine/worksheet/g3s2-multiplication-combine-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-multiplication-combine/worksheet/g3s2-multiplication-combine-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-multiplication-combine/worksheet/g3s2-multiplication-combine-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1113,13 +1113,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-multiplication-combine",
-        "digest": "ff58a11ac0f5",
-        "localRecordStatus": "published",
+        "digest": "f2b2d4f6fc4e",
+        "localRecordStatus": "stale",
         "localRecordId": "73ebf7b2-b4e5-4ee7-8992-4cc364c2bfd9",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/73ebf7b2-b4e5-4ee7-8992-4cc364c2bfd9/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1145,7 +1145,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-multiplication-two-digit/worksheet/g3s2-multiplication-two-digit-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-multiplication-two-digit/worksheet/g3s2-multiplication-two-digit-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-multiplication-two-digit/worksheet/g3s2-multiplication-two-digit-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1169,13 +1169,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-multiplication-two-digit",
-        "digest": "6cf1d6ec7d70",
-        "localRecordStatus": "published",
+        "digest": "583a70038b62",
+        "localRecordStatus": "stale",
         "localRecordId": "6f2c7f32-b96d-4e68-9d1f-4fb21e15cb84",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/6f2c7f32-b96d-4e68-9d1f-4fb21e15cb84/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1201,7 +1201,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-division-meaning/worksheet/g3s2-division-meaning-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-division-meaning/worksheet/g3s2-division-meaning-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-division-meaning/worksheet/g3s2-division-meaning-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1225,13 +1225,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-division-meaning",
-        "digest": "6fccf71cebc7",
-        "localRecordStatus": "published",
+        "digest": "fb3a16e7f00c",
+        "localRecordStatus": "stale",
         "localRecordId": "82bbb53f-d5aa-4f46-b3fe-3e805fecb530",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/82bbb53f-d5aa-4f46-b3fe-3e805fecb530/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1257,7 +1257,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-division-remainder/worksheet/g3s2-division-remainder-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-division-remainder/worksheet/g3s2-division-remainder-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-division-remainder/worksheet/g3s2-division-remainder-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1281,13 +1281,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-division-remainder",
-        "digest": "06a71e5055da",
-        "localRecordStatus": "published",
+        "digest": "9f1ea6738405",
+        "localRecordStatus": "stale",
         "localRecordId": "61037655-2af2-47f5-b111-76ee165bbcc0",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/61037655-2af2-47f5-b111-76ee165bbcc0/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1313,7 +1313,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-division-remainder-check/worksheet/g3s2-division-remainder-check-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-division-remainder-check/worksheet/g3s2-division-remainder-check-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-division-remainder-check/worksheet/g3s2-division-remainder-check-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1337,13 +1337,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-division-remainder-check",
-        "digest": "92de6cdcdc5c",
-        "localRecordStatus": "published",
+        "digest": "388af13a9295",
+        "localRecordStatus": "stale",
         "localRecordId": "6732ca19-4aed-4ba9-a0bb-677aa8a27ae8",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/6732ca19-4aed-4ba9-a0bb-677aa8a27ae8/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1369,7 +1369,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-circle-parts/worksheet/g3s2-circle-parts-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-circle-parts/worksheet/g3s2-circle-parts-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-circle-parts/worksheet/g3s2-circle-parts-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1393,13 +1393,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-circle-parts",
-        "digest": "af7774df5948",
-        "localRecordStatus": "published",
+        "digest": "aeadd60278d8",
+        "localRecordStatus": "stale",
         "localRecordId": "8cab9775-d12e-4ec1-a261-a0afb323ca94",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/8cab9775-d12e-4ec1-a261-a0afb323ca94/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1425,7 +1425,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-circle-diameter/worksheet/g3s2-circle-diameter-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-circle-diameter/worksheet/g3s2-circle-diameter-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-circle-diameter/worksheet/g3s2-circle-diameter-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1449,13 +1449,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-circle-diameter",
-        "digest": "5c1f49e0b279",
-        "localRecordStatus": "published",
+        "digest": "28baf850de2a",
+        "localRecordStatus": "stale",
         "localRecordId": "2d306307-a92a-4570-9284-8f7fdf074d32",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/2d306307-a92a-4570-9284-8f7fdf074d32/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1465,7 +1465,7 @@
       "title": "색칠한 부분을 분수로",
       "subject": "수학",
       "grade": "초등 3학년 2학기",
-      "unit": "4. 분수",
+      "unit": "4. 분수와 소수",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -1481,7 +1481,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-fraction-part-whole/worksheet/g3s2-fraction-part-whole-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-fraction-part-whole/worksheet/g3s2-fraction-part-whole-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-fraction-part-whole/worksheet/g3s2-fraction-part-whole-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1505,13 +1505,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-fraction-part-whole",
-        "digest": "a322a60aa2ec",
-        "localRecordStatus": "published",
+        "digest": "f7aa21822170",
+        "localRecordStatus": "stale",
         "localRecordId": "112fd707-abf1-4d7c-bedd-06bd507d0bf3",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/112fd707-abf1-4d7c-bedd-06bd507d0bf3/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1521,7 +1521,7 @@
       "title": "가분수를 대분수로 바꾸기",
       "subject": "수학",
       "grade": "초등 3학년 2학기",
-      "unit": "4. 분수",
+      "unit": "4. 분수와 소수",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -1537,7 +1537,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-fraction-convert/worksheet/g3s2-fraction-convert-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-fraction-convert/worksheet/g3s2-fraction-convert-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-fraction-convert/worksheet/g3s2-fraction-convert-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1561,13 +1561,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-fraction-convert",
-        "digest": "afa8fecf2833",
-        "localRecordStatus": "published",
+        "digest": "f93716b1e8b4",
+        "localRecordStatus": "stale",
         "localRecordId": "fc053fed-9118-486f-a719-4b60b757dbd8",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/fc053fed-9118-486f-a719-4b60b757dbd8/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1577,7 +1577,7 @@
       "title": "분모가 같은 분수 비교하기",
       "subject": "수학",
       "grade": "초등 3학년 2학기",
-      "unit": "4. 분수",
+      "unit": "4. 분수와 소수",
       "durationMinutes": 40,
       "declaredSlideCount": 11,
       "content": {
@@ -1593,7 +1593,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-fraction-compare/worksheet/g3s2-fraction-compare-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-fraction-compare/worksheet/g3s2-fraction-compare-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-fraction-compare/worksheet/g3s2-fraction-compare-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1617,13 +1617,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-fraction-compare",
-        "digest": "276513d3d635",
-        "localRecordStatus": "published",
+        "digest": "386f0a495515",
+        "localRecordStatus": "stale",
         "localRecordId": "e9fc9a07-fd63-4a7e-95b4-966bb57f91f3",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/e9fc9a07-fd63-4a7e-95b4-966bb57f91f3/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1649,7 +1649,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-capacity-unit/worksheet/g3s2-capacity-unit-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-capacity-unit/worksheet/g3s2-capacity-unit-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-capacity-unit/worksheet/g3s2-capacity-unit-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1673,13 +1673,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-capacity-unit",
-        "digest": "cc2f93875a07",
-        "localRecordStatus": "published",
+        "digest": "7282177ad521",
+        "localRecordStatus": "stale",
         "localRecordId": "822d7f5d-b22d-48f3-88af-e4c431b61301",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/822d7f5d-b22d-48f3-88af-e4c431b61301/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1705,7 +1705,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-weight-unit/worksheet/g3s2-weight-unit-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-weight-unit/worksheet/g3s2-weight-unit-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-weight-unit/worksheet/g3s2-weight-unit-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1729,13 +1729,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-weight-unit",
-        "digest": "4bf93961ed0e",
-        "localRecordStatus": "published",
+        "digest": "e108c2aa03dc",
+        "localRecordStatus": "stale",
         "localRecordId": "8d553b1c-92dc-4506-b4a6-4dd360c74b27",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/8d553b1c-92dc-4506-b4a6-4dd360c74b27/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     },
@@ -1761,7 +1761,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-pictograph-compare/worksheet/g3s2-pictograph-compare-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-compare/worksheet/g3s2-pictograph-compare-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-compare/worksheet/g3s2-pictograph-compare-worksheet.pdf",
-        "validatedAt": "2026-08-08T08:46:46.290Z"
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "ppt": {
         "status": "received",
@@ -1785,13 +1785,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-pictograph-compare",
-        "digest": "90bc4ff0619d",
-        "localRecordStatus": "published",
+        "digest": "37d00d5739a4",
+        "localRecordStatus": "stale",
         "localRecordId": "9ec7cf1d-26f1-418c-8e13-b2db1640e524",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/9ec7cf1d-26f1-418c-8e13-b2db1640e524/",
-        "validatedAt": "2026-08-08T11:09:07.565Z"
+        "anonymousAccessStatus": "code-tests-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T13:15:48.169Z"
       },
       "notes": []
     }
@@ -2438,6 +2438,54 @@
       "sequence": null,
       "event": "Eduitit 운영 공개·비로그인 검증 완료",
       "detail": "PPT 수령분 30개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다."
+    },
+    {
+      "at": "2026-08-08T11:46:35.748Z",
+      "sequence": null,
+      "event": "교과서 매핑·학습 흐름 수정 패키지 재빌드",
+      "detail": "30개 패키지를 새 교과서·성취기준 메타데이터로 검증했다. 변경본은 아직 로컬 재발행·비로그인 접근·운영 배포 검증 전이므로 공개 상태를 stale/not-tested/not-deployed로 되돌렸다."
+    },
+    {
+      "at": "2026-08-08T11:50:07.901Z",
+      "sequence": null,
+      "event": "교과서 매핑·학습 흐름 수정 패키지 코드 검증 통과",
+      "detail": "원본 계약 21개 테스트와 Eduitit 패키지 로더 2개 표적 테스트를 통과했다. 로컬 재발행과 실제 비로그인 화면 검증은 아직 남아 있다."
+    },
+    {
+      "at": "2026-08-08T12:07:10.987Z",
+      "sequence": null,
+      "event": "교실 화면 공간 계약 회귀 수정 패키지 재검증",
+      "detail": "9개 영향 패키지의 구조 오류와 하단 넘침을 수정하고 30개 덱 720개 초기·공개 상태를 헤드리스 렌더링해 overflow·잘림·작은 본문 0건을 확인했다."
+    },
+    {
+      "at": "2026-08-08T12:15:50.715Z",
+      "sequence": null,
+      "event": "학생 화면 단원 표기·21번 교과서 범위 정합성 보정",
+      "detail": "30개 화면 표기를 정본 매핑과 자동 대조해 18개 덱의 단원 번호·이름을 수정하고, 21번을 실제 활동 내용에 맞게 4~7차시·38~47쪽으로 확장한 뒤 30개 패키지를 재검증했다."
+    },
+    {
+      "at": "2026-08-08T12:35:49.079Z",
+      "sequence": null,
+      "event": "예상·확인·수정 흐름 및 학생 표현 정합성 보정",
+      "detail": "초기 정답 선노출 제거, 쌓인 분수 표기, 오답별 첫 수정 단계, 교과서 성취기준과 학년 범위, 조건 화면 공간 계약을 30개 패키지에 반영했다."
+    },
+    {
+      "at": "2026-08-08T13:15:48.169Z",
+      "sequence": null,
+      "event": "정본 활동지 교정·30개 패키지 재검증",
+      "detail": "18개 활동지의 단원 표기와 14번의 길이 값을 선언한 영역 안에서만 교정하고, 영역 밖 픽셀 0건 변경을 확인한 뒤 PDF와 Middle·Eduitit 30개 패키지를 다시 빌드했다. 운영 배포는 하지 않아 재발행 대기 상태를 유지한다."
+    },
+    {
+      "at": "2026-08-08T13:27:26.303Z",
+      "sequence": null,
+      "event": "14번 길이 값 원본·합본 최종 동기화",
+      "detail": "학생 화면과 활동지에 맞춰 원본 스키마·Claude handoff·30개 합본의 지우개 길이를 약 5cm로 통일하고 4cm 잔존 0건을 확인했다."
+    },
+    {
+      "at": "2026-08-08T13:48:13.226Z",
+      "sequence": 9,
+      "event": "몇 묶음 정답 단계·공간 계약 최종 교정",
+      "detail": "35장을 초기에는 불규칙하게 흩어진 붙임 딱지로 제시하고, 수학적 확인 뒤에만 5장씩 7묶음을 공개하도록 고쳤다. 30개 덱 720개 상태에서 겹침·잘림·작은 글자 0건을 확인했으며 운영 배포 전 상태를 유지한다."
     }
   ]
 }

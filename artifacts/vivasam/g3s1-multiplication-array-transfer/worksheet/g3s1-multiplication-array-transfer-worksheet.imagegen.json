@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-e1f8ec84-f8bc-43ce-934d-06125c88158c.png",
   "promptFile": "g3s1-multiplication-array-transfer-worksheet.prompt.txt",
-  "promptSha256": "79aa176b4bc62bdd075810a8626357110d1846c4205fcc30f5e63b270eb38290",
+  "promptSha256": "96081b4fd7c5fe414f120c416ad2f73d79f020d4467ce1569010b565a5e15451",
   "imageFile": "g3s1-multiplication-array-transfer-worksheet.png",
-  "imageSha256": "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8",
+  "imageSha256": "79e23be2bc4a49966e02a957b17e51a3a36e4527bc3705defbac9db558981771",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-07T22:11:21Z",
+    "reviewedAt": "2026-08-08T13:12:17.995Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -29,5 +29,26 @@
         "6장"
       ]
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8",
+    "appliedAt": "2026-08-08T13:12:17.995Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 50,
+          "top": 215,
+          "width": 470,
+          "height": 68
+        },
+        "text": "초등 3학년 1학기 · 4. 곱셈"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 31641
   }
 }

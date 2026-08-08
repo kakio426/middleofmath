@@ -4,13 +4,13 @@
   "generator": "image_gen",
   "sourceOutputId": "exec-44874590-9828-4518-bf82-c243e7f03985.png",
   "promptFile": "g3s1-fraction-pizza-context-worksheet.prompt.txt",
-  "promptSha256": "6acc73ba8011627a0bd28ab34c2181a4019f8ea3759e601c82470d4a546f0dc8",
+  "promptSha256": "088f0fb8e70999905cd5acfe85f4fc06ec9f6e3bf750347b8cf779dc0b3cc1bf",
   "imageFile": "g3s1-fraction-pizza-context-worksheet.png",
-  "imageSha256": "df99f044b1ce1d12bd4e985900ad89ff9de21f8179a8dd68f80d585c30e229f5",
+  "imageSha256": "be63ed75f2c8db5cb15783a68cc01a9540372a5b8a5e5eade64bec5004178178",
   "width": 1024,
   "height": 1536,
   "visualQa": {
-    "reviewedAt": "2026-08-08T08:40:57.594Z",
+    "reviewedAt": "2026-08-08T13:12:23.388Z",
     "logoTitleSeparated": true,
     "allQuestionTextLegible": true,
     "choicesVisuallySeparated": true,
@@ -27,5 +27,26 @@
       "problem2PizzaParts": 10,
       "problem2EatenParts": 4
     }
+  },
+  "postProcessing": {
+    "mode": "deterministic-text-overlay",
+    "tool": "sharp",
+    "script": "tools/vivasam-bundle/patch-worksheet-curriculum-labels.cjs",
+    "sourceImageSha256": "df99f044b1ce1d12bd4e985900ad89ff9de21f8179a8dd68f80d585c30e229f5",
+    "appliedAt": "2026-08-08T13:12:23.388Z",
+    "regions": [
+      {
+        "kind": "curriculum-label",
+        "bbox": {
+          "left": 50,
+          "top": 195,
+          "width": 620,
+          "height": 70
+        },
+        "text": "초등 3학년 1학기 · 6. 분수와 소수"
+      }
+    ],
+    "outsideChangedPixels": 0,
+    "changedPixels": 37581
   }
 }

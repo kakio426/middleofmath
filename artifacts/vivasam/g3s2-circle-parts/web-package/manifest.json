@@ -9,17 +9,38 @@
   "subjectCode": "MATH",
   "grade": "초등 3학년 2학기",
   "unit": "3. 원",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 23,
+    "lessonId": "g3s2-circle-parts",
+    "semester": 2,
+    "unitNumber": 3,
+    "unitTitle": "원",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수03-06"
+    ],
+    "lessonRange": "2~3차시",
+    "lessonTitle": "원의 중심, 반지름, 지름을 알아볼까요?",
+    "textbookPages": {
+      "start": 64,
+      "end": 67
+    },
+    "usageNote": "중심과 원 위의 점을 직접 짚으며 반지름을 정의한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "af7774df5948",
-  "thumbnailAsset": "af7774df5948/representative-image.png",
-  "worksheetAsset": "af7774df5948/g3s2-circle-parts-worksheet.png",
+  "digest": "aeadd60278d8",
+  "thumbnailAsset": "aeadd60278d8/representative-image.png",
+  "worksheetAsset": "aeadd60278d8/g3s2-circle-parts-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "af7774df5948/g3s2-circle-parts-slides.html",
+  "slideHtmlAsset": "aeadd60278d8/g3s2-circle-parts-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-circle-parts",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,28 +48,28 @@
   ],
   "assets": [
     {
-      "path": "af7774df5948/g3s2-circle-parts-slides.html",
-      "bytes": 9172741,
-      "sha256": "8ee50b4d925be25fabbd88bf43f1c46467bfc74a0d4f1e3425aaf6fbe31f32bd",
+      "path": "aeadd60278d8/g3s2-circle-parts-slides.html",
+      "bytes": 9172780,
+      "sha256": "1cce88148be4deca5e204f6f59906e46b0674e9679dbed40d8630225a4d4ef40",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "af7774df5948/g3s2-circle-parts-worksheet.pdf",
+      "path": "aeadd60278d8/g3s2-circle-parts-worksheet.pdf",
       "bytes": 1087280,
       "sha256": "91dd0dc888e935ac21ace9551d5ec311a33755ed8850f5b0bdd9d233a130a80d",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "af7774df5948/g3s2-circle-parts-worksheet.png",
+      "path": "aeadd60278d8/g3s2-circle-parts-worksheet.png",
       "bytes": 1220164,
       "sha256": "dea7e2ff7c59a10f368afd0abf6f67c95d8155071b53ed1dd53e11a952e8722c",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "af7774df5948/representative-image.png",
+      "path": "aeadd60278d8/representative-image.png",
       "bytes": 55381,
       "sha256": "41767a68d347c1d63f66515d00c363a2a95b3bfc7e9dce272d2fc67b4afb92fc",
       "contentType": "image/png",

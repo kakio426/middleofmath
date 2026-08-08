@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "1. 곱셈",
+  "unit": "4. 곱셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 2,
+    "lessonId": "g3s1-multiplication-groups-model",
+    "semester": 1,
+    "unitNumber": 4,
+    "unitTitle": "곱셈",
+    "alignmentType": "connection",
+    "standardCodes": [
+      "4수01-04"
+    ],
+    "lessonRange": "1차시 단원 도입~2차시 전",
+    "lessonTitle": "두 자리 수의 곱셈 전 선수 개념 확인",
+    "textbookPages": {
+      "start": 86,
+      "end": 89
+    },
+    "usageNote": "한 묶음 수와 묶음 수를 곱으로 나타내는 감각을 도입 전 진단·복습에 활용한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "cf5c407775e3",
-  "thumbnailAsset": "cf5c407775e3/representative-image.png",
-  "worksheetAsset": "cf5c407775e3/g3s1-multiplication-groups-model-worksheet.png",
+  "digest": "4618788d24ea",
+  "thumbnailAsset": "4618788d24ea/representative-image.png",
+  "worksheetAsset": "4618788d24ea/g3s1-multiplication-groups-model-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "cf5c407775e3/g3s1-multiplication-groups-model-slides.html",
+  "slideHtmlAsset": "4618788d24ea/g3s1-multiplication-groups-model-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication-groups-model",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "cf5c407775e3/g3s1-multiplication-groups-model-slides.html",
-      "bytes": 8800883,
-      "sha256": "fefd2db128e315276266699b0621395e9cea1d46dd083cf795c72c458ce9b9b9",
+      "path": "4618788d24ea/g3s1-multiplication-groups-model-slides.html",
+      "bytes": 8802222,
+      "sha256": "fd4236cda9a0e1b2236ad9a9566345030843a4747847a7ae6c94e012a1dc8b9d",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "cf5c407775e3/g3s1-multiplication-groups-model-worksheet.pdf",
-      "bytes": 1227319,
-      "sha256": "b12ba1da086d09f825713c85105e07a15f6bc2466fa84af56381023afe79222f",
+      "path": "4618788d24ea/g3s1-multiplication-groups-model-worksheet.pdf",
+      "bytes": 1209980,
+      "sha256": "3eb59703cdb1a35706e152bda8184d0bd4d23d6363cc1dda16d863433fc0195c",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "cf5c407775e3/g3s1-multiplication-groups-model-worksheet.png",
-      "bytes": 1307984,
-      "sha256": "b01d618df1f3e151d259f63bbe08e5e4943b0b475541af82905555c1be01c83c",
+      "path": "4618788d24ea/g3s1-multiplication-groups-model-worksheet.png",
+      "bytes": 1238037,
+      "sha256": "ef0959b7631623b26c911968602ae933448569f4a49ecaa23dead5f7bcd88d2b",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "cf5c407775e3/representative-image.png",
-      "bytes": 50821,
-      "sha256": "6ce69eb8a963b48cb7d8d647a07ee1463e632557680bca6a81a306c8774cdcf6",
+      "path": "4618788d24ea/representative-image.png",
+      "bytes": 50889,
+      "sha256": "2102035d6b16a4788a32e236038fe2b7613ec7eecbff51a2075a6bff178b8416",
       "contentType": "image/png",
       "role": "thumbnail"
     }

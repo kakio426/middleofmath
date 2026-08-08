@@ -11,6 +11,27 @@
       "title": "그림 하나에 숨은 수",
       "grade": "초등 3학년 2학기",
       "unit": "6. 그림그래프",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 1,
+        "lessonId": "g3s2-pictograph-legend",
+        "semester": 2,
+        "unitNumber": 6,
+        "unitTitle": "그림그래프",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수04-01"
+        ],
+        "lessonRange": "3차시",
+        "lessonTitle": "그림그래프로 나타내고 해석해 볼까요?",
+        "textbookPages": {
+          "start": 137,
+          "end": 141
+        },
+        "usageNote": "그림 수에 범례를 적용해 실제 수량과 차이를 해석한다."
+      },
       "digest": "4ba76bae9760",
       "pptStatus": "available",
       "presentationMode": "html",
@@ -21,8 +42,29 @@
       "lessonId": "g3s1-multiplication-groups-model",
       "title": "같은 묶음은 곱셈으로",
       "grade": "초등 3학년 1학기",
-      "unit": "1. 곱셈",
-      "digest": "cf5c407775e3",
+      "unit": "4. 곱셈",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 2,
+        "lessonId": "g3s1-multiplication-groups-model",
+        "semester": 1,
+        "unitNumber": 4,
+        "unitTitle": "곱셈",
+        "alignmentType": "connection",
+        "standardCodes": [
+          "4수01-04"
+        ],
+        "lessonRange": "1차시 단원 도입~2차시 전",
+        "lessonTitle": "두 자리 수의 곱셈 전 선수 개념 확인",
+        "textbookPages": {
+          "start": 86,
+          "end": 89
+        },
+        "usageNote": "한 묶음 수와 묶음 수를 곱으로 나타내는 감각을 도입 전 진단·복습에 활용한다."
+      },
+      "digest": "4618788d24ea",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-multiplication-groups-model/manifest.json"
@@ -32,8 +74,29 @@
       "lessonId": "g3s1-multiplication-array-transfer",
       "title": "줄과 칸으로 전체 수 찾기",
       "grade": "초등 3학년 1학기",
-      "unit": "1. 곱셈",
-      "digest": "3dc5dfce03fa",
+      "unit": "4. 곱셈",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 3,
+        "lessonId": "g3s1-multiplication-array-transfer",
+        "semester": 1,
+        "unitNumber": 4,
+        "unitTitle": "곱셈",
+        "alignmentType": "connection",
+        "standardCodes": [
+          "4수01-04"
+        ],
+        "lessonRange": "1차시 단원 도입~2차시 전",
+        "lessonTitle": "두 자리 수의 곱셈 전 선수 개념 확인",
+        "textbookPages": {
+          "start": 86,
+          "end": 89
+        },
+        "usageNote": "배열을 곱셈식으로 읽는 감각을 확인한 뒤 자릿값 곱셈으로 이어 간다."
+      },
+      "digest": "00a756445f5f",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-multiplication-array-transfer/manifest.json"
@@ -43,8 +106,29 @@
       "lessonId": "g3s1-multiplication-place-value-model",
       "title": "34×2를 두 부분으로",
       "grade": "초등 3학년 1학기",
-      "unit": "1. 곱셈",
-      "digest": "0dc470a95dfb",
+      "unit": "4. 곱셈",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 4,
+        "lessonId": "g3s1-multiplication-place-value-model",
+        "semester": 1,
+        "unitNumber": 4,
+        "unitTitle": "곱셈",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-04"
+        ],
+        "lessonRange": "3차시",
+        "lessonTitle": "(몇십몇)×(몇)을 구해 볼까요?(1)",
+        "textbookPages": {
+          "start": 90,
+          "end": 91
+        },
+        "usageNote": "받아올림이 없는 두 자리 수를 십과 일로 나누어 부분곱을 만든다."
+      },
+      "digest": "b4f9aaae411a",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-multiplication-place-value-model/manifest.json"
@@ -54,8 +138,29 @@
       "lessonId": "g3s1-multiplication-place-value-context",
       "title": "상자 수를 자릿값으로 곱하기",
       "grade": "초등 3학년 1학기",
-      "unit": "1. 곱셈",
-      "digest": "e041efb07707",
+      "unit": "4. 곱셈",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 5,
+        "lessonId": "g3s1-multiplication-place-value-context",
+        "semester": 1,
+        "unitNumber": 4,
+        "unitTitle": "곱셈",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-04"
+        ],
+        "lessonRange": "3차시",
+        "lessonTitle": "(몇십몇)×(몇)을 구해 볼까요?(1)",
+        "textbookPages": {
+          "start": 90,
+          "end": 91
+        },
+        "usageNote": "자릿값을 보존해 만든 부분곱을 더하는 원리를 생활 맥락에 적용한다."
+      },
+      "digest": "8f8430293740",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-multiplication-place-value-context/manifest.json"
@@ -65,8 +170,29 @@
       "lessonId": "g3s1-division-equal-sharing",
       "title": "18개를 똑같이 나누면",
       "grade": "초등 3학년 1학기",
-      "unit": "2. 나눗셈",
-      "digest": "21ca89affd04",
+      "unit": "3. 나눗셈",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 6,
+        "lessonId": "g3s1-division-equal-sharing",
+        "semester": 1,
+        "unitNumber": 3,
+        "unitTitle": "나눗셈",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-05"
+        ],
+        "lessonRange": "2차시",
+        "lessonTitle": "똑같이 나누어 볼까요?",
+        "textbookPages": {
+          "start": 62,
+          "end": 65
+        },
+        "usageNote": "전체를 같은 수의 묶음에 똑같이 나누며 한 묶음의 수를 구한다."
+      },
+      "digest": "0c46d8def08b",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-division-equal-sharing/manifest.json"
@@ -76,8 +202,30 @@
       "lessonId": "g3s1-division-missing-factor",
       "title": "곱셈의 빈칸으로 몫 찾기",
       "grade": "초등 3학년 1학기",
-      "unit": "2. 나눗셈",
-      "digest": "5f4185a02ba7",
+      "unit": "3. 나눗셈",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 7,
+        "lessonId": "g3s1-division-missing-factor",
+        "semester": 1,
+        "unitNumber": 3,
+        "unitTitle": "나눗셈",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-05",
+          "4수01-06"
+        ],
+        "lessonRange": "6차시",
+        "lessonTitle": "나눗셈의 몫을 곱셈식으로 구해 볼까요?",
+        "textbookPages": {
+          "start": 77,
+          "end": 79
+        },
+        "usageNote": "곱셈식의 빈 요인을 찾아 몫을 구하고 관련 나눗셈식으로 확인한다."
+      },
+      "digest": "b3639b04d85a",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-division-missing-factor/manifest.json"
@@ -87,8 +235,29 @@
       "lessonId": "g3s1-division-fact-family",
       "title": "한 곱셈식에서 두 나눗셈식",
       "grade": "초등 3학년 1학기",
-      "unit": "2. 나눗셈",
-      "digest": "76ba91267cca",
+      "unit": "3. 나눗셈",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 8,
+        "lessonId": "g3s1-division-fact-family",
+        "semester": 1,
+        "unitNumber": 3,
+        "unitTitle": "나눗셈",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-05"
+        ],
+        "lessonRange": "5차시",
+        "lessonTitle": "곱셈과 나눗셈의 관계를 알아볼까요?",
+        "textbookPages": {
+          "start": 74,
+          "end": 76
+        },
+        "usageNote": "하나의 곱셈식에서 관련된 두 나눗셈식을 만든다."
+      },
+      "digest": "b68c2733d1f4",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-division-fact-family/manifest.json"
@@ -98,8 +267,30 @@
       "lessonId": "g3s1-division-group-count",
       "title": "몇 묶음인지 곱셈으로 확인하기",
       "grade": "초등 3학년 1학기",
-      "unit": "2. 나눗셈",
-      "digest": "10aad6354d2d",
+      "unit": "3. 나눗셈",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 9,
+        "lessonId": "g3s1-division-group-count",
+        "semester": 1,
+        "unitNumber": 3,
+        "unitTitle": "나눗셈",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-05",
+          "4수01-06"
+        ],
+        "lessonRange": "6차시",
+        "lessonTitle": "나눗셈의 몫을 곱셈식으로 구해 볼까요?",
+        "textbookPages": {
+          "start": 77,
+          "end": 79
+        },
+        "usageNote": "몇 묶음인지 묻는 몫을 곱셈 사실로 확인한다."
+      },
+      "digest": "097b5bb82020",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-division-group-count/manifest.json"
@@ -109,8 +300,29 @@
       "lessonId": "g3s1-fraction-equal-parts",
       "title": "분수의 첫 조건, 똑같이",
       "grade": "초등 3학년 1학기",
-      "unit": "3. 분수",
-      "digest": "a8c2578f0748",
+      "unit": "6. 분수와 소수",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 10,
+        "lessonId": "g3s1-fraction-equal-parts",
+        "semester": 1,
+        "unitNumber": 6,
+        "unitTitle": "분수와 소수",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-09"
+        ],
+        "lessonRange": "2차시",
+        "lessonTitle": "똑같이 나누어 볼까요?",
+        "textbookPages": {
+          "start": 132,
+          "end": 133
+        },
+        "usageNote": "조각 수뿐 아니라 전체가 같은 크기로 등분되었는지 판단한다."
+      },
+      "digest": "bfee3093aa72",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-fraction-equal-parts/manifest.json"
@@ -120,8 +332,29 @@
       "lessonId": "g3s1-fraction-fix-partition",
       "title": "같지 않은 조각을 고쳐 나누기",
       "grade": "초등 3학년 1학기",
-      "unit": "3. 분수",
-      "digest": "c4da3fbc982c",
+      "unit": "6. 분수와 소수",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 11,
+        "lessonId": "g3s1-fraction-fix-partition",
+        "semester": 1,
+        "unitNumber": 6,
+        "unitTitle": "분수와 소수",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-09"
+        ],
+        "lessonRange": "2차시",
+        "lessonTitle": "똑같이 나누어 볼까요?",
+        "textbookPages": {
+          "start": 132,
+          "end": 133
+        },
+        "usageNote": "잘못 나눈 그림을 고치며 등분할 조건을 설명한다."
+      },
+      "digest": "61a39adee966",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-fraction-fix-partition/manifest.json"
@@ -131,8 +364,29 @@
       "lessonId": "g3s1-fraction-part-whole",
       "title": "전체와 부분을 분수로 읽기",
       "grade": "초등 3학년 1학기",
-      "unit": "3. 분수",
-      "digest": "cc4faa83d6aa",
+      "unit": "6. 분수와 소수",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 12,
+        "lessonId": "g3s1-fraction-part-whole",
+        "semester": 1,
+        "unitNumber": 6,
+        "unitTitle": "분수와 소수",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-09"
+        ],
+        "lessonRange": "3차시",
+        "lessonTitle": "분수를 알아볼까요?(1)",
+        "textbookPages": {
+          "start": 134,
+          "end": 137
+        },
+        "usageNote": "전체 조각 수와 고른 조각 수를 분모·분자와 연결한다."
+      },
+      "digest": "5b2d432bf9f8",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-fraction-part-whole/manifest.json"
@@ -142,8 +396,29 @@
       "lessonId": "g3s1-fraction-pizza-context",
       "title": "피자에서 분모와 분자 찾기",
       "grade": "초등 3학년 1학기",
-      "unit": "3. 분수",
-      "digest": "23b8cb4ba8cc",
+      "unit": "6. 분수와 소수",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 13,
+        "lessonId": "g3s1-fraction-pizza-context",
+        "semester": 1,
+        "unitNumber": 6,
+        "unitTitle": "분수와 소수",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-09"
+        ],
+        "lessonRange": "3차시",
+        "lessonTitle": "분수를 알아볼까요?(1)",
+        "textbookPages": {
+          "start": 134,
+          "end": 137
+        },
+        "usageNote": "생활 그림에서 분수를 쓰고 읽으며 분모와 분자의 뜻을 말한다."
+      },
+      "digest": "95468a280fd3",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-fraction-pizza-context/manifest.json"
@@ -153,8 +428,29 @@
       "lessonId": "g3s1-length-centimeter-meter",
       "title": "연필에는 cm, 문에는 m",
       "grade": "초등 3학년 1학기",
-      "unit": "4. 길이",
-      "digest": "7e7d6830db33",
+      "unit": "5. 길이와 시간",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 14,
+        "lessonId": "g3s1-length-centimeter-meter",
+        "semester": 1,
+        "unitNumber": 5,
+        "unitTitle": "길이와 시간",
+        "alignmentType": "connection",
+        "standardCodes": [
+          "4수03-15"
+        ],
+        "lessonRange": "2~5차시 전·사이",
+        "lessonTitle": "길이 단위 선택 선수 개념 진단",
+        "textbookPages": {
+          "start": 110,
+          "end": 117
+        },
+        "usageNote": "cm와 m의 선수 감각을 확인하고 mm와 km 학습으로 이어 간다."
+      },
+      "digest": "6a0b719dadd0",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-length-centimeter-meter/manifest.json"
@@ -164,8 +460,29 @@
       "lessonId": "g3s1-length-real-world-units",
       "title": "크기에 맞는 길이 단위",
       "grade": "초등 3학년 1학기",
-      "unit": "4. 길이",
-      "digest": "c40585b8ea89",
+      "unit": "5. 길이와 시간",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 15,
+        "lessonId": "g3s1-length-real-world-units",
+        "semester": 1,
+        "unitNumber": 5,
+        "unitTitle": "길이와 시간",
+        "alignmentType": "multi-lesson",
+        "standardCodes": [
+          "4수03-15"
+        ],
+        "lessonRange": "2~5차시",
+        "lessonTitle": "길이 단위 학습 종합 적용",
+        "textbookPages": {
+          "start": 110,
+          "end": 117
+        },
+        "usageNote": "mm, cm, m, km 중 대상 크기에 알맞은 단위를 고르는 종합 적용에 활용한다."
+      },
+      "digest": "b71d9f55a282",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-length-real-world-units/manifest.json"
@@ -175,8 +492,29 @@
       "lessonId": "g3s1-length-unit-conversion",
       "title": "m·cm, km·m 연결하기",
       "grade": "초등 3학년 1학기",
-      "unit": "4. 길이",
-      "digest": "f5238903a8f7",
+      "unit": "5. 길이와 시간",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 16,
+        "lessonId": "g3s1-length-unit-conversion",
+        "semester": 1,
+        "unitNumber": 5,
+        "unitTitle": "길이와 시간",
+        "alignmentType": "connection",
+        "standardCodes": [
+          "4수03-16"
+        ],
+        "lessonRange": "4차시 전후",
+        "lessonTitle": "m보다 큰 단위는 무엇일까요?",
+        "textbookPages": {
+          "start": 114,
+          "end": 115
+        },
+        "usageNote": "1m=100cm를 복습하면서 1km=1000m 관계로 연결한다."
+      },
+      "digest": "81754658937d",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-length-unit-conversion/manifest.json"
@@ -187,7 +525,28 @@
       "title": "자릿값을 살려 먼저 곱하기",
       "grade": "초등 3학년 2학기",
       "unit": "1. 곱셈",
-      "digest": "d3885aae904c",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 17,
+        "lessonId": "g3s2-multiplication-place-value",
+        "semester": 2,
+        "unitNumber": 1,
+        "unitTitle": "곱셈",
+        "alignmentType": "multi-lesson",
+        "standardCodes": [
+          "4수01-04"
+        ],
+        "lessonRange": "2~4차시",
+        "lessonTitle": "(세 자리 수)×(한 자리 수)",
+        "textbookPages": {
+          "start": 10,
+          "end": 17
+        },
+        "usageNote": "세 자리 수를 백, 십, 일로 나누어 각 부분곱의 자릿값을 보존한다."
+      },
+      "digest": "02544f623764",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-multiplication-place-value/manifest.json"
@@ -198,7 +557,28 @@
       "title": "부분곱을 빠짐없이 더하기",
       "grade": "초등 3학년 2학기",
       "unit": "1. 곱셈",
-      "digest": "ff58a11ac0f5",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 18,
+        "lessonId": "g3s2-multiplication-combine",
+        "semester": 2,
+        "unitNumber": 1,
+        "unitTitle": "곱셈",
+        "alignmentType": "multi-lesson",
+        "standardCodes": [
+          "4수01-04"
+        ],
+        "lessonRange": "2~4차시",
+        "lessonTitle": "(세 자리 수)×(한 자리 수)",
+        "textbookPages": {
+          "start": 10,
+          "end": 17
+        },
+        "usageNote": "여러 받아올림 경우에 공통으로 필요한 부분곱 합치기를 점검한다."
+      },
+      "digest": "f2b2d4f6fc4e",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-multiplication-combine/manifest.json"
@@ -209,7 +589,28 @@
       "title": "두 자리 수를 나누어 곱하기",
       "grade": "초등 3학년 2학기",
       "unit": "1. 곱셈",
-      "digest": "6cf1d6ec7d70",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 19,
+        "lessonId": "g3s2-multiplication-two-digit",
+        "semester": 2,
+        "unitNumber": 1,
+        "unitTitle": "곱셈",
+        "alignmentType": "multi-lesson",
+        "standardCodes": [
+          "4수01-04"
+        ],
+        "lessonRange": "7~8차시",
+        "lessonTitle": "(몇십몇)×(몇십몇)",
+        "textbookPages": {
+          "start": 22,
+          "end": 25
+        },
+        "usageNote": "두 번째 수를 십과 일로 나누어 두 부분곱을 만든 뒤 더한다."
+      },
+      "digest": "583a70038b62",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-multiplication-two-digit/manifest.json"
@@ -220,7 +621,28 @@
       "title": "나눗셈이 묻는 두 가지",
       "grade": "초등 3학년 2학기",
       "unit": "2. 나눗셈",
-      "digest": "6fccf71cebc7",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 20,
+        "lessonId": "g3s2-division-meaning",
+        "semester": 2,
+        "unitNumber": 2,
+        "unitTitle": "나눗셈",
+        "alignmentType": "connection",
+        "standardCodes": [
+          "4수01-05"
+        ],
+        "lessonRange": "1차시 단원 도입~2차시 전",
+        "lessonTitle": "두 자리 수 나눗셈 전 뜻 진단",
+        "textbookPages": {
+          "start": 32,
+          "end": 35
+        },
+        "usageNote": "계산 절차 전에 한 묶음의 수와 묶음 수라는 나눗셈의 두 뜻을 진단한다."
+      },
+      "digest": "fb3a16e7f00c",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-division-meaning/manifest.json"
@@ -231,7 +653,28 @@
       "title": "먼저 나누고 남은 수 찾기",
       "grade": "초등 3학년 2학기",
       "unit": "2. 나눗셈",
-      "digest": "06a71e5055da",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 21,
+        "lessonId": "g3s2-division-remainder",
+        "semester": 2,
+        "unitNumber": 2,
+        "unitTitle": "나눗셈",
+        "alignmentType": "multi-lesson",
+        "standardCodes": [
+          "4수01-06"
+        ],
+        "lessonRange": "4~7차시",
+        "lessonTitle": "나머지가 없는·있는 (몇십몇)÷(몇)",
+        "textbookPages": {
+          "start": 38,
+          "end": 47
+        },
+        "usageNote": "나머지가 없는 계산에서 10개씩 먼저 나누는 방법을 확인한 뒤, 남은 수도 다시 나누어 몫과 최종 나머지를 구별한다."
+      },
+      "digest": "9f1ea6738405",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-division-remainder/manifest.json"
@@ -242,7 +685,28 @@
       "title": "몫과 나머지로 처음 수 확인하기",
       "grade": "초등 3학년 2학기",
       "unit": "2. 나눗셈",
-      "digest": "92de6cdcdc5c",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 22,
+        "lessonId": "g3s2-division-remainder-check",
+        "semester": 2,
+        "unitNumber": 2,
+        "unitTitle": "나눗셈",
+        "alignmentType": "multi-lesson",
+        "standardCodes": [
+          "4수01-06"
+        ],
+        "lessonRange": "6~7차시",
+        "lessonTitle": "나머지가 있는 (몇십몇)÷(몇)",
+        "textbookPages": {
+          "start": 42,
+          "end": 47
+        },
+        "usageNote": "나누는 수×몫+나머지로 결과를 검산하고 나머지의 뜻을 확인한다."
+      },
+      "digest": "388af13a9295",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-division-remainder-check/manifest.json"
@@ -253,7 +717,28 @@
       "title": "원의 중심과 반지름 찾기",
       "grade": "초등 3학년 2학기",
       "unit": "3. 원",
-      "digest": "af7774df5948",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 23,
+        "lessonId": "g3s2-circle-parts",
+        "semester": 2,
+        "unitNumber": 3,
+        "unitTitle": "원",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수03-06"
+        ],
+        "lessonRange": "2~3차시",
+        "lessonTitle": "원의 중심, 반지름, 지름을 알아볼까요?",
+        "textbookPages": {
+          "start": 64,
+          "end": 67
+        },
+        "usageNote": "중심과 원 위의 점을 직접 짚으며 반지름을 정의한다."
+      },
+      "digest": "aeadd60278d8",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-circle-parts/manifest.json"
@@ -264,7 +749,28 @@
       "title": "반지름 두 개가 만드는 지름",
       "grade": "초등 3학년 2학기",
       "unit": "3. 원",
-      "digest": "5c1f49e0b279",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 24,
+        "lessonId": "g3s2-circle-diameter",
+        "semester": 2,
+        "unitNumber": 3,
+        "unitTitle": "원",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수03-06"
+        ],
+        "lessonRange": "4차시",
+        "lessonTitle": "원의 성질을 알아볼까요?",
+        "textbookPages": {
+          "start": 68,
+          "end": 69
+        },
+        "usageNote": "중심을 지나는 지름이 반지름 두 개의 길이라는 성질을 확인한다."
+      },
+      "digest": "28baf850de2a",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-circle-diameter/manifest.json"
@@ -274,8 +780,29 @@
       "lessonId": "g3s2-fraction-part-whole",
       "title": "색칠한 부분을 분수로",
       "grade": "초등 3학년 2학기",
-      "unit": "4. 분수",
-      "digest": "a322a60aa2ec",
+      "unit": "4. 분수와 소수",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 25,
+        "lessonId": "g3s2-fraction-part-whole",
+        "semester": 2,
+        "unitNumber": 4,
+        "unitTitle": "분수와 소수",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-09"
+        ],
+        "lessonRange": "2차시",
+        "lessonTitle": "분수로 나타내어 볼까요?",
+        "textbookPages": {
+          "start": 80,
+          "end": 81
+        },
+        "usageNote": "등분된 전체에서 주어진 부분을 분수로 나타낸다."
+      },
+      "digest": "f7aa21822170",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-fraction-part-whole/manifest.json"
@@ -285,8 +812,29 @@
       "lessonId": "g3s2-fraction-convert",
       "title": "가분수를 대분수로 바꾸기",
       "grade": "초등 3학년 2학기",
-      "unit": "4. 분수",
-      "digest": "afa8fecf2833",
+      "unit": "4. 분수와 소수",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 26,
+        "lessonId": "g3s2-fraction-convert",
+        "semester": 2,
+        "unitNumber": 4,
+        "unitTitle": "분수와 소수",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-10"
+        ],
+        "lessonRange": "6차시",
+        "lessonTitle": "대분수를 알아볼까요?",
+        "textbookPages": {
+          "start": 88,
+          "end": 89
+        },
+        "usageNote": "가분수 개념을 이어 분모만큼 묶어 대분수로 바꾼다."
+      },
+      "digest": "f93716b1e8b4",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-fraction-convert/manifest.json"
@@ -296,8 +844,29 @@
       "lessonId": "g3s2-fraction-compare",
       "title": "분모가 같은 분수 비교하기",
       "grade": "초등 3학년 2학기",
-      "unit": "4. 분수",
-      "digest": "276513d3d635",
+      "unit": "4. 분수와 소수",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 27,
+        "lessonId": "g3s2-fraction-compare",
+        "semester": 2,
+        "unitNumber": 4,
+        "unitTitle": "분수와 소수",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수01-11"
+        ],
+        "lessonRange": "7차시",
+        "lessonTitle": "분모가 같은 분수의 크기를 비교해 볼까요?",
+        "textbookPages": {
+          "start": 90,
+          "end": 91
+        },
+        "usageNote": "한 조각의 크기가 같을 때 분자와 전체 양의 관계로 비교한다."
+      },
+      "digest": "386f0a495515",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-fraction-compare/manifest.json"
@@ -308,7 +877,28 @@
       "title": "L를 mL로 정확히 바꾸기",
       "grade": "초등 3학년 2학기",
       "unit": "5. 들이와 무게",
-      "digest": "cc2f93875a07",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 28,
+        "lessonId": "g3s2-capacity-unit",
+        "semester": 2,
+        "unitNumber": 5,
+        "unitTitle": "들이와 무게",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수03-18"
+        ],
+        "lessonRange": "2차시",
+        "lessonTitle": "들이를 비교하고 들이의 단위를 알아볼까요?",
+        "textbookPages": {
+          "start": 108,
+          "end": 110
+        },
+        "usageNote": "1L=1000mL를 사용해 혼합 단위와 단일 단위를 연결한다."
+      },
+      "digest": "7282177ad521",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-capacity-unit/manifest.json"
@@ -319,7 +909,28 @@
       "title": "kg을 g으로 정확히 바꾸기",
       "grade": "초등 3학년 2학기",
       "unit": "5. 들이와 무게",
-      "digest": "4bf93961ed0e",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 29,
+        "lessonId": "g3s2-weight-unit",
+        "semester": 2,
+        "unitNumber": 5,
+        "unitTitle": "들이와 무게",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수03-21"
+        ],
+        "lessonRange": "6차시",
+        "lessonTitle": "무게의 단위를 알아볼까요?",
+        "textbookPages": {
+          "start": 118,
+          "end": 120
+        },
+        "usageNote": "1kg=1000g을 사용해 몇 kg 몇 g을 g으로 바꾼다."
+      },
+      "digest": "e108c2aa03dc",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-weight-unit/manifest.json"
@@ -330,7 +941,28 @@
       "title": "그림그래프의 실제 차이 구하기",
       "grade": "초등 3학년 2학기",
       "unit": "6. 그림그래프",
-      "digest": "90bc4ff0619d",
+      "curriculum": {
+        "curriculumRevision": "2022 개정 교육과정",
+        "publisher": "비상교육",
+        "grade": 3,
+        "sequence": 30,
+        "lessonId": "g3s2-pictograph-compare",
+        "semester": 2,
+        "unitNumber": 6,
+        "unitTitle": "그림그래프",
+        "alignmentType": "exact",
+        "standardCodes": [
+          "4수04-01"
+        ],
+        "lessonRange": "3차시",
+        "lessonTitle": "그림그래프로 나타내고 해석해 볼까요?",
+        "textbookPages": {
+          "start": 137,
+          "end": 141
+        },
+        "usageNote": "그림 개수의 차이가 아니라 범례를 적용한 실제 수량 차이를 구한다."
+      },
+      "digest": "37d00d5739a4",
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s2-pictograph-compare/manifest.json"

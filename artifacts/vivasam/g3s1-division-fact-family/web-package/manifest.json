@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "2. 나눗셈",
+  "unit": "3. 나눗셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 8,
+    "lessonId": "g3s1-division-fact-family",
+    "semester": 1,
+    "unitNumber": 3,
+    "unitTitle": "나눗셈",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-05"
+    ],
+    "lessonRange": "5차시",
+    "lessonTitle": "곱셈과 나눗셈의 관계를 알아볼까요?",
+    "textbookPages": {
+      "start": 74,
+      "end": 76
+    },
+    "usageNote": "하나의 곱셈식에서 관련된 두 나눗셈식을 만든다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "76ba91267cca",
-  "thumbnailAsset": "76ba91267cca/representative-image.png",
-  "worksheetAsset": "76ba91267cca/g3s1-division-fact-family-worksheet.png",
+  "digest": "b68c2733d1f4",
+  "thumbnailAsset": "b68c2733d1f4/representative-image.png",
+  "worksheetAsset": "b68c2733d1f4/g3s1-division-fact-family-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "76ba91267cca/g3s1-division-fact-family-slides.html",
+  "slideHtmlAsset": "b68c2733d1f4/g3s1-division-fact-family-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-division-fact-family",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "76ba91267cca/g3s1-division-fact-family-slides.html",
-      "bytes": 9192935,
-      "sha256": "b2e30588efcf1b5112ac74e15c35e51a0f136f574fccf33fb4bb003002bb962b",
+      "path": "b68c2733d1f4/g3s1-division-fact-family-slides.html",
+      "bytes": 9193785,
+      "sha256": "817fd859a12c5816a96d7d838e7c6c549988a8953e4215701f92d059cbca7b71",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "76ba91267cca/g3s1-division-fact-family-worksheet.pdf",
-      "bytes": 1058844,
-      "sha256": "5e89daeb4f6d8a64ad85ef4547713ac49fc76e7e832f835fc6487d6be28d1067",
+      "path": "b68c2733d1f4/g3s1-division-fact-family-worksheet.pdf",
+      "bytes": 1036463,
+      "sha256": "fda6daef9f149b1e7d344463e7892c1fd65d3a8da3a5fbd9d06a562969072540",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "76ba91267cca/g3s1-division-fact-family-worksheet.png",
-      "bytes": 1154128,
-      "sha256": "651dded4ebcfe87ca8928eafaf2dbe51e8670fb811555fb2ebd3d1066c824ab8",
+      "path": "b68c2733d1f4/g3s1-division-fact-family-worksheet.png",
+      "bytes": 1051605,
+      "sha256": "6afe771047675dc617c38d38c3a5f5b6cc9fae15c04bc72cc6e4e3aab9ba1acc",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "76ba91267cca/representative-image.png",
-      "bytes": 53963,
-      "sha256": "57de460e679b22612247dc6ea218cbac71108993a9ea026c185c2c033b4cf20a",
+      "path": "b68c2733d1f4/representative-image.png",
+      "bytes": 53973,
+      "sha256": "4717b8a09626a6c2b403dd9a2d5cdf14db13b352d6ffbb8b01b15caed339a68c",
       "contentType": "image/png",
       "role": "thumbnail"
     }

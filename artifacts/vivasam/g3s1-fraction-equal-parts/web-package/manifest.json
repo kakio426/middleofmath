@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "3. 분수",
+  "unit": "6. 분수와 소수",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 10,
+    "lessonId": "g3s1-fraction-equal-parts",
+    "semester": 1,
+    "unitNumber": 6,
+    "unitTitle": "분수와 소수",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-09"
+    ],
+    "lessonRange": "2차시",
+    "lessonTitle": "똑같이 나누어 볼까요?",
+    "textbookPages": {
+      "start": 132,
+      "end": 133
+    },
+    "usageNote": "조각 수뿐 아니라 전체가 같은 크기로 등분되었는지 판단한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "a8c2578f0748",
-  "thumbnailAsset": "a8c2578f0748/representative-image.png",
-  "worksheetAsset": "a8c2578f0748/g3s1-fraction-equal-parts-worksheet.png",
+  "digest": "bfee3093aa72",
+  "thumbnailAsset": "bfee3093aa72/representative-image.png",
+  "worksheetAsset": "bfee3093aa72/g3s1-fraction-equal-parts-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "a8c2578f0748/g3s1-fraction-equal-parts-slides.html",
+  "slideHtmlAsset": "bfee3093aa72/g3s1-fraction-equal-parts-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-fraction-equal-parts",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "a8c2578f0748/g3s1-fraction-equal-parts-slides.html",
-      "bytes": 8406502,
-      "sha256": "61b7defd5293a2e802e9ddbd7cb97286c715d4236d3531164201386fadb0460e",
+      "path": "bfee3093aa72/g3s1-fraction-equal-parts-slides.html",
+      "bytes": 8409027,
+      "sha256": "a3a3f6882ff0e9fd4ad92124c8c36a030935d6f71487f134480c9344044d5b6c",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "a8c2578f0748/g3s1-fraction-equal-parts-worksheet.pdf",
-      "bytes": 1100701,
-      "sha256": "38d3d29cfc7eadcd04d80191dea67b6dc26cdce098e9627eaff8c6a1e17499ec",
+      "path": "bfee3093aa72/g3s1-fraction-equal-parts-worksheet.pdf",
+      "bytes": 1076625,
+      "sha256": "4af187733bad8ca770a5d6574359d8510f2f1c2dfa823f59bd4c35760f2724fb",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "a8c2578f0748/g3s1-fraction-equal-parts-worksheet.png",
-      "bytes": 1193896,
-      "sha256": "67666a41dd77f77bc0019d25b8bc58b2f5e3663b0e2ff6d777ab71730d4cad10",
+      "path": "bfee3093aa72/g3s1-fraction-equal-parts-worksheet.png",
+      "bytes": 1096128,
+      "sha256": "825e95db71d42541fecba769d98d1f240ab3c9be0d0b783c17199f1d6dafcde1",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "a8c2578f0748/representative-image.png",
-      "bytes": 50486,
-      "sha256": "fea00dfa7647788ff613328f77289f4875c6e6048e8893563069a6aabc85751c",
+      "path": "bfee3093aa72/representative-image.png",
+      "bytes": 51179,
+      "sha256": "128dc175151981e035a5defbd0172ff30199b57a264c99e6eb301cd65e891e60",
       "contentType": "image/png",
       "role": "thumbnail"
     }

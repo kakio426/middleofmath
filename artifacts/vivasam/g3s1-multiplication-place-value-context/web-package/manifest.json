@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "1. 곱셈",
+  "unit": "4. 곱셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 5,
+    "lessonId": "g3s1-multiplication-place-value-context",
+    "semester": 1,
+    "unitNumber": 4,
+    "unitTitle": "곱셈",
+    "alignmentType": "exact",
+    "standardCodes": [
+      "4수01-04"
+    ],
+    "lessonRange": "3차시",
+    "lessonTitle": "(몇십몇)×(몇)을 구해 볼까요?(1)",
+    "textbookPages": {
+      "start": 90,
+      "end": 91
+    },
+    "usageNote": "자릿값을 보존해 만든 부분곱을 더하는 원리를 생활 맥락에 적용한다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "e041efb07707",
-  "thumbnailAsset": "e041efb07707/representative-image.png",
-  "worksheetAsset": "e041efb07707/g3s1-multiplication-place-value-context-worksheet.png",
+  "digest": "8f8430293740",
+  "thumbnailAsset": "8f8430293740/representative-image.png",
+  "worksheetAsset": "8f8430293740/g3s1-multiplication-place-value-context-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "e041efb07707/g3s1-multiplication-place-value-context-slides.html",
+  "slideHtmlAsset": "8f8430293740/g3s1-multiplication-place-value-context-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication-place-value-context",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "e041efb07707/g3s1-multiplication-place-value-context-slides.html",
-      "bytes": 8207193,
-      "sha256": "ae094190191bc586836f71c516f9c5d75ce925e12909c4a8fb887b620a9dabc4",
+      "path": "8f8430293740/g3s1-multiplication-place-value-context-slides.html",
+      "bytes": 8207210,
+      "sha256": "440a171b11e75f0067ad5f08fb7ea9daabafa94956ac5517abb0db415b25e57d",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "e041efb07707/g3s1-multiplication-place-value-context-worksheet.pdf",
-      "bytes": 1226619,
-      "sha256": "02262e7b61cde19f2de8ab92405df0e423ff92fd51a92729525170397eaee16c",
+      "path": "8f8430293740/g3s1-multiplication-place-value-context-worksheet.pdf",
+      "bytes": 1204935,
+      "sha256": "ce298a7c38fdb68347baae38e2bfd1ff68ce49c09474bce9e32002833d4c425b",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "e041efb07707/g3s1-multiplication-place-value-context-worksheet.png",
-      "bytes": 1300589,
-      "sha256": "a2930e8732037becaf573970dfb016ff02c10bb5495e0ce6a42b2bc8b33b8406",
+      "path": "8f8430293740/g3s1-multiplication-place-value-context-worksheet.png",
+      "bytes": 1228496,
+      "sha256": "837fb9561a4e06839d678a3f9c918eb32505da59919f51644e4d882f694b9a66",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "e041efb07707/representative-image.png",
-      "bytes": 53378,
-      "sha256": "d954aceccc2bac261013bdb0e22414387c0a9f16eed242a1676b32730e64c88d",
+      "path": "8f8430293740/representative-image.png",
+      "bytes": 53472,
+      "sha256": "de3ebfbf8230abff9288eab86e6159eb982e526660d2b1ccb88f4f26bebc51b1",
       "contentType": "image/png",
       "role": "thumbnail"
     }

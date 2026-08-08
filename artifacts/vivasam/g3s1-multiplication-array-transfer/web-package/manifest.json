@@ -8,18 +8,39 @@
   "subject": "수학",
   "subjectCode": "MATH",
   "grade": "초등 3학년 1학기",
-  "unit": "1. 곱셈",
+  "unit": "4. 곱셈",
+  "curriculum": {
+    "curriculumRevision": "2022 개정 교육과정",
+    "publisher": "비상교육",
+    "grade": 3,
+    "sequence": 3,
+    "lessonId": "g3s1-multiplication-array-transfer",
+    "semester": 1,
+    "unitNumber": 4,
+    "unitTitle": "곱셈",
+    "alignmentType": "connection",
+    "standardCodes": [
+      "4수01-04"
+    ],
+    "lessonRange": "1차시 단원 도입~2차시 전",
+    "lessonTitle": "두 자리 수의 곱셈 전 선수 개념 확인",
+    "textbookPages": {
+      "start": 86,
+      "end": 89
+    },
+    "usageNote": "배열을 곱셈식으로 읽는 감각을 확인한 뒤 자릿값 곱셈으로 이어 간다."
+  },
   "durationMinutes": 40,
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "3dc5dfce03fa",
-  "thumbnailAsset": "3dc5dfce03fa/representative-image.png",
-  "worksheetAsset": "3dc5dfce03fa/g3s1-multiplication-array-transfer-worksheet.png",
+  "digest": "00a756445f5f",
+  "thumbnailAsset": "00a756445f5f/representative-image.png",
+  "worksheetAsset": "00a756445f5f/g3s1-multiplication-array-transfer-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "3dc5dfce03fa/g3s1-multiplication-array-transfer-slides.html",
+  "slideHtmlAsset": "00a756445f5f/g3s1-multiplication-array-transfer-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication-array-transfer",
   "mathCanvasEditorUrl": "https://mathcanvas.vivasam.com/ko/view/TBmzEW",
   "downloadAssets": [
@@ -27,30 +48,30 @@
   ],
   "assets": [
     {
-      "path": "3dc5dfce03fa/g3s1-multiplication-array-transfer-slides.html",
-      "bytes": 8228839,
-      "sha256": "7503dec1d8291e26ceb97b13ed6eaedbc9d9146feaf96f85525087b1aa584074",
+      "path": "00a756445f5f/g3s1-multiplication-array-transfer-slides.html",
+      "bytes": 8230182,
+      "sha256": "ef7d601ad9279cdb7a36be9e5968a7a85190ca799f4c7bcc4cf3f30eae6bdc54",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "3dc5dfce03fa/g3s1-multiplication-array-transfer-worksheet.pdf",
-      "bytes": 1373873,
-      "sha256": "62700a537202107b993d098f50d48c41b5b49b0265e0c7bb9a7be1a4092673eb",
+      "path": "00a756445f5f/g3s1-multiplication-array-transfer-worksheet.pdf",
+      "bytes": 1344940,
+      "sha256": "a3cf4a436763f69700514d3b7523b53ad3f5b3ec0abb6387fa71b79094e7271d",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "3dc5dfce03fa/g3s1-multiplication-array-transfer-worksheet.png",
-      "bytes": 1317136,
-      "sha256": "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8",
+      "path": "00a756445f5f/g3s1-multiplication-array-transfer-worksheet.png",
+      "bytes": 1405299,
+      "sha256": "79e23be2bc4a49966e02a957b17e51a3a36e4527bc3705defbac9db558981771",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "3dc5dfce03fa/representative-image.png",
-      "bytes": 52500,
-      "sha256": "cbe0a39ca6dae457e019e86a39315e6a73d898e28ecb79194297f3c1e7ca5cb1",
+      "path": "00a756445f5f/representative-image.png",
+      "bytes": 52590,
+      "sha256": "3a0de5021e3a0cb55fe410e2379a913b42fe0c5dc5cb7b2249077e0e2c27559d",
       "contentType": "image/png",
       "role": "thumbnail"
     }
