@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-07T22:18:22.541Z",
+  "updatedAt": "2026-08-08T00:52:30.178Z",
   "subject": "수학",
   "targetDeckCount": 30,
   "targetWorksheetCount": 30,
-  "completedRecordCount": 2,
+  "completedRecordCount": 3,
   "records": [
     {
       "sequence": 1,
@@ -33,6 +33,21 @@
       "teachingIntent": "이 차시는 학생이 정답만 말하는 데서 멈추지 않고, 자료에서 필요한 정보를 찾고 수학적 관계를 적용한 뒤 식·그림·한 문장으로 근거를 남기도록 설계했습니다. 슬라이드의 짝 설명과 오류 분석은 한 장짜리 통합 활동지의 기록으로 이어지며, 교사는 서로 다른 문항에서 같은 오류가 반복되는지 확인한 뒤 다음 수업 행동을 결정합니다.",
       "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
       "representativeImagePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/support/representative-image.png",
+      "pptStatus": "received",
+      "communityPostStatus": "not-posted",
+      "raceRecordStatus": "not-registered"
+    },
+    {
+      "sequence": 3,
+      "lessonId": "g3s1-multiplication-array-transfer",
+      "subject": "수학",
+      "grade": "초등 3학년 1학기",
+      "unit": "1. 곱셈",
+      "title": "줄과 칸으로 전체 수 찾기",
+      "slideCount": 12,
+      "teachingIntent": "이 차시는 학생이 정답만 말하는 데서 멈추지 않고, 자료에서 필요한 정보를 찾고 수학적 관계를 적용한 뒤 식·그림·한 문장으로 근거를 남기도록 설계했습니다. 슬라이드의 짝 설명과 오류 분석은 한 장짜리 통합 활동지의 기록으로 이어지며, 교사는 서로 다른 문항에서 같은 오류가 반복되는지 확인한 뒤 다음 수업 행동을 결정합니다.",
+      "publicUrl": "https://eduitit.site/edu-materials/bf456499-f56d-4bf5-86e2-2179f4ce354a/",
+      "representativeImagePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/support/representative-image.png",
       "pptStatus": "received",
       "communityPostStatus": "not-posted",
       "raceRecordStatus": "not-registered"

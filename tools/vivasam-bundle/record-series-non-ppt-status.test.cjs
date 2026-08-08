@@ -52,9 +52,9 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
   assert.equal(summary.supportValidated, 3);
   assert.equal(summary.packagesValidated, 3);
   assert.equal(summary.localRecordsPublished, 3);
-  assert.equal(summary.claudePptsAwaiting, 27);
+  assert.equal(summary.claudePptsAwaiting, 24);
   assert.equal(summary.claudePptsValidated, 0);
-  assert.equal(summary.productionPublished, 2);
+  assert.equal(summary.productionPublished, 3);
 
   for (const bundle of validated.bundles.slice(0, 3)) {
     assert.equal(bundle.worksheet.status, "validated");
@@ -67,19 +67,23 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
     assert.equal(bundle.support.representativeImageStatus, "validated");
     assert.equal(bundle.eduitit.packageStatus, "validated");
     assert.equal(bundle.eduitit.localRecordStatus, "published");
-    if (bundle.sequence <= 2) {
-      assert.equal(bundle.eduitit.anonymousAccessStatus, "production-passed");
-      assert.equal(bundle.eduitit.productionStatus, "deployed");
-      assert.match(bundle.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
-    } else {
-      assert.equal(bundle.eduitit.anonymousAccessStatus, "local-passed");
-      assert.equal(bundle.eduitit.productionStatus, "not-deployed");
-      assert.equal(bundle.eduitit.publicUrl, "");
-    }
+    assert.equal(bundle.eduitit.anonymousAccessStatus, "production-passed");
+    assert.equal(bundle.eduitit.productionStatus, "deployed");
+    assert.match(bundle.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
     assert.equal(bundle.ppt.status, "received");
     assert.equal(bundle.ppt.slideCount, 12);
   }
-  for (const bundle of validated.bundles.slice(3)) {
+  for (const bundle of validated.bundles.slice(3, 6)) {
+    assert.equal(bundle.worksheet.status, "not-started");
+    assert.equal(bundle.support.intentStatus, "not-started");
+    assert.equal(bundle.eduitit.packageStatus, "not-started");
+    assert.equal(bundle.eduitit.localRecordStatus, "unpublished");
+    assert.equal(bundle.eduitit.productionStatus, "not-deployed");
+    assert.equal(bundle.ppt.status, "received");
+    assert.equal(bundle.ppt.format, "html");
+    assert.equal(bundle.ppt.slideCount, 12);
+  }
+  for (const bundle of validated.bundles.slice(6)) {
     assert.equal(bundle.worksheet.status, "not-started");
     assert.equal(bundle.support.intentStatus, "not-started");
     assert.equal(bundle.eduitit.packageStatus, "not-started");

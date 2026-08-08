@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-08T00:31:21.110Z",
+  "updatedAt": "2026-08-08T00:52:30.178Z",
   "contract": {
     "targetDeckCount": 30,
     "preferredSlidesPerDeck": 11,
@@ -147,10 +147,10 @@
         "digest": "0b45930ac8bc",
         "localRecordStatus": "published",
         "localRecordId": "2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae",
-        "anonymousAccessStatus": "local-passed",
-        "productionStatus": "not-deployed",
-        "publicUrl": "",
-        "validatedAt": "2026-08-08T00:31:10.000Z"
+        "anonymousAccessStatus": "production-passed",
+        "productionStatus": "deployed",
+        "publicUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/",
+        "validatedAt": "2026-08-08T00:52:30.178Z"
       },
       "notes": []
     },
@@ -204,10 +204,10 @@
         "digest": "2a81ac7e0439",
         "localRecordStatus": "published",
         "localRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
-        "anonymousAccessStatus": "local-passed",
-        "productionStatus": "not-deployed",
-        "publicUrl": "",
-        "validatedAt": "2026-08-08T00:31:10.000Z"
+        "anonymousAccessStatus": "production-passed",
+        "productionStatus": "deployed",
+        "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
+        "validatedAt": "2026-08-08T00:52:30.178Z"
       },
       "notes": []
     },
@@ -260,11 +260,11 @@
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-array-transfer",
         "digest": "434492442ef4",
         "localRecordStatus": "published",
-        "localRecordId": "e0eb0dc2-f97d-4bc4-8b7a-292f8d7a3564",
-        "anonymousAccessStatus": "local-passed",
-        "productionStatus": "not-deployed",
-        "publicUrl": "",
-        "validatedAt": "2026-08-08T00:31:10.000Z"
+        "localRecordId": "bf456499-f56d-4bf5-86e2-2179f4ce354a",
+        "anonymousAccessStatus": "production-passed",
+        "productionStatus": "deployed",
+        "publicUrl": "https://eduitit.site/edu-materials/bf456499-f56d-4bf5-86e2-2179f4ce354a/",
+        "validatedAt": "2026-08-08T00:52:30.178Z"
       },
       "notes": [
         "수동 제작본 검수 결과를 반영했으며 다른 사람 자료와 기존 AI 프로토타입은 재사용하지 않습니다."
@@ -2144,6 +2144,12 @@
       "sequence": 3,
       "event": "HTML·MathCanvas 로컬 재게시 검증",
       "detail": "상세·실행·렌더·썸네일·활동지·12장 슬라이드와 TBmzEW 링크를 비로그인 상태로 확인했다."
+    },
+    {
+      "at": "2026-08-08T00:52:30.178Z",
+      "sequence": null,
+      "event": "Eduitit 운영 공개·비로그인 검증 완료",
+      "detail": "PPT 수령분 3개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다."
     }
   ]
 }

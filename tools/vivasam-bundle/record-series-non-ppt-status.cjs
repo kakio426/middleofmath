@@ -102,18 +102,9 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
         pdfPath: "",
         validatedAt: "",
       };
-      bundle.ppt = {
-        ...bundle.ppt,
-        status: "awaiting-claude",
-        format: "html",
-        pptxPath: "",
-        htmlPath: "",
-        slideCount: null,
-        intakeReportPath: "",
-        renderedPdfPath: "",
-        slidesDirectory: "",
-        validatedAt: "",
-      };
+      // 발표 화면을 이미 받은 슬롯은 통합 활동지가 없어서 이번 공개 대상에
+      // 들지 못했더라도 수령 증거를 보존한다. 공개 검증은 게시 상태만
+      // 되돌려야 하며 HTML/PPTX 수령 자체를 없던 일로 만들면 안 된다.
       bundle.support = {
         ...bundle.support,
         intentStatus: "not-started",
@@ -194,7 +185,7 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
     at: now,
     sequence: null,
     event: "발표 화면 수령분 산출물·Eduitit 로컬 공개 검증 완료",
-    detail: `수령된 Claude HTML/PPTX ${verification.records.length}개를 기준으로 통합 활동지·수업 진행 안내·대표 이미지와 Eduitit 공개 패키지를 만들고 비로그인 접근을 검증했다. 나머지 슬롯은 발표 화면 수령 대기로 되돌렸다.`,
+    detail: `통합 활동지까지 준비된 Claude HTML/PPTX ${verification.records.length}개를 Eduitit 공개 패키지로 만들고 비로그인 접근을 검증했다. 발표 화면만 도착한 슬롯은 수령 상태를 보존하고 게시를 대기한다.`,
   });
   return tracker;
 }

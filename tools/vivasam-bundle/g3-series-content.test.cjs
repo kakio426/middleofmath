@@ -125,18 +125,18 @@ test("색인과 합본은 30개 원고를 빠짐없이 가리킨다", () => {
   for (const entry of SERIES_PLAN) assert.ok(index.includes(entry.lessonId));
 });
 
-test("추적 원장은 내용 30개와 수령된 발표 자료 3개를 정확히 기록한다", () => {
+test("추적 원장은 내용 30개와 수령된 발표 자료 6개를 정확히 기록한다", () => {
   const loaded = loadTracker(trackerPath);
   const validated = validateTracker(loaded.tracker, { trackerPath });
   const summary = summarizeTracker(validated);
   assert.equal(summary.registeredLessons, 30);
   assert.equal(summary.contentValidated, 30);
-  assert.equal(summary.claudePptsAwaiting, 27);
+  assert.equal(summary.claudePptsAwaiting, 24);
   assert.equal(summary.claudePptsValidated, 0);
   assert.equal(summary.worksheetsValidated, 3);
   assert.equal(summary.supportValidated, 3);
   assert.equal(summary.packagesValidated, 3);
   assert.equal(summary.localRecordsPublished, 3);
-  assert.equal(summary.productionPublished, 2);
+  assert.equal(summary.productionPublished, 3);
   assert.equal(summary.fullyCompleted, 0);
 });
