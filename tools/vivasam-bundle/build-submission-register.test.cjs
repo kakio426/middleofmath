@@ -21,6 +21,7 @@ test("submission register contains only the received and publicly verified lesso
   assert.equal(register.records.length, 30);
   assert.equal(register.completedRecordCount, 30);
   assert.equal(new Set(register.records.map((record) => record.publicUrl)).size, 30);
+  assert.equal(new Set(register.records.map((record) => record.teachingIntent)).size, 30);
   for (const record of register.records) {
     assert.equal(record.subject, "수학");
     assert.match(record.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);

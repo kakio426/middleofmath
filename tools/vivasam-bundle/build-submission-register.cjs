@@ -3,6 +3,7 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
+const { registrationIntentFor } = require("./registration-intents.cjs");
 
 const REPO_ROOT = path.resolve(__dirname, "../..");
 const DEFAULT_TRACKER_PATH = path.join(__dirname, "series-tracker.json");
@@ -33,9 +34,7 @@ function buildSubmissionRegister(tracker) {
     .filter((bundle) => bundle.eduitit?.anonymousAccessStatus === "production-passed")
     .map((bundle) => {
       const schemaPath = repoPath(bundle.content.schemaPath);
-      const intentPath = repoPath(bundle.support.intentPath);
       const schema = require(schemaPath);
-      const intentMarkdown = fs.readFileSync(intentPath, "utf8");
       const submission = { ...defaultSubmission, ...(bundle.submission || {}) };
       ensure(schema.id === bundle.lessonId, `${bundle.lessonId} 스키마 ID가 다릅니다.`);
       ensure(bundle.subject === "수학", `${bundle.lessonId} 교과목이 수학이 아닙니다.`);
@@ -49,7 +48,7 @@ function buildSubmissionRegister(tracker) {
         unit: bundle.unit,
         title: bundle.title,
         slideCount: bundle.ppt.slideCount,
-        teachingIntent: extractCoreIntent(intentMarkdown),
+        teachingIntent: registrationIntentFor(bundle.lessonId),
         publicUrl: bundle.eduitit.publicUrl,
         representativeImagePath: bundle.support.representativeImagePath,
         pptStatus: bundle.ppt.status,
@@ -60,6 +59,7 @@ function buildSubmissionRegister(tracker) {
   ensure(records.length > 0 && records.length <= 30, "현재 공개 완료된 제출 기록 수가 잘못되었습니다.");
   ensure(new Set(records.map((record) => record.lessonId)).size === records.length, "lessonId가 중복되었습니다.");
   ensure(new Set(records.map((record) => record.publicUrl)).size === records.length, "공개 URL이 중복되었습니다.");
+  ensure(new Set(records.map((record) => record.teachingIntent)).size === records.length, "등록용 수업 설계 의도가 중복되었습니다.");
   return {
     schemaVersion: 1,
     seriesId: tracker.seriesId,
