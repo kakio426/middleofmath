@@ -126,6 +126,7 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
   assert.equal(report.representativeImageCount, 30);
   assert.equal(new Set(report.worksheetHashes).size, 30);
   assert.equal(new Set(report.representativeImageHashes).size, 30);
+  const practiceUrls = new Set();
 
   for (const item of report.items) {
     const worksheetRoot = path.dirname(item.worksheetPngPath);
@@ -234,7 +235,12 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
     assert.equal(manifest.assets.some((asset) => asset.path.endsWith(".pptx")), false);
     assert.equal(manifest.assets.filter((asset) => asset.role === "presentation").length, 1);
     assert.equal(manifest.downloadAssets.length, 1);
-    assert.match(manifest.practiceUrl, /^https:\/\/middle-of-math-student\.vercel\.app\/\?practice=/);
+    assert.equal(
+      manifest.practiceUrl,
+      `https://middle-of-math-student.vercel.app/?practice=${item.lessonId}`,
+      `${item.lessonId}: 차시 전용 문제 묶음 링크`,
+    );
+    practiceUrls.add(manifest.practiceUrl);
     assert.equal(manifest.assets.some((asset) => /\.(?:md|json|svg)$/i.test(asset.path)), false);
     const trackedMathCanvas = seriesTracker.bundles.find((bundle) => bundle.lessonId === item.lessonId).mathcanvas || {};
     const expectedMathCanvasUrl = ["manual-selected", "created", "public-link-ready"].includes(trackedMathCanvas.status)
@@ -262,6 +268,8 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
       assert.equal((teachingIntent.match(/^\| \d+ \|/gm) || []).length, 12);
     }
   }
+
+  assert.equal(practiceUrls.size, 30);
 
 });
 

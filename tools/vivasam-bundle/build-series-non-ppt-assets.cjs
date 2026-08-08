@@ -561,8 +561,7 @@ function downloadUrl(lessonId, filename) {
 }
 
 function practiceUrlFor(lesson) {
-  const semester = lesson.id.startsWith("g3s1-") ? "g3s1" : "g3s2";
-  return `https://middle-of-math-student.vercel.app/?practice=${semester}-${lessonDomain(lesson)}`;
+  return `https://middle-of-math-student.vercel.app/?practice=${lesson.id}`;
 }
 
 function mathCanvasEditorUrlFor(lesson, {
@@ -1139,7 +1138,10 @@ function validatePackage(item) {
     ensure(manifest.slideHtmlAsset === `${manifest.digest}/${item.lesson.id}-slides.html`, `${item.lesson.id} HTML 슬라이드 자산 경로가 잘못되었습니다.`);
     validateClaudeHtmlSlides(path.join(item.packageRoot, manifest.slideHtmlAsset));
   }
-  ensure(/^https:\/\/middle-of-math-student\.vercel\.app\/\?practice=g3s[12]-[a-z-]+$/.test(manifest.practiceUrl), `${item.lesson.id} 관련 문제 링크가 잘못되었습니다.`);
+  ensure(
+    manifest.practiceUrl === practiceUrlFor(item.lesson),
+    `${item.lesson.id} 관련 문제 링크가 차시 전용 주소가 아닙니다.`,
+  );
   const expectedMathCanvasEditorUrl = item.mathcanvasEditorUrl || "";
   ensure((manifest.mathCanvasEditorUrl || "") === expectedMathCanvasEditorUrl, `${item.lesson.id} MathCanvas manifest와 추적 상태가 다릅니다.`);
   if (expectedMathCanvasEditorUrl) {
