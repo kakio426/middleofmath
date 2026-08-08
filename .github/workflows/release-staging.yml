@@ -8,14 +8,45 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: staging-release
   cancel-in-progress: false
 
 jobs:
-  preflight-secrets:
+  # CI decides whether a push can affect what we ship. When it can, CI runs its
+  # `verify` job; otherwise `verify` is skipped. Releasing on a skipped verify
+  # would migrate the staging database and redeploy three apps to publish a PDF,
+  # so read that decision back instead of trusting the run conclusion alone.
+  gate:
     if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      release: ${{ steps.decide.outputs.release }}
+    steps:
+      - name: Release only what the full suite verified
+        id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -uo pipefail
+          verify=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs?per_page=100" \
+            --jq '[.jobs[] | select(.name == "verify") | .conclusion] | first // "absent"')
+          echo "CI verify job: $verify"
+          if [ "$verify" = "success" ]; then
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::This push changed no shipped code, so staging keeps its current release."
+          fi
+
+  preflight-secrets:
+    needs: gate
+    if: needs.gate.outputs.release == 'true'
     runs-on: ubuntu-latest
     environment: staging
     env:
