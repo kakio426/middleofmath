@@ -8,6 +8,7 @@ const path = require("node:path");
 const test = require("node:test");
 
 const sharp = require("sharp");
+const seriesTracker = require("./series-tracker.json");
 
 const {
   SERIES_ASSET_CONTRACT,
@@ -193,20 +194,31 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
     const manifest = JSON.parse(fs.readFileSync(item.packageManifestPath, "utf8"));
     const html = fs.readFileSync(item.packageHtmlPath, "utf8");
     assert.equal(manifest.lessonId, item.lessonId);
-    const pptAvailable = [1, 2, 3].includes(item.lesson.sequence);
-    assert.equal(manifest.schemaVersion, 3);
-    assert.equal(manifest.slideCount, pptAvailable ? 12 : 11);
-    assert.equal(manifest.pptStatus, pptAvailable ? "available" : "awaiting-claude");
-    assert.equal(manifest.assets.some((asset) => asset.path.endsWith(".pptx")), pptAvailable);
-    assert.equal(manifest.downloadAssets.length, pptAvailable ? 2 : 1);
+    assert.equal(manifest.schemaVersion, 4);
+    assert.equal(manifest.slideCount, 12);
+    assert.equal(manifest.pptStatus, "available");
+    assert.equal(manifest.presentationMode, "html");
+    assert.equal(manifest.assets.some((asset) => asset.path.endsWith(".pptx")), false);
+    assert.equal(manifest.assets.filter((asset) => asset.role === "presentation").length, 1);
+    assert.equal(manifest.downloadAssets.length, 1);
     assert.match(manifest.practiceUrl, /^https:\/\/middle-of-math-student\.vercel\.app\/\?practice=/);
     assert.equal(manifest.assets.some((asset) => /\.(?:md|json|svg)$/i.test(asset.path)), false);
+    const trackedMathCanvas = seriesTracker.bundles.find((bundle) => bundle.lessonId === item.lessonId).mathcanvas || {};
+    const expectedMathCanvasUrl = ["manual-selected", "created", "public-link-ready"].includes(trackedMathCanvas.status)
+      ? trackedMathCanvas.editorUrl
+      : "";
+    assert.equal(manifest.mathCanvasEditorUrl || "", expectedMathCanvasUrl);
     assert.equal((html.match(/data-section=/g) || []).length, 3);
     assert.match(html, />PPT</);
     assert.match(html, />활동지</);
     assert.match(html, /수업은 이렇게 진행해 보세요/);
     assert.match(html, /관련 문제 더 풀기/);
     assert.match(html, new RegExp(`href="${manifest.practiceUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`));
+    if (expectedMathCanvasUrl) {
+      assert.doesNotMatch(html, /data-section="mathcanvas"/);
+      assert.match(html, new RegExp(`href="${expectedMathCanvasUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`));
+      assert.match(html, /MathCanvas에서 열기/);
+    }
     assert.doesNotMatch(html, /비바샘|개인정보|Claude|교사용 정답|수업 설계 의도|슬라이드별 내용/);
     assert.doesNotMatch(html, /data:image\//i);
     assert.doesNotMatch(html, /\b01[016789]-?\d{3,4}-?\d{4}\b/);
@@ -256,11 +268,8 @@ test("PPT가 도착한 원본과 Eduitit 동기화 폴더에는 공개 자료만
         false,
         lesson.id,
       );
-      assert.equal(
-        actual.some((file) => /\.pptx$/i.test(file)),
-        [1, 2, 3].includes(lesson.sequence),
-        lesson.id,
-      );
+      assert.equal(actual.some((file) => /\.pptx$/i.test(file)), false, lesson.id);
+      assert.equal(actual.filter((file) => /-slides\.html$/i.test(file)).length, 1, lesson.id);
     }
   }
 });

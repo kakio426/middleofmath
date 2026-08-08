@@ -15,39 +15,40 @@
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "e9ba426f29d8",
-  "thumbnailAsset": "e9ba426f29d8/representative-image.png",
-  "worksheetAsset": "e9ba426f29d8/g3s2-pictograph-legend-worksheet.png",
+  "digest": "0b45930ac8bc",
+  "thumbnailAsset": "0b45930ac8bc/representative-image.png",
+  "worksheetAsset": "0b45930ac8bc/g3s2-pictograph-legend-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "e9ba426f29d8/g3s2-pictograph-legend-slides.html",
+  "slideHtmlAsset": "0b45930ac8bc/g3s2-pictograph-legend-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-pictograph",
+  "mathCanvasEditorUrl": "",
   "downloadAssets": [
     "g3s2-pictograph-legend-worksheet.pdf"
   ],
   "assets": [
     {
-      "path": "e9ba426f29d8/g3s2-pictograph-legend-slides.html",
-      "bytes": 8419455,
-      "sha256": "80ed77bcc90b17fb2a7ff13c38d0a314bf9105994a01ac68788ec2083a09c949",
+      "path": "0b45930ac8bc/g3s2-pictograph-legend-slides.html",
+      "bytes": 8419459,
+      "sha256": "37b157383af3d671d1e5bb57fbae5e45b003de69cefde44cb018c6758a3d3c28",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "e9ba426f29d8/g3s2-pictograph-legend-worksheet.pdf",
+      "path": "0b45930ac8bc/g3s2-pictograph-legend-worksheet.pdf",
       "bytes": 1071027,
       "sha256": "06a2215425053735c84f47846cf18953604055c8ad8748562b01b732b1aa3102",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "e9ba426f29d8/g3s2-pictograph-legend-worksheet.png",
+      "path": "0b45930ac8bc/g3s2-pictograph-legend-worksheet.png",
       "bytes": 1178918,
       "sha256": "49b7311804eba015a099b92f30195996ff0d0abe88016bf2d3e1e52399fdd261",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "e9ba426f29d8/representative-image.png",
+      "path": "0b45930ac8bc/representative-image.png",
       "bytes": 55221,
       "sha256": "9a402b50d8119adb2eef273f1c916db5d43d5117fff0fcaaa75446fad5908e7a",
       "contentType": "image/png",

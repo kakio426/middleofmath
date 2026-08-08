@@ -10,8 +10,13 @@ const { materializeBundle, repositoryRoots } = require("./track-series.cjs");
 const {
   assertWorksheetContract,
   buildWorksheetIntake,
+  eduititStaleFields,
+  loadLessonSchema,
   parseArgs,
   projectTrackerFields,
+  shouldSyncMathCanvasPackage,
+  syncMathCanvasPackage,
+  validateMathCanvasPackageLink,
 } = require("./mathcanvas-loop.cjs");
 
 const trackerPath = path.join(__dirname, "series-tracker.json");
@@ -82,8 +87,116 @@ test("fresh canary 채택 결과는 재생성 없이 원장에 기록할 수 있
   const options = parseArgs(["--sequence", "3", "--result-only"]);
   assert.equal(options.resultOnly, true);
   assert.equal(options.confirm, false);
+  assert.equal(options.syncEduitit, true);
   assert.throws(
     () => parseArgs(["--sequence", "3", "--prepare-only", "--result-only"]),
     /함께 사용할 수 없습니다/
+  );
+});
+
+test("수업 스키마는 JSON과 기존 CJS 차시를 모두 MathCanvas 입력으로 읽는다", () => {
+  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "mathcanvas-lesson-schema-"));
+  try {
+    const jsonPath = path.join(temporaryRoot, "lesson.json");
+    const cjsPath = path.join(temporaryRoot, "lesson.cjs");
+    fs.writeFileSync(jsonPath, JSON.stringify({ id: "json-lesson", slides: [{}] }), "utf8");
+    fs.writeFileSync(cjsPath, 'module.exports = { id: "cjs-lesson", slides: [{}] };\n', "utf8");
+
+    assert.equal(loadLessonSchema(jsonPath).id, "json-lesson");
+    assert.equal(loadLessonSchema(cjsPath).id, "cjs-lesson");
+    assert.throws(() => loadLessonSchema(path.join(temporaryRoot, "lesson.txt")), /JSON 또는 CJS/);
+  } finally {
+    fs.rmSync(temporaryRoot, { recursive: true, force: true });
+  }
+});
+
+function writeMathCanvasPackage(repositoryRoot, lessonId, editorUrl, { eduitit = false } = {}) {
+  const packageRoot = eduitit
+    ? path.join(repositoryRoot, "edu_materials", "static", "edu_materials", "lesson_bundles", lessonId)
+    : path.join(repositoryRoot, "artifacts", "vivasam", lessonId, "web-package");
+  fs.mkdirSync(packageRoot, { recursive: true });
+  fs.writeFileSync(
+    path.join(packageRoot, "manifest.json"),
+    `${JSON.stringify({ lessonId, digest: "123456789abc", mathCanvasEditorUrl: editorUrl }, null, 2)}\n`,
+    "utf8",
+  );
+  const link = editorUrl
+    ? `<a href="${editorUrl}" target="_blank" rel="noopener noreferrer">MathCanvas에서 열기</a>`
+    : "";
+  fs.writeFileSync(
+    path.join(packageRoot, "source.html"),
+    `<!doctype html><section data-section="ppt"></section><section data-section="worksheet"></section><section data-section="guide">${link}</section>`,
+    "utf8",
+  );
+}
+
+test("MathCanvas 완료 상태는 패키지 생성·Eduitit 동기화·정확한 링크 검증까지 잇는다", () => {
+  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "mathcanvas-package-sync-"));
+  try {
+    const middleofmathRoot = path.join(temporaryRoot, "middleofmath");
+    const eduititRoot = path.join(temporaryRoot, "eduitit");
+    const lessonId = "g3s1-loop-test";
+    const editorUrl = "https://mathcanvas.vivasam.com/ko/view/loop1";
+    writeMathCanvasPackage(middleofmathRoot, lessonId, editorUrl);
+    writeMathCanvasPackage(eduititRoot, lessonId, editorUrl, { eduitit: true });
+    const prepared = {
+      bundle: {
+        lessonId,
+        ppt: { status: "received" },
+        mathcanvas: { editorUrl: "" },
+        eduitit: { localRecordId: "00000000-0000-4000-8000-000000000003" },
+      },
+      validated: { roots: { middleofmath: middleofmathRoot, eduitit: eduititRoot } },
+    };
+    const options = {
+      trackerPath: path.join(middleofmathRoot, "tools", "vivasam-bundle", "series-tracker.json"),
+      eduititRoot,
+      syncEduitit: true,
+    };
+    const fields = {
+      "mathcanvas.status": "created",
+      "mathcanvas.editorUrl": editorUrl,
+    };
+    const calls = [];
+
+    assert.equal(shouldSyncMathCanvasPackage(prepared.bundle, fields), true);
+    const synced = syncMathCanvasPackage(options, prepared, fields, (...args) => {
+      calls.push(args);
+      return "생성 완료";
+    });
+
+    assert.equal(calls.length, 1);
+    assert.ok(calls[0][1].includes("--available-only"));
+    assert.ok(calls[0][1].includes("--tracker"));
+    assert.equal(synced.status, "synced");
+    assert.equal(synced.editorUrl, editorUrl);
+    assert.equal(validateMathCanvasPackageLink(prepared, editorUrl).digest, "123456789abc");
+    assert.deepEqual(eduititStaleFields(synced, prepared.bundle), {
+      "eduitit.packageStatus": "validated",
+      "eduitit.packagePath": `eduitit:edu_materials/static/edu_materials/lesson_bundles/${lessonId}`,
+      "eduitit.digest": "123456789abc",
+      "eduitit.localRecordStatus": "stale",
+      "eduitit.anonymousAccessStatus": "not-tested",
+      "eduitit.productionStatus": "not-deployed",
+      "eduitit.publicUrl": "",
+      "eduitit.validatedAt": synced.validatedAt,
+    });
+  } finally {
+    fs.rmSync(temporaryRoot, { recursive: true, force: true });
+  }
+});
+
+test("PPT가 아직 없거나 MathCanvas 링크가 생기지 않은 단계는 패키지 동기화를 미룬다", () => {
+  const fields = { "mathcanvas.status": "manual-review-required", "mathcanvas.editorUrl": "" };
+  assert.equal(
+    shouldSyncMathCanvasPackage({ ppt: { status: "received" }, mathcanvas: { editorUrl: "" } }, fields),
+    false,
+  );
+  assert.equal(
+    shouldSyncMathCanvasPackage({ ppt: { status: "awaiting-claude" }, mathcanvas: { editorUrl: "old" } }, {
+      "mathcanvas.status": "created",
+      "mathcanvas.editorUrl": "https://mathcanvas.vivasam.com/ko/view/new1",
+    }),
+    false,
   );
 });

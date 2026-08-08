@@ -31,6 +31,7 @@
     "quality:release": "node scripts/run-quality-loop.mjs release",
     "refresh:crosswalk": "node scripts/refresh-crosswalk-snapshot.mjs",
     "refresh:upper-runtime": "node scripts/generate-upper-grade-runtime-snapshots.mjs --write",
+    "vivasam:mathcanvas": "node tools/vivasam-bundle/mathcanvas-loop.cjs",
     "test:watch": "vitest",
     "supabase:start": "npx supabase start",
     "supabase:push": "npx supabase db push"

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-08T00:14:04.073Z",
+  "updatedAt": "2026-08-08T00:31:21.110Z",
   "contract": {
     "targetDeckCount": 30,
     "preferredSlidesPerDeck": 11,
@@ -144,13 +144,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-pictograph-legend",
-        "digest": "e9ba426f29d8",
+        "digest": "0b45930ac8bc",
         "localRecordStatus": "published",
         "localRecordId": "2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae",
         "anonymousAccessStatus": "local-passed",
         "productionStatus": "not-deployed",
         "publicUrl": "",
-        "validatedAt": "2026-08-08T00:10:00.000Z"
+        "validatedAt": "2026-08-08T00:31:10.000Z"
       },
       "notes": []
     },
@@ -201,13 +201,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model",
-        "digest": "36e7c54ead6c",
+        "digest": "2a81ac7e0439",
         "localRecordStatus": "published",
         "localRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
         "anonymousAccessStatus": "local-passed",
         "productionStatus": "not-deployed",
         "publicUrl": "",
-        "validatedAt": "2026-08-08T00:10:00.000Z"
+        "validatedAt": "2026-08-08T00:31:10.000Z"
       },
       "notes": []
     },
@@ -258,13 +258,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-array-transfer",
-        "digest": "b7b666d69f86",
+        "digest": "434492442ef4",
         "localRecordStatus": "published",
         "localRecordId": "e0eb0dc2-f97d-4bc4-8b7a-292f8d7a3564",
         "anonymousAccessStatus": "local-passed",
         "productionStatus": "not-deployed",
         "publicUrl": "",
-        "validatedAt": "2026-08-08T00:10:00.000Z"
+        "validatedAt": "2026-08-08T00:31:10.000Z"
       },
       "notes": [
         "수동 제작본 검수 결과를 반영했으며 다른 사람 자료와 기존 AI 프로토타입은 재사용하지 않습니다."
@@ -2090,6 +2090,60 @@
       "sequence": 3,
       "event": "HTML 패키지 로컬 검증",
       "detail": "기존 통합 활동지 1개와 12장 HTML을 묶어 비로그인 경로를 확인했다."
+    },
+    {
+      "at": "2026-08-08T00:20:12.926Z",
+      "sequence": 3,
+      "event": "MathCanvas 선별·생성 상태 갱신",
+      "detail": "created: 활동지 해시 65be8eb9aeac"
+    },
+    {
+      "at": "2026-08-08T00:20:12.931Z",
+      "sequence": 3,
+      "event": "MathCanvas 링크 변경으로 Eduitit 재생성 시작",
+      "detail": "MathCanvas 연결 상태가 공개 패키지에 영향을 주므로 기존 로컬·운영 공개 상태를 무효화했다."
+    },
+    {
+      "at": "2026-08-08T00:20:15.296Z",
+      "sequence": 3,
+      "event": "MathCanvas 링크를 Eduitit 패키지에 동기화",
+      "detail": "원본·Eduitit 패키지의 MathCanvas 링크를 검증했고, 최신 HTML을 로컬 공개 레코드에 다시 게시할 차례다."
+    },
+    {
+      "at": "2026-08-08T00:28:30.884Z",
+      "sequence": 1,
+      "event": "HTML 패키지 재생성",
+      "detail": "HTML 슬라이드와 최신 학습 링크를 반영해 패키지를 다시 만들었으며 재게시 검증 전까지 stale로 표시한다."
+    },
+    {
+      "at": "2026-08-08T00:28:39.863Z",
+      "sequence": 2,
+      "event": "HTML 패키지 재생성",
+      "detail": "HTML 슬라이드와 최신 학습 링크를 반영해 패키지를 다시 만들었으며 재게시 검증 전까지 stale로 표시한다."
+    },
+    {
+      "at": "2026-08-08T00:28:48.338Z",
+      "sequence": 3,
+      "event": "HTML·MathCanvas 패키지 재생성",
+      "detail": "12장 HTML 슬라이드와 TBmzEW MathCanvas 링크를 함께 반영했으며 재게시 검증 전까지 stale로 표시한다."
+    },
+    {
+      "at": "2026-08-08T00:31:20.989Z",
+      "sequence": 1,
+      "event": "HTML 패키지 로컬 재게시 검증",
+      "detail": "상세·실행·렌더·썸네일·활동지·12장 슬라이드 경로를 비로그인 상태로 확인했다."
+    },
+    {
+      "at": "2026-08-08T00:31:21.043Z",
+      "sequence": 2,
+      "event": "HTML 패키지 로컬 재게시 검증",
+      "detail": "상세·실행·렌더·썸네일·활동지·12장 슬라이드 경로를 비로그인 상태로 확인했다."
+    },
+    {
+      "at": "2026-08-08T00:31:21.110Z",
+      "sequence": 3,
+      "event": "HTML·MathCanvas 로컬 재게시 검증",
+      "detail": "상세·실행·렌더·썸네일·활동지·12장 슬라이드와 TBmzEW 링크를 비로그인 상태로 확인했다."
     }
   ]
 }
