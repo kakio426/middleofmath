@@ -195,7 +195,30 @@ export const PUBLIC_PRACTICE_DEFINITIONS = {
   }
 } as const satisfies Record<string, PracticeDefinition>;
 
-export type PublicPracticeKey = keyof typeof PUBLIC_PRACTICE_DEFINITIONS;
+const PUBLIC_PRACTICE_ALIASES = {
+  "g3s2-multiplication": {
+    title: "곱셈 생각 확인하기",
+    content: grade3Semester2CompleteDiagnosis,
+    unitId: "multiplication",
+    judgmentIds: [
+      "g3s2-mul-01",
+      "g3s2-mul-02",
+      "g3s2-mul-03",
+      "g3s2-mul-04",
+      "g3s2-mul-05",
+      "g3s2-mul-06",
+      "g3s2-mul-07",
+      "g3s2-mul-08"
+    ]
+  }
+} as const satisfies Record<string, PracticeDefinition>;
+
+const PUBLIC_PRACTICE_ROUTES = {
+  ...PUBLIC_PRACTICE_DEFINITIONS,
+  ...PUBLIC_PRACTICE_ALIASES
+} as const satisfies Record<string, PracticeDefinition>;
+
+export type PublicPracticeKey = keyof typeof PUBLIC_PRACTICE_ROUTES;
 
 export interface PublicPractice {
   key: PublicPracticeKey;
@@ -205,9 +228,9 @@ export interface PublicPractice {
 }
 
 export function createPublicPractice(value: string | null): PublicPractice | null {
-  if (!value || !(value in PUBLIC_PRACTICE_DEFINITIONS)) return null;
+  if (!value || !(value in PUBLIC_PRACTICE_ROUTES)) return null;
   const key = value as PublicPracticeKey;
-  const definition: PracticeDefinition = PUBLIC_PRACTICE_DEFINITIONS[key];
+  const definition: PracticeDefinition = PUBLIC_PRACTICE_ROUTES[key];
   const judgmentIds = new Set<string>(definition.judgmentIds);
   const judgments = definition.content.judgments.filter((judgment) => judgmentIds.has(judgment.id));
   if (judgments.length !== judgmentIds.size) return null;
