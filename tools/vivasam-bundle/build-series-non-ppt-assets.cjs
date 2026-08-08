@@ -544,8 +544,10 @@ function practiceUrlFor(lesson) {
   return `https://middle-of-math-student.vercel.app/?practice=${semester}-${lessonDomain(lesson)}`;
 }
 
-function mathCanvasEditorUrlFor(lesson, { repoRoot = REPO_ROOT } = {}) {
-  const trackerPath = path.join(repoRoot, "tools", "vivasam-bundle", "series-tracker.json");
+function mathCanvasEditorUrlFor(lesson, {
+  repoRoot = REPO_ROOT,
+  trackerPath = path.join(repoRoot, "tools", "vivasam-bundle", "series-tracker.json"),
+} = {}) {
   ensure(fs.existsSync(trackerPath), "MathCanvas 연결 상태를 확인할 시리즈 추적 파일이 없습니다.");
   const tracker = JSON.parse(fs.readFileSync(trackerPath, "utf8"));
   const bundle = tracker.bundles?.find((entry) => entry.lessonId === lesson.id);
@@ -708,10 +710,13 @@ function receivedPresentationForLesson(lesson, { repoRoot = REPO_ROOT } = {}) {
   return null;
 }
 
-function receivedSlideCountForLesson(lesson, { repoRoot = REPO_ROOT, presentation = null } = {}) {
+function receivedSlideCountForLesson(lesson, {
+  repoRoot = REPO_ROOT,
+  trackerPath = path.join(repoRoot, "tools", "vivasam-bundle", "series-tracker.json"),
+  presentation = null,
+} = {}) {
   if (!presentation) return lesson.slides.length;
   if (presentation.format === "html") return presentation.slideCount;
-  const trackerPath = path.join(repoRoot, "tools", "vivasam-bundle", "series-tracker.json");
   const tracker = JSON.parse(fs.readFileSync(trackerPath, "utf8"));
   const bundle = tracker.bundles.find((item) => item.sequence === lesson.sequence);
   ensure(bundle?.lessonId === lesson.id, `${lesson.id}의 PPT 추적 슬롯을 찾지 못했습니다.`);
@@ -773,7 +778,10 @@ async function validateWorksheetImagegenSource(lesson, { worksheetRoot, filename
   return { promptPath, metadataPath, pngPath, pdfPath, metadata };
 }
 
-async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
+async function buildLessonAssets(lesson, {
+  repoRoot = REPO_ROOT,
+  trackerPath = path.join(repoRoot, "tools", "vivasam-bundle", "series-tracker.json"),
+} = {}) {
   const artifactsRoot = path.join(repoRoot, "artifacts", "vivasam");
   const lessonRoot = path.join(artifactsRoot, lesson.id);
   const worksheetRoot = path.join(lessonRoot, "worksheet");
@@ -802,8 +810,8 @@ async function buildLessonAssets(lesson, { repoRoot = REPO_ROOT } = {}) {
   const handoffJsonPath = path.join(handoffRoot, filenames.handoffJson);
   const presentation = receivedPresentationForLesson(lesson, { repoRoot });
   const presentationAvailable = Boolean(presentation);
-  const publishedSlideCount = receivedSlideCountForLesson(lesson, { repoRoot, presentation });
-  const mathcanvasEditorUrl = mathCanvasEditorUrlFor(lesson, { repoRoot });
+  const publishedSlideCount = receivedSlideCountForLesson(lesson, { repoRoot, trackerPath, presentation });
+  const mathcanvasEditorUrl = mathCanvasEditorUrlFor(lesson, { repoRoot, trackerPath });
 
   // PDF is only a print wrapper around the untouched whole-page image.
   // Never place generated text, SVG, HTML, or another raster layer over it.
@@ -1031,7 +1039,13 @@ function removePrematureGeneratedAssets(repoRoot, lessons) {
   fs.rmSync(path.join(repoRoot, "artifacts", "vivasam", "review"), { recursive: true, force: true });
 }
 
-async function buildSeriesAssets({ repoRoot = REPO_ROOT, eduititRoot = DEFAULT_EDUITIT_ROOT, syncEduitit = true, availableOnly = false } = {}) {
+async function buildSeriesAssets({
+  repoRoot = REPO_ROOT,
+  eduititRoot = DEFAULT_EDUITIT_ROOT,
+  trackerPath = path.join(repoRoot, "tools", "vivasam-bundle", "series-tracker.json"),
+  syncEduitit = true,
+  availableOnly = false,
+} = {}) {
   const allLessons = loadSeriesLessons({ repoRoot });
   const lessons = availableOnly ? allLessons.filter((lesson) => hasReceivedPresentation(repoRoot, lesson)) : allLessons;
   ensure(lessons.length > 0, "공개할 PPT가 있는 차시가 없습니다.");
@@ -1040,7 +1054,7 @@ async function buildSeriesAssets({ repoRoot = REPO_ROOT, eduititRoot = DEFAULT_E
     removePrematureGeneratedAssets(repoRoot, allLessons.filter((lesson) => !receivedIds.has(lesson.id)));
   }
   const items = [];
-  for (const lesson of lessons) items.push(await buildLessonAssets(lesson, { repoRoot }));
+  for (const lesson of lessons) items.push(await buildLessonAssets(lesson, { repoRoot, trackerPath }));
   const review = items.length === SERIES_ASSET_CONTRACT.packageCount
     ? await buildReviewContactSheets(items, { repoRoot })
     : null;
@@ -1126,7 +1140,11 @@ function validatePackage(item) {
   if (presentationMode === "html") ensure(html.includes(slideViewerUrl(item.lesson.id)), `${item.lesson.id} 패키지에 HTML 슬라이드 보기 링크가 없습니다.`);
 }
 
-async function validateSeriesArtifacts({ repoRoot = REPO_ROOT, availableOnly = false } = {}) {
+async function validateSeriesArtifacts({
+  repoRoot = REPO_ROOT,
+  trackerPath = path.join(repoRoot, "tools", "vivasam-bundle", "series-tracker.json"),
+  availableOnly = false,
+} = {}) {
   const allLessons = loadSeriesLessons({ repoRoot });
   const lessons = availableOnly ? allLessons.filter((lesson) => hasReceivedPresentation(repoRoot, lesson)) : allLessons;
   const items = [];
@@ -1150,7 +1168,7 @@ async function validateSeriesArtifacts({ repoRoot = REPO_ROOT, availableOnly = f
       representativeImagePath: path.join(lessonRoot, "support", filenames.representative),
       teachingIntentPath: path.join(lessonRoot, "support", filenames.intent),
       answerKeyPath: path.join(lessonRoot, "support", filenames.answerKey),
-      mathcanvasEditorUrl: mathCanvasEditorUrlFor(lesson, { repoRoot }),
+      mathcanvasEditorUrl: mathCanvasEditorUrlFor(lesson, { repoRoot, trackerPath }),
     };
     for (const [label, filePath] of Object.entries({ worksheetPrompt: item.worksheetPromptPath, worksheetMetadata: item.worksheetMetadataPath, worksheetPng: item.worksheetPngPath, worksheetPdf: item.worksheetPdfPath, representative: item.representativeImagePath, intent: item.teachingIntentPath, answerKey: item.answerKeyPath })) ensure(fs.existsSync(filePath), `${lesson.id} ${label}가 없습니다.`);
     await validateWorksheetImagegenSource(lesson, {
@@ -1182,20 +1200,25 @@ async function main() {
   const argv = process.argv.slice(2);
   const args = new Set(argv);
   const eduititRootFlag = argv.indexOf("--eduitit-root");
+  const trackerFlag = argv.indexOf("--tracker");
   ensure(eduititRootFlag === -1 || argv[eduititRootFlag + 1], "--eduitit-root 뒤에 경로를 입력하세요.");
+  ensure(trackerFlag === -1 || argv[trackerFlag + 1], "--tracker 뒤에 경로를 입력하세요.");
   const eduititRoot = eduititRootFlag === -1
     ? DEFAULT_EDUITIT_ROOT
     : path.resolve(argv[eduititRootFlag + 1]);
+  const trackerPath = trackerFlag === -1
+    ? path.join(REPO_ROOT, "tools", "vivasam-bundle", "series-tracker.json")
+    : path.resolve(argv[trackerFlag + 1]);
   const checkOnly = args.has("--check");
   const availableOnly = args.has("--available-only");
   if (checkOnly) {
-    const report = await validateSeriesArtifacts({ repoRoot: REPO_ROOT, availableOnly });
+    const report = await validateSeriesArtifacts({ repoRoot: REPO_ROOT, trackerPath, availableOnly });
     process.stdout.write(`검증 완료: ${report.lessonCount}개 차시 · 통합 활동지 ${report.worksheetCount}개 · 대표 이미지 ${report.representativeImageCount}개 · Eduitit 패키지 ${report.packageCount}개\n`);
     return;
   }
   const syncEduitit = !args.has("--no-sync-eduitit");
-  const result = await buildSeriesAssets({ repoRoot: REPO_ROOT, eduititRoot, syncEduitit, availableOnly });
-  const report = await validateSeriesArtifacts({ repoRoot: REPO_ROOT, availableOnly });
+  const result = await buildSeriesAssets({ repoRoot: REPO_ROOT, eduititRoot, trackerPath, syncEduitit, availableOnly });
+  const report = await validateSeriesArtifacts({ repoRoot: REPO_ROOT, trackerPath, availableOnly });
   process.stdout.write(`생성 완료: ${result.items.length}개 차시\n`);
   process.stdout.write(`통합 활동지: ${report.worksheetCount}/30\n`);
   process.stdout.write(`수업 의도·정답·대표 이미지: ${report.supportCount}/30\n`);

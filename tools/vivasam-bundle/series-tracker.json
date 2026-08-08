@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-07T23:28:20.089Z",
+  "updatedAt": "2026-08-08T00:20:15.296Z",
   "contract": {
     "targetDeckCount": 30,
     "preferredSlidesPerDeck": 11,
@@ -254,12 +254,12 @@
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-array-transfer",
         "digest": "2de55ea9fac9",
-        "localRecordStatus": "published",
+        "localRecordStatus": "stale",
         "localRecordId": "e0eb0dc2-f97d-4bc4-8b7a-292f8d7a3564",
-        "anonymousAccessStatus": "local-passed",
+        "anonymousAccessStatus": "not-tested",
         "productionStatus": "not-deployed",
         "publicUrl": "",
-        "validatedAt": "2026-08-07T22:18:22.541Z"
+        "validatedAt": "2026-08-08T00:20:15.295Z"
       },
       "notes": [
         "수동 제작본 검수 결과를 반영했으며 다른 사람 자료와 기존 AI 프로토타입은 재사용하지 않습니다."
@@ -2025,6 +2025,24 @@
       "sequence": 3,
       "event": "MathCanvas 선별·생성 상태 갱신",
       "detail": "created: 활동지 해시 65be8eb9aeac"
+    },
+    {
+      "at": "2026-08-08T00:20:12.926Z",
+      "sequence": 3,
+      "event": "MathCanvas 선별·생성 상태 갱신",
+      "detail": "created: 활동지 해시 65be8eb9aeac"
+    },
+    {
+      "at": "2026-08-08T00:20:12.931Z",
+      "sequence": 3,
+      "event": "MathCanvas 링크 변경으로 Eduitit 재생성 시작",
+      "detail": "MathCanvas 연결 상태가 공개 패키지에 영향을 주므로 기존 로컬·운영 공개 상태를 무효화했다."
+    },
+    {
+      "at": "2026-08-08T00:20:15.296Z",
+      "sequence": 3,
+      "event": "MathCanvas 링크를 Eduitit 패키지에 동기화",
+      "detail": "원본·Eduitit 패키지의 MathCanvas 링크를 검증했고, 최신 HTML을 로컬 공개 레코드에 다시 게시할 차례다."
     }
   ]
 }

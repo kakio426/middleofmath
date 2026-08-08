@@ -571,6 +571,7 @@ ${rows}
 - 이전 Codex 제작 발표 화면이나 슬라이드별 활동지는 새 계약의 Claude HTML/PPTX 또는 통합 활동지 1개 완료로 계산하지 않습니다.
 - MathCanvas는 로그인한 선생님의 내 캔버스에서 직접 만든 수동 자료를 화면 검수한 뒤 차시별 허용 목록으로만 재사용합니다. 다른 사람 자료와 기존 AI·프로토타입 프로젝트는 재사용하지 않습니다.
 - 쓸 만한 수동 자료가 없을 때만 새 MathCanvas 활동을 자동 제작합니다. MathCanvas 활동은 별도 활동지 장수로 계산하지 않습니다.
+- MathCanvas 선택·생성이 끝나면 원본과 Eduitit 패키지를 다시 만들고 링크를 대조합니다. 기존 로컬·운영 공개본은 최신 HTML을 재게시하고 다시 검증할 때까지 완료로 계산하지 않습니다.
 - MathCanvas 편집 URL과 학생 공개 URL은 구분합니다. 공개 접근을 검증하기 전에는 학생 링크로 기록하지 않습니다.
 - \`validated\`, \`published\`, \`deployed\`, \`registered\`는 대응 파일·ID·URL·검증 시각이 있을 때만 기록합니다.
 - Eduitit 운영 공개는 HTTPS 공개 URL과 비로그인 운영 접근 검증이 모두 있어야 완료입니다.
@@ -685,7 +686,10 @@ function updateTracker(options) {
   assertNoUnapprovedDowngrade(before, after, options.sets.map(([fieldPath]) => fieldPath), options.allowDowngrade);
   const changed = options.sets.map(([fieldPath]) => fieldPath).concat(options.note ? ["notes"] : []);
   appendHistory(tracker, options.sequence, options.event, options.detail || `갱신 필드: ${changed.join(", ")}`);
-  const validated = validateTracker(tracker, { trackerPath: loaded.trackerPath });
+  const validated = validateTracker(tracker, {
+    trackerPath: loaded.trackerPath,
+    roots: options.roots || {},
+  });
   writeTracker(loaded.trackerPath, tracker);
   const dashboardPath = writeDashboard(validated, options.dashboardPath);
   return { validated, dashboardPath };
