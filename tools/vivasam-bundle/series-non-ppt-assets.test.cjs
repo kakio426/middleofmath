@@ -8,6 +8,7 @@ const path = require("node:path");
 const test = require("node:test");
 
 const sharp = require("sharp");
+const seriesTracker = require("./series-tracker.json");
 
 const {
   SERIES_ASSET_CONTRACT,
@@ -201,12 +202,22 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
     assert.equal(manifest.downloadAssets.length, pptAvailable ? 2 : 1);
     assert.match(manifest.practiceUrl, /^https:\/\/middle-of-math-student\.vercel\.app\/\?practice=/);
     assert.equal(manifest.assets.some((asset) => /\.(?:md|json|svg)$/i.test(asset.path)), false);
-    assert.equal((html.match(/data-section=/g) || []).length, 3);
+    const trackedMathCanvas = seriesTracker.bundles.find((bundle) => bundle.lessonId === item.lessonId).mathcanvas || {};
+    const expectedMathCanvasUrl = ["manual-selected", "created", "public-link-ready"].includes(trackedMathCanvas.status)
+      ? trackedMathCanvas.editorUrl
+      : "";
+    assert.equal(manifest.mathCanvasEditorUrl || "", expectedMathCanvasUrl);
+    assert.equal((html.match(/data-section=/g) || []).length, expectedMathCanvasUrl ? 4 : 3);
     assert.match(html, />PPT</);
     assert.match(html, />활동지</);
     assert.match(html, /수업은 이렇게 진행해 보세요/);
     assert.match(html, /관련 문제 더 풀기/);
     assert.match(html, new RegExp(`href="${manifest.practiceUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`));
+    if (expectedMathCanvasUrl) {
+      assert.match(html, /data-section="mathcanvas"/);
+      assert.match(html, new RegExp(`href="${expectedMathCanvasUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`));
+      assert.match(html, /MathCanvas에서 열기/);
+    }
     assert.doesNotMatch(html, /비바샘|개인정보|Claude|교사용 정답|수업 설계 의도|슬라이드별 내용/);
     assert.doesNotMatch(html, /data:image\//i);
     assert.doesNotMatch(html, /\b01[016789]-?\d{3,4}-?\d{4}\b/);
