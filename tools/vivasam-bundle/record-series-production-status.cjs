@@ -120,6 +120,7 @@ async function verifyProductionHttp(publication, {
   const records = [];
   for (const record of [...publication.records].sort((a, b) => a.sequence - b.sequence)) {
     const manifest = packageManifest(record.lessonId);
+    const practiceUrl = `https://middle-of-math-student.vercel.app/?practice=${record.lessonId}`;
     const presentationMode = manifest.presentationMode || "pptx";
     const worksheetUrl = `${origin}/edu-materials/lesson-bundles/${record.lessonId}/download/${record.lessonId}-worksheet.pdf/`;
     const pptUrl = presentationMode === "html"
@@ -152,6 +153,10 @@ async function verifyProductionHttp(publication, {
 
     ensure((detail.response.headers.get("content-type") || "").includes("text/html"), `${record.lessonId} 상세 응답이 HTML이 아닙니다.`);
     ensure((run.response.headers.get("content-type") || "").includes("text/html"), `${record.lessonId} 실행 응답이 HTML이 아닙니다.`);
+    ensure(
+      render.body.toString("utf8").includes(`href="${practiceUrl}"`),
+      `${record.lessonId} 렌더에 차시 전용 Middle of Math 링크가 없습니다.`,
+    );
     const csp = render.response.headers.get("content-security-policy") || "";
     const cacheControl = render.response.headers.get("cache-control") || "";
     const edgeEtag = render.response.headers.get("etag") || "";
@@ -197,6 +202,7 @@ async function verifyProductionHttp(publication, {
       productionRecordId: record.localRecordId,
       publicUrl: record.detailUrl,
       runUrl: record.runUrl,
+      practiceUrl,
       worksheetUrl,
       pptUrl,
       presentationMode,
@@ -250,6 +256,10 @@ function validateProductionVerification(verification) {
     ensure(planned.digest === record.digest, `${record.lessonId} 운영 지문이 다릅니다.`);
     ensure(isUuid(record.productionRecordId), `${record.lessonId} 운영 레코드 ID가 잘못되었습니다.`);
     ensure(record.publicUrl.startsWith("https://"), `${record.lessonId} 운영 URL이 HTTPS가 아닙니다.`);
+    ensure(
+      record.practiceUrl === `https://middle-of-math-student.vercel.app/?practice=${record.lessonId}`,
+      `${record.lessonId} 운영 문제 링크가 차시 전용 주소가 아닙니다.`,
+    );
     ensure(record.etag304 === true, `${record.lessonId} 운영 ETag 검증이 실패했습니다.`);
     for (const name of REQUIRED_STATUSES) ensure(record.statuses?.[name] === 200, `${record.lessonId} ${name} 상태가 200이 아닙니다.`);
     ensure(!ids.has(record.productionRecordId), `${record.lessonId} 운영 레코드 ID가 중복되었습니다.`);

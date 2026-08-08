@@ -64,6 +64,7 @@ function verificationFixture() {
       productionRecordId: record.localRecordId,
       publicUrl: record.detailUrl,
       runUrl: record.runUrl,
+      practiceUrl: `https://middle-of-math-student.vercel.app/?practice=${record.lessonId}`,
       worksheetUrl: `https://eduitit.site/worksheet/${record.lessonId}`,
       representativeAssetUrl: `https://eduitit.site/representative/${record.lessonId}`,
       statuses: Object.fromEntries(REQUIRED_STATUSES.map((name) => [name, 200])),
@@ -127,11 +128,12 @@ test("운영 비로그인 검증은 PPT 수령분만 원장에 기록한다", ()
   }
 });
 
-test("운영 상태·ETag·대표 이미지 중 하나라도 실패하면 기록하지 않는다", () => {
+test("운영 상태·ETag·대표 이미지·차시 전용 문제 링크 중 하나라도 실패하면 기록하지 않는다", () => {
   for (const mutate of [
     (payload) => { payload.catalogStatus = 302; },
     (payload) => { payload.records[0].etag304 = false; },
     (payload) => { payload.records[0].statuses.representativeAsset = 404; },
+    (payload) => { payload.records[0].practiceUrl = "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication"; },
     (payload) => { payload.records.pop(); payload.verified -= 1; },
   ]) {
     const broken = verificationFixture();
