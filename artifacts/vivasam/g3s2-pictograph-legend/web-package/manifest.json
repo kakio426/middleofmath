@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "seriesId": "vivasam-2026-middleofmath-30",
   "generatedAt": "2026-08-07T00:00:00.000Z",
   "lessonId": "g3s2-pictograph-legend",
@@ -13,42 +13,41 @@
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
-  "presentationMode": "pptx",
+  "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "20c347053492",
-  "thumbnailAsset": "20c347053492/representative-image.png",
-  "worksheetAsset": "20c347053492/g3s2-pictograph-legend-worksheet.png",
-  "pptAsset": "20c347053492/g3s2-pictograph-legend.pptx",
-  "slideHtmlAsset": "",
+  "digest": "e9ba426f29d8",
+  "thumbnailAsset": "e9ba426f29d8/representative-image.png",
+  "worksheetAsset": "e9ba426f29d8/g3s2-pictograph-legend-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "e9ba426f29d8/g3s2-pictograph-legend-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s2-pictograph",
   "downloadAssets": [
-    "g3s2-pictograph-legend.pptx",
     "g3s2-pictograph-legend-worksheet.pdf"
   ],
   "assets": [
     {
-      "path": "20c347053492/g3s2-pictograph-legend-worksheet.pdf",
+      "path": "e9ba426f29d8/g3s2-pictograph-legend-slides.html",
+      "bytes": 8419455,
+      "sha256": "80ed77bcc90b17fb2a7ff13c38d0a314bf9105994a01ac68788ec2083a09c949",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "e9ba426f29d8/g3s2-pictograph-legend-worksheet.pdf",
       "bytes": 1071027,
       "sha256": "06a2215425053735c84f47846cf18953604055c8ad8748562b01b732b1aa3102",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "20c347053492/g3s2-pictograph-legend-worksheet.png",
+      "path": "e9ba426f29d8/g3s2-pictograph-legend-worksheet.png",
       "bytes": 1178918,
       "sha256": "49b7311804eba015a099b92f30195996ff0d0abe88016bf2d3e1e52399fdd261",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "20c347053492/g3s2-pictograph-legend.pptx",
-      "bytes": 4304986,
-      "sha256": "9f7c0a0eb8b8f78d79332e5cfce6c54c85c100f68c4dd5cdc6b2b4fd35520b75",
-      "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      "role": "presentation"
-    },
-    {
-      "path": "20c347053492/representative-image.png",
+      "path": "e9ba426f29d8/representative-image.png",
       "bytes": 55221,
       "sha256": "9a402b50d8119adb2eef273f1c916db5d43d5117fff0fcaaa75446fad5908e7a",
       "contentType": "image/png",

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "seriesId": "vivasam-2026-middleofmath-30",
   "generatedAt": "2026-08-07T00:00:00.000Z",
   "lessonId": "g3s1-multiplication-groups-model",
@@ -13,42 +13,41 @@
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
-  "presentationMode": "pptx",
+  "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "3d4cabf98fe2",
-  "thumbnailAsset": "3d4cabf98fe2/representative-image.png",
-  "worksheetAsset": "3d4cabf98fe2/g3s1-multiplication-groups-model-worksheet.png",
-  "pptAsset": "3d4cabf98fe2/g3s1-multiplication-groups-model.pptx",
-  "slideHtmlAsset": "",
+  "digest": "36e7c54ead6c",
+  "thumbnailAsset": "36e7c54ead6c/representative-image.png",
+  "worksheetAsset": "36e7c54ead6c/g3s1-multiplication-groups-model-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "36e7c54ead6c/g3s1-multiplication-groups-model-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication",
   "downloadAssets": [
-    "g3s1-multiplication-groups-model.pptx",
     "g3s1-multiplication-groups-model-worksheet.pdf"
   ],
   "assets": [
     {
-      "path": "3d4cabf98fe2/g3s1-multiplication-groups-model-worksheet.pdf",
+      "path": "36e7c54ead6c/g3s1-multiplication-groups-model-slides.html",
+      "bytes": 8417849,
+      "sha256": "537262efabd772586037999fcae42951442fb7e2ecb09f98d77235176c6b4607",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "36e7c54ead6c/g3s1-multiplication-groups-model-worksheet.pdf",
       "bytes": 1227319,
       "sha256": "b12ba1da086d09f825713c85105e07a15f6bc2466fa84af56381023afe79222f",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "3d4cabf98fe2/g3s1-multiplication-groups-model-worksheet.png",
+      "path": "36e7c54ead6c/g3s1-multiplication-groups-model-worksheet.png",
       "bytes": 1307984,
       "sha256": "b01d618df1f3e151d259f63bbe08e5e4943b0b475541af82905555c1be01c83c",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "3d4cabf98fe2/g3s1-multiplication-groups-model.pptx",
-      "bytes": 4309946,
-      "sha256": "a1ef75802f572a098db22c8b383338979a106c34fb3909b325cefd2a616863b2",
-      "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      "role": "presentation"
-    },
-    {
-      "path": "3d4cabf98fe2/representative-image.png",
+      "path": "36e7c54ead6c/representative-image.png",
       "bytes": 50821,
       "sha256": "6ce69eb8a963b48cb7d8d647a07ee1463e632557680bca6a81a306c8774cdcf6",
       "contentType": "image/png",

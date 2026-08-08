@@ -11,9 +11,9 @@
       "title": "그림 하나에 숨은 수",
       "grade": "초등 3학년 2학기",
       "unit": "6. 그림그래프",
-      "digest": "20c347053492",
+      "digest": "e9ba426f29d8",
       "pptStatus": "available",
-      "presentationMode": "pptx",
+      "presentationMode": "html",
       "packageManifest": "g3s2-pictograph-legend/manifest.json"
     },
     {
@@ -22,9 +22,9 @@
       "title": "같은 묶음은 곱셈으로",
       "grade": "초등 3학년 1학기",
       "unit": "1. 곱셈",
-      "digest": "3d4cabf98fe2",
+      "digest": "36e7c54ead6c",
       "pptStatus": "available",
-      "presentationMode": "pptx",
+      "presentationMode": "html",
       "packageManifest": "g3s1-multiplication-groups-model/manifest.json"
     },
     {
@@ -33,9 +33,9 @@
       "title": "줄과 칸으로 전체 수 찾기",
       "grade": "초등 3학년 1학기",
       "unit": "1. 곱셈",
-      "digest": "2de55ea9fac9",
+      "digest": "b7b666d69f86",
       "pptStatus": "available",
-      "presentationMode": "pptx",
+      "presentationMode": "html",
       "packageManifest": "g3s1-multiplication-array-transfer/manifest.json"
     }
   ]

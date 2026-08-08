@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-07T23:28:20.089Z",
+  "updatedAt": "2026-08-08T00:14:04.073Z",
   "contract": {
     "targetDeckCount": 30,
     "preferredSlidesPerDeck": 11,
@@ -123,14 +123,15 @@
       },
       "ppt": {
         "status": "received",
-        "format": "pptx",
-        "legacyPptxPath": "",
-        "pptxPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/claude/g3s2-pictograph-legend.pptx",
+        "format": "html",
+        "legacyPptxPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/claude/g3s2-pictograph-legend.pptx",
+        "pptxPath": "",
         "slideCount": 12,
-        "intakeReportPath": "",
+        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/claude/html-intake.json",
         "renderedPdfPath": "",
         "slidesDirectory": "",
-        "validatedAt": ""
+        "validatedAt": "",
+        "htmlPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/claude/g3s2-pictograph-legend-slides.html"
       },
       "support": {
         "intentStatus": "validated",
@@ -143,13 +144,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s2-pictograph-legend",
-        "digest": "20c347053492",
+        "digest": "e9ba426f29d8",
         "localRecordStatus": "published",
         "localRecordId": "2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/",
-        "validatedAt": "2026-08-07T15:30:41.709Z"
+        "anonymousAccessStatus": "local-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T00:10:00.000Z"
       },
       "notes": []
     },
@@ -179,13 +180,15 @@
       },
       "ppt": {
         "status": "received",
-        "format": "pptx",
-        "pptxPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/claude/g3s1-multiplication-groups-model.pptx",
+        "format": "html",
+        "pptxPath": "",
         "slideCount": 12,
-        "intakeReportPath": "",
+        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/claude/html-intake.json",
         "renderedPdfPath": "",
         "slidesDirectory": "",
-        "validatedAt": ""
+        "validatedAt": "",
+        "htmlPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/claude/g3s1-multiplication-groups-model-slides.html",
+        "legacyPptxPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/claude/g3s1-multiplication-groups-model.pptx"
       },
       "support": {
         "intentStatus": "validated",
@@ -198,13 +201,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model",
-        "digest": "3d4cabf98fe2",
+        "digest": "36e7c54ead6c",
         "localRecordStatus": "published",
         "localRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
-        "anonymousAccessStatus": "production-passed",
-        "productionStatus": "deployed",
-        "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
-        "validatedAt": "2026-08-07T15:30:41.709Z"
+        "anonymousAccessStatus": "local-passed",
+        "productionStatus": "not-deployed",
+        "publicUrl": "",
+        "validatedAt": "2026-08-08T00:10:00.000Z"
       },
       "notes": []
     },
@@ -234,13 +237,15 @@
       },
       "ppt": {
         "status": "received",
-        "format": "pptx",
-        "pptxPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/claude/g3s1-multiplication-array-transfer.pptx",
+        "format": "html",
+        "pptxPath": "",
         "slideCount": 12,
-        "intakeReportPath": "",
+        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/claude/html-intake.json",
         "renderedPdfPath": "",
         "slidesDirectory": "",
-        "validatedAt": ""
+        "validatedAt": "",
+        "htmlPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/claude/g3s1-multiplication-array-transfer-slides.html",
+        "legacyPptxPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/claude/g3s1-multiplication-array-transfer.pptx"
       },
       "support": {
         "intentStatus": "validated",
@@ -253,13 +258,13 @@
       "eduitit": {
         "packageStatus": "validated",
         "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-array-transfer",
-        "digest": "2de55ea9fac9",
+        "digest": "b7b666d69f86",
         "localRecordStatus": "published",
         "localRecordId": "e0eb0dc2-f97d-4bc4-8b7a-292f8d7a3564",
         "anonymousAccessStatus": "local-passed",
         "productionStatus": "not-deployed",
         "publicUrl": "",
-        "validatedAt": "2026-08-07T22:18:22.541Z"
+        "validatedAt": "2026-08-08T00:10:00.000Z"
       },
       "notes": [
         "수동 제작본 검수 결과를 반영했으며 다른 사람 자료와 기존 AI 프로토타입은 재사용하지 않습니다."
@@ -303,13 +308,15 @@
         "validatedAt": ""
       },
       "ppt": {
-        "status": "awaiting-claude",
+        "status": "received",
         "pptxPath": "",
-        "slideCount": null,
-        "intakeReportPath": "",
+        "slideCount": 12,
+        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/claude/html-intake.json",
         "renderedPdfPath": "",
         "slidesDirectory": "",
-        "validatedAt": ""
+        "validatedAt": "",
+        "format": "html",
+        "htmlPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/claude/g3s1-multiplication-place-value-model-slides.html"
       },
       "support": {
         "intentStatus": "not-started",
@@ -357,13 +364,15 @@
         "validatedAt": ""
       },
       "ppt": {
-        "status": "awaiting-claude",
+        "status": "received",
         "pptxPath": "",
-        "slideCount": null,
-        "intakeReportPath": "",
+        "slideCount": 12,
+        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/claude/html-intake.json",
         "renderedPdfPath": "",
         "slidesDirectory": "",
-        "validatedAt": ""
+        "validatedAt": "",
+        "format": "html",
+        "htmlPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/claude/g3s1-multiplication-place-value-context-slides.html"
       },
       "support": {
         "intentStatus": "not-started",
@@ -411,13 +420,15 @@
         "validatedAt": ""
       },
       "ppt": {
-        "status": "awaiting-claude",
+        "status": "received",
         "pptxPath": "",
-        "slideCount": null,
-        "intakeReportPath": "",
+        "slideCount": 12,
+        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/claude/html-intake.json",
         "renderedPdfPath": "",
         "slidesDirectory": "",
-        "validatedAt": ""
+        "validatedAt": "",
+        "format": "html",
+        "htmlPath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/claude/g3s1-division-equal-sharing-slides.html"
       },
       "support": {
         "intentStatus": "not-started",
@@ -2025,6 +2036,60 @@
       "sequence": 3,
       "event": "MathCanvas 선별·생성 상태 갱신",
       "detail": "created: 활동지 해시 65be8eb9aeac"
+    },
+    {
+      "at": "2026-08-08T00:11:25.357Z",
+      "sequence": 1,
+      "event": "Claude Design HTML 수령",
+      "detail": "원본 디자인 묶음을 12장 HTML로 보존했다."
+    },
+    {
+      "at": "2026-08-08T00:11:25.403Z",
+      "sequence": 2,
+      "event": "Claude Design HTML 수령",
+      "detail": "원본 디자인 묶음을 12장 HTML로 보존했다."
+    },
+    {
+      "at": "2026-08-08T00:11:25.439Z",
+      "sequence": 3,
+      "event": "Claude Design HTML 수령",
+      "detail": "원본 디자인 묶음을 12장 HTML로 보존했다."
+    },
+    {
+      "at": "2026-08-08T00:11:25.474Z",
+      "sequence": 4,
+      "event": "Claude Design HTML 수령",
+      "detail": "12장 HTML 원본을 보존했다. 통합 활동지 제작 전이라 아직 공개하지 않는다."
+    },
+    {
+      "at": "2026-08-08T00:11:25.509Z",
+      "sequence": 5,
+      "event": "Claude Design HTML 수령",
+      "detail": "12장 HTML 원본을 보존했다. 통합 활동지 제작 전이라 아직 공개하지 않는다."
+    },
+    {
+      "at": "2026-08-08T00:11:25.544Z",
+      "sequence": 6,
+      "event": "Claude Design HTML 수령",
+      "detail": "12장 HTML 원본을 보존했다. 통합 활동지 제작 전이라 아직 공개하지 않는다."
+    },
+    {
+      "at": "2026-08-08T00:13:46.896Z",
+      "sequence": 1,
+      "event": "HTML 패키지 로컬 검증",
+      "detail": "기존 통합 활동지 1개와 12장 HTML을 묶어 비로그인 경로를 확인했다."
+    },
+    {
+      "at": "2026-08-08T00:13:55.726Z",
+      "sequence": 2,
+      "event": "HTML 패키지 로컬 검증",
+      "detail": "기존 통합 활동지 1개와 12장 HTML을 묶어 비로그인 경로를 확인했다."
+    },
+    {
+      "at": "2026-08-08T00:14:04.073Z",
+      "sequence": 3,
+      "event": "HTML 패키지 로컬 검증",
+      "detail": "기존 통합 활동지 1개와 12장 HTML을 묶어 비로그인 경로를 확인했다."
     }
   ]
 }

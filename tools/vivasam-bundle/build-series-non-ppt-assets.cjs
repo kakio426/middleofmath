@@ -990,6 +990,17 @@ function hasReceivedPresentation(repoRoot, lesson) {
   return Boolean(receivedPresentationForLesson(lesson, { repoRoot }));
 }
 
+function hasPublishableInputs(repoRoot, lesson) {
+  if (!hasReceivedPresentation(repoRoot, lesson)) return false;
+  const filenames = packageFilenames(lesson.id);
+  const worksheetRoot = path.join(repoRoot, "artifacts", "vivasam", lesson.id, "worksheet");
+  return [
+    filenames.worksheetPrompt,
+    filenames.worksheetMetadata,
+    filenames.worksheetPng,
+  ].every((filename) => fs.existsSync(path.join(worksheetRoot, filename)));
+}
+
 function removePrematureGeneratedAssets(repoRoot, lessons) {
   for (const lesson of lessons) {
     const lessonRoot = path.join(repoRoot, "artifacts", "vivasam", lesson.id);
@@ -1003,7 +1014,7 @@ function removePrematureGeneratedAssets(repoRoot, lessons) {
 
 async function buildSeriesAssets({ repoRoot = REPO_ROOT, eduititRoot = DEFAULT_EDUITIT_ROOT, syncEduitit = true, availableOnly = false } = {}) {
   const allLessons = loadSeriesLessons({ repoRoot });
-  const lessons = availableOnly ? allLessons.filter((lesson) => hasReceivedPresentation(repoRoot, lesson)) : allLessons;
+  const lessons = availableOnly ? allLessons.filter((lesson) => hasPublishableInputs(repoRoot, lesson)) : allLessons;
   ensure(lessons.length > 0, "공개할 PPT가 있는 차시가 없습니다.");
   if (availableOnly) {
     const receivedIds = new Set(lessons.map((lesson) => lesson.id));
@@ -1086,7 +1097,7 @@ function validatePackage(item) {
 
 async function validateSeriesArtifacts({ repoRoot = REPO_ROOT, availableOnly = false } = {}) {
   const allLessons = loadSeriesLessons({ repoRoot });
-  const lessons = availableOnly ? allLessons.filter((lesson) => hasReceivedPresentation(repoRoot, lesson)) : allLessons;
+  const lessons = availableOnly ? allLessons.filter((lesson) => hasPublishableInputs(repoRoot, lesson)) : allLessons;
   const items = [];
   for (const lesson of lessons) {
     const lessonRoot = path.join(repoRoot, "artifacts", "vivasam", lesson.id);
@@ -1177,6 +1188,7 @@ module.exports = {
   buildSeriesAssets,
   buildTeachingIntentMarkdown,
   buildWorksheetModel,
+  hasPublishableInputs,
   loadSeriesLessons,
   renderRepresentativeSvg,
   receivedPresentationForLesson,

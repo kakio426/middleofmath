@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "seriesId": "vivasam-2026-middleofmath-30",
   "generatedAt": "2026-08-07T00:00:00.000Z",
   "lessonId": "g3s1-multiplication-array-transfer",
@@ -13,42 +13,41 @@
   "slideCount": 12,
   "worksheetCount": 1,
   "pptStatus": "available",
-  "presentationMode": "pptx",
+  "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "2de55ea9fac9",
-  "thumbnailAsset": "2de55ea9fac9/representative-image.png",
-  "worksheetAsset": "2de55ea9fac9/g3s1-multiplication-array-transfer-worksheet.png",
-  "pptAsset": "2de55ea9fac9/g3s1-multiplication-array-transfer.pptx",
-  "slideHtmlAsset": "",
+  "digest": "b7b666d69f86",
+  "thumbnailAsset": "b7b666d69f86/representative-image.png",
+  "worksheetAsset": "b7b666d69f86/g3s1-multiplication-array-transfer-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "b7b666d69f86/g3s1-multiplication-array-transfer-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication",
   "downloadAssets": [
-    "g3s1-multiplication-array-transfer.pptx",
     "g3s1-multiplication-array-transfer-worksheet.pdf"
   ],
   "assets": [
     {
-      "path": "2de55ea9fac9/g3s1-multiplication-array-transfer-worksheet.pdf",
+      "path": "b7b666d69f86/g3s1-multiplication-array-transfer-slides.html",
+      "bytes": 8432140,
+      "sha256": "b4940d82ed9ffd990ea0c93e502f8c2da256efe720a1e6669420f9d0066a2c97",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "b7b666d69f86/g3s1-multiplication-array-transfer-worksheet.pdf",
       "bytes": 1373873,
       "sha256": "62700a537202107b993d098f50d48c41b5b49b0265e0c7bb9a7be1a4092673eb",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "2de55ea9fac9/g3s1-multiplication-array-transfer-worksheet.png",
+      "path": "b7b666d69f86/g3s1-multiplication-array-transfer-worksheet.png",
       "bytes": 1317136,
       "sha256": "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "2de55ea9fac9/g3s1-multiplication-array-transfer.pptx",
-      "bytes": 4332768,
-      "sha256": "c6de3f61256df6a43e7b9dfeae7be4c4708135023cdd6759ac769a4f639f3ad9",
-      "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      "role": "presentation"
-    },
-    {
-      "path": "2de55ea9fac9/representative-image.png",
+      "path": "b7b666d69f86/representative-image.png",
       "bytes": 52500,
       "sha256": "cbe0a39ca6dae457e019e86a39315e6a73d898e28ecb79194297f3c1e7ca5cb1",
       "contentType": "image/png",
