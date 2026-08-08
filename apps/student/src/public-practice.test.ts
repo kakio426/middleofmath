@@ -54,16 +54,10 @@ describe("public practice links", () => {
     expect(practice).not.toBeNull();
     expect(practice?.assignments).toHaveLength(1);
     expect(practice?.assignments[0].unitId).toBe("multiplication");
-    expect(practice?.assignments[0].judgmentCount).toBe(8);
+    expect(practice?.assignments[0].judgmentCount).toBe(2);
     expect(practice?.content.judgments.map((judgment) => judgment.id).sort()).toEqual([
       "g3s2-mul-01",
-      "g3s2-mul-02",
-      "g3s2-mul-03",
-      "g3s2-mul-04",
-      "g3s2-mul-05",
-      "g3s2-mul-06",
-      "g3s2-mul-07",
-      "g3s2-mul-08"
+      "g3s2-mul-02"
     ]);
   });
 

@@ -12,6 +12,6 @@ test("공개 곱셈 링크는 Supabase 설정 없이 바로 문제 목록을 연
 
   await expect(page.getByRole("heading", { name: "학생 앱 설정이 필요합니다" })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "곱셈 생각 확인하기" })).toBeVisible();
-  await expect(page.getByText("8문제 · 약 4분")).toBeVisible();
+  await expect(page.getByText("2문제 · 약 3분")).toBeVisible();
   await expect(page.getByRole("button", { name: "시작하기" })).toBeVisible();
 });

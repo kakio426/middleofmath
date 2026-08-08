@@ -202,13 +202,7 @@ const PUBLIC_PRACTICE_ALIASES = {
     unitId: "multiplication",
     judgmentIds: [
       "g3s2-mul-01",
-      "g3s2-mul-02",
-      "g3s2-mul-03",
-      "g3s2-mul-04",
-      "g3s2-mul-05",
-      "g3s2-mul-06",
-      "g3s2-mul-07",
-      "g3s2-mul-08"
+      "g3s2-mul-02"
     ]
   }
 } as const satisfies Record<string, PracticeDefinition>;
