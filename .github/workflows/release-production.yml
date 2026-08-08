@@ -62,7 +62,9 @@ jobs:
           cache: npm
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          # Pinned: 2.112.0 rejects the api-keys `inserted_at` timestamp and breaks
+          # `supabase link`. See the matching comment in ci.yml.
+          version: 2.111.0
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
@@ -73,7 +75,12 @@ jobs:
       - run: npm run test:e2e
       - run: npm run test:smoke:contract
       - if: always()
-        run: supabase stop --no-backup
+        run: |
+          if command -v supabase >/dev/null 2>&1; then
+            supabase stop --no-backup
+          else
+            echo "Supabase CLI was never installed, so there is nothing to stop."
+          fi
 
   migrate:
     needs: [preflight-secrets, preflight]
@@ -85,7 +92,9 @@ jobs:
           ref: ${{ inputs.git_sha }}
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          # Pinned: 2.112.0 rejects the api-keys `inserted_at` timestamp and breaks
+          # `supabase link`. See the matching comment in ci.yml.
+          version: 2.111.0
       - name: Link production without interactive credentials
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
