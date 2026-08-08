@@ -15,11 +15,11 @@
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "2a81ac7e0439",
-  "thumbnailAsset": "2a81ac7e0439/representative-image.png",
-  "worksheetAsset": "2a81ac7e0439/g3s1-multiplication-groups-model-worksheet.png",
+  "digest": "cf5c407775e3",
+  "thumbnailAsset": "cf5c407775e3/representative-image.png",
+  "worksheetAsset": "cf5c407775e3/g3s1-multiplication-groups-model-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "2a81ac7e0439/g3s1-multiplication-groups-model-slides.html",
+  "slideHtmlAsset": "cf5c407775e3/g3s1-multiplication-groups-model-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,28 +27,28 @@
   ],
   "assets": [
     {
-      "path": "2a81ac7e0439/g3s1-multiplication-groups-model-slides.html",
-      "bytes": 8417853,
-      "sha256": "52cc2bfc3bf9ef2cdeceec5f81c8af5a20d74524e19ea1b1df8d9403225358f3",
+      "path": "cf5c407775e3/g3s1-multiplication-groups-model-slides.html",
+      "bytes": 8800883,
+      "sha256": "fefd2db128e315276266699b0621395e9cea1d46dd083cf795c72c458ce9b9b9",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "2a81ac7e0439/g3s1-multiplication-groups-model-worksheet.pdf",
+      "path": "cf5c407775e3/g3s1-multiplication-groups-model-worksheet.pdf",
       "bytes": 1227319,
       "sha256": "b12ba1da086d09f825713c85105e07a15f6bc2466fa84af56381023afe79222f",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "2a81ac7e0439/g3s1-multiplication-groups-model-worksheet.png",
+      "path": "cf5c407775e3/g3s1-multiplication-groups-model-worksheet.png",
       "bytes": 1307984,
       "sha256": "b01d618df1f3e151d259f63bbe08e5e4943b0b475541af82905555c1be01c83c",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "2a81ac7e0439/representative-image.png",
+      "path": "cf5c407775e3/representative-image.png",
       "bytes": 50821,
       "sha256": "6ce69eb8a963b48cb7d8d647a07ee1463e632557680bca6a81a306c8774cdcf6",
       "contentType": "image/png",

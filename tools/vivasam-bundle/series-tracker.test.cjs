@@ -39,7 +39,7 @@ test("원장은 30개 PPT와 PPT당 통합 활동지 1개 계약을 고정한다
   assert.equal(tracker.contract.pptAuthor, "Claude");
 });
 
-test("1~6번은 운영 공개 검증과 Claude HTML 수령을 추적한다", () => {
+test("30개 Claude HTML 수령과 1~6번 운영 공개 검증을 함께 추적한다", () => {
   const validated = validateTracker(tracker, { trackerPath });
   const summary = summarizeTracker(validated);
   for (const bundle of validated.bundles.slice(0, 6)) {
@@ -54,12 +54,23 @@ test("1~6번은 운영 공개 검증과 Claude HTML 수령을 추적한다", () 
     assert.equal(bundle.eduitit.productionStatus, "deployed");
     assert.match(bundle.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
   }
+  for (const bundle of validated.bundles) {
+    assert.equal(bundle.ppt.status, "received");
+    assert.equal(bundle.ppt.format, "html");
+    assert.equal(bundle.ppt.slideCount, 12);
+    assert.match(bundle.ppt.htmlPath, /-slides\.html$/);
+    assert.match(bundle.ppt.intakeReportPath, /html-intake\.json$/);
+  }
+  for (const bundle of validated.bundles.slice(6)) {
+    assert.equal(bundle.worksheet.status, "not-started");
+    assert.equal(bundle.eduitit.packageStatus, "not-started");
+  }
   assert.equal(summary.worksheetsValidated, 6);
   assert.equal(summary.supportValidated, 6);
   assert.equal(summary.packagesValidated, 6);
   assert.equal(summary.localRecordsPublished, 6);
-  assert.equal(summary.claudePptsReceived, 6);
-  assert.equal(summary.claudePptsAwaiting, 24);
+  assert.equal(summary.claudePptsReceived, 30);
+  assert.equal(summary.claudePptsAwaiting, 0);
   assert.equal(summary.claudePptsValidated, 0);
   assert.equal(summary.fullyCompleted, 0);
 });

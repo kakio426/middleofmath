@@ -52,7 +52,7 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
   assert.equal(summary.supportValidated, 6);
   assert.equal(summary.packagesValidated, 6);
   assert.equal(summary.localRecordsPublished, 6);
-  assert.equal(summary.claudePptsAwaiting, 24);
+  assert.equal(summary.claudePptsAwaiting, 0);
   assert.equal(summary.claudePptsValidated, 0);
   assert.equal(summary.productionPublished, 6);
 
@@ -79,7 +79,9 @@ test("PPT 수령분만 활동지와 Eduitit 익명 공개 결과로 기록한다
     assert.equal(bundle.eduitit.packageStatus, "not-started");
     assert.equal(bundle.eduitit.localRecordStatus, "unpublished");
     assert.equal(bundle.eduitit.productionStatus, "not-deployed");
-    assert.equal(bundle.ppt.status, "awaiting-claude");
+    assert.equal(bundle.ppt.status, "received");
+    assert.equal(bundle.ppt.format, "html");
+    assert.equal(bundle.ppt.slideCount, 12);
   }
 });
 

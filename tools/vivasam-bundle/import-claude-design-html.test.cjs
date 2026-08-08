@@ -12,6 +12,9 @@ const {
 } = require("./build-series-non-ppt-assets.cjs");
 const { compileClaudeDesignHtml } = require("./import-claude-design-html.cjs");
 
+const repoRoot = path.resolve(__dirname, "../..");
+const tracker = require("./series-tracker.json");
+
 function write(root, relativePath, content) {
   const target = path.join(root, relativePath);
   fs.mkdirSync(path.dirname(target), { recursive: true });
@@ -88,4 +91,24 @@ test("HTML을 받았어도 통합 활동지가 없으면 공개 패키지 대상
   write(repoRoot, `${worksheetRoot}/${lesson.id}-worksheet.png`, "png");
 
   assert.equal(hasPublishableInputs(repoRoot, lesson), true);
+});
+
+test("30개 수업 슬롯에 1920×1080 Claude HTML 12장과 인수 기록이 모두 연결된다", () => {
+  assert.equal(tracker.bundles.length, 30);
+  for (const bundle of tracker.bundles) {
+    const htmlPath = path.join(repoRoot, "artifacts", "vivasam", bundle.lessonId, "claude", `${bundle.lessonId}-slides.html`);
+    const intakePath = path.join(repoRoot, "artifacts", "vivasam", bundle.lessonId, "claude", "html-intake.json");
+    const validated = validateClaudeHtmlSlides(htmlPath);
+    const intake = JSON.parse(fs.readFileSync(intakePath, "utf8"));
+
+    assert.equal(validated.slideCount, 12, bundle.lessonId);
+    assert.equal(validated.width, 1920, bundle.lessonId);
+    assert.equal(validated.height, 1080, bundle.lessonId);
+    assert.equal(intake.lessonId, bundle.lessonId);
+    assert.equal(intake.sequence, bundle.sequence);
+    assert.equal(intake.title, bundle.title);
+    assert.equal(intake.slideCount, 12);
+    assert.match(intake.sourceSha256, /^[a-f0-9]{64}$/);
+    assert.match(intake.outputSha256, /^[a-f0-9]{64}$/);
+  }
 });

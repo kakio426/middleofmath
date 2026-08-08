@@ -15,11 +15,11 @@
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "22afba8273c6",
-  "thumbnailAsset": "22afba8273c6/representative-image.png",
-  "worksheetAsset": "22afba8273c6/g3s1-multiplication-place-value-context-worksheet.png",
+  "digest": "e041efb07707",
+  "thumbnailAsset": "e041efb07707/representative-image.png",
+  "worksheetAsset": "e041efb07707/g3s1-multiplication-place-value-context-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "22afba8273c6/g3s1-multiplication-place-value-context-slides.html",
+  "slideHtmlAsset": "e041efb07707/g3s1-multiplication-place-value-context-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication",
   "mathCanvasEditorUrl": "",
   "downloadAssets": [
@@ -27,28 +27,28 @@
   ],
   "assets": [
     {
-      "path": "22afba8273c6/g3s1-multiplication-place-value-context-slides.html",
-      "bytes": 8410498,
-      "sha256": "fad695bb41995c442de080b85c0f757d3fed7c7223c56211050e46717b25ca41",
+      "path": "e041efb07707/g3s1-multiplication-place-value-context-slides.html",
+      "bytes": 8207193,
+      "sha256": "ae094190191bc586836f71c516f9c5d75ce925e12909c4a8fb887b620a9dabc4",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "22afba8273c6/g3s1-multiplication-place-value-context-worksheet.pdf",
+      "path": "e041efb07707/g3s1-multiplication-place-value-context-worksheet.pdf",
       "bytes": 1226619,
       "sha256": "02262e7b61cde19f2de8ab92405df0e423ff92fd51a92729525170397eaee16c",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "22afba8273c6/g3s1-multiplication-place-value-context-worksheet.png",
+      "path": "e041efb07707/g3s1-multiplication-place-value-context-worksheet.png",
       "bytes": 1300589,
       "sha256": "a2930e8732037becaf573970dfb016ff02c10bb5495e0ce6a42b2bc8b33b8406",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "22afba8273c6/representative-image.png",
+      "path": "e041efb07707/representative-image.png",
       "bytes": 53378,
       "sha256": "d954aceccc2bac261013bdb0e22414387c0a9f16eed242a1676b32730e64c88d",
       "contentType": "image/png",

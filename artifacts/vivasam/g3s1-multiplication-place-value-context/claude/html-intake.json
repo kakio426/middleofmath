@@ -8,8 +8,8 @@
   "slideCount": 12,
   "width": 1920,
   "height": 1080,
-  "sourceSha256": "545c3b3f18fbfa617940de3de816f4754d6afc6ed9845c05a23643de0d8023f8",
-  "outputSha256": "fad695bb41995c442de080b85c0f757d3fed7c7223c56211050e46717b25ca41",
+  "sourceSha256": "e8a79996f96bed51ab40b57921fdd935ba644a33d871b120b4059220f4ca3a1d",
+  "outputSha256": "ae094190191bc586836f71c516f9c5d75ce925e12909c4a8fb887b620a9dabc4",
   "outputFilename": "g3s1-multiplication-place-value-context-slides.html",
   "dependencies": [
     {
@@ -63,14 +63,14 @@
       "bytes": 1211808
     },
     {
-      "path": "assets/illustrations/cloud-collaboration.png",
-      "sha256": "83bc4905c7aa8690fe382e93f57b8c6ec0e8fb7bcc55f5d30b1c7518bc5debcc",
-      "bytes": 924571
-    },
-    {
       "path": "assets/illustrations/cloud-selected.png",
       "sha256": "a2c5a4cb68a9000b5ad09a375061000d8d343da977735d9e8733311620ffd8bd",
       "bytes": 1851519
+    },
+    {
+      "path": "assets/illustrations/cloud-vector-edit.png",
+      "sha256": "f6033144ad54e7294753fad4ca8bb0a75437889902ad2e447cf07395e5880ca9",
+      "bytes": 772070
     },
     {
       "path": "deck-stage.js",
@@ -84,8 +84,8 @@
     },
     {
       "path": "상자 수를 자릿값으로 곱하기.dc.html",
-      "sha256": "545c3b3f18fbfa617940de3de816f4754d6afc6ed9845c05a23643de0d8023f8",
-      "bytes": 56068
+      "sha256": "e8a79996f96bed51ab40b57921fdd935ba644a33d871b120b4059220f4ca3a1d",
+      "bytes": 56097
     }
   ]
 }

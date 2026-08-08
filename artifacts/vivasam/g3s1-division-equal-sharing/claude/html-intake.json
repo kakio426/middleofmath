@@ -8,14 +8,14 @@
   "slideCount": 12,
   "width": 1920,
   "height": 1080,
-  "sourceSha256": "0325fb1e5a0506e0015cf094fb7b691e4352609add7f0f7121f894c59202be38",
-  "outputSha256": "b3a31651a54e5f2cc3c2827b42fdc8ac215d78efbc5369edc8942dac9d8b8db5",
+  "sourceSha256": "17de5acefe8378fa4cf1e3c9e34b3e77af313343b57b3b585056005b5ae7adf1",
+  "outputSha256": "f659da5c8d337ca2bca66891df6f335c3e944c2f100d8ec916b318e3f861ba96",
   "outputFilename": "g3s1-division-equal-sharing-slides.html",
   "dependencies": [
     {
       "path": "18개를 똑같이 나누면.dc.html",
-      "sha256": "0325fb1e5a0506e0015cf094fb7b691e4352609add7f0f7121f894c59202be38",
-      "bytes": 57303
+      "sha256": "17de5acefe8378fa4cf1e3c9e34b3e77af313343b57b3b585056005b5ae7adf1",
+      "bytes": 57325
     },
     {
       "path": "_ds/blockprint-design-system-6ad389cf-7cce-484e-9a4d-fc23df3839f3/_ds_bundle.js",

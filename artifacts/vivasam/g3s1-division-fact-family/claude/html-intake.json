@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "sourceFormat": "claude-design-dc-html",
+  "sourceFilename": "한 곱셈식에서 두 나눗셈식.dc.html",
+  "lessonId": "g3s1-division-fact-family",
+  "sequence": 8,
+  "title": "한 곱셈식에서 두 나눗셈식",
+  "slideCount": 12,
+  "width": 1920,
+  "height": 1080,
+  "sourceSha256": "c2e69dedf7cd25145cb7b554c2599e01088966a303d0efe52401a2a766dd11ee",
+  "outputSha256": "b2e30588efcf1b5112ac74e15c35e51a0f136f574fccf33fb4bb003002bb962b",
+  "outputFilename": "g3s1-division-fact-family-slides.html",
+  "dependencies": [
+    {
+      "path": "_ds/blockprint-design-system-6ad389cf-7cce-484e-9a4d-fc23df3839f3/_ds_bundle.js",
+      "sha256": "8ff8fbd423494bf15ffb1d87eb83685dfc4daf863cb397c297e7cd7c909bb1c0",
+      "bytes": 38567
+    },
+    {
+      "path": "_ds/blockprint-design-system-6ad389cf-7cce-484e-9a4d-fc23df3839f3/assets/fonts/PretendardVariable.woff2",
+      "sha256": "9599f12fd42fc0bce1cd50b47a0c022e108d7aa64dd0d1bb0ed44f3282d900b4",
+      "bytes": 2057688
+    },
+    {
+      "path": "_ds/blockprint-design-system-6ad389cf-7cce-484e-9a4d-fc23df3839f3/styles.css",
+      "sha256": "f48c9bddbf3e5f9b01fc63aa2c0698f8a70caa02cbf27fed48760d5e6f5fad26",
+      "bytes": 405
+    },
+    {
+      "path": "_ds/blockprint-design-system-6ad389cf-7cce-484e-9a4d-fc23df3839f3/tokens/colors.css",
+      "sha256": "1d9ff74751d7ed687b040c4afc7227847d3b9e57f2cce7a39f6774bb7a550f7d",
+      "bytes": 676
+    },
+    {
+      "path": "_ds/blockprint-design-system-6ad389cf-7cce-484e-9a4d-fc23df3839f3/tokens/fonts.css",
+      "sha256": "e24e2c1a5761bbd9d5bae78091d8d5ace4914d294160f0e884ea3b3b06cee706",
+      "bytes": 345
+    },
+    {
+      "path": "_ds/blockprint-design-system-6ad389cf-7cce-484e-9a4d-fc23df3839f3/tokens/illustration.css",
+      "sha256": "a59a85f8fdaa183bb34567226a0682baea52e50dcf8512cb3659fe9549e6361e",
+      "bytes": 476
+    },
+    {
+      "path": "_ds/blockprint-design-system-6ad389cf-7cce-484e-9a4d-fc23df3839f3/tokens/radius.css",
+      "sha256": "de6f21ea0cfbb60b409362f27258cec1866d7b673fa0acb28e3a75bb7be4d65f",
+      "bytes": 226
+    },
+    {
+      "path": "_ds/blockprint-design-system-6ad389cf-7cce-484e-9a4d-fc23df3839f3/tokens/spacing.css",
+      "sha256": "917da26232903a4d3aab3c506a2df99fdb0b4777ecdbb86cb13829f97e6a8772",
+      "bytes": 192
+    },
+    {
+      "path": "_ds/blockprint-design-system-6ad389cf-7cce-484e-9a4d-fc23df3839f3/tokens/typography.css",
+      "sha256": "4e0df4f4bf3db15e2976bd95e31400f254e25be0e6151308fad7f965ea57dc39",
+      "bytes": 1497
+    },
+    {
+      "path": "assets/illustrations/cloud-card-stack-purple.png",
+      "sha256": "1167940894647798090432a12ffef7959bc7bd1ee3b42d9eb2f391af7e158d24",
+      "bytes": 1211808
+    },
+    {
+      "path": "assets/illustrations/cloud-card-stack.png",
+      "sha256": "366c557d396d06566804f26a52f54726905556ff74bdadbb1d14af691501b77a",
+      "bytes": 1502263
+    },
+    {
+      "path": "assets/illustrations/cloud-selected.png",
+      "sha256": "a2c5a4cb68a9000b5ad09a375061000d8d343da977735d9e8733311620ffd8bd",
+      "bytes": 1851519
+    },
+    {
+      "path": "deck-stage.js",
+      "sha256": "f3d3d0a662c08eefb5a8757a6da3139572485f4be32ac33785c5047061926a8a",
+      "bytes": 136293
+    },
+    {
+      "path": "support.js",
+      "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe",
+      "bytes": 69150
+    },
+    {
+      "path": "한 곱셈식에서 두 나눗셈식.dc.html",
+      "sha256": "c2e69dedf7cd25145cb7b554c2599e01088966a303d0efe52401a2a766dd11ee",
+      "bytes": 68038
+    }
+  ]
+}

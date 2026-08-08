@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "verifiedAt": "2026-08-08T01:36:31.364Z",
-  "commitHash": "c341c4e2c8bd37593b1ca93b051de9ccbf40e258",
+  "verifiedAt": "2026-08-08T07:41:06.351Z",
+  "commitHash": "aa0836156914eb9fd37039afc3b6c51cc6504eda",
   "baseUrl": "https://eduitit.site",
   "catalogUrl": "https://eduitit.site/edu-materials/?category=lesson_bundle",
   "catalogStatus": 200,
@@ -20,7 +20,7 @@
     {
       "sequence": 1,
       "lessonId": "g3s2-pictograph-legend",
-      "digest": "0b45930ac8bc",
+      "digest": "4ba76bae9760",
       "productionRecordId": "2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae",
       "publicUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/",
       "runUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/run/",
@@ -29,7 +29,7 @@
       "presentationMode": "html",
       "presentationUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-pictograph-legend/slides/",
       "slideDeckUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s2-pictograph-legend/slides/deck/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-pictograph-legend/0b45930ac8bc/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s2-pictograph-legend/4ba76bae9760/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -49,7 +49,7 @@
     {
       "sequence": 2,
       "lessonId": "g3s1-multiplication-groups-model",
-      "digest": "2a81ac7e0439",
+      "digest": "cf5c407775e3",
       "productionRecordId": "c058e808-6713-42fa-8905-24dc0515776e",
       "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
       "runUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/run/",
@@ -58,7 +58,7 @@
       "presentationMode": "html",
       "presentationUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-groups-model/slides/",
       "slideDeckUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-groups-model/slides/deck/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model/2a81ac7e0439/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-groups-model/cf5c407775e3/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -76,7 +76,7 @@
     {
       "sequence": 3,
       "lessonId": "g3s1-multiplication-array-transfer",
-      "digest": "434492442ef4",
+      "digest": "3dc5dfce03fa",
       "productionRecordId": "bf456499-f56d-4bf5-86e2-2179f4ce354a",
       "publicUrl": "https://eduitit.site/edu-materials/bf456499-f56d-4bf5-86e2-2179f4ce354a/",
       "runUrl": "https://eduitit.site/edu-materials/bf456499-f56d-4bf5-86e2-2179f4ce354a/run/",
@@ -85,7 +85,7 @@
       "presentationMode": "html",
       "presentationUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-array-transfer/slides/",
       "slideDeckUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-array-transfer/slides/deck/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-array-transfer/434492442ef4/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-array-transfer/3dc5dfce03fa/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -103,7 +103,7 @@
     {
       "sequence": 4,
       "lessonId": "g3s1-multiplication-place-value-model",
-      "digest": "7b79a5f74447",
+      "digest": "0dc470a95dfb",
       "productionRecordId": "9d3ac7a8-6596-429d-bac5-a3a75ad4540c",
       "publicUrl": "https://eduitit.site/edu-materials/9d3ac7a8-6596-429d-bac5-a3a75ad4540c/",
       "runUrl": "https://eduitit.site/edu-materials/9d3ac7a8-6596-429d-bac5-a3a75ad4540c/run/",
@@ -112,7 +112,7 @@
       "presentationMode": "html",
       "presentationUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-place-value-model/slides/",
       "slideDeckUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-place-value-model/slides/deck/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-model/7b79a5f74447/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-model/0dc470a95dfb/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -130,7 +130,7 @@
     {
       "sequence": 5,
       "lessonId": "g3s1-multiplication-place-value-context",
-      "digest": "22afba8273c6",
+      "digest": "e041efb07707",
       "productionRecordId": "b8d42be0-1a5d-4de9-88c5-a655c6066d68",
       "publicUrl": "https://eduitit.site/edu-materials/b8d42be0-1a5d-4de9-88c5-a655c6066d68/",
       "runUrl": "https://eduitit.site/edu-materials/b8d42be0-1a5d-4de9-88c5-a655c6066d68/run/",
@@ -139,7 +139,7 @@
       "presentationMode": "html",
       "presentationUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-place-value-context/slides/",
       "slideDeckUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-multiplication-place-value-context/slides/deck/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-context/22afba8273c6/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-context/e041efb07707/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,
@@ -157,7 +157,7 @@
     {
       "sequence": 6,
       "lessonId": "g3s1-division-equal-sharing",
-      "digest": "bd28e298da8c",
+      "digest": "21ca89affd04",
       "productionRecordId": "5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54",
       "publicUrl": "https://eduitit.site/edu-materials/5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54/",
       "runUrl": "https://eduitit.site/edu-materials/5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54/run/",
@@ -166,7 +166,7 @@
       "presentationMode": "html",
       "presentationUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-division-equal-sharing/slides/",
       "slideDeckUrl": "https://eduitit.site/edu-materials/lesson-bundles/g3s1-division-equal-sharing/slides/deck/",
-      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-division-equal-sharing/bd28e298da8c/representative-image.png",
+      "representativeAssetUrl": "https://eduitit.site/static/edu_materials/lesson_bundles/g3s1-division-equal-sharing/21ca89affd04/representative-image.png",
       "statuses": {
         "detail": 200,
         "run": 200,

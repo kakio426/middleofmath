@@ -115,7 +115,7 @@ test("운영 비로그인 검증은 PPT 수령분만 원장에 기록한다", ()
   const summary = summarizeTracker(validated);
   assert.equal(summary.productionPublished, 6);
   assert.equal(summary.localAnonymousAccessPassed, 6);
-  assert.equal(summary.claudePptsAwaiting, 24);
+  assert.equal(summary.claudePptsAwaiting, 0);
   assert.equal(summary.claudePptsValidated, 0);
   assert.equal(summary.communityPosts, 0);
   assert.equal(summary.raceRecords, 0);
@@ -129,7 +129,9 @@ test("운영 비로그인 검증은 PPT 수령분만 원장에 기록한다", ()
     assert.equal(bundle.eduitit.productionStatus, "not-deployed");
     assert.equal(bundle.eduitit.anonymousAccessStatus, "not-tested");
     assert.equal(bundle.eduitit.publicUrl, "");
-    assert.equal(bundle.ppt.status, "awaiting-claude");
+    assert.equal(bundle.ppt.status, "received");
+    assert.equal(bundle.ppt.format, "html");
+    assert.equal(bundle.ppt.slideCount, 12);
   }
 });
 

@@ -8,8 +8,8 @@
   "slideCount": 12,
   "width": 1920,
   "height": 1080,
-  "sourceSha256": "a8cbd3e4304e41f88a160d576f7ae9b4b4ce1613ab43f744cdf387ec35d7cfb3",
-  "outputSha256": "cccda9c476dddad55bff4a981fd2a00743de08161bbd03c0e81b5f7831d9a797",
+  "sourceSha256": "b3734013d619d37f1549c4877fb93b1ee62ab5f4b9ba7cd03a9f4cca317db3fc",
+  "outputSha256": "7503dec1d8291e26ceb97b13ed6eaedbc9d9146feaf96f85525087b1aa584074",
   "outputFilename": "g3s1-multiplication-array-transfer-slides.html",
   "dependencies": [
     {
@@ -63,14 +63,14 @@
       "bytes": 1211808
     },
     {
-      "path": "assets/illustrations/cloud-collaboration.png",
-      "sha256": "83bc4905c7aa8690fe382e93f57b8c6ec0e8fb7bcc55f5d30b1c7518bc5debcc",
-      "bytes": 924571
-    },
-    {
       "path": "assets/illustrations/cloud-selected.png",
       "sha256": "a2c5a4cb68a9000b5ad09a375061000d8d343da977735d9e8733311620ffd8bd",
       "bytes": 1851519
+    },
+    {
+      "path": "assets/illustrations/cloud-vector-edit.png",
+      "sha256": "f6033144ad54e7294753fad4ca8bb0a75437889902ad2e447cf07395e5880ca9",
+      "bytes": 772070
     },
     {
       "path": "deck-stage.js",
@@ -84,8 +84,8 @@
     },
     {
       "path": "줄과 칸으로 전체 수 찾기.dc.html",
-      "sha256": "a8cbd3e4304e41f88a160d576f7ae9b4b4ce1613ab43f744cdf387ec35d7cfb3",
-      "bytes": 77500
+      "sha256": "b3734013d619d37f1549c4877fb93b1ee62ab5f4b9ba7cd03a9f4cca317db3fc",
+      "bytes": 77529
     }
   ]
 }

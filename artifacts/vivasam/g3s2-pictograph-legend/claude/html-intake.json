@@ -8,8 +8,8 @@
   "slideCount": 12,
   "width": 1920,
   "height": 1080,
-  "sourceSha256": "fd3745cb8d56eb4f7fa47be2474566741bfb0ea71430ed4b3a4347e71513b349",
-  "outputSha256": "37b157383af3d671d1e5bb57fbae5e45b003de69cefde44cb018c6758a3d3c28",
+  "sourceSha256": "a5b7b79e268482bd8bea1e650cec07acdc4fadf5ac571f502c08aaad05e47c14",
+  "outputSha256": "edf8fae0ee2fe18ab0f5a269a3e727e7196fe78b39138692ff44c0338439e7c3",
   "outputFilename": "g3s2-pictograph-legend-slides.html",
   "dependencies": [
     {
@@ -84,8 +84,8 @@
     },
     {
       "path": "그림 하나에 숨은 수.dc.html",
-      "sha256": "fd3745cb8d56eb4f7fa47be2474566741bfb0ea71430ed4b3a4347e71513b349",
-      "bytes": 64834
+      "sha256": "a5b7b79e268482bd8bea1e650cec07acdc4fadf5ac571f502c08aaad05e47c14",
+      "bytes": 64874
     }
   ]
 }

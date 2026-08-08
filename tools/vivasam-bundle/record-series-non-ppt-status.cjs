@@ -160,7 +160,11 @@ function applyVerificationToTracker(sourceTracker, verification, now = new Date(
       pptxPath: presentation.format === "pptx" ? `${artifactRoot}/claude/${presentation.trackedPath}` : "",
       htmlPath: presentation.format === "html" ? `${artifactRoot}/claude/${presentation.trackedPath}` : "",
       slideCount: presentation.slideCount,
-      intakeReportPath: "",
+      intakeReportPath:
+        presentation.format === "html"
+          && fs.existsSync(path.join(REPO_ROOT, "artifacts", "vivasam", lessonId, "claude", "html-intake.json"))
+          ? `${artifactRoot}/claude/html-intake.json`
+          : bundle.ppt.intakeReportPath,
       renderedPdfPath: "",
       slidesDirectory: "",
       validatedAt: "",

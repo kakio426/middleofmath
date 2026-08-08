@@ -8,8 +8,8 @@
   "slideCount": 12,
   "width": 1920,
   "height": 1080,
-  "sourceSha256": "ce833619634b7d95845d620cc0642c12c688db4a5202397b127dbbe204198598",
-  "outputSha256": "52cc2bfc3bf9ef2cdeceec5f81c8af5a20d74524e19ea1b1df8d9403225358f3",
+  "sourceSha256": "bcb1793e16020d75647773334e7cd4ebac85f104683fa2b4b3c9ad2750825271",
+  "outputSha256": "fefd2db128e315276266699b0621395e9cea1d46dd083cf795c72c458ce9b9b9",
   "outputFilename": "g3s1-multiplication-groups-model-slides.html",
   "dependencies": [
     {
@@ -63,11 +63,6 @@
       "bytes": 1211808
     },
     {
-      "path": "assets/illustrations/cloud-collaboration.png",
-      "sha256": "83bc4905c7aa8690fe382e93f57b8c6ec0e8fb7bcc55f5d30b1c7518bc5debcc",
-      "bytes": 924571
-    },
-    {
       "path": "assets/illustrations/cloud-selected.png",
       "sha256": "a2c5a4cb68a9000b5ad09a375061000d8d343da977735d9e8733311620ffd8bd",
       "bytes": 1851519
@@ -84,8 +79,8 @@
     },
     {
       "path": "같은 묶음은 곱셈으로.dc.html",
-      "sha256": "ce833619634b7d95845d620cc0642c12c688db4a5202397b127dbbe204198598",
-      "bytes": 63216
+      "sha256": "bcb1793e16020d75647773334e7cd4ebac85f104683fa2b4b3c9ad2750825271",
+      "bytes": 63270
     }
   ]
 }

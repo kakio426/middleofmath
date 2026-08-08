@@ -2,7 +2,7 @@
 
 이 문서는 `tools/vivasam-bundle/series-tracker.json`에서 자동 생성됩니다. 직접 고치지 말고 `track-series.cjs update`로 원장을 갱신하세요.
 
-- 원장 최종 갱신: 2026-08-08T01:36:31.364Z
+- 원장 최종 갱신: 2026-08-08T07:41:06.351Z
 - 생산 계약: PPT 30개 · PPT당 약 11장(차시별 가변) · PPT당 통합 활동지 1개 · 활동지 총 30개
 - 역할: Claude는 발표 화면(HTML 우선, 기존 PPTX 호환)만 제작, Codex는 내용 원고와 발표 화면 외 모든 산출물·플랫폼·검증·추적 담당
 
@@ -17,7 +17,7 @@
 | MathCanvas 새 활동 생성 | 1 | 상황별 |
 | MathCanvas 활동 연결 완료 | 1 | 30 |
 | MathCanvas 학생 공개 링크 검증 | 0 | 지원 시 |
-| Claude HTML/PPTX 수령 | 6 | 30 |
+| Claude HTML/PPTX 수령 | 30 | 30 |
 | 설계 의도·정답·대표 이미지 검증 | 6 | 30 |
 | Eduitit 패키지 검증 | 6 | 30 |
 | Eduitit 로컬 공개·비로그인 접근 검증 | 6 | 30 |
@@ -26,7 +26,7 @@
 | 나의 레이스 등록 | 0 | 30 |
 | 전 과정 완료 | 0 | 30 |
 
-현재 Claude HTML/PPTX 수령 대기: 24개. 남은 전체 완료 슬롯: 30개.
+현재 Claude HTML/PPTX 수령 대기: 0개. 남은 전체 완료 슬롯: 30개.
 
 ## 30개 슬롯
 
@@ -38,30 +38,30 @@
 | 04 | 34×2를 두 부분으로 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
 | 05 | 상자 수를 자릿값으로 곱하기 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
 | 06 | 18개를 똑같이 나누면 | 11 | validated | validated | not-started | received | validated | validated | published/production-passed | deployed | 미게시 | 활동지에서 MathCanvas intake 생성 |
-| 07 | 곱셈의 빈칸으로 몫 찾기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 08 | 한 곱셈식에서 두 나눗셈식 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 09 | 몇 묶음인지 곱셈으로 확인하기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 10 | 분수의 첫 조건, 똑같이 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 11 | 같지 않은 조각을 고쳐 나누기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 12 | 전체와 부분을 분수로 읽기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 13 | 피자에서 분모와 분자 찾기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 14 | 연필에는 cm, 문에는 m | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 15 | 크기에 맞는 길이 단위 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 16 | m·cm, km·m 연결하기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 17 | 자릿값을 살려 먼저 곱하기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 18 | 부분곱을 빠짐없이 더하기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 19 | 두 자리 수를 나누어 곱하기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 20 | 나눗셈이 묻는 두 가지 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 21 | 먼저 나누고 남은 수 찾기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 22 | 몫과 나머지로 처음 수 확인하기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 23 | 원의 중심과 반지름 찾기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 24 | 반지름 두 개가 만드는 지름 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 25 | 색칠한 부분을 분수로 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 26 | 가분수를 대분수로 바꾸기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 27 | 분모가 같은 분수 비교하기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 28 | L를 mL로 정확히 바꾸기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 29 | kg을 g으로 정확히 바꾸기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
-| 30 | 그림그래프의 실제 차이 구하기 | 11 | validated | not-started | not-started | awaiting-claude | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | Claude HTML/PPTX 수령 |
+| 07 | 곱셈의 빈칸으로 몫 찾기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 08 | 한 곱셈식에서 두 나눗셈식 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 09 | 몇 묶음인지 곱셈으로 확인하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 10 | 분수의 첫 조건, 똑같이 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 11 | 같지 않은 조각을 고쳐 나누기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 12 | 전체와 부분을 분수로 읽기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 13 | 피자에서 분모와 분자 찾기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 14 | 연필에는 cm, 문에는 m | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 15 | 크기에 맞는 길이 단위 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 16 | m·cm, km·m 연결하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 17 | 자릿값을 살려 먼저 곱하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 18 | 부분곱을 빠짐없이 더하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 19 | 두 자리 수를 나누어 곱하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 20 | 나눗셈이 묻는 두 가지 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 21 | 먼저 나누고 남은 수 찾기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 22 | 몫과 나머지로 처음 수 확인하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 23 | 원의 중심과 반지름 찾기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 24 | 반지름 두 개가 만드는 지름 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 25 | 색칠한 부분을 분수로 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 26 | 가분수를 대분수로 바꾸기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 27 | 분모가 같은 분수 비교하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 28 | L를 mL로 정확히 바꾸기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 29 | kg을 g으로 정확히 바꾸기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
+| 30 | 그림그래프의 실제 차이 구하기 | 11 | validated | not-started | not-started | received | pending | not-started | unpublished/not-tested | not-deployed | 미게시 | 통합 활동지 1개 제작 + 수업 진행 안내·대표 이미지 완성 |
 
 ## 판정 원칙
 
@@ -84,23 +84,23 @@
 
 | 시각 | 번호 | 이벤트 | 근거 |
 |---|---:|---|---|
-| 2026-08-08T01:36:31.364Z | 전체 | Eduitit 운영 공개·비로그인 검증 완료 | PPT 수령분 6개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다. |
-| 2026-08-08T01:26:26.935Z | 전체 | 발표 화면 수령분 산출물·Eduitit 로컬 공개 검증 완료 | 통합 활동지까지 준비된 Claude HTML/PPTX 6개를 Eduitit 공개 패키지로 만들고 비로그인 접근을 검증했다. 발표 화면만 도착한 슬롯은 수령 상태를 보존하고 게시를 대기한다. |
-| 2026-08-08T00:52:30.178Z | 전체 | Eduitit 운영 공개·비로그인 검증 완료 | PPT 수령분 3개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다. |
-| 2026-08-08T00:31:21.110Z | 03 | HTML·MathCanvas 로컬 재게시 검증 | 상세·실행·렌더·썸네일·활동지·12장 슬라이드와 TBmzEW 링크를 비로그인 상태로 확인했다. |
-| 2026-08-08T00:31:21.043Z | 02 | HTML 패키지 로컬 재게시 검증 | 상세·실행·렌더·썸네일·활동지·12장 슬라이드 경로를 비로그인 상태로 확인했다. |
-| 2026-08-08T00:31:20.989Z | 01 | HTML 패키지 로컬 재게시 검증 | 상세·실행·렌더·썸네일·활동지·12장 슬라이드 경로를 비로그인 상태로 확인했다. |
-| 2026-08-08T00:28:48.338Z | 03 | HTML·MathCanvas 패키지 재생성 | 12장 HTML 슬라이드와 TBmzEW MathCanvas 링크를 함께 반영했으며 재게시 검증 전까지 stale로 표시한다. |
-| 2026-08-08T00:28:39.863Z | 02 | HTML 패키지 재생성 | HTML 슬라이드와 최신 학습 링크를 반영해 패키지를 다시 만들었으며 재게시 검증 전까지 stale로 표시한다. |
-| 2026-08-08T00:28:30.884Z | 01 | HTML 패키지 재생성 | HTML 슬라이드와 최신 학습 링크를 반영해 패키지를 다시 만들었으며 재게시 검증 전까지 stale로 표시한다. |
-| 2026-08-08T00:20:15.296Z | 03 | MathCanvas 링크를 Eduitit 패키지에 동기화 | 원본·Eduitit 패키지의 MathCanvas 링크를 검증했고, 최신 HTML을 로컬 공개 레코드에 다시 게시할 차례다. |
-| 2026-08-08T00:20:12.931Z | 03 | MathCanvas 링크 변경으로 Eduitit 재생성 시작 | MathCanvas 연결 상태가 공개 패키지에 영향을 주므로 기존 로컬·운영 공개 상태를 무효화했다. |
-| 2026-08-08T00:20:12.926Z | 03 | MathCanvas 선별·생성 상태 갱신 | created: 활동지 해시 65be8eb9aeac |
-| 2026-08-08T00:14:04.073Z | 03 | HTML 패키지 로컬 검증 | 기존 통합 활동지 1개와 12장 HTML을 묶어 비로그인 경로를 확인했다. |
-| 2026-08-08T00:13:55.726Z | 02 | HTML 패키지 로컬 검증 | 기존 통합 활동지 1개와 12장 HTML을 묶어 비로그인 경로를 확인했다. |
-| 2026-08-08T00:13:46.896Z | 01 | HTML 패키지 로컬 검증 | 기존 통합 활동지 1개와 12장 HTML을 묶어 비로그인 경로를 확인했다. |
-| 2026-08-08T00:11:25.544Z | 06 | Claude Design HTML 수령 | 12장 HTML 원본을 보존했다. 통합 활동지 제작 전이라 아직 공개하지 않는다. |
-| 2026-08-08T00:11:25.509Z | 05 | Claude Design HTML 수령 | 12장 HTML 원본을 보존했다. 통합 활동지 제작 전이라 아직 공개하지 않는다. |
-| 2026-08-08T00:11:25.474Z | 04 | Claude Design HTML 수령 | 12장 HTML 원본을 보존했다. 통합 활동지 제작 전이라 아직 공개하지 않는다. |
-| 2026-08-08T00:11:25.439Z | 03 | Claude Design HTML 수령 | 원본 디자인 묶음을 12장 HTML로 보존했다. |
-| 2026-08-08T00:11:25.403Z | 02 | Claude Design HTML 수령 | 원본 디자인 묶음을 12장 HTML로 보존했다. |
+| 2026-08-08T07:41:06.351Z | 전체 | Eduitit 운영 공개·비로그인 검증 완료 | PPT 수령분 6개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다. |
+| 2026-08-08T07:39:32.137Z | 전체 | Eduitit 운영 공개·비로그인 검증 완료 | PPT 수령분 6개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다. |
+| 2026-08-08T07:37:39.994Z | 전체 | 발표 화면 수령분 산출물·Eduitit 로컬 공개 검증 완료 | 통합 활동지까지 준비된 Claude HTML/PPTX 6개를 Eduitit 공개 패키지로 만들고 비로그인 접근을 검증했다. 발표 화면만 도착한 슬롯은 수령 상태를 보존하고 게시를 대기한다. |
+| 2026-08-08T07:30:10.875Z | 전체 | 발표 화면 수령분 산출물·Eduitit 로컬 공개 검증 완료 | 통합 활동지까지 준비된 Claude HTML/PPTX 6개를 Eduitit 공개 패키지로 만들고 비로그인 접근을 검증했다. 발표 화면만 도착한 슬롯은 수령 상태를 보존하고 게시를 대기한다. |
+| 2026-08-08T07:24:16.609Z | 30 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:16.551Z | 29 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:16.490Z | 28 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:16.430Z | 27 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:16.371Z | 26 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:16.312Z | 25 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:16.252Z | 24 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:16.192Z | 23 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:16.132Z | 22 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:16.072Z | 21 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:16.008Z | 20 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:15.948Z | 19 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:15.889Z | 18 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:15.827Z | 17 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:15.765Z | 16 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |
+| 2026-08-08T07:24:15.704Z | 15 | Claude Design HTML 일괄 수령 | 제목 매핑, 16:9 캔버스, 12장 슬라이드, 외부 리소스 제거와 단일 HTML 묶음을 확인했다. |

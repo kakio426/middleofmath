@@ -15,11 +15,11 @@
   "pptStatus": "available",
   "presentationMode": "html",
   "sourceHtml": "source.html",
-  "digest": "434492442ef4",
-  "thumbnailAsset": "434492442ef4/representative-image.png",
-  "worksheetAsset": "434492442ef4/g3s1-multiplication-array-transfer-worksheet.png",
+  "digest": "3dc5dfce03fa",
+  "thumbnailAsset": "3dc5dfce03fa/representative-image.png",
+  "worksheetAsset": "3dc5dfce03fa/g3s1-multiplication-array-transfer-worksheet.png",
   "pptAsset": "",
-  "slideHtmlAsset": "434492442ef4/g3s1-multiplication-array-transfer-slides.html",
+  "slideHtmlAsset": "3dc5dfce03fa/g3s1-multiplication-array-transfer-slides.html",
   "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication",
   "mathCanvasEditorUrl": "https://mathcanvas.vivasam.com/ko/view/TBmzEW",
   "downloadAssets": [
@@ -27,28 +27,28 @@
   ],
   "assets": [
     {
-      "path": "434492442ef4/g3s1-multiplication-array-transfer-slides.html",
-      "bytes": 8432144,
-      "sha256": "cccda9c476dddad55bff4a981fd2a00743de08161bbd03c0e81b5f7831d9a797",
+      "path": "3dc5dfce03fa/g3s1-multiplication-array-transfer-slides.html",
+      "bytes": 8228839,
+      "sha256": "7503dec1d8291e26ceb97b13ed6eaedbc9d9146feaf96f85525087b1aa584074",
       "contentType": "text/html; charset=utf-8",
       "role": "presentation"
     },
     {
-      "path": "434492442ef4/g3s1-multiplication-array-transfer-worksheet.pdf",
+      "path": "3dc5dfce03fa/g3s1-multiplication-array-transfer-worksheet.pdf",
       "bytes": 1373873,
       "sha256": "62700a537202107b993d098f50d48c41b5b49b0265e0c7bb9a7be1a4092673eb",
       "contentType": "application/pdf",
       "role": "worksheet"
     },
     {
-      "path": "434492442ef4/g3s1-multiplication-array-transfer-worksheet.png",
+      "path": "3dc5dfce03fa/g3s1-multiplication-array-transfer-worksheet.png",
       "bytes": 1317136,
       "sha256": "65be8eb9aeac51dab319f53c21993bb9d1a5a87f6852116213e99ec68be0d9c8",
       "contentType": "image/png",
       "role": "worksheet"
     },
     {
-      "path": "434492442ef4/representative-image.png",
+      "path": "3dc5dfce03fa/representative-image.png",
       "bytes": 52500,
       "sha256": "cbe0a39ca6dae457e019e86a39315e6a73d898e28ecb79194297f3c1e7ca5cb1",
       "contentType": "image/png",
