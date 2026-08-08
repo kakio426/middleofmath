@@ -16,3 +16,6 @@ supabase/.temp/
 supabase/.branches/
 tmp/
 .codex-work/
+# Its own git repository lives here. Committing it would record a bare gitlink,
+# so the files would look tracked while never actually reaching this repo.
+ask-me-plan/
