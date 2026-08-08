@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "updatedAt": "2026-08-08T00:52:30.178Z",
+  "updatedAt": "2026-08-08T01:36:31.364Z",
   "contract": {
     "targetDeckCount": 30,
     "preferredSlidesPerDeck": 11,
@@ -119,7 +119,7 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/worksheet/g3s2-pictograph-legend-worksheet.pdf",
-        "validatedAt": "2026-08-07T22:18:22.541Z"
+        "validatedAt": "2026-08-08T01:26:26.935Z"
       },
       "ppt": {
         "status": "received",
@@ -127,7 +127,7 @@
         "legacyPptxPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/claude/g3s2-pictograph-legend.pptx",
         "pptxPath": "",
         "slideCount": 12,
-        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s2-pictograph-legend/claude/html-intake.json",
+        "intakeReportPath": "",
         "renderedPdfPath": "",
         "slidesDirectory": "",
         "validatedAt": "",
@@ -150,7 +150,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/2e02ca70-e3ee-4734-9741-bf4a3a5cb7ae/",
-        "validatedAt": "2026-08-08T00:52:30.178Z"
+        "validatedAt": "2026-08-08T01:36:31.364Z"
       },
       "notes": []
     },
@@ -176,14 +176,14 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/worksheet/g3s1-multiplication-groups-model-worksheet.pdf",
-        "validatedAt": "2026-08-07T22:18:22.541Z"
+        "validatedAt": "2026-08-08T01:26:26.935Z"
       },
       "ppt": {
         "status": "received",
         "format": "html",
         "pptxPath": "",
         "slideCount": 12,
-        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-groups-model/claude/html-intake.json",
+        "intakeReportPath": "",
         "renderedPdfPath": "",
         "slidesDirectory": "",
         "validatedAt": "",
@@ -207,7 +207,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/c058e808-6713-42fa-8905-24dc0515776e/",
-        "validatedAt": "2026-08-08T00:52:30.178Z"
+        "validatedAt": "2026-08-08T01:36:31.364Z"
       },
       "notes": []
     },
@@ -233,14 +233,14 @@
         "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/worksheet/g3s1-multiplication-array-transfer-worksheet.prompt.txt",
         "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/worksheet/g3s1-multiplication-array-transfer-worksheet.png",
         "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/worksheet/g3s1-multiplication-array-transfer-worksheet.pdf",
-        "validatedAt": "2026-08-07T22:18:22.541Z"
+        "validatedAt": "2026-08-08T01:26:26.935Z"
       },
       "ppt": {
         "status": "received",
         "format": "html",
         "pptxPath": "",
         "slideCount": 12,
-        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/claude/html-intake.json",
+        "intakeReportPath": "",
         "renderedPdfPath": "",
         "slidesDirectory": "",
         "validatedAt": "",
@@ -264,7 +264,7 @@
         "anonymousAccessStatus": "production-passed",
         "productionStatus": "deployed",
         "publicUrl": "https://eduitit.site/edu-materials/bf456499-f56d-4bf5-86e2-2179f4ce354a/",
-        "validatedAt": "2026-08-08T00:52:30.178Z"
+        "validatedAt": "2026-08-08T01:36:31.364Z"
       },
       "notes": [
         "수동 제작본 검수 결과를 반영했으며 다른 사람 자료와 기존 AI 프로토타입은 재사용하지 않습니다."
@@ -301,17 +301,17 @@
       },
       "worksheet": {
         "filename": "g3s1-multiplication-place-value-model-worksheet.png",
-        "status": "not-started",
-        "sourcePath": "",
-        "pngPath": "",
-        "pdfPath": "",
-        "validatedAt": ""
+        "status": "validated",
+        "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/worksheet/g3s1-multiplication-place-value-model-worksheet.prompt.txt",
+        "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/worksheet/g3s1-multiplication-place-value-model-worksheet.png",
+        "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/worksheet/g3s1-multiplication-place-value-model-worksheet.pdf",
+        "validatedAt": "2026-08-08T01:26:26.935Z"
       },
       "ppt": {
         "status": "received",
         "pptxPath": "",
         "slideCount": 12,
-        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/claude/html-intake.json",
+        "intakeReportPath": "",
         "renderedPdfPath": "",
         "slidesDirectory": "",
         "validatedAt": "",
@@ -319,23 +319,23 @@
         "htmlPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/claude/g3s1-multiplication-place-value-model-slides.html"
       },
       "support": {
-        "intentStatus": "not-started",
-        "intentPath": "",
-        "answerKeyStatus": "not-started",
-        "answerKeyPath": "",
-        "representativeImageStatus": "not-started",
-        "representativeImagePath": ""
+        "intentStatus": "validated",
+        "intentPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/support/teaching-intent.md",
+        "answerKeyStatus": "validated",
+        "answerKeyPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/support/teacher-answer-key.md",
+        "representativeImageStatus": "validated",
+        "representativeImagePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/support/representative-image.png"
       },
       "eduitit": {
-        "packageStatus": "not-started",
-        "packagePath": "",
-        "digest": "",
-        "localRecordStatus": "unpublished",
-        "localRecordId": "",
-        "anonymousAccessStatus": "not-tested",
-        "productionStatus": "not-deployed",
-        "publicUrl": "",
-        "validatedAt": ""
+        "packageStatus": "validated",
+        "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-model",
+        "digest": "7b79a5f74447",
+        "localRecordStatus": "published",
+        "localRecordId": "9d3ac7a8-6596-429d-bac5-a3a75ad4540c",
+        "anonymousAccessStatus": "production-passed",
+        "productionStatus": "deployed",
+        "publicUrl": "https://eduitit.site/edu-materials/9d3ac7a8-6596-429d-bac5-a3a75ad4540c/",
+        "validatedAt": "2026-08-08T01:36:31.364Z"
       },
       "notes": []
     },
@@ -357,17 +357,17 @@
       },
       "worksheet": {
         "filename": "g3s1-multiplication-place-value-context-worksheet.png",
-        "status": "not-started",
-        "sourcePath": "",
-        "pngPath": "",
-        "pdfPath": "",
-        "validatedAt": ""
+        "status": "validated",
+        "sourcePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/worksheet/g3s1-multiplication-place-value-context-worksheet.prompt.txt",
+        "pngPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/worksheet/g3s1-multiplication-place-value-context-worksheet.png",
+        "pdfPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/worksheet/g3s1-multiplication-place-value-context-worksheet.pdf",
+        "validatedAt": "2026-08-08T01:26:26.935Z"
       },
       "ppt": {
         "status": "received",
         "pptxPath": "",
         "slideCount": 12,
-        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/claude/html-intake.json",
+        "intakeReportPath": "",
         "renderedPdfPath": "",
         "slidesDirectory": "",
         "validatedAt": "",
@@ -375,23 +375,23 @@
         "htmlPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/claude/g3s1-multiplication-place-value-context-slides.html"
       },
       "support": {
-        "intentStatus": "not-started",
-        "intentPath": "",
-        "answerKeyStatus": "not-started",
-        "answerKeyPath": "",
-        "representativeImageStatus": "not-started",
-        "representativeImagePath": ""
+        "intentStatus": "validated",
+        "intentPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/support/teaching-intent.md",
+        "answerKeyStatus": "validated",
+        "answerKeyPath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/support/teacher-answer-key.md",
+        "representativeImageStatus": "validated",
+        "representativeImagePath": "middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/support/representative-image.png"
       },
       "eduitit": {
-        "packageStatus": "not-started",
-        "packagePath": "",
-        "digest": "",
-        "localRecordStatus": "unpublished",
-        "localRecordId": "",
-        "anonymousAccessStatus": "not-tested",
-        "productionStatus": "not-deployed",
-        "publicUrl": "",
-        "validatedAt": ""
+        "packageStatus": "validated",
+        "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-multiplication-place-value-context",
+        "digest": "22afba8273c6",
+        "localRecordStatus": "published",
+        "localRecordId": "b8d42be0-1a5d-4de9-88c5-a655c6066d68",
+        "anonymousAccessStatus": "production-passed",
+        "productionStatus": "deployed",
+        "publicUrl": "https://eduitit.site/edu-materials/b8d42be0-1a5d-4de9-88c5-a655c6066d68/",
+        "validatedAt": "2026-08-08T01:36:31.364Z"
       },
       "notes": []
     },
@@ -413,17 +413,17 @@
       },
       "worksheet": {
         "filename": "g3s1-division-equal-sharing-worksheet.png",
-        "status": "not-started",
-        "sourcePath": "",
-        "pngPath": "",
-        "pdfPath": "",
-        "validatedAt": ""
+        "status": "validated",
+        "sourcePath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/worksheet/g3s1-division-equal-sharing-worksheet.prompt.txt",
+        "pngPath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/worksheet/g3s1-division-equal-sharing-worksheet.png",
+        "pdfPath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/worksheet/g3s1-division-equal-sharing-worksheet.pdf",
+        "validatedAt": "2026-08-08T01:26:26.935Z"
       },
       "ppt": {
         "status": "received",
         "pptxPath": "",
         "slideCount": 12,
-        "intakeReportPath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/claude/html-intake.json",
+        "intakeReportPath": "",
         "renderedPdfPath": "",
         "slidesDirectory": "",
         "validatedAt": "",
@@ -431,23 +431,23 @@
         "htmlPath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/claude/g3s1-division-equal-sharing-slides.html"
       },
       "support": {
-        "intentStatus": "not-started",
-        "intentPath": "",
-        "answerKeyStatus": "not-started",
-        "answerKeyPath": "",
-        "representativeImageStatus": "not-started",
-        "representativeImagePath": ""
+        "intentStatus": "validated",
+        "intentPath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/support/teaching-intent.md",
+        "answerKeyStatus": "validated",
+        "answerKeyPath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/support/teacher-answer-key.md",
+        "representativeImageStatus": "validated",
+        "representativeImagePath": "middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/support/representative-image.png"
       },
       "eduitit": {
-        "packageStatus": "not-started",
-        "packagePath": "",
-        "digest": "",
-        "localRecordStatus": "unpublished",
-        "localRecordId": "",
-        "anonymousAccessStatus": "not-tested",
-        "productionStatus": "not-deployed",
-        "publicUrl": "",
-        "validatedAt": ""
+        "packageStatus": "validated",
+        "packagePath": "eduitit:edu_materials/static/edu_materials/lesson_bundles/g3s1-division-equal-sharing",
+        "digest": "bd28e298da8c",
+        "localRecordStatus": "published",
+        "localRecordId": "5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54",
+        "anonymousAccessStatus": "production-passed",
+        "productionStatus": "deployed",
+        "publicUrl": "https://eduitit.site/edu-materials/5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54/",
+        "validatedAt": "2026-08-08T01:36:31.364Z"
       },
       "notes": []
     },
@@ -2150,6 +2150,18 @@
       "sequence": null,
       "event": "Eduitit 운영 공개·비로그인 검증 완료",
       "detail": "PPT 수령분 3개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다."
+    },
+    {
+      "at": "2026-08-08T01:26:26.935Z",
+      "sequence": null,
+      "event": "발표 화면 수령분 산출물·Eduitit 로컬 공개 검증 완료",
+      "detail": "통합 활동지까지 준비된 Claude HTML/PPTX 6개를 Eduitit 공개 패키지로 만들고 비로그인 접근을 검증했다. 발표 화면만 도착한 슬롯은 수령 상태를 보존하고 게시를 대기한다."
+    },
+    {
+      "at": "2026-08-08T01:36:31.364Z",
+      "sequence": null,
+      "event": "Eduitit 운영 공개·비로그인 검증 완료",
+      "detail": "PPT 수령분 6개만 운영에 게시하고 목록·상세·실행·렌더·썸네일·PPT·활동지 다운로드를 비로그인 외부 HTTP로 검증했다."
     }
   ]
 }

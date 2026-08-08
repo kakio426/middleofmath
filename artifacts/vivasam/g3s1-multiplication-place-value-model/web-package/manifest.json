@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-multiplication-place-value-model",
+  "sequence": 4,
+  "title": "34×2를 두 부분으로",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "1. 곱셈",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "7b79a5f74447",
+  "thumbnailAsset": "7b79a5f74447/representative-image.png",
+  "worksheetAsset": "7b79a5f74447/g3s1-multiplication-place-value-model-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "7b79a5f74447/g3s1-multiplication-place-value-model-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-multiplication",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-multiplication-place-value-model-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "7b79a5f74447/g3s1-multiplication-place-value-model-slides.html",
+      "bytes": 8411477,
+      "sha256": "2bf9597ecc99e6d3da2c046cc09dd17ecc4799e96a9ce17bbe54d15b2df06b83",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "7b79a5f74447/g3s1-multiplication-place-value-model-worksheet.pdf",
+      "bytes": 1189133,
+      "sha256": "622ecf50465bc9738b1cd76a8aff2c27991984c72b555aa95613c764cfaa5017",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "7b79a5f74447/g3s1-multiplication-place-value-model-worksheet.png",
+      "bytes": 1246716,
+      "sha256": "cd1411887250a7b94fea8053b773e9d6bc5d07667f5e19fd63010f321e6bef35",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "7b79a5f74447/representative-image.png",
+      "bytes": 49830,
+      "sha256": "5696349970382637f48391b871756897eb1a50da58c9292d323dccb4b1063ee8",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

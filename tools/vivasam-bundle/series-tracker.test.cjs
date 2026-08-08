@@ -39,10 +39,10 @@ test("원장은 30개 PPT와 PPT당 통합 활동지 1개 계약을 고정한다
   assert.equal(tracker.contract.pptAuthor, "Claude");
 });
 
-test("1~3번은 운영 공개 검증, 1~6번은 Claude HTML 수령을 추적한다", () => {
+test("1~6번은 운영 공개 검증과 Claude HTML 수령을 추적한다", () => {
   const validated = validateTracker(tracker, { trackerPath });
   const summary = summarizeTracker(validated);
-  for (const bundle of validated.bundles.slice(0, 3)) {
+  for (const bundle of validated.bundles.slice(0, 6)) {
     assert.equal(bundle.content.status, "validated");
     assert.equal(bundle.worksheet.status, "validated");
     assert.equal(bundle.ppt.status, "received");
@@ -54,17 +54,10 @@ test("1~3번은 운영 공개 검증, 1~6번은 Claude HTML 수령을 추적한�
     assert.equal(bundle.eduitit.productionStatus, "deployed");
     assert.match(bundle.eduitit.publicUrl, /^https:\/\/eduitit\.site\/edu-materials\//);
   }
-  for (const bundle of validated.bundles.slice(3, 6)) {
-    assert.equal(bundle.ppt.status, "received");
-    assert.equal(bundle.ppt.format, "html");
-    assert.equal(bundle.ppt.slideCount, 12);
-    assert.notEqual(bundle.worksheet.status, "validated");
-    assert.equal(bundle.eduitit.packageStatus, "not-started");
-  }
-  assert.equal(summary.worksheetsValidated, 3);
-  assert.equal(summary.supportValidated, 3);
-  assert.equal(summary.packagesValidated, 3);
-  assert.equal(summary.localRecordsPublished, 3);
+  assert.equal(summary.worksheetsValidated, 6);
+  assert.equal(summary.supportValidated, 6);
+  assert.equal(summary.packagesValidated, 6);
+  assert.equal(summary.localRecordsPublished, 6);
   assert.equal(summary.claudePptsReceived, 6);
   assert.equal(summary.claudePptsAwaiting, 24);
   assert.equal(summary.claudePptsValidated, 0);
@@ -141,7 +134,7 @@ test("사람용 진행표에는 30개 슬롯과 1개 통합 활동지 계약이 
   assert.equal((markdown.match(/^\| \d{2} \|/gm) || []).length, 30);
   assert.match(markdown, /PPT당 통합 활동지 1개/);
   assert.match(markdown, /Claude는 발표 화면\(HTML 우선, 기존 PPTX 호환\)만 제작/);
-  assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 3 \| 30/);
+  assert.match(markdown, /Eduitit 로컬 공개·비로그인 접근 검증 \| 6 \| 30/);
   assert.match(markdown, /Claude HTML\/PPTX 수령/);
   assert.match(markdown, /Claude HTML\/PPTX 수령 대기/);
   assert.match(markdown, /MathCanvas 활동 연결 완료/);

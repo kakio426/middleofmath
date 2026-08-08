@@ -67,8 +67,8 @@ test("내부 생산 하네스는 PPT 30개와 통합 활동지 30개를 추적�
   assert.equal(progress.registeredDeckCount, 30);
   assert.equal(progress.remainingDeckCount, 0);
   assert.equal(progress.plannedWorksheetCount, 30);
-  assert.equal(progress.validatedWorksheetCount, 3);
-  assert.equal(progress.remainingValidatedWorksheetCount, 27);
+  assert.equal(progress.validatedWorksheetCount, 6);
+  assert.equal(progress.remainingValidatedWorksheetCount, 24);
   assert.equal(progress.claudePptsValidated, 0);
   assert.equal(progress.fullyCompleted, 0);
 });

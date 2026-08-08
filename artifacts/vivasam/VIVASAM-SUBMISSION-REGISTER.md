@@ -1,8 +1,8 @@
 # 수업 자료 등록용 입력 내용
 
-- 기준 시각: 2026-08-08T00:52:30.178Z
+- 기준 시각: 2026-08-08T01:36:31.364Z
 - 범위: 초등 수학 3학년 1·2학기, PPT 30개, PPT당 통합 활동지 1개
-- 현재 작성 완료: 3/30
+- 현재 작성 완료: 6/30
 
 ## 01. 그림 하나에 숨은 수
 
@@ -29,4 +29,31 @@
 - 수업 설계 의도: 이 차시는 학생이 정답만 말하는 데서 멈추지 않고, 자료에서 필요한 정보를 찾고 수학적 관계를 적용한 뒤 식·그림·한 문장으로 근거를 남기도록 설계했습니다. 슬라이드의 짝 설명과 오류 분석은 한 장짜리 통합 활동지의 기록으로 이어지며, 교사는 서로 다른 문항에서 같은 오류가 반복되는지 확인한 뒤 다음 수업 행동을 결정합니다.
 - 공개 URL: https://eduitit.site/edu-materials/bf456499-f56d-4bf5-86e2-2179f4ce354a/
 - 대표 이미지: middleofmath:artifacts/vivasam/g3s1-multiplication-array-transfer/support/representative-image.png
+- PPT 장수: 12장
+
+## 04. 34×2를 두 부분으로
+
+- 교과목: 수학
+- 대상·단원: 초등 3학년 1학기 · 1. 곱셈
+- 수업 설계 의도: 이 차시는 학생이 정답만 말하는 데서 멈추지 않고, 자료에서 필요한 정보를 찾고 수학적 관계를 적용한 뒤 식·그림·한 문장으로 근거를 남기도록 설계했습니다. 슬라이드의 짝 설명과 오류 분석은 한 장짜리 통합 활동지의 기록으로 이어지며, 교사는 서로 다른 문항에서 같은 오류가 반복되는지 확인한 뒤 다음 수업 행동을 결정합니다.
+- 공개 URL: https://eduitit.site/edu-materials/9d3ac7a8-6596-429d-bac5-a3a75ad4540c/
+- 대표 이미지: middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-model/support/representative-image.png
+- PPT 장수: 12장
+
+## 05. 상자 수를 자릿값으로 곱하기
+
+- 교과목: 수학
+- 대상·단원: 초등 3학년 1학기 · 1. 곱셈
+- 수업 설계 의도: 이 차시는 학생이 정답만 말하는 데서 멈추지 않고, 자료에서 필요한 정보를 찾고 수학적 관계를 적용한 뒤 식·그림·한 문장으로 근거를 남기도록 설계했습니다. 슬라이드의 짝 설명과 오류 분석은 한 장짜리 통합 활동지의 기록으로 이어지며, 교사는 서로 다른 문항에서 같은 오류가 반복되는지 확인한 뒤 다음 수업 행동을 결정합니다.
+- 공개 URL: https://eduitit.site/edu-materials/b8d42be0-1a5d-4de9-88c5-a655c6066d68/
+- 대표 이미지: middleofmath:artifacts/vivasam/g3s1-multiplication-place-value-context/support/representative-image.png
+- PPT 장수: 12장
+
+## 06. 18개를 똑같이 나누면
+
+- 교과목: 수학
+- 대상·단원: 초등 3학년 1학기 · 2. 나눗셈
+- 수업 설계 의도: 이 차시는 학생이 정답만 말하는 데서 멈추지 않고, 자료에서 필요한 정보를 찾고 수학적 관계를 적용한 뒤 식·그림·한 문장으로 근거를 남기도록 설계했습니다. 슬라이드의 짝 설명과 오류 분석은 한 장짜리 통합 활동지의 기록으로 이어지며, 교사는 서로 다른 문항에서 같은 오류가 반복되는지 확인한 뒤 다음 수업 행동을 결정합니다.
+- 공개 URL: https://eduitit.site/edu-materials/5b3e5909-24ab-442b-a5ed-1d5d2ccf5c54/
+- 대표 이미지: middleofmath:artifacts/vivasam/g3s1-division-equal-sharing/support/representative-image.png
 - PPT 장수: 12장

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-5f2ae82e-f82c-4a98-9402-0f20d5b08d25.png",
+  "promptFile": "g3s1-multiplication-place-value-model-worksheet.prompt.txt",
+  "promptSha256": "984862e8a74239183c9fbae870ecb54da0b2d49db9cf3a4cbf92aecf15bdda0f",
+  "imageFile": "g3s1-multiplication-place-value-model-worksheet.png",
+  "imageSha256": "cd1411887250a7b94fea8053b773e9d6bc5d07667f5e19fd63010f321e6bef35",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T01:14:11Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Decomposition": ["30×2", "4×2"],
+      "problem2Boxes": 2,
+      "problem2ChoiceLabels": ["84권", "8권", "44권"],
+      "problem3WrongWork": "2×3=6 → 3×3=9 → 6+9=15"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "generationMode": "built-in-imagegen",
+  "generator": "image_gen",
+  "sourceOutputId": "exec-26866c3e-a638-4964-aada-ec39a7c9c983.png",
+  "promptFile": "g3s1-multiplication-place-value-context-worksheet.prompt.txt",
+  "promptSha256": "0e6e74780054e405934ac62983520c9777ea6c080642998a070e9852f006d94e",
+  "imageFile": "g3s1-multiplication-place-value-context-worksheet.png",
+  "imageSha256": "a2930e8732037becaf573970dfb016ff02c10bb5495e0ce6a42b2bc8b33b8406",
+  "width": 1024,
+  "height": 1536,
+  "visualQa": {
+    "reviewedAt": "2026-08-08T01:14:11Z",
+    "logoTitleSeparated": true,
+    "allQuestionTextLegible": true,
+    "choicesVisuallySeparated": true,
+    "answerSpacesPresent": true,
+    "noOverlapsOrClipping": true,
+    "mathVisualCounts": {
+      "problem1Boxes": 2,
+      "problem1ChoiceLabels": ["84권", "8권", "44권"],
+      "problem2Boxes": 3,
+      "problem2PlaceValueParts": ["30×3", "1×3"],
+      "problem3WorkLabels": ["첫 번째 풀이", "두 번째 풀이"]
+    }
+  }
+}

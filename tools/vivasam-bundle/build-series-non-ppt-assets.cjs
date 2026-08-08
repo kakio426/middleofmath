@@ -53,6 +53,25 @@ const WORKSHEET_MATH_VISUAL_CONTRACTS = Object.freeze({
     problem1ChoiceLabels: ["3×4=12자루", "3+4=7자루", "4자루"],
     problem3WorkLabels: ["5+6=11장", "6장"],
   },
+  "g3s1-multiplication-place-value-model": {
+    problem1Decomposition: ["30×2", "4×2"],
+    problem2Boxes: 2,
+    problem2ChoiceLabels: ["84권", "8권", "44권"],
+    problem3WrongWork: "2×3=6 → 3×3=9 → 6+9=15",
+  },
+  "g3s1-multiplication-place-value-context": {
+    problem1Boxes: 2,
+    problem1ChoiceLabels: ["84권", "8권", "44권"],
+    problem2Boxes: 3,
+    problem2PlaceValueParts: ["30×3", "1×3"],
+    problem3WorkLabels: ["첫 번째 풀이", "두 번째 풀이"],
+  },
+  "g3s1-division-equal-sharing": {
+    problem1SourceCookies: 18,
+    problem1RecipientPlates: 6,
+    problem2ChoiceLabels: ["4자루", "5자루", "15자루"],
+    problem3WrongWork: "12÷3=3개",
+  },
 });
 
 const PALETTE_BY_DOMAIN = Object.freeze({

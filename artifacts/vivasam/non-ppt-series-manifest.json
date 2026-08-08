@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
   "generatedAt": "2026-08-07T00:00:00.000Z",
-  "count": 3,
+  "count": 6,
   "pptStatus": "available",
   "records": [
     {
@@ -37,6 +37,39 @@
       "pptStatus": "available",
       "presentationMode": "html",
       "packageManifest": "g3s1-multiplication-array-transfer/manifest.json"
+    },
+    {
+      "sequence": 4,
+      "lessonId": "g3s1-multiplication-place-value-model",
+      "title": "34×2를 두 부분으로",
+      "grade": "초등 3학년 1학기",
+      "unit": "1. 곱셈",
+      "digest": "7b79a5f74447",
+      "pptStatus": "available",
+      "presentationMode": "html",
+      "packageManifest": "g3s1-multiplication-place-value-model/manifest.json"
+    },
+    {
+      "sequence": 5,
+      "lessonId": "g3s1-multiplication-place-value-context",
+      "title": "상자 수를 자릿값으로 곱하기",
+      "grade": "초등 3학년 1학기",
+      "unit": "1. 곱셈",
+      "digest": "22afba8273c6",
+      "pptStatus": "available",
+      "presentationMode": "html",
+      "packageManifest": "g3s1-multiplication-place-value-context/manifest.json"
+    },
+    {
+      "sequence": 6,
+      "lessonId": "g3s1-division-equal-sharing",
+      "title": "18개를 똑같이 나누면",
+      "grade": "초등 3학년 1학기",
+      "unit": "2. 나눗셈",
+      "digest": "bd28e298da8c",
+      "pptStatus": "available",
+      "presentationMode": "html",
+      "packageManifest": "g3s1-division-equal-sharing/manifest.json"
     }
   ]
 }

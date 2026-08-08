@@ -133,10 +133,10 @@ test("추적 원장은 내용 30개와 수령된 발표 자료 6개를 정확히
   assert.equal(summary.contentValidated, 30);
   assert.equal(summary.claudePptsAwaiting, 24);
   assert.equal(summary.claudePptsValidated, 0);
-  assert.equal(summary.worksheetsValidated, 3);
-  assert.equal(summary.supportValidated, 3);
-  assert.equal(summary.packagesValidated, 3);
-  assert.equal(summary.localRecordsPublished, 3);
-  assert.equal(summary.productionPublished, 3);
+  assert.equal(summary.worksheetsValidated, 6);
+  assert.equal(summary.supportValidated, 6);
+  assert.equal(summary.packagesValidated, 6);
+  assert.equal(summary.localRecordsPublished, 6);
+  assert.equal(summary.productionPublished, 6);
   assert.equal(summary.fullyCompleted, 0);
 });

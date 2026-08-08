@@ -4,46 +4,97 @@
   "catalogStatus": 200,
   "records": [
     {
-      "digest": "20c347053492",
+      "digest": "0b45930ac8bc",
       "etag304": true,
       "lessonId": "g3s2-pictograph-legend",
-      "localRecordId": "f1a382eb-762a-4212-bf49-34db1c2af346",
+      "localRecordId": "a96cda89-b613-4819-b2fa-3b903c0bd2e9",
       "sequence": 1,
       "statuses": {
         "detail": 200,
         "ppt": 200,
         "render": 200,
         "run": 200,
+        "slideDeck": 200,
         "thumbnail": 200,
         "worksheet": 200
       }
     },
     {
-      "digest": "3d4cabf98fe2",
+      "digest": "2a81ac7e0439",
       "etag304": true,
       "lessonId": "g3s1-multiplication-groups-model",
-      "localRecordId": "86a18a01-1903-4dfc-a398-cb3f3ed2ead6",
+      "localRecordId": "7fd67818-4401-44d3-b3f6-8d1cda511e58",
       "sequence": 2,
       "statuses": {
         "detail": 200,
         "ppt": 200,
         "render": 200,
         "run": 200,
+        "slideDeck": 200,
         "thumbnail": 200,
         "worksheet": 200
       }
     },
     {
-      "digest": "2de55ea9fac9",
+      "digest": "434492442ef4",
       "etag304": true,
       "lessonId": "g3s1-multiplication-array-transfer",
-      "localRecordId": "e0eb0dc2-f97d-4bc4-8b7a-292f8d7a3564",
+      "localRecordId": "03826674-f45d-466b-9f05-dd49c5ee3e45",
       "sequence": 3,
       "statuses": {
         "detail": 200,
         "ppt": 200,
         "render": 200,
         "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "7b79a5f74447",
+      "etag304": true,
+      "lessonId": "g3s1-multiplication-place-value-model",
+      "localRecordId": "0b493f14-6ec6-4a57-96c2-554f1c8bd0c8",
+      "sequence": 4,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "22afba8273c6",
+      "etag304": true,
+      "lessonId": "g3s1-multiplication-place-value-context",
+      "localRecordId": "0361e691-2d14-4472-8239-0ac3b7b98c73",
+      "sequence": 5,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
+        "thumbnail": 200,
+        "worksheet": 200
+      }
+    },
+    {
+      "digest": "bd28e298da8c",
+      "etag304": true,
+      "lessonId": "g3s1-division-equal-sharing",
+      "localRecordId": "b0c257cd-38a8-4548-8141-cb455ba3e099",
+      "sequence": 6,
+      "statuses": {
+        "detail": 200,
+        "ppt": 200,
+        "render": 200,
+        "run": 200,
+        "slideDeck": 200,
         "thumbnail": 200,
         "worksheet": 200
       }
@@ -51,8 +102,8 @@
   ],
   "schemaVersion": 1,
   "seriesId": "vivasam-2026-middleofmath-30",
-  "verified": 3,
-  "recordedAt": "2026-08-07T22:18:22.541Z",
+  "verified": 6,
+  "recordedAt": "2026-08-08T01:26:26.935Z",
   "scope": "local-django-publication",
   "productionStatus": "not-deployed"
 }

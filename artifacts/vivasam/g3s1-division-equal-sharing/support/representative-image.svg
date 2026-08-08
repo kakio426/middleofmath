@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="18개를 똑같이 나누면 대표 이미지">
+  <defs><filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#33245A" flood-opacity=".16"/></filter></defs>
+  <rect width="1200" height="675" fill="#F8F5FF"/>
+  <circle cx="1060" cy="92" r="190" fill="#0F766E" opacity=".08"/>
+  <circle cx="104" cy="654" r="180" fill="#F4C95D" opacity=".12"/>
+  <rect x="62" y="58" width="1076" height="559" rx="56" fill="#FFFFFF" stroke="#DDD5F2" stroke-width="3" filter="url(#shadow)"/>
+  <rect x="98" y="96" width="244" height="50" rx="25" fill="#0F766E"/>
+  <text x="220" y="129" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="850" text-anchor="middle" fill="#FFFFFF">수학 수업 06</text>
+  <text x="102" y="246" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="58" font-weight="900" fill="#164E48" text-anchor="start" class=""><tspan x="102" dy="0">18개를</tspan><tspan x="102" dy="68">똑같이 나누면</tspan></text>
+  <text x="104" y="405" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="650" fill="#5D5668" text-anchor="start" class=""><tspan x="104" dy="0">전체를 똑같이 나누기</tspan></text>
+  <rect x="102" y="492" width="430" height="64" rx="28" fill="#E8F7F3"/>
+  <text x="128" y="533" font-family="Apple SD Gothic Neo, sans-serif" font-size="22" font-weight="800" fill="#0F766E">초등 3학년 1학기 · 2. 나눗셈</text>
+  <g transform="translate(718 123)">
+    <circle cx="165" cy="118" r="98" fill="#DCCEFF"/>
+    <circle cx="265" cy="104" r="120" fill="#EEE8FF"/>
+    <circle cx="350" cy="145" r="84" fill="#DCCEFF"/>
+    <rect x="92" y="118" width="335" height="238" rx="46" fill="#FFFFFF" stroke="#0F766E" stroke-width="5" filter="url(#shadow)"/>
+    <g aria-label="같은 수로 나눈 세 묶음"><rect x="146" y="174" width="68" height="100" rx="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="3"/><circle cx="166" cy="201" r="9" fill="#0F766E"/><circle cx="194" cy="201" r="9" fill="#0F766E"/><circle cx="166" cy="235" r="9" fill="#0F766E"/><circle cx="194" cy="235" r="9" fill="#F4C95D"/><rect x="224" y="174" width="68" height="100" rx="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="3"/><circle cx="244" cy="201" r="9" fill="#0F766E"/><circle cx="272" cy="201" r="9" fill="#0F766E"/><circle cx="244" cy="235" r="9" fill="#0F766E"/><circle cx="272" cy="235" r="9" fill="#F4C95D"/><rect x="302" y="174" width="68" height="100" rx="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="3"/><circle cx="322" cy="201" r="9" fill="#0F766E"/><circle cx="350" cy="201" r="9" fill="#0F766E"/><circle cx="322" cy="235" r="9" fill="#0F766E"/><circle cx="350" cy="235" r="9" fill="#F4C95D"/><path d="M154 304H365" stroke="#0F766E" stroke-width="5" stroke-linecap="round"/></g>
+  </g>
+  <text x="102" y="592" font-family="Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="750" fill="#746D7C">MIDDLE OF MATH · EDUITIT</text>
+</svg>

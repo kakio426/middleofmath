@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 4,
+  "seriesId": "vivasam-2026-middleofmath-30",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "lessonId": "g3s1-division-equal-sharing",
+  "sequence": 6,
+  "title": "18개를 똑같이 나누면",
+  "subject": "수학",
+  "subjectCode": "MATH",
+  "grade": "초등 3학년 1학기",
+  "unit": "2. 나눗셈",
+  "durationMinutes": 40,
+  "slideCount": 12,
+  "worksheetCount": 1,
+  "pptStatus": "available",
+  "presentationMode": "html",
+  "sourceHtml": "source.html",
+  "digest": "bd28e298da8c",
+  "thumbnailAsset": "bd28e298da8c/representative-image.png",
+  "worksheetAsset": "bd28e298da8c/g3s1-division-equal-sharing-worksheet.png",
+  "pptAsset": "",
+  "slideHtmlAsset": "bd28e298da8c/g3s1-division-equal-sharing-slides.html",
+  "practiceUrl": "https://middle-of-math-student.vercel.app/?practice=g3s1-division",
+  "mathCanvasEditorUrl": "",
+  "downloadAssets": [
+    "g3s1-division-equal-sharing-worksheet.pdf"
+  ],
+  "assets": [
+    {
+      "path": "bd28e298da8c/g3s1-division-equal-sharing-slides.html",
+      "bytes": 8411934,
+      "sha256": "b3a31651a54e5f2cc3c2827b42fdc8ac215d78efbc5369edc8942dac9d8b8db5",
+      "contentType": "text/html; charset=utf-8",
+      "role": "presentation"
+    },
+    {
+      "path": "bd28e298da8c/g3s1-division-equal-sharing-worksheet.pdf",
+      "bytes": 1320621,
+      "sha256": "d54b9a10c37d24d424d1b83f1e8fe23070b85d0969aa867f5f590c28a04b1414",
+      "contentType": "application/pdf",
+      "role": "worksheet"
+    },
+    {
+      "path": "bd28e298da8c/g3s1-division-equal-sharing-worksheet.png",
+      "bytes": 1356750,
+      "sha256": "d6653fa4fc01377ec45542c2b2a16cad967a2bf991285b0ee2d111a2da2aa3a3",
+      "contentType": "image/png",
+      "role": "worksheet"
+    },
+    {
+      "path": "bd28e298da8c/representative-image.png",
+      "bytes": 51252,
+      "sha256": "c7b9fefcf04e035800d35c513bf6e28cf2873c568ff5119fdc67362c495e6114",
+      "contentType": "image/png",
+      "role": "thumbnail"
+    }
+  ]
+}

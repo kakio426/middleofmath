@@ -118,13 +118,13 @@ test("대표 이미지 제목은 어절을 자르지 않고 최대 두 줄로 �
 
 test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만든다", async () => {
   const report = await validateSeriesArtifacts({ repoRoot, availableOnly: true });
-  assert.equal(report.lessonCount, 3);
-  assert.equal(report.worksheetCount, 3);
-  assert.equal(report.packageCount, 3);
-  assert.equal(report.supportCount, 3);
-  assert.equal(report.representativeImageCount, 3);
-  assert.equal(new Set(report.worksheetHashes).size, 3);
-  assert.equal(new Set(report.representativeImageHashes).size, 3);
+  assert.equal(report.lessonCount, 6);
+  assert.equal(report.worksheetCount, 6);
+  assert.equal(report.packageCount, 6);
+  assert.equal(report.supportCount, 6);
+  assert.equal(report.representativeImageCount, 6);
+  assert.equal(new Set(report.worksheetHashes).size, 6);
+  assert.equal(new Set(report.representativeImageHashes).size, 6);
 
   for (const item of report.items) {
     const worksheetRoot = path.dirname(item.worksheetPngPath);
@@ -190,6 +190,31 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
         problem3WorkLabels: ["5+6=11장", "6장"],
       });
     }
+    if (item.lessonId === "g3s1-multiplication-place-value-model") {
+      assert.deepEqual(generation.visualQa.mathVisualCounts, {
+        problem1Decomposition: ["30×2", "4×2"],
+        problem2Boxes: 2,
+        problem2ChoiceLabels: ["84권", "8권", "44권"],
+        problem3WrongWork: "2×3=6 → 3×3=9 → 6+9=15",
+      });
+    }
+    if (item.lessonId === "g3s1-multiplication-place-value-context") {
+      assert.deepEqual(generation.visualQa.mathVisualCounts, {
+        problem1Boxes: 2,
+        problem1ChoiceLabels: ["84권", "8권", "44권"],
+        problem2Boxes: 3,
+        problem2PlaceValueParts: ["30×3", "1×3"],
+        problem3WorkLabels: ["첫 번째 풀이", "두 번째 풀이"],
+      });
+    }
+    if (item.lessonId === "g3s1-division-equal-sharing") {
+      assert.deepEqual(generation.visualQa.mathVisualCounts, {
+        problem1SourceCookies: 18,
+        problem1RecipientPlates: 6,
+        problem2ChoiceLabels: ["4자루", "5자루", "15자루"],
+        problem3WrongWork: "12÷3=3개",
+      });
+    }
 
     const manifest = JSON.parse(fs.readFileSync(item.packageManifestPath, "utf8"));
     const html = fs.readFileSync(item.packageHtmlPath, "utf8");
@@ -230,7 +255,7 @@ test("PPT가 도착한 차시만 활동지 이미지와 공개 패키지를 만�
     }
   }
 
-  for (const lesson of loadSeriesLessons().filter((lesson) => ![1, 2, 3].includes(lesson.sequence))) {
+  for (const lesson of loadSeriesLessons().filter((lesson) => ![1, 2, 3, 4, 5, 6].includes(lesson.sequence))) {
     const lessonRoot = path.join(repoRoot, "artifacts", "vivasam", lesson.id);
     for (const directory of ["worksheet", "support", "web-package"]) {
       assert.equal(fs.existsSync(path.join(lessonRoot, directory)), false, `${lesson.id}: ${directory}`);
@@ -244,13 +269,13 @@ test("전체 접촉표는 PPT 30개가 모두 도착하기 전에는 만들지 �
 });
 
 test("PPT가 도착한 원본과 Eduitit 동기화 폴더에는 공개 자료만 있다", () => {
-  const lessons = loadSeriesLessons().filter((lesson) => [1, 2, 3].includes(lesson.sequence));
+  const lessons = loadSeriesLessons().filter((lesson) => [1, 2, 3, 4, 5, 6].includes(lesson.sequence));
   const eduititRoot = process.env.EDUITIT_ROOT
     ? path.resolve(process.env.EDUITIT_ROOT)
     : path.resolve(repoRoot, "../eduitit");
   const syncedRoot = path.join(eduititRoot, "edu_materials", "static", "edu_materials", "lesson_bundles");
   const syncedLessonDirectories = fs.readdirSync(syncedRoot, { withFileTypes: true }).filter((entry) => entry.isDirectory());
-  assert.equal(syncedLessonDirectories.length, 3);
+  assert.equal(syncedLessonDirectories.length, 6);
 
   for (const lesson of lessons) {
     for (const packageRoot of [
